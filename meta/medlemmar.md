@@ -110,15 +110,11 @@ Bild | Förnamn | Efternamn | Personnummer | Användarnamn (GitHub)
 
 ### Okänd talang
 
-**TODO:** Beskriv kortfattad något du gillar att göra vid sidan av dina studier.
 Gillar basket, spel, mat, att lyssna på musik och podcasts, och lite allt möjligt.
 
 ### Starka sidor
 
 Under projektet tror jag att jag kommer ha lättast att bidra med:
-
-**TODO:** Skapa en lista med kortfattad beskrivning över områden där du tror du
- har lättast att bidra till projektet, till exempel:
 
 - Analys/Design
 - Planering
@@ -131,8 +127,6 @@ Under projektet tror jag att jag kommer ha lättast att bidra med:
 
 Under projektet hoppas jag förutom att bli ännu bättre på mina redan starka
 sidor även ges möjlighet att utveckla följande färdigheter, till exempel:
-
-**TODO:** Skapa en lista, till exempel:
 
 - Algoritmer
 - Skriva kod utifrån färdig specifikation
