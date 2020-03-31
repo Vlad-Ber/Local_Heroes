@@ -145,7 +145,7 @@ sidor även ges möjlighet att utveckla följande färdigheter, till exempel:
 
 Bild | Förnamn | Efternamn | Personnummer | Användarnamn (GitHub)
 -----------------------------------------|-----------------------------|-----------|--------------|----------------------
-<img src="images/user.png" width="180"/> | [Vlad](#Vladislav-Bertilsson) | Bertilsson | 980829-4491 | `Vlad-Ber`
+<img src="images/vlad.png" width="180"/> | [Vladislav](#Vladislav-Bertilsson) | Bertilsson | 980829-4491 | `Vlad-Ber`
 
 ### Okänd talang
 
@@ -162,7 +162,7 @@ Under projektet tror jag att jag kommer ha lättast att bidra med:
 - Research
 - Datastrukturer/Algoritmer
 - Analys/Design
-- Lära sig nytt
+- Lära sig nytt snabbt
 
 ### Personlig utveckling
 
