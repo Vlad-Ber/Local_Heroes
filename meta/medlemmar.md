@@ -104,7 +104,7 @@ sidor även ges möjlighet att utveckla följande färdigheter, till exempel:
 
 Bild | Förnamn | Efternamn | Personnummer | Användarnamn (GitHub)
 -----------------------------------------|-----------------------------|-----------|--------------|----------------------
-<img src="images/user.png" width="180"/> | [Vlad](#Vladislav-Bertilsson) | Bertilsson | 980829-4491 | `Vlad-Ber`
+<img src="images/vlad.png" width="180"/> | [Vlad](#Vladislav-Bertilsson) | Bertilsson | 980829-4491 | `Vlad-Ber`
 
 ### Okänd talang
 
