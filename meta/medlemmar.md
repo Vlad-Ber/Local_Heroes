@@ -143,7 +143,7 @@ Bild | Förnamn | Efternamn | Personnummer | Användarnamn (GitHub)
 
 ### Okänd talang
 
-Tävla inom e-sport(LoL), producera musik, träna, lyssna på podcasts. 
+Tävla inom e-sport, producera musik, träna, lyssna på podcasts. 
 
 ### Starka sidor
 
