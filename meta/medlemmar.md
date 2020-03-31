@@ -105,7 +105,7 @@ sidor även ges möjlighet att utveckla följande färdigheter, till exempel:
 
 Bild | Förnamn | Efternamn | Personnummer | Användarnamn (GitHub)
 -----------------------------------------|-----------------------------|-----------|--------------|----------------------
-<img src="images/jonathan.jpg" width="180"/> | [Jonathan](#Jonathan) | Tadese | 990305-9310 | `jontad`
+<img src="images/jonathan.png" width="180"/> | [Jonathan](#Jonathan) | Tadese | 990305-9310 | `jontad`
 
 
 ### Okänd talang
