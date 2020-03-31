@@ -100,6 +100,47 @@ sidor även ges möjlighet att utveckla följande färdigheter, till exempel:
 - Tag bort avsnittet Anders Andersson.
 - Tag bort hela detta avsnitt, dvs tag bort avsnittet **Färdigställ**.
 
+
+## Jonathan Tadese
+
+Bild | Förnamn | Efternamn | Personnummer | Användarnamn (GitHub)
+-----------------------------------------|-----------------------------|-----------|--------------|----------------------
+<img src="images/jonathan.jpg" width="180"/> | [Jonathan](#Jonathan) | Tadese | 990305-9310 | `jontad`
+
+
+### Okänd talang
+
+**TODO:** Beskriv kortfattad något du gillar att göra vid sidan av dina studier.
+Gillar basket, spel, mat, att lyssna på musik och podcasts, och lite allt möjligt.
+
+### Starka sidor
+
+Under projektet tror jag att jag kommer ha lättast att bidra med:
+
+**TODO:** Skapa en lista med kortfattad beskrivning över områden där du tror du
+ har lättast att bidra till projektet, till exempel:
+
+- Analys/Design
+- Planering
+- Samarbete
+- Research (söka och sammanställa information)
+- Dokumentation
+- Rapportskrivande
+
+### Personlig utveckling
+
+Under projektet hoppas jag förutom att bli ännu bättre på mina redan starka
+sidor även ges möjlighet att utveckla följande färdigheter, till exempel:
+
+**TODO:** Skapa en lista, till exempel:
+
+- Algoritmer
+- Skriva kod utifrån färdig specifikation
+- Ledarskap
+- Muntlig presentation
+- Distansarbete
+
+
 ## Vladislav Bertilsson
 
 Bild | Förnamn | Efternamn | Personnummer | Användarnamn (GitHub)
