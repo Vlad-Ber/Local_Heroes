@@ -175,7 +175,7 @@ sidor även ges möjlighet att utveckla följande färdigheter, till exempel:
 
 Bild | Förnamn | Efternamn | Personnummer | Användarnamn (GitHub)
 -----------------------------------------|-----------------------------|-----------|--------------|----------------------
-<img src="images/fabian.png" width="180"/> | [Fabian](#fabian-haglund) | Haglund | 950211-5778 | `fabianhaglund`
+<img src="images/fabian.jpg" width="180"/> | [Fabian](#fabian-haglund) | Haglund | 950211-5778 | `fabianhaglund`
 
 ### Okänd talang
 
