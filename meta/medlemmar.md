@@ -44,6 +44,13 @@ gruppen sorterade i bokstavsordning.
 
 ## Anders Andersson
 
+Bild | Förnamn | Efternamn | Personnummer | Användarnamn (GitHub)
+-----------------------------------------|-----------------------------|-----------|--------------|----------------------
+<img src="images/user.png" width="180"/> | [Anders](#anders-andersson) | Andersson | YYMMDD-XXXX | `anders877`
+
+**TODO:** Utgå från mallen nedan och skapa ett avsnitt för varje medlem i
+gruppen sorterade i bokstavsordning.
+
 ### Okänd talang
 
 **TODO:** Beskriv kortfattad något du gillar att göra vid sidan av dina studier.
@@ -86,8 +93,44 @@ sidor även ges möjlighet att utveckla följande färdigheter, till exempel:
 - muntlig presentation
 - lägg gärna till flera punkter ...
 
+
 ## Färdigställ
 
 - Tag bort alla stycken markerade med **TODO** och **INFO**.
 - Tag bort avsnittet Anders Andersson.
 - Tag bort hela detta avsnitt, dvs tag bort avsnittet **Färdigställ**.
+
+## Vladislav Bertilsson
+
+Bild | Förnamn | Efternamn | Personnummer | Användarnamn (GitHub)
+-----------------------------------------|-----------------------------|-----------|--------------|----------------------
+<img src="images/user.png" width="180"/> | [Vlad](#Vladislav-Bertilsson) | Bertilsson | 980829-4491 | `Vlad-Ber`
+
+### Okänd talang
+
+Tävla inom e-sport(LoL), producera musik, träna, lyssna på podcasts. 
+
+### Starka sidor
+
+Under projektet tror jag att jag kommer ha lättast att bidra med:
+
+- Att ta ansvar för mitt arbete
+- Se till att vi kommer närmare vårt mål
+- Att effektivesera vårt arbete.
+- Problemlösning
+- Research
+- Datastrukturer/Algoritmer
+- Analys/Design
+- Lära sig nytt
+
+### Personlig utveckling
+
+Under projektet hoppas jag förutom att bli ännu bättre på mina redan starka
+sidor även ges möjlighet att utveckla följande färdigheter, till exempel:
+
+- Arbeta med kod annan skrivit
+- Kommunikation
+- Github
+- Samarbete i ett större projekt
+- Gå från en öppen idé till slutprodukt
+- Arbete på distans
