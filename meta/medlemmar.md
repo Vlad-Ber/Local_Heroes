@@ -78,11 +78,13 @@ Bild | Förnamn | Efternamn | Personnummer | Användarnamn (GitHub)
 
 ### Okänd talang
 
-Driver tech-bolag, skriver ganska mycket (filosofi, poesi och en del skönlitterärt) samt arbetar lite smått på design av en dagbädd. 
+- Driver tech-bolag sedan 4 år tillbaka (https://barkh.se/)
+- Aspirerar som författare (skriver och läser mycket filosofi främst)
+- Gillar schack, matlagning och musik (elektroniskt, jazz, soul framförallt)
+- Pysslar på ett par sidoprojekt, ett inom positiv psykologi och ett inom möbeldesign (spretigt jag vet)
+- Döpt efter en tax (japp)
 
 ### Starka sidor
-
-Under projektet tror jag att jag kommer ha lättast att bidra med:
 
 Jag har jobbat professionellt med projektledning/produktägarskap inom digital produktutveckling i 3-4 år nu så med det i ryggen bidrar jag nog enklast på den fronten:
 
