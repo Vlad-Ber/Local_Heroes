@@ -95,11 +95,15 @@ sidor även ges möjlighet att utveckla följande färdigheter, till exempel:
 
 
 ## Färdigställ
+## Daniel Bäckner
 
 - Tag bort alla stycken markerade med **TODO** och **INFO**.
 - Tag bort avsnittet Anders Andersson.
 - Tag bort hela detta avsnitt, dvs tag bort avsnittet **Färdigställ**.
 
+Bild | Förnamn | Efternamn | Personnummer | Användarnamn (GitHub)
+-----------------------------------------|-----------------------------|-----------|--------------|----------------------
+<img src="images/user.png" width="180"/> | [Daniel](#daba6626) | Bäckner | YYMMDD-XXXX | `daba6626`
 
 ## Fabian Haglund
 
