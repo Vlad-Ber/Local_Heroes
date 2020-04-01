@@ -133,6 +133,42 @@ Under detta projektet vill jag gärna fokusera på att utveckla mina programmeri
 - hantera asynkront dataflöde  
 - jobba med databas och server i "molnet" 
 
+## Gholam Mohammadi
+
+Bild | Förnamn | Efternamn | Personnummer | Användarnamn (GitHub)
+-----------------------------------------|-----------------------------|-----------|--------------|----------------------
+<img src="images/gholam.jpg" width="180"/> | [Gholam](#gholam-mohammadi) | Mohammadi | 950902-7539 | `gholam95`
+
+### Okänd talang
+
+-Gillar att titta på football och läsa att möjlig från bok till vetenskaplig artikler.
+
+### Starka sidor
+
+Under projektet tror jag att jag kommer ha lättast att bidra med:
+
+- analys/design/specifikation
+- planering
+- samarbete
+- ledarskap
+- research
+- dokumentation
+- muntlig presentation
+
+### Personlig utveckling
+
+- analys/design/specifikation
+- problemlösning och algoritmer
+- skriva kod utifrån färdig specifikation
+- planering
+- samarbete
+- ledarskap
+- research
+- dokumentation
+- rapportskrivande
+- Jobba på ett större projekt under längre tid
+- Arbete distans i en grupp
+
 
 ## Jonathan Tadese
 
