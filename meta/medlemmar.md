@@ -101,6 +101,39 @@ sidor även ges möjlighet att utveckla följande färdigheter, till exempel:
 - Tag bort hela detta avsnitt, dvs tag bort avsnittet **Färdigställ**.
 
 
+## Fabian Haglund
+
+Bild | Förnamn | Efternamn | Personnummer | Användarnamn (GitHub)
+-----------------------------------------|-----------------------------|-----------|--------------|----------------------
+<img src="images/fabian.jpg" width="180"/> | [Fabian](#fabian-haglund) | Haglund | 950211-5778 | `fabianhaglund`
+
+### Okänd talang
+
+Driver tech-bolag, skriver ganska mycket (filosofi, poesi och en del skönlitterärt) samt arbetar lite smått på design av en dagbädd. 
+
+### Starka sidor
+
+Under projektet tror jag att jag kommer ha lättast att bidra med:
+
+Jag har jobbat professionellt med projektledning/produktägarskap inom digital produktutveckling i 3-4 år nu så med det i ryggen bidrar jag nog enklast på den fronten:
+
+- allmän projektledning (planering, koordination, uppföljning etc.)
+- organisationsförmåga
+- kommunikation
+- ledarskap 
+- idéutveckling
+- problemmodellering
+- rapportskrivande 
+
+### Personlig utveckling
+
+Under detta projektet vill jag gärna fokusera på att utveckla mina programmeringsfärdigheter, särskilt med inriktning på: 
+
+- tänka kring systemarkitektur
+- hantera asynkront dataflöde  
+- jobba med databas och server i "molnet" 
+
+
 ## Jonathan Tadese
 
 Bild | Förnamn | Efternamn | Personnummer | Användarnamn (GitHub)
@@ -171,34 +204,3 @@ sidor även ges möjlighet att utveckla följande färdigheter, till exempel:
 - Arbete på distans
 
 
-## Fabian Haglund
-
-Bild | Förnamn | Efternamn | Personnummer | Användarnamn (GitHub)
------------------------------------------|-----------------------------|-----------|--------------|----------------------
-<img src="images/fabian.jpg" width="180"/> | [Fabian](#fabian-haglund) | Haglund | 950211-5778 | `fabianhaglund`
-
-### Okänd talang
-
-Driver tech-bolag, skriver ganska mycket (filosofi, poesi och en del skönlitterärt) samt arbetar lite smått på design av en dagbädd. 
-
-### Starka sidor
-
-Under projektet tror jag att jag kommer ha lättast att bidra med:
-
-Jag har jobbat professionellt med projektledning/produktägarskap inom digital produktutveckling i 3-4 år nu så med det i ryggen bidrar jag nog enklast på den fronten:
-
-- allmän projektledning (planering, koordination, uppföljning etc.)
-- organisationsförmåga
-- kommunikation
-- ledarskap 
-- idéutveckling
-- problemmodellering
-- rapportskrivande 
-
-### Personlig utveckling
-
-Under detta projektet vill jag gärna fokusera på att utveckla mina programmeringsfärdigheter, särskilt med inriktning på: 
-
-- tänka kring systemarkitektur
-- hantera asynkront dataflöde  
-- jobba med databas och server i "molnet" 
