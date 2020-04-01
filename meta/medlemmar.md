@@ -95,11 +95,39 @@ sidor även ges möjlighet att utveckla följande färdigheter, till exempel:
 
 
 ## Färdigställ
+## Daniel Bäckner
 
 - Tag bort alla stycken markerade med **TODO** och **INFO**.
 - Tag bort avsnittet Anders Andersson.
 - Tag bort hela detta avsnitt, dvs tag bort avsnittet **Färdigställ**.
 
+Bild | Förnamn | Efternamn | Personnummer | Användarnamn (GitHub)
+-----------------------------------------|-----------------------------|-----------|--------------|----------------------
+<img src="images/user.png" width="180"/> | [Daniel](#daba6626) | Bäckner | YYMMDD-XXXX | `daba6626`
+
+### Okänd talang
+
+Dömer fotboll och innebandy, har ett intresse för ekonomi och företagande, samt gillar teknik och gaming i massvis av olika former.
+
+### Starka sidor
+
+Under projektet tror jag att jag kommer ha lättast att bidra med:
+
+- analys/specifikation
+- planering
+- research (söka och sammanställa information)
+- dokumentation
+- rapportskrivande
+- muntlig presentation
+
+### Personlig utveckling
+
+Under projektet hoppas jag förutom att bli ännu bättre på mina redan starka
+sidor även ges möjlighet att utveckla följande färdigheter, till exempel:
+
+- Genomföra arbetsprocessen med en bra slutprodukt
+- problemlösning och algoritmer
+- skriva kod utifrån färdig specifikation
 
 ## Fabian Haglund
 
