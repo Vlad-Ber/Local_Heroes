@@ -138,7 +138,7 @@ Under detta projektet vill jag gärna fokusera på att utveckla mina programmeri
 
 Bild | Förnamn | Efternamn | Personnummer | Användarnamn (GitHub)
 -----------------------------------------|-----------------------------|-----------|--------------|----------------------
-<img src="images/jonathan.png" width="180"/> | [Jonathan](#Jonathan) | Tadese | 990305-9310 | `jontad`
+<img src="images/jonathan.png" width="180"/> | [Jonathan](#jonathan-tadese) | Tadese | 990305-9310 | `jontad`
 
 
 ### Okänd talang
