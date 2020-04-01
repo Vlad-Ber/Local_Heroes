@@ -13,11 +13,6 @@ till lämpliga underrubriker.
 
 **TODO:** Lägg till en kortfattad beskrivning över katalogstrukturen.
 
-**meta**
-
-- gruppkontrakt
-- presentation av gruppens medlemmar
-
 ## Färdigställ 
 
 - Färdigställ dokumentet [meta/medlemmar.md](./meta/medlemmar.md).
