@@ -1,11 +1,9 @@
-# [PROJEKT] ([GRUPP])
+# [PROJEKT] ([FESS])
 
 Projektarbete på kursen Datorsystem med projektarbete (1DT003) 
 (1DT096) våren 2020, Uppsala universitet.
 
 **TODO:** Byt ut [PROJEKT] mot det namn ni själva givet projektet.
-
-**TODO:** Byt ut [GRUPP] mot namnet på gruppen (Archos, Bossy, Cohen, Dragon, Elope, Fess eller Glooper).
 
 **INFO:** Detta dokument är skrivet i
 formatet
