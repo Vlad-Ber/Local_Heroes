@@ -9,7 +9,7 @@ Grupp: Fess
 
 Bild | Förnamn | Efternamn | Personnummer | Användarnamn (GitHub)
 -----------------------------------------|-----------------------------|-----------|--------------|----------------------
-<img src="images/Benny.png" width="180"/> | [Benny](#benny-lam)| Lam | YYMMDD-XXXX | `bela7171`
+<img src="images/Benny.jpg" width="180"/> | [Benny](#benny-lam)| Lam | YYMMDD-XXXX | `bela7171`
 
 ### Okänd talang
 
