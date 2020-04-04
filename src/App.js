@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       Hello FESS
-      <EventItem/>
+      <EventItem title="Event" description="I want to help you"/>
     </div>
   );
 }
