@@ -5,9 +5,12 @@ import EventItem from './components/EventItem.js';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{ fontFamily: 'Inter' }}>
       Hello FESS
-      <EventItem title="Event" description="I want to help you"/>
+      <EventItem title="Event" description="Maria helped Lisa carry a sofa"/>
+      <EventItem title="Event" description="Maria helped Lisa carry a sofa"/>
+      <EventItem title="Event" description="Maria helped Lisa carry a sofa"/>
+      <EventItem title="Event" description="Maria helped Lisa carry a sofa"/>
     </div>
   );
 }
