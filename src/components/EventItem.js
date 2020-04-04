@@ -48,7 +48,7 @@ const EventItemWrapper = styled.div`
     align-items: center;
     padding: 20px;
     margin: 6px;
-    box-shadow: 0px 1.5px 1.5px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
     border-radius: 3px;
 `
 
