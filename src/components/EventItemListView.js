@@ -2,27 +2,17 @@ import React, { Component } from "react";
 
 import EventItem from "./EventItem.js";
 
-class EventItemListView extends Component {
+function EventItemListView(props){
 
-  constructor(props) {
-    super(props);
+    return props.errands.map((errand, i) => (
 
-    this.state = {
-      requests: [
-        "Maria helped Lisa carry a sofa",
-        "Maria helped Lisa carry a sofa",
-        "Maria helped Lisa carry a sofa",
-        "Maria helped Lisa carry a sofa",
-      ],
-      title: ["Event", "Event", "Event", "Event"],
-    };
-  }
+      <EventItem
+        key={i}
+        title={errand.title}
+        description={errand.description}
+      />
 
-  render() {
-    return this.state.requests.map((desc, i) => (
-      <EventItem key={i} title={this.state.title[i]} description={desc} />
     ));
-  }
 }
 
 export default EventItemListView;
