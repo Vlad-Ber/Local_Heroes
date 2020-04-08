@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import EventItem from "./EventItem.js";
 
@@ -10,6 +10,8 @@ function EventItemListView(props){
         key={i}
         title={errand.title}
         description={errand.description}
+        type={errand.type}
+        status={errand.status}
       />
 
     ));
