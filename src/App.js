@@ -4,7 +4,7 @@ import './App.css';
 import NavBar from './components/NavBar.js';
 import EventItemListView from './components/EventItemListView.js';
 
-import data from './data/data.json';
+import errands from './data/errands.json';
 
 class App extends Component {
 
@@ -12,7 +12,7 @@ class App extends Component {
     return (
       <div className="App" style={{ fontFamily: 'Inter' }}>
         <NavBar/>
-        <EventItemListView errands={data["errands"]}/>
+        <EventItemListView errands={errands["errands"]}/>
       </div>
     ); 
   }
