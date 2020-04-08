@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
+
 import NavBar from './components/NavBar.js';
 import EventItemListView from './components/EventItemListView.js';
 import SectionTitle from './components/SectionTitle.js';
@@ -16,7 +17,7 @@ class App extends Component {
         <SectionTitle text="RECENT ACTIVITY"/>
         <EventItemListView errands={errands["errands"]}/>
       </div>
-    ); 
+    );
   }
 }
 
