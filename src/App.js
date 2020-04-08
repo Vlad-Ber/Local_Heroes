@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
 
 
@@ -8,13 +8,16 @@ import EventItem from './components/EventItem.js';
 import TextInput from './components/TextInput.js';
 
 
-function App() {
-  return (
-    <div className="App" style={{ fontFamily: 'Inter' }}>
-      <NavBar/>
-      <EventItemListView />
-    </div>
-  );
+class App extends Component {
+
+  render(){
+    return (
+      <div className="App" style={{ fontFamily: 'Inter' }}>
+        <NavBar/>
+        <EventItemListView />
+      </div>
+    ); 
+  }
 }
 
 export default App;
