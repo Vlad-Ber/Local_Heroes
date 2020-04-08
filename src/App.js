@@ -5,6 +5,7 @@ import NavBar from './components/NavBar.js';
 import EventItemListView from './components/EventItemListView.js';
 
 class App extends Component {
+
   render(){
     return (
       <div className="App" style={{ fontFamily: 'Inter' }}>
