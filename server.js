@@ -4,6 +4,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
+
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://Vlad-Ber:arneiskogen1@cluster0-76fsx.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, {
@@ -31,8 +32,9 @@ client.connect(err => {
 
     app.post('/', function(req, res) {
 	var testData = req.body.data1;
+	var dataToSend = {"testData1":testData, "testdata2": "boll"}
 	console.log(testData);
-	areas.insertOne(testData);
+	areas.insertOne(dataToSend).catch(error =>console.error(error));
     });
-    client.close();
 });
+client.close();
