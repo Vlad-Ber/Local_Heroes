@@ -28,7 +28,6 @@ class TextInput extends React.Component {
  }
 
   render() {
-    console.log(this.state.value)
     return (
         <Input type="text" value={this.state.value} onChange={this.saveText}/>
     );
