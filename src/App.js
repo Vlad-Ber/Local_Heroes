@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
+import axios from 'axios';
+
 
 import NavBar from './components/NavBar.js';
 import EventItemListView from './components/EventItemListView.js';
@@ -20,8 +22,17 @@ class App extends Component {
     }
   }
 
-  componentDidMount(){
+  vidKnappTryck = () => {
+	axios.post("/",{
+	    data1: "hej",
+	}).then((response)=> {
+	    console.log("Data submitted successfully");
+	}).catch((error)=> {
+	    console.log("got errr while posting data", error);	    
+	});
+    }
 
+  componentDidMount(){
     let updatedActiveUsers = data["users"].filter(user => 
       user.areaId === this.state.areaId).length;
 
@@ -29,7 +40,6 @@ class App extends Component {
       errand.areaId === this.state.areaId && errand.status !== "done").length;
 
     this.setState({ activeErrands: updatedActiveErrands, activeUsers: updatedActiveUsers })
-
   }
 
   render(){
@@ -43,9 +53,9 @@ class App extends Component {
         /> 
         <SectionTitle text="RECENT ACTIVITY"/>
         <EventItemListView errands={data["errands"]}/>
+		    <button onClick={this.vidKnappTryck} id="loginKnapp" type="button" className="input">Server-TestKnapp</button>
       </div>
-    ); 
-  }
+	)}
 }
 
 export default App;
