@@ -5,9 +5,7 @@ import NavBar from './components/NavBar.js';
 import EventItemListView from './components/EventItemListView.js';
 import SectionTitle from './components/SectionTitle.js';
 import StatusView from './components/StatusView.js';
-
 import TextButton from './components/TextButton.js'; 
-import TextInput from './components/TextInput.js';
 
 import data from './data/data.json';
 
@@ -23,16 +21,15 @@ class App extends Component {
     }
   }
 
-  vidKnappTryck = () => {
-
-	axios.post("/",{
-	    data1: "hej",
-	}).then((response)=> {
-	    console.log("Data submitted successfully");
-	}).catch((error)=> {
-	    console.log("got errr while posting data", error);
-	});
-    }
+  askForHelp = () => {
+      axios.post("/",{
+          data1: "I want help!",
+      }).then((response)=> {
+          console.log("Data submitted successfully");
+      }).catch((error)=> {
+          console.log("got errr while posting data", error);
+      });
+  }
 
 
   componentDidMount(){
@@ -54,11 +51,9 @@ class App extends Component {
           activeUsers={this.state.activeUsers}
           activeErrands={this.state.activeErrands}
         />
+        <TextButton function={this.askForHelp} description="ASK FOR HELP"/>
         <SectionTitle text="RECENT ACTIVITY"/>
         <EventItemListView errands={data["errands"]}/>
-		    <button onClick={this.vidKnappTryck} id="loginKnapp" type="button" className="input">Server-TestKnapp</button>
-        <TextInput/>
-        <TextButton function={() => console.log("hello")} description="hello"/>
       </div>
 	)}
 }
