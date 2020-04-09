@@ -22,7 +22,9 @@ const TextButtonWrapper = styled.div`
     align-items: center;
     font-weight: 800;
     height: 40px;
-    width: 20%;
+    width: 15em;
+    margin-top: 30px;
+    margin-bottom: 30px;
     background: #31D285;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 `
