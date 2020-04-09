@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 
-
 import NavBar from './components/NavBar.js';
 import EventItemListView from './components/EventItemListView.js';
 import SectionTitle from './components/SectionTitle.js';
@@ -22,6 +21,7 @@ class App extends Component {
   }
 
   vidKnappTryck = () => {
+
 	axios.post("/",{
 	    data1: "hej",
 	}).then((response)=> {
@@ -30,6 +30,7 @@ class App extends Component {
 	    console.log("got errr while posting data", error);
 	});
     }
+
 
   componentDidMount(){
     let updatedActiveUsers = data["users"].filter(user =>
@@ -54,12 +55,7 @@ class App extends Component {
         <EventItemListView errands={data["errands"]}/>
 		    <button onClick={this.vidKnappTryck} id="loginKnapp" type="button" className="input">Server-TestKnapp</button>
       </div>
-<<<<<<< HEAD
-    );
-  }
-=======
 	)}
->>>>>>> master
 }
 
 export default App;
