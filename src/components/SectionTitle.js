@@ -6,6 +6,7 @@ const SectionTitle = (props) => <SectionTitleWrapper>{props.text}</SectionTitleW
 
 const SectionTitleWrapper = styled.div`
     font-size: 18px;
+    text-align: center;
     text-decoration: underline;
     text-transform: uppercase;
     padding-top: 20px;

@@ -61,6 +61,7 @@ const StatusBox = styled.div`
     flex: 1;
     flex-direction: column; 
     justify-content: space-around;
+    text-align: center;
     align-items: center; 
     margin: 6px;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);

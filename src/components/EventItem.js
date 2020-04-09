@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPeopleCarry, faShoppingCart, faInfo } from '@fortawesome/free-solid-svg-icons'
+import { faArrowCircleRight, faUserCircle, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 
 
 class EventItem extends Component {
@@ -20,64 +21,67 @@ class EventItem extends Component {
 
         // Return icon for event type 
         let type = this.props.type;
-        let icon = null; 
-        let iconStyle = {
+        let typeIcon = null; 
+        let typeIconStyle = {
             display: 'flex',
             justifyContent: 'center',
             padding: '4x',
-            fontSize: '24px',
+            fontSize: '18px',
             color: '#31D285'
         }
 
         switch(type){
             case "carrying": 
-                icon = <FontAwesomeIcon icon={faPeopleCarry} style={iconStyle}/>
+                typeIcon = <FontAwesomeIcon icon={faPeopleCarry} style={typeIconStyle}/>
                 break;
             case "shopping": 
-                icon = <FontAwesomeIcon icon={faShoppingCart} style={iconStyle}/>
+                typeIcon = <FontAwesomeIcon icon={faShoppingCart} style={typeIconStyle}/>
                 break;
             default: 
-                icon = <FontAwesomeIcon icon={faInfo} style={iconStyle}/>
+                typeIcon = <FontAwesomeIcon icon={faInfo} style={typeIconStyle}/>
                 break;
         }
 
         //Return status marker 
-        let status = null;
+        let statusIcon = null;
+        let statusIconStyle = {
+            fontSize: '32px',
+            color: '#31D285'
+        } 
         switch(this.state.status){
             case "waiting": 
-                status = <Status>WAITING</Status>
+                statusIcon = <FontAwesomeIcon icon={faArrowCircleRight} style={statusIconStyle}/>
                 break;
             case "inProgress": 
-                status = <Status>IN PROGRESS</Status>
+                statusIcon = <FontAwesomeIcon icon={faUserCircle} style={statusIconStyle}/>
                 break;
             case "done": 
-                status = <Status>DONE</Status>
+                statusIcon = <FontAwesomeIcon icon={faCheckCircle} style={statusIconStyle}/>
                 break;
             default: 
-                status = <Status>UNKNOWN</Status>
+                statusIcon = <Status>UNKNOWN</Status>
         }
 
         // Return component 
         return(
             <EventItemWrapper>
 
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'start'}}>
+                <EventMetaData>
+                    {typeIcon}
+                    <TimeStamp>Today 12.24</TimeStamp>
+                </EventMetaData>
 
+                <TextWrapper>
                     <Title>
-                        { this.props.title }
+                        {this.props.title}
                     </Title>
 
                     <Description>
-                        { this.props.description }
+                        {this.props.description}
                     </Description>
+                </TextWrapper>
 
-                </div>
-
-                <IconWrapper>
-                    {icon}
-                    {status}
-                </IconWrapper>
-
+                {statusIcon}
 
             </EventItemWrapper>
         );
@@ -89,11 +93,18 @@ const EventItemWrapper = styled.div`
     display: flex; 
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
-    padding: 20px;
+    padding: 12px;
     margin: 6px;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
     border-radius: 3px;
+`
+
+const TextWrapper = styled.div`
+    display: flex; 
+    flex: 1;
+    flex-direction: column; 
+    justify-content: start;
+    padding-left: 8px; 
 `
 
 const Title = styled.div`
@@ -108,18 +119,25 @@ const Description = styled.div`
     padding: 4px;
 `
 
-const IconWrapper = styled.div`
+const EventMetaData = styled.div`
     display: flex; 
-    flex: 0.4;
     flex-direction: column; 
-    justify-content: center; 
-    align-items: center; 
+    align-items: center;
+    justify-content: center;
 `
 
 const Status = styled.div`
     display: flex; 
     align-items: center; 
+    flex-direction: end;
     font-weight: 500;
+    font-size: 8px;
+    padding-top: 4px;
+`
+
+const TimeStamp = styled.div`
+    display: flex; 
+    justify-content: center; 
     font-size: 8px;
     padding-top: 4px;
 `
