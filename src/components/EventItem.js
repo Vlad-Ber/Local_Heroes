@@ -53,6 +53,8 @@ class EventItem extends Component {
             case "done": 
                 status = <Status>DONE</Status>
                 break;
+            default: 
+                status = <Status>UNKNOWN</Status>
         }
 
         // Return component 
