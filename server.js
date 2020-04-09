@@ -1,6 +1,12 @@
 const express = require('express');
+var bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 5000;
+
+//app.use(bodyParser.urlencoded({ extended: false })); : DETTA KANSKE BEHÖVS I FRAMTIDEN
+app.use(bodyParser.json());
+
+var router = express.Router();
 
 // console.log that your server is up and running
 app.listen(port, () => console.log(`Listening on port ${port}`));
@@ -11,6 +17,6 @@ app.get('/api/greeting', (req, res) => {
 });
 
 app.post('/', function(req, res) {
-    var testData = req;
+    var testData = req.body.data1;
     console.log(testData);
 });

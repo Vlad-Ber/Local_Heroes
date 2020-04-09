@@ -18,9 +18,8 @@ class App extends Component {
 
     }
     vidKnappTryck = () => {
-	console.log("Funkar123");
 	axios.post("/",{
-	    data1: "hejsan123",
+	    data1: "hej",
 	}).then((response)=> {
 	    console.log("Data submitted successfully");
 	}).catch((error)=> {
