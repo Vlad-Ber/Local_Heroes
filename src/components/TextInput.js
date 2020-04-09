@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import styled from 'styled-components'
 
@@ -13,7 +13,7 @@ const Input = styled.input`
 `
 
 
-class TextInput extends React.Component {
+class TextInput extends React {
   constructor(props) {
       super(props);
 
