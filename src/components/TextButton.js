@@ -2,7 +2,17 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 
-const Button = styled.button`
+class TextButton extends Component {
+    render(){
+        return (
+            <StyledButton onClick={this.props.function}>
+                {this.props.description} 
+            </StyledButton>
+        );
+    }
+}
+
+const StyledButton = styled.button`
     margin: auto;
     display: flex;
     justify-content: center;
@@ -15,15 +25,5 @@ const Button = styled.button`
     background: #31D285;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 `
-
-class TextButton extends Component {
-    render(){
-        return (
-            <Button onClick = {this.props.function}>
-                { this.props.description } 
-            </Button>
-        );
-    }
-}
 
 export default TextButton;
