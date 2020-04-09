@@ -1,24 +1,37 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-class TextInput extends React.Component {
-  state = {
-    value: '',
+import styled from 'styled-components'
+
+class TextInput extends Component {
+
+  constructor(props) {
+      super(props);
+
+      this.state = {
+        value: '',
+      }
   }
 
   saveText = (event) => {
+    console.log(this.state.value)
    this.setState({value: event.target.value});
-
  }
 
   render() {
-    console.log(this.state.value)
     return (
-      <form>
-        <input type="text" value={this.state.value} onChange={this.saveText} />
-        <input type="submit" value="Submit" />
-      </form>
+        <StyledInput type="text" value={this.state.value} onChange={this.saveText}/>
     );
   }
+
 }
+
+const StyledInput = styled.input`
+    border:  1px solid #31D285;
+    box-sizing: border-box;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.12);
+
+    height: 30px;
+    width: 18em;
+`
 
 export default TextInput;

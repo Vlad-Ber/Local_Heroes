@@ -6,12 +6,15 @@ import EventItemListView from './components/EventItemListView.js';
 import SectionTitle from './components/SectionTitle.js';
 import StatusView from './components/StatusView.js';
 
+import TextButton from './components/TextButton.js'; 
+import TextInput from './components/TextInput.js';
+
 import data from './data/data.json';
 
 class App extends Component {
 
   constructor(props){
-    super(props); 
+    super(props);
 
     this.state = {
       areaId: 75232,
@@ -21,20 +24,22 @@ class App extends Component {
   }
 
   vidKnappTryck = () => {
-    axios.post("/",{
-        data1: "hej",
-    }).then((response) => {
-        console.log("Data submitted successfully");
-    }).catch((error) => {
-        console.log("got errr while posting data", error);	    
-    });
-  }
+
+	axios.post("/",{
+	    data1: "hej",
+	}).then((response)=> {
+	    console.log("Data submitted successfully");
+	}).catch((error)=> {
+	    console.log("got errr while posting data", error);
+	});
+    }
+
 
   componentDidMount(){
-    let updatedActiveUsers = data["users"].filter(user => 
+    let updatedActiveUsers = data["users"].filter(user =>
       user.areaId === this.state.areaId).length;
 
-    let updatedActiveErrands = data["errands"].filter(errand => 
+    let updatedActiveErrands = data["errands"].filter(errand =>
       errand.areaId === this.state.areaId && errand.status !== "done").length;
 
     this.setState({ activeErrands: updatedActiveErrands, activeUsers: updatedActiveUsers })
@@ -44,14 +49,16 @@ class App extends Component {
     return (
       <div className="App" style={{ fontFamily: 'Inter' }}>
         <NavBar/>
-        <StatusView 
-          areaId={this.state.areaId} 
-          activeUsers={this.state.activeUsers} 
+        <StatusView
+          areaId={this.state.areaId}
+          activeUsers={this.state.activeUsers}
           activeErrands={this.state.activeErrands}
-        /> 
+        />
         <SectionTitle text="RECENT ACTIVITY"/>
         <EventItemListView errands={data["errands"]}/>
 		    <button onClick={this.vidKnappTryck} id="loginKnapp" type="button" className="input">Server-TestKnapp</button>
+        <TextInput/>
+        <TextButton function={() => console.log("hello")} description="hello"/>
       </div>
 	)}
 }

@@ -35,8 +35,6 @@ class StatusView extends Component {
 
 }
 
-export default StatusView;
-
 const StatusViewWrapper = styled.div`
     display: flex; 
     flex: 1;
@@ -67,3 +65,5 @@ const StatusBox = styled.div`
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
     border-radius: 3px;
 `
+
+export default StatusView;
