@@ -2,17 +2,18 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 
+
 class TextButton extends Component {
     render(){
         return (
-            <StyledButton onClick={this.props.function}>
-                {this.props.description} 
-            </StyledButton>
+            <Button onClick = {this.props.function}>
+                { this.props.description }
+            </Button>
         );
     }
 }
 
-const StyledButton = styled.button`
+const Button = styled.button`
     margin: auto;
     display: flex;
     justify-content: center;

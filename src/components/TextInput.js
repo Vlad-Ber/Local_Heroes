@@ -12,17 +12,15 @@ class TextInput extends Component {
       }
   }
 
-  saveText = (event) => {
-    console.log(this.state.value)
+  saveInput = (event) => {
    this.setState({value: event.target.value});
  }
 
   render() {
     return (
-        <StyledInput type="text" value={this.state.value} onChange={this.saveText}/>
+        <StyledInput type="text" value={this.state.value} onChange={this.saveInput}/>
     );
   }
-
 }
 
 const StyledInput = styled.input`
