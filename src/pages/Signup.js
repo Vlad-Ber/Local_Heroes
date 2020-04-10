@@ -13,7 +13,7 @@ class Signup extends React.Component {
         <TextInput />
 
         <SectionTitle text = "PASSWORD" />
-        <TextInput />
+        <TextInput type = "password"/>
 
         <TextButton description = "LOGIN"/>
         <TextButton description = "SIGN UP"/>

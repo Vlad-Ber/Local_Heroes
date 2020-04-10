@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-
 import styled from 'styled-components'
 
-class TextInput extends Component {
+
+class TextInput extends React.Component {
 
   constructor(props) {
       super(props);
@@ -23,13 +23,13 @@ class TextInput extends Component {
     switch(type){
         case "dropdown":
             inputType = <StyledDropdown>
-                          <option value = "Male">Male</option>
-                          <option value = "Female">Female</option>
-                          <option value = "Other" selected>Other</option>
+                          <option value = "Male">MALE</option>
+                          <option value = "Female">FEMALE</option>
+                          <option value = "Other" selected>OTHER</option>
                         </StyledDropdown>
             break;
         case "number":
-            inputType = <StyledInput type = "number" value={this.state.value} onChange={this.saveInput}/>
+            inputType = <StyledInput type = "number" value={this.state.value} onChange={this.saveInput} min = "0"/>
             break;
         case "password":
             inputType = <StyledInput type = "password" value={this.state.value} onChange={this.saveInput}/>
@@ -67,9 +67,8 @@ const StyledDropdown = styled.select`
     height: 30px;
     width: 18em;
 
-    justify-content: center;
-    align-items: center;
-
+    opacity: 0.8;
+    text-align: center;
 `
 
 export default TextInput;
