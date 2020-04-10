@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import EventItem from './components/EventItem.js';
+
 import NavBar from './components/NavBar.js';
 import EventItemListView from './components/EventItemListView.js';
 import SectionTitle from './components/SectionTitle.js';
 import StatusView from './components/StatusView.js';
-import TextButton from './components/TextButton.js';
 import ConfirmButton from './components/ConfirmButton.js';    
+import TextButton from './components/TextButton.js'; 
+
 
 import data from './data/data.json';
 
@@ -56,6 +57,7 @@ class App extends Component {
         <TextButton function={this.askForHelp} description="ASK FOR HELP"/>
         <SectionTitle text="RECENT ACTIVITY"/>
         <EventItemListView errands={data["errands"]}/>
+
         <ConfirmButton/>
       </div>
 	)}
