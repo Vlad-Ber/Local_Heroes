@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './App.css';
 
 import EventItem from './components/EventItem.js';
 import NavBar from './components/NavBar.js';
