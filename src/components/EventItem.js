@@ -4,7 +4,6 @@ import styled from 'styled-components'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPeopleCarry, faShoppingCart, faInfo } from '@fortawesome/free-solid-svg-icons'
-import { faArrowCircleRight, faUserCircle, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 
 
 class EventItem extends Component {
@@ -48,27 +47,19 @@ class EventItem extends Component {
         }
 
         //Return status marker 
-        let statusIcon = null;
         let statusText = ""
-        let statusIconStyle = {
-            fontSize: '32px',
-            color: '#31D285'
-        } 
         switch(this.state.errand.status){
             case "waiting": 
-                statusIcon = <FontAwesomeIcon icon={faArrowCircleRight} style={statusIconStyle}/>
-                statusText = "Waiting"
+                statusText = <div style={{ color: 'red' }}>WAITING FOR HELP</div>
                 break;
             case "inProgress": 
-                statusIcon = <FontAwesomeIcon icon={faUserCircle} style={statusIconStyle}/>
-                statusText = "In progress"
+                statusText = <div style={{ color: '#31D285' }}>HELP UNDER WAY!</div>
                 break;
             case "done": 
-                statusIcon = <FontAwesomeIcon icon={faCheckCircle} style={statusIconStyle}/>
-                statusText = "Done!"
+                statusText = <div style={{ color: 'black' }}>DONE</div>
                 break;
             default: 
-                statusIcon = <Status>UNKNOWN</Status>
+                statusText = <div>Data error</div>
         }
 
         // Return component 
@@ -94,7 +85,9 @@ class EventItem extends Component {
 
                         </TextWrapper>
 
-                        {statusIcon}
+                        <Status>
+                            {statusText}
+                        </Status>
 
                     </ExpandedViewEventItem> 
                 
@@ -121,13 +114,6 @@ class EventItem extends Component {
                             {this.state.errand.contact}
                         </Description>
 
-                        <InfoTitle>
-                            Status
-                        </InfoTitle>
-                        <Description>
-                            {statusText}
-                        </Description>
-
                     </InfoWrapper>
 
             </ExpandedView>
@@ -150,8 +136,11 @@ class EventItem extends Component {
                         {this.state.errand.description}
                     </Description>
                 </TextWrapper>
-
-                {statusIcon}
+                
+                
+                <Status>
+                    {statusText}
+                </Status>
 
             </EventItemWrapper>
         );
@@ -223,12 +212,16 @@ const EventMetaData = styled.div`
 
 const Status = styled.div`
     display: flex; 
+    width: 20%;
+    text-align: center;
     align-items: center; 
+    justify-content: center;
     flex-direction: end;
-    font-weight: 500;
-    font-size: 8px;
+    font-weight: 700;
+    font-size: 10px;
     padding-top: 4px;
 `
+
 
 const TimeStamp = styled.div`
     display: flex; 
