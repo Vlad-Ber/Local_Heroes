@@ -1,0 +1,92 @@
+{
+    "errands": [
+        {    
+            "_id": "5e8d9b19bf2ed5257ff40428", 
+            "errandId": "5e8d9b19bf2ed5257ff40428",
+            "createdAt": "Today 12.24",
+            "closedAt": "",
+            "status": "inProgress",        
+            "title": "I need help!", 
+            "description": "I need help with buying groceries",
+            "adress": "MyStreet 1, 111 11 MyTown", 
+            "contact": "123456789",
+            "requester": "user1",
+            "helpers": [],    
+            "type": "shopping", 
+            "areaId": 75232
+        },
+        {    
+            "_id": "5e8d9b19bf2ed5257ff40428", 
+            "errandId": "5e8d9b19bf2ed5257ff40428",
+            "createdAt": "Today 13.42",
+            "closedAt": "",
+            "status": "waiting",        
+            "title": "Can someone strong help me?", 
+            "description": "I need help with carrying furniture",
+            "adress": "MyStreet 1, 111 11 MyTown", 
+            "contact": "123456789",
+            "requester": "user1",
+            "helpers": [],    
+            "type": "carrying", 
+            "areaId": 75232
+        },
+        {    
+            "_id": "5e8d9b19bf2ed5257ff40428", 
+            "errandId": "5e8d9b19bf2ed5257ff40428",
+            "createdAt": "Yesterday 19.47",
+            "closedAt": "",
+            "status": "done",        
+            "title": "I need help!", 
+            "description": "I need help with buying groceries",
+            "adress": "MyStreet 1, 111 11 MyTown", 
+            "contact": "123456789",
+            "requester": "user1",
+            "helpers": [],    
+            "type": "shopping", 
+            "areaId": 75232
+        }
+    ], 
+    "users": [
+        {
+            "_id": "5e8dc80bbf2ed5257ff40429",
+            "userId": "5e8dc80bbf2ed5257ff40429",
+            "name": "Maria",
+            "age": 28,
+            "adress": "Marias gata 1",
+            "description": "I am in self-isolation because of Corona and need help with various things", 
+            "virtuePoints": 0,
+            "areaId": 75232
+        },
+        {
+            "_id": "5e8dc80bbf2ed5257ff40429",
+            "userId": "5e8dc80bbf2ed5257ff40429",
+            "name": "Maria",
+            "age": 28,
+            "adress": "Marias gata 1",
+            "description": "I am in self-isolation because of Corona and need help with various things", 
+            "virtuePoints": 0,
+            "areaId": 75232
+        },
+        {
+            "_id": "5e8dc80bbf2ed5257ff40429",
+            "userId": "5e8dc80bbf2ed5257ff40429",
+            "name": "Maria",
+            "age": 28,
+            "adress": "Marias gata 1",
+            "description": "I am in self-isolation because of Corona and need help with various things", 
+            "virtuePoints": 0,
+            "areaId": 75232
+        },
+        {
+            "_id": "5e8dc80bbf2ed5257ff40429",
+            "userId": "5e8dc80bbf2ed5257ff40429",
+            "name": "Maria",
+            "age": 28,
+            "adress": "Marias gata 1",
+            "description": "I am in self-isolation because of Corona and need help with various things", 
+            "virtuePoints": 0,
+            "areaId": 75232
+        }
+    ]
+        
+}
