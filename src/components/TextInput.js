@@ -29,7 +29,7 @@ class TextInput extends Component {
   }
 }
 
-const StyledInput = styled.input`
+const StyledInput = styled.textarea`
     margin: auto;
     display: flex;
 
