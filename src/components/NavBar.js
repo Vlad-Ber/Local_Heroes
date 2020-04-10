@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHandsHelping } from '@fortawesome/free-solid-svg-icons'
+import { faSeedling } from '@fortawesome/free-solid-svg-icons'
 
 
 class NavBar extends Component {
@@ -13,7 +13,7 @@ class NavBar extends Component {
                     style={{
                         fontSize: '32px'
                     }} 
-                    icon={faHandsHelping}
+                    icon={faSeedling}
                 />
             </NavBarWrapper>
             

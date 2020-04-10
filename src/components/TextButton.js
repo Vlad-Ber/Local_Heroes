@@ -7,7 +7,7 @@ class TextButton extends Component {
     render(){
         return (
             <Button onClick = {this.props.function}>
-                { this.props.description }
+                {this.props.description}
             </Button>
         );
     }
