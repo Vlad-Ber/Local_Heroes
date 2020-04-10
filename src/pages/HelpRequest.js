@@ -14,8 +14,7 @@ class HelpRequest extends Component {
                 <SectionTitle text="HELP REQUEST"/>
 
                 <DescriptionInput>
-                    <SectionTitle text="What do you need help with?"/>
-
+                    <SectionTitle fontSize="14px" text="What do you need help with?"/>
                     <InputWrapper>
                         <TextInput height="20em"/>
                     </InputWrapper>
