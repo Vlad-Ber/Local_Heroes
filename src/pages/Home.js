@@ -33,6 +33,16 @@ class Home extends Component {
         this.setState({ activeErrands: updatedActiveErrands, activeUsers: updatedActiveUsers })
     }
 
+    askForHelp = () => {
+        axios.post("/",{
+            data1: "I want help!",
+        }).then((response)=> {
+            console.log("Data submitted successfully");
+        }).catch((error)=> {
+            console.log("got errr while posting data", error);
+        });
+    }
+
     render(){
         return(
             <div>
