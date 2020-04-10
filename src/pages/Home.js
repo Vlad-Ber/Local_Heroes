@@ -1,5 +1,7 @@
 import React, { Component } from 'react'; 
 
+import {Link} from 'react-router-dom';
+
 import data from '../data/data.json';
 
 import NavBar from '../components/NavBar.js';
@@ -14,7 +16,7 @@ class Home extends Component {
         super(props); 
 
         this.state = {
-            areaId: 0, 
+            areaId: 75232, 
             activeUsers: 0,
             activeErrands: 0,
         }
@@ -40,7 +42,9 @@ class Home extends Component {
                     activeUsers={this.state.activeUsers}
                     activeErrands={this.state.activeErrands}
                 />
-                <TextButton function={this.askForHelp} description="ASK FOR HELP"/>
+                <Link to="/help-request">
+                    <TextButton description="ASK FOR HELP"/>
+                </Link>
                 <SectionTitle text="RECENT ACTIVITY"/>
                 <EventItemListView errands={data["errands"]}/>
             </div>
