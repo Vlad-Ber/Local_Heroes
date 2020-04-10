@@ -8,10 +8,7 @@ function EventItemListView(props){
 
       <EventItem
         key={i}
-        title={errand.title}
-        description={errand.description}
-        type={errand.type}
-        status={errand.status}
+        errand={errand}
       />
 
     ));

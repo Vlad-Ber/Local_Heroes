@@ -13,14 +13,18 @@ class EventItem extends Component {
         super(props); 
 
         this.state = {
-            status: this.props.status
+            errand: {}
         }
+    }
+
+    componentDidMount(){
+        this.setState({ errand: this.props.errand });
     }
 
     render(){
 
         // Return icon for event type 
-        let type = this.props.type;
+        let type = this.state.errand.type;
         let typeIcon = null; 
         let typeIconStyle = {
             display: 'flex',
@@ -48,7 +52,7 @@ class EventItem extends Component {
             fontSize: '32px',
             color: '#31D285'
         } 
-        switch(this.state.status){
+        switch(this.state.errand.status){
             case "waiting": 
                 statusIcon = <FontAwesomeIcon icon={faArrowCircleRight} style={statusIconStyle}/>
                 break;
@@ -73,11 +77,11 @@ class EventItem extends Component {
 
                 <TextWrapper>
                     <Title>
-                        {this.props.title}
+                        {this.state.errand.title}
                     </Title>
 
                     <Description>
-                        {this.props.description}
+                        {this.state.errand.description}
                     </Description>
                 </TextWrapper>
 
