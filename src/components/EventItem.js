@@ -71,7 +71,7 @@ class EventItem extends Component {
 
                         <EventMetaData>
                             {typeIcon}
-                            <TimeStamp>Today 12.24</TimeStamp>
+                            <TimeStamp>{this.state.errand.createdAt}</TimeStamp>
                         </EventMetaData>
 
                         <TextWrapper>
@@ -124,7 +124,7 @@ class EventItem extends Component {
 
                 <EventMetaData>
                     {typeIcon}
-                    <TimeStamp>Today 12.24</TimeStamp>
+                    <TimeStamp>{this.state.errand.createdAt}</TimeStamp>
                 </EventMetaData>
 
                 <TextWrapper>
