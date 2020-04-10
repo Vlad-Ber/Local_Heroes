@@ -17,62 +17,68 @@ class EventItem extends Component {
             fullView: false,
             errand: {}
         }
-    }
+    };
 
     toggleView = () => {
         this.setState({ fullView: !this.state.fullView});
-    }
+    };
 
     handleHelpNotice = () => {
         console.log("I want to help");
-    }
+    };
 
-    componentDidMount(){
-        this.setState({ fullView: this.props.fullView, errand: this.props.errand });
-    }
+    renderTypeIcon = (args) => {
 
-    render(){
-
-        // Return icon for event type 
         let type = this.state.errand.type;
-        let typeIcon = null; 
         let typeIconStyle = {
-            display: 'flex',
+            display: 'flex', 
             justifyContent: 'center',
-            padding: '4x',
+            padding: '4px',
             fontSize: '18px',
             color: '#31D285'
         }
 
         switch(type){
             case "carrying": 
-                typeIcon = <FontAwesomeIcon icon={faPeopleCarry} style={typeIconStyle}/>
-                break;
+            return <FontAwesomeIcon icon={faPeopleCarry} style={typeIconStyle}/>
+
             case "shopping": 
-                typeIcon = <FontAwesomeIcon icon={faShoppingCart} style={typeIconStyle}/>
-                break;
+            return <FontAwesomeIcon icon={faShoppingCart} style={typeIconStyle}/>
+
             default: 
-                typeIcon = <FontAwesomeIcon icon={faInfo} style={typeIconStyle}/>
-                break;
+            return <FontAwesomeIcon icon={faInfo} style={typeIconStyle}/>
         }
 
-        //Return status marker 
-        let statusText = ""
-        let actionButton = <div></div>
+    };
+
+    renderStatusMarker = () => {
+
         switch(this.state.errand.status){
             case "waiting": 
-                statusText = <div style={{ color: 'red' }}>WAITING FOR HELP</div>
-                actionButton = <TextButton function={this.handleHelpNotice} description="I WANT TO HELP"/>
-                break;
+            return <div style={{ color: 'red' }}>WAITING FOR HELP</div>
+
             case "inProgress": 
-                statusText = <div style={{ color: '#31D285' }}>HELP UNDER WAY!</div>
-                break;
+            return <div style={{ color: '#31D285' }}>HELP UNDER WAY!</div>
+
             case "done": 
-                statusText = <div style={{ color: 'black' }}>DONE</div>
-                break;
+            return <div>DONE</div>
+
             default: 
-                statusText = <div>Data error</div>
+            return <div>STATUS UNKOWN</div>
         }
+
+    }
+
+    renderActionButton = () => {
+        return this.state.errand.status === "waiting" ? <TextButton function={this.handleHelpNotice} description="I WANT TO HELP"/> : null
+
+    }
+
+    componentDidMount(){
+        this.setState({ fullView: this.props.fullView, errand: this.props.errand });
+    };
+
+    render(){
 
         // Return component 
         return( this.state.fullView ? 
@@ -82,7 +88,7 @@ class EventItem extends Component {
                     <ExpandedViewEventItem onClick={this.toggleView}>
 
                         <EventMetaData>
-                            {typeIcon}
+                            {this.renderTypeIcon()}
                             <TimeStamp>{this.state.errand.createdAt}</TimeStamp>
                         </EventMetaData>
 
@@ -98,7 +104,7 @@ class EventItem extends Component {
                         </TextWrapper>
 
                         <Status>
-                            {statusText}
+                            {this.renderStatusMarker()}
                         </Status>
 
                     </ExpandedViewEventItem> 
@@ -128,7 +134,7 @@ class EventItem extends Component {
 
                     </InfoWrapper>
 
-                    {actionButton}
+                    {this.renderActionButton()}
 
             </ExpandedView>
             
@@ -137,7 +143,7 @@ class EventItem extends Component {
             <EventItemWrapper onClick={this.toggleView}>
 
                 <EventMetaData>
-                    {typeIcon}
+                    {this.renderTypeIcon()}
                     <TimeStamp>{this.state.errand.createdAt}</TimeStamp>
                 </EventMetaData>
 
@@ -152,7 +158,7 @@ class EventItem extends Component {
                 </TextWrapper>
                 
                 <Status>
-                    {statusText}
+                    {this.renderStatusMarker()}
                 </Status>
 
             </EventItemWrapper>
