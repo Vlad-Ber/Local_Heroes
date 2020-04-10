@@ -8,6 +8,7 @@ function EventItemListView(props){
 
       <EventItem
         key={i}
+        fullView={false}
         errand={errand}
       />
 

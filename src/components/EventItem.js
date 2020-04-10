@@ -13,12 +13,13 @@ class EventItem extends Component {
         super(props); 
 
         this.state = {
+            fullView: false,
             errand: {}
         }
     }
 
     componentDidMount(){
-        this.setState({ errand: this.props.errand });
+        this.setState({ fullView: this.props.fullView, errand: this.props.errand });
     }
 
     render(){
@@ -48,6 +49,7 @@ class EventItem extends Component {
 
         //Return status marker 
         let statusIcon = null;
+        let statusText = ""
         let statusIconStyle = {
             fontSize: '32px',
             color: '#31D285'
@@ -55,20 +57,84 @@ class EventItem extends Component {
         switch(this.state.errand.status){
             case "waiting": 
                 statusIcon = <FontAwesomeIcon icon={faArrowCircleRight} style={statusIconStyle}/>
+                statusText = "Waiting"
                 break;
             case "inProgress": 
                 statusIcon = <FontAwesomeIcon icon={faUserCircle} style={statusIconStyle}/>
+                statusText = "In progress"
                 break;
             case "done": 
                 statusIcon = <FontAwesomeIcon icon={faCheckCircle} style={statusIconStyle}/>
+                statusText = "Done!"
                 break;
             default: 
                 statusIcon = <Status>UNKNOWN</Status>
         }
 
         // Return component 
-        return(
-            <EventItemWrapper>
+        return( this.state.fullView ? 
+        
+            <ExpandedView onClick={() => this.setState({ fullView: false })}>
+
+                    <ExpandedViewEventItem>
+
+                        <EventMetaData>
+                            {typeIcon}
+                            <TimeStamp>Today 12.24</TimeStamp>
+                        </EventMetaData>
+
+                        <TextWrapper>
+                            <Title>
+                                {this.state.errand.title}
+                            </Title>
+
+                            <Description>
+                                {this.state.errand.description}
+                            </Description>
+
+                        </TextWrapper>
+
+                        {statusIcon}
+
+                    </ExpandedViewEventItem> 
+                
+                    <InfoWrapper>
+                        
+                        <InfoTitle>
+                            Requested by
+                        </InfoTitle>
+                        <Description>
+                            {this.state.errand.requester}
+                        </Description>
+
+                        <InfoTitle>
+                            Adress
+                        </InfoTitle>
+                        <Description>
+                            {this.state.errand.adress}
+                        </Description>
+
+                        <InfoTitle>
+                            Contact
+                        </InfoTitle>
+                        <Description>
+                            {this.state.errand.contact}
+                        </Description>
+
+                        <InfoTitle>
+                            Status
+                        </InfoTitle>
+                        <Description>
+                            {statusText}
+                        </Description>
+
+                    </InfoWrapper>
+
+            </ExpandedView>
+            
+            :
+
+            <EventItemWrapper onClick={() => this.setState({ fullView: true })}>
 
                 <EventMetaData>
                     {typeIcon}
@@ -92,6 +158,31 @@ class EventItem extends Component {
     }
 
 }
+
+const ExpandedView = styled.div`
+   display: flex; 
+   flex-direction: column;
+   border-radius: 3px;
+   padding: 12px;
+   margin: 6px;
+   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3); 
+`
+
+const ExpandedViewEventItem = styled.div`
+    display: flex; 
+    flex-direction: row;
+    justify-content: space-between;
+`
+
+const InfoWrapper = styled.div`
+    padding: 20px;
+    font-size: 10px;
+`
+
+const InfoTitle = styled.div`
+    font-weight: 800;
+    padding: 4px;
+`
 
 const EventItemWrapper = styled.div`
     display: flex; 
