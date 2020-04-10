@@ -74,92 +74,77 @@ class EventItem extends Component {
 
     }
 
+    renderExpandedView = () => {
+        return this.state.fullView ? 
+
+        <ExpandedView>
+
+            <InfoWrapper onClick={this.toggleView}>
+                
+                <InfoTitle>
+                    Requested by
+                </InfoTitle>
+                <Description>
+                    {this.state.errand.requester}
+                </Description>
+
+                <InfoTitle>
+                    Adress
+                </InfoTitle>
+                <Description>
+                    {this.state.errand.adress}
+                </Description>
+
+                <InfoTitle>
+                    Contact
+                </InfoTitle>
+                <Description>
+                    {this.state.errand.contact}
+                </Description>
+
+            </InfoWrapper>
+
+            {this.renderActionButton()}
+
+        </ExpandedView> 
+        
+        : null
+    }
+
     componentDidMount(){
         this.setState({ fullView: this.props.fullView, errand: this.props.errand });
     };
 
     render(){
 
-        // Return component 
-        return( this.state.fullView ? 
-        
-            <ExpandedView>
-
-                    <ExpandedViewEventItem onClick={this.toggleView}>
-
-                        <EventMetaData>
-                            {this.renderTypeIcon()}
-                            <TimeStamp>{this.state.errand.createdAt}</TimeStamp>
-                        </EventMetaData>
-
-                        <TextWrapper>
-                            <Title>
-                                {this.state.errand.title}
-                            </Title>
-
-                            <Description>
-                                {this.state.errand.description}
-                            </Description>
-
-                        </TextWrapper>
-
-                        <Status>
-                            {this.renderStatusMarker()}
-                        </Status>
-
-                    </ExpandedViewEventItem> 
-                
-                    <InfoWrapper onClick={this.toggleView}>
-                        
-                        <InfoTitle>
-                            Requested by
-                        </InfoTitle>
-                        <Description>
-                            {this.state.errand.requester}
-                        </Description>
-
-                        <InfoTitle>
-                            Adress
-                        </InfoTitle>
-                        <Description>
-                            {this.state.errand.adress}
-                        </Description>
-
-                        <InfoTitle>
-                            Contact
-                        </InfoTitle>
-                        <Description>
-                            {this.state.errand.contact}
-                        </Description>
-
-                    </InfoWrapper>
-
-                    {this.renderActionButton()}
-
-            </ExpandedView>
-            
-            :
+        return(
 
             <EventItemWrapper onClick={this.toggleView}>
 
-                <EventMetaData>
-                    {this.renderTypeIcon()}
-                    <TimeStamp>{this.state.errand.createdAt}</TimeStamp>
-                </EventMetaData>
+                <DefaultView>
 
-                <TextWrapper>
-                    <Title>
-                        {this.state.errand.title}
-                    </Title>
+                    <EventMetaData>
+                        {this.renderTypeIcon()}
+                        <TimeStamp>{this.state.errand.createdAt}</TimeStamp>
+                    </EventMetaData>
 
-                    <Description>
-                        {this.state.errand.description}
-                    </Description>
-                </TextWrapper>
-                
-                <Status>
-                    {this.renderStatusMarker()}
-                </Status>
+                    <TextWrapper>
+                        <Title>
+                            {this.state.errand.title}
+                        </Title>
+
+                        <Description>
+                            {this.state.errand.description}
+                        </Description>
+                    </TextWrapper>
+                    
+                    <Status>
+                        {this.renderStatusMarker()}
+                    </Status>
+
+                </DefaultView>
+
+                {this.renderExpandedView()}
 
             </EventItemWrapper>
         );
@@ -167,40 +152,38 @@ class EventItem extends Component {
 
 }
 
-const ExpandedView = styled.div`
-   display: flex; 
-   flex-direction: column;
-   border-radius: 3px;
-   padding: 12px;
-   margin: 6px;
-   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3); 
-`
-
-const ExpandedViewEventItem = styled.div`
-    display: flex; 
-    flex-direction: row;
-    justify-content: space-between;
-`
-
-const InfoWrapper = styled.div`
-    padding: 20px;
-    font-size: 10px;
-`
-
-const InfoTitle = styled.div`
-    font-weight: 800;
-    padding: 4px;
-`
 
 const EventItemWrapper = styled.div`
     display: flex; 
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     padding: 12px;
     margin: 6px;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
     border-radius: 3px;
 `
+
+const DefaultView = styled.div`
+    display: flex; 
+    flex-direction: row;
+`;
+
+const ExpandedView = styled.div`
+   display: flex; 
+   flex-direction: column;
+   padding: 12px;
+   margin: 6px;
+`;
+
+const InfoWrapper = styled.div`
+    padding: 20px;
+    font-size: 10px;
+`;
+
+const InfoTitle = styled.div`
+    font-weight: 800;
+    padding: 4px;
+`;
 
 const TextWrapper = styled.div`
     display: flex; 
@@ -240,7 +223,6 @@ const Status = styled.div`
     font-size: 10px;
     padding-top: 4px;
 `
-
 
 const TimeStamp = styled.div`
     display: flex; 
