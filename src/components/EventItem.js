@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import styled from 'styled-components'
 
+import TextButton from './TextButton.js'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPeopleCarry, faShoppingCart, faInfo } from '@fortawesome/free-solid-svg-icons'
 
@@ -15,6 +17,14 @@ class EventItem extends Component {
             fullView: false,
             errand: {}
         }
+    }
+
+    toggleView = () => {
+        this.setState({ fullView: !this.state.fullView});
+    }
+
+    handleHelpNotice = () => {
+        console.log("I want to help");
     }
 
     componentDidMount(){
@@ -48,9 +58,11 @@ class EventItem extends Component {
 
         //Return status marker 
         let statusText = ""
+        let actionButton = <div></div>
         switch(this.state.errand.status){
             case "waiting": 
                 statusText = <div style={{ color: 'red' }}>WAITING FOR HELP</div>
+                actionButton = <TextButton function={this.handleHelpNotice} description="I WANT TO HELP"/>
                 break;
             case "inProgress": 
                 statusText = <div style={{ color: '#31D285' }}>HELP UNDER WAY!</div>
@@ -65,9 +77,9 @@ class EventItem extends Component {
         // Return component 
         return( this.state.fullView ? 
         
-            <ExpandedView onClick={() => this.setState({ fullView: false })}>
+            <ExpandedView>
 
-                    <ExpandedViewEventItem>
+                    <ExpandedViewEventItem onClick={this.toggleView}>
 
                         <EventMetaData>
                             {typeIcon}
@@ -91,7 +103,7 @@ class EventItem extends Component {
 
                     </ExpandedViewEventItem> 
                 
-                    <InfoWrapper>
+                    <InfoWrapper onClick={this.toggleView}>
                         
                         <InfoTitle>
                             Requested by
@@ -116,11 +128,13 @@ class EventItem extends Component {
 
                     </InfoWrapper>
 
+                    {actionButton}
+
             </ExpandedView>
             
             :
 
-            <EventItemWrapper onClick={() => this.setState({ fullView: true })}>
+            <EventItemWrapper onClick={this.toggleView}>
 
                 <EventMetaData>
                     {typeIcon}
@@ -136,7 +150,6 @@ class EventItem extends Component {
                         {this.state.errand.description}
                     </Description>
                 </TextWrapper>
-                
                 
                 <Status>
                     {statusText}
