@@ -13,12 +13,18 @@ class TextInput extends Component {
   }
 
   saveInput = (event) => {
-   this.setState({value: event.target.value});
- }
+    this.setState({value: event.target.value});
+  }
 
   render() {
     return (
-        <StyledInput type="text" value={this.state.value} onChange={this.saveInput}/>
+        <StyledInput 
+          type="text" 
+          value={this.state.value} 
+          onChange={this.saveInput}
+          height={this.props.height} 
+          width={this.props.width} 
+        />
     );
   }
 }
@@ -31,8 +37,8 @@ const StyledInput = styled.input`
     box-sizing: border-box;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.12);
 
-    height: 30px;
-    width: 18em;
+    height: ${props => props.height || '30em'};
+    width: ${props => props.width || '18em'};
 `
 
 export default TextInput;
