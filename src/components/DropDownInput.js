@@ -4,6 +4,14 @@ import styled from 'styled-components';
 
 class DropDownInput extends Component {
 
+    constructor(props){
+        super(props); 
+
+        this.state = {
+            value: ""
+        } 
+    }
+
     renderOptions = () => {
         return this.props.options.map((option, i) => 
         <option value={option.value} key={i}>{option.text}</option>);

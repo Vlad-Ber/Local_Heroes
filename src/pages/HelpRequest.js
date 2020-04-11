@@ -6,8 +6,13 @@ import NavBar from '../components/NavBar.js';
 import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js';
 import DropDownInput from '../components/DropDownInput.js';
+import TextButton from '../components/TextButton.js';
 
 class HelpRequest extends Component {
+
+    handleHelpRequest = () => {
+        console.log("handleHelpRequest")
+    }
 
     render(){
 
@@ -25,30 +30,23 @@ class HelpRequest extends Component {
         return(
             <div>
                 <NavBar/>
-                <SectionTitle text="HELP REQUEST"/>
 
+                <SectionTitle fontSize="14px" text="What do you need help with?"/>
                 <InputWrapper>
                     <DropDownInput options={options}/>
                 </InputWrapper>
 
-                <DescriptionInput>
-                    <SectionTitle fontSize="14px" text="What do you need help with?"/>
-                    <InputWrapper>
-                        <TextInput height="20em"/>
-                    </InputWrapper>
-                </DescriptionInput>
+                <SectionTitle fontSize="14px" text="Describe more in detail please"/>
+                <InputWrapper>
+                    <TextInput height="20em"/>
+                </InputWrapper>
+
+                <TextButton function={this.handleHelpRequest()} description="PUBLISH HELP REQUEST"/>
 
             </div>
         );
     }
 }
-
-const DescriptionInput = styled.div`
-    display: flex; 
-    flex-direction: column; 
-    justify-content: space-around;
-    padding: 20px;
-`;
 
 const InputWrapper = styled.div`
     padding: 30px;
