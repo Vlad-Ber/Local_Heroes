@@ -18,9 +18,10 @@ client.connect(err => {
 
     const users = db.collection("Users");
 
-    async function document_exist(collection, document_query){
+    //Generell function to check if a document exist
+    async function documentExist(collection, document_query){
 	      const coll = db.collection(collection);
-	      var foundQuery = await coll.findOne(document_query);
+	      let foundQuery = await coll.findOne(document_query);
 	      if (foundQuery == null){
 	          return false;
 	      }
@@ -28,7 +29,7 @@ client.connect(err => {
 	          return true;
 	      }
     }
-    
+
     async function insertUser(email, name, age, adress, description,areaID){
 	      var data = {
 	          "email": email,
@@ -40,7 +41,7 @@ client.connect(err => {
 	          "areaID": areaID,
 	      };
 	      var queryToFind = {"email": email};
-	      var findUser = await document_exist("Users", queryToFind);
+	      var findUser = await documentExist("Users", queryToFind);
 	      if( findUser == false){
 	          users.insertOne(data).catch(error =>console.error(error));
 	          console.log("User " + name + " has been added!");
@@ -50,24 +51,10 @@ client.connect(err => {
 	      }
     };
 
-    //-----------------------------------------------------------------------------------------------------------
-
     const ObjectID = require("mongodb").ObjectID;
     // perform actions on the collection object
 
     //-------------------------------------------------------------------------------------//
-
-    async function documentExist(curCollection, documentQuery){
-        let findCollection = db.collection(curCollection);
-        let findDocument = await findCollection.findOne(documentQuery);
-        if(findDocument == null){
-            return false;
-        }
-        else{
-            return true;
-        }
-    };
-
 
     async function deleteErrands(errandId){
         let arg = {"_id": new ObjectID(errandId)};
@@ -88,9 +75,6 @@ client.connect(err => {
     app.use(bodyParser.json());
 
     var router = express.Router();
-
-    // console.log that your server is up and running
-    
     
     // create a GET route
     app.get('/api/greeting', (req, res) => {
@@ -112,4 +96,5 @@ client.connect(err => {
     });
 
 });
+
 client.close();

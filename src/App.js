@@ -29,31 +29,32 @@ class App extends Component {
         }).catch((error)=> {
             console.log("got errr while posting data", error);
         });
-
-        componentDidMount(){
-            let updatedActiveUsers = data["users"].filter(user =>
-                                                          user.areaId === this.state.areaId).length;
-
-            let updatedActiveErrands = data["errands"].filter(errand =>
-                                                              errand.areaId === this.state.areaId && errand.status !== "done").length;
-
-            this.setState({ activeErrands: updatedActiveErrands, activeUsers: updatedActiveUsers })
-        }
-
-        render(){
-            return (
-                    <div className="App" style={{ fontFamily: 'Inter' }}>
-                    <NavBar/>
-                    <StatusView
-                areaId={this.state.areaId}
-                activeUsers={this.state.activeUsers}
-                activeErrands={this.state.activeErrands}
-                    />
-                    <TextButton function={this.askForHelp} description="ASK FOR HELP"/>
-                    <SectionTitle text="RECENT ACTIVITY"/>
-                    <EventItemListView errands={data["errands"]}/>
-                    </div>
-	          )}
     }
 
-    export default App;
+    componentDidMount(){
+        let updatedActiveUsers = data["users"].filter(user =>
+                                                      user.areaId === this.state.areaId).length;
+
+        let updatedActiveErrands = data["errands"].filter(errand =>
+                                                          errand.areaId === this.state.areaId && errand.status !== "done").length;
+
+        this.setState({ activeErrands: updatedActiveErrands, activeUsers: updatedActiveUsers })
+    }
+
+    render(){
+        return (
+                <div className="App" style={{ fontFamily: 'Inter' }}>
+                <NavBar/>
+                <StatusView
+            areaId={this.state.areaId}
+            activeUsers={this.state.activeUsers}
+            activeErrands={this.state.activeErrands}
+                />
+                <TextButton function={this.askForHelp} description="ASK FOR HELP"/>
+                <SectionTitle text="RECENT ACTIVITY"/>
+                <EventItemListView errands={data["errands"]}/>
+                </div>
+	      )}
+}
+
+export default App;
