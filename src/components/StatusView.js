@@ -13,10 +13,10 @@ class StatusView extends Component {
         return (
             <StatusViewWrapper>
 
-                <DisplayArea>
+                <DisplayAreaId>
                     <FontAwesomeIcon icon={faLocationArrow} style={{ color: "#31D285", fontSize: '12px', padding: '4px'}}/>
                     <div style={{ fontSize: "14px", padding: '4px' }}>{this.props.areaId}</div>
-                </DisplayArea>
+                </DisplayAreaId>
 
                 <StatusBoxWrapper>
                     <StatusBox>
@@ -41,7 +41,7 @@ const StatusViewWrapper = styled.div`
     flex: 1;
     flex-direction: column;
 `
-const DisplayArea = styled.div`
+const DisplayAreaId = styled.div`
     display: flex; 
     flex: 1;
     flex-direction: column;
