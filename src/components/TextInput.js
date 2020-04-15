@@ -37,7 +37,7 @@ const StyledInput = styled.textarea`
     box-sizing: border-box;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.12);
 
-    height: ${props => props.height || '30em'};
+    height: ${props => props.height || '24em'};
     width: ${props => props.width || '18em'};
 `
 
