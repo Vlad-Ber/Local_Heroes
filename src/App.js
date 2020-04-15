@@ -30,6 +30,15 @@ class App extends Component {
           console.log("got errr while posting data", error);
       });
   }
+    vidKnappTryck = () => {
+	axios.post("/",{
+	    data1: "hej",
+	}).then((response) => {
+            console.log("Data submitted successfully");
+	}).catch((error) => {
+            console.log("got errr while posting data", error);	    
+	});
+    }
 
 
   componentDidMount(){
@@ -53,7 +62,8 @@ class App extends Component {
         />
         <TextButton function={this.askForHelp} description="ASK FOR HELP"/>
         <SectionTitle text="RECENT ACTIVITY"/>
-        <EventItemListView errands={data["errands"]}/>
+            <EventItemListView errands={data["errands"]}/>
+	    <button onClick={this.vidKnappTryck} id="loginKnapp" type="button" className="input">Server-TestKnapp</button>
       </div>
 	)}
 }
