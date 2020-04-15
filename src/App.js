@@ -14,15 +14,25 @@ import data from './data/data.json';
 
 class App extends Component {
 
-  constructor(props){
-    super(props);
+    constructor(props){
+        super(props);
 
-    this.state = {
-      areaId: 75232,
-      activeErrands: 0,
-      activeUsers: 0
+        this.state = {
+            areaId: 75232,
+            activeErrands: 0,
+            activeUsers: 0
+        }
     }
-  }
+    
+    vidKnappTryck = () => {
+	axios.post("/",{
+	    data1: "hej",
+	}).then((response) => {
+            console.log("Data submitted successfully");
+	}).catch((error) => {
+            console.log("got errr while posting data", error);	    
+	});
+    }
 
   askForHelp = () => {
       axios.post("/",{
@@ -58,10 +68,10 @@ class App extends Component {
         <SectionTitle text="RECENT ACTIVITY"/>
         <EventItemListView errands={data["errands"]}/>
 
-        <ConfirmButton/>
-      </div>
+            <ConfirmButton/>
+	    <button onClick={this.vidKnappTryck} id="loginKnapp" type="button" className="input">Server-TestKnapp</button>
+	    </div>
 	)}
 
 }
-
 export default App;
