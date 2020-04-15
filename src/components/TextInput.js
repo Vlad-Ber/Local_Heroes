@@ -56,7 +56,11 @@ class TextInput extends Component {
   }
 
   render(){
-    return({renderInputType()})
+    return (
+      <React.Fragment>
+        {this.renderInputType()}
+      </React.Fragment>
+    );
   }
 }
 

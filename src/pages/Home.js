@@ -54,7 +54,7 @@ class Home extends Component {
                     activeErrands={this.state.activeErrands}
                 />
                 <Link to="/help-request">
-                    <TextButton description="ASK FOR HELP"/>
+                    <TextButton function={this.askForHelp()} description="ASK FOR HELP"/>
                 </Link>
                 <SectionTitle text="RECENT ACTIVITY"/>
                 <EventItemListView errands={data["errands"]}/>
