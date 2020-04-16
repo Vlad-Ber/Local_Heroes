@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from './pages/Home.js'; 
 import HelpRequest from './pages/HelpRequest.js';
 import Signup from './pages/Signup.js';
+import ProfileCreation from './pages/ProfileCreation.js';
+import ResidenceInfo from './pages/ResidenceInfo.js';
 
 class App extends Component {
 
@@ -15,6 +17,8 @@ class App extends Component {
             <Route path="/" exact component={Home}/>
             <Route path="/help-request" component={HelpRequest}/>
             <Route path="/signup" component={Signup}/>
+            <Route path="/residence-info" component={ResidenceInfo}/>
+            <Route path="/profile-info" component={ProfileCreation}/>
           </Switch>
         </div>
       </Router>
