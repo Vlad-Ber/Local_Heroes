@@ -30,7 +30,6 @@ client.connect(err => {
 	      }
     }
 
-<<<<<<< HEAD
     async function insertArea(areaID, email){
 	var data = {
 	    "areaID": areaID,
@@ -52,12 +51,12 @@ client.connect(err => {
 	    "areaID": areaID,
 	};
 	var queryToFind = {"email": email};
-	var findUser = await document_exist("Users", queryToFind);
+	var findUser = await documentExist("Users", queryToFind);
 	if( findUser == false){
 	    await users.insertOne(data).catch(error =>console.error(error));
 	    console.log("User " + name + " has been added!");
 	    var areaToFind = {"areaId": areaID}
-	    var findArea = await document_exist("Areas", areaToFind);
+	    var findArea = await documentExist("Areas", areaToFind);
 	    if (findArea == false){
 		await insertArea(areaID, email);
 	    }
@@ -89,34 +88,11 @@ client.connect(err => {
 	await errands.insertOne(data).catch(error =>console.error(error));
 	console.log("Errand has been created by " + requester);
     }
-	    
+    
 
-//-----------------------------------------------------------------------------------------------------------
-=======
-    async function insertUser(email, name, age, adress, description,areaID){
-	      var data = {
-	          "email": email,
-	          "name": name,
-	          "age": age,
-	          "adress": adress,
-	          "desription": description,
-	          "virtuePoints": 0,
-	          "areaID": areaID,
-	      };
-	      var queryToFind = {"email": email};
-	      var findUser = await documentExist("Users", queryToFind);
-	      if( findUser == false){
-	          users.insertOne(data).catch(error =>console.error(error));
-	          console.log("User " + name + " has been added!");
-	      }
-	      else{
-	          console.log("A user with this email already exists");
-	      }
-    };
+
 
     const ObjectID = require("mongodb").ObjectID;
-    // perform actions on the collection object
->>>>>>> f0296b34560a977b2740e5965d739196312787d7
 
     //-------------------------------------------------------------------------------------//
 
@@ -146,25 +122,11 @@ client.connect(err => {
     });
 
     app.post('/', function(req, res) {
-<<<<<<< HEAD
 	var testData = req.body.data1;
 	var dataToSend = {"testData1":testData, "testdata2": "boll"}
 	insertUser("olle@hotmail.com", "Olle Eriksson", 20, "Sveavägen 1", "Gillar att laga mat", 75757);
 	//insertErrand("Laga mat", "Handla mjölk på Ica", "Anna", "Shopping", "Ringvägen 2", "07567467", 75757);
 	
-=======
-	      var testData = req.body.data1;
-	      var dataToSend = {"testData1":testData, "testdata2": "boll"}
-	      insertUser("olle@hotmail.com", "Olle Eriksson", 20, "Sveavägen 1", "Gillar att laga mat", 75757);
-
-	      var testData = req.body.data1;
-	      var dataToSend = {"testData1":testData, "testdata2": "boll"}
-	      console.log(testData);
-        // errands.insertOne(dataToSend);
-        let id = "5e906452b7e4ac5c969483c4";
-        deleteErrands(id);
-	      
->>>>>>> f0296b34560a977b2740e5965d739196312787d7
     });
 
 });
