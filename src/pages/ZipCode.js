@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import styled from 'styled-components';
 
 import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js'
 
-class ZipCode extends React.Component {
+class ZipCode extends Component {
 
   render(){
     return (
@@ -15,8 +15,8 @@ class ZipCode extends React.Component {
         </TitleWrapper>
 
         <SectionTitle
-          text = "Please enter your zip code"
-          titleType = "variant"
+          text="Please enter your zip code"
+          fontSize="16px"
         />
         <TextInput />
       </div>

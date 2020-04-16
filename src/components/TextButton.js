@@ -6,8 +6,8 @@ import styled from 'styled-components'
 class TextButton extends Component {
     render(){
         return (
-            <Button onClick = {this.props.function}>
-                {this.props.description}
+            <Button onClick={this.props.function}>
+                    {this.props.description}
             </Button>
         );
     }

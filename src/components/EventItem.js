@@ -17,143 +17,134 @@ class EventItem extends Component {
             fullView: false,
             errand: {}
         }
-    }
+    };
 
     toggleView = () => {
         this.setState({ fullView: !this.state.fullView});
-    }
+    };
 
     handleHelpNotice = () => {
         console.log("I want to help");
-    }
+    };
 
-    componentDidMount(){
-        this.setState({ fullView: this.props.fullView, errand: this.props.errand });
-    }
+    renderTypeIcon = (args) => {
 
-    render(){
-
-        // Return icon for event type 
         let type = this.state.errand.type;
-        let typeIcon = null; 
         let typeIconStyle = {
-            display: 'flex',
+            display: 'flex', 
             justifyContent: 'center',
-            padding: '4x',
+            padding: '4px',
             fontSize: '18px',
             color: '#31D285'
         }
 
         switch(type){
             case "carrying": 
-                typeIcon = <FontAwesomeIcon icon={faPeopleCarry} style={typeIconStyle}/>
-                break;
+            return <FontAwesomeIcon icon={faPeopleCarry} style={typeIconStyle}/>
+
             case "shopping": 
-                typeIcon = <FontAwesomeIcon icon={faShoppingCart} style={typeIconStyle}/>
-                break;
+            return <FontAwesomeIcon icon={faShoppingCart} style={typeIconStyle}/>
+
             default: 
-                typeIcon = <FontAwesomeIcon icon={faInfo} style={typeIconStyle}/>
-                break;
+            return <FontAwesomeIcon icon={faInfo} style={typeIconStyle}/>
         }
 
-        //Return status marker 
-        let statusText = ""
-        let actionButton = <div></div>
+    };
+
+    renderStatusMarker = () => {
+
         switch(this.state.errand.status){
             case "waiting": 
-                statusText = <div style={{ color: 'red' }}>WAITING FOR HELP</div>
-                actionButton = <TextButton function={this.handleHelpNotice} description="I WANT TO HELP"/>
-                break;
+            return <div style={{ color: 'red' }}>WAITING FOR HELP</div>
+
             case "inProgress": 
-                statusText = <div style={{ color: '#31D285' }}>HELP UNDER WAY!</div>
-                break;
+            return <div style={{ color: '#31D285' }}>HELP UNDER WAY!</div>
+
             case "done": 
-                statusText = <div style={{ color: 'black' }}>DONE</div>
-                break;
+            return <div>DONE</div>
+
             default: 
-                statusText = <div>Data error</div>
+            return <div>STATUS UNKOWN</div>
         }
 
-        // Return component 
-        return( this.state.fullView ? 
-        
-            <ExpandedView>
+    }
 
-                    <ExpandedViewEventItem onClick={this.toggleView}>
+    renderActionButton = () => {
+        return this.state.errand.status === "waiting" ? <TextButton function={this.handleHelpNotice} description="I WANT TO HELP"/> : null
 
-                        <EventMetaData>
-                            {typeIcon}
-                            <TimeStamp>{this.state.errand.createdAt}</TimeStamp>
-                        </EventMetaData>
+    }
 
-                        <TextWrapper>
-                            <Title>
-                                {this.state.errand.title}
-                            </Title>
+    renderExpandedView = () => {
+        return this.state.fullView ? 
 
-                            <Description>
-                                {this.state.errand.description}
-                            </Description>
+        <ExpandedView>
 
-                        </TextWrapper>
-
-                        <Status>
-                            {statusText}
-                        </Status>
-
-                    </ExpandedViewEventItem> 
+            <InfoWrapper onClick={this.toggleView}>
                 
-                    <InfoWrapper onClick={this.toggleView}>
-                        
-                        <InfoTitle>
-                            Requested by
-                        </InfoTitle>
-                        <Description>
-                            {this.state.errand.requester}
-                        </Description>
+                <InfoTitle>
+                    Requested by
+                </InfoTitle>
+                <Description>
+                    {this.state.errand.requester}
+                </Description>
 
-                        <InfoTitle>
-                            Adress
-                        </InfoTitle>
-                        <Description>
-                            {this.state.errand.adress}
-                        </Description>
+                <InfoTitle>
+                    Adress
+                </InfoTitle>
+                <Description>
+                    {this.state.errand.adress}
+                </Description>
 
-                        <InfoTitle>
-                            Contact
-                        </InfoTitle>
-                        <Description>
-                            {this.state.errand.contact}
-                        </Description>
+                <InfoTitle>
+                    Contact
+                </InfoTitle>
+                <Description>
+                    {this.state.errand.contact}
+                </Description>
 
-                    </InfoWrapper>
+            </InfoWrapper>
 
-                    {actionButton}
+            {this.renderActionButton()}
 
-            </ExpandedView>
-            
-            :
+        </ExpandedView> 
+        
+        : null
+    }
+
+    componentDidMount(){
+        this.setState({ fullView: this.props.fullView, errand: this.props.errand });
+    };
+
+    render(){
+
+        return(
 
             <EventItemWrapper onClick={this.toggleView}>
 
-                <EventMetaData>
-                    {typeIcon}
-                    <TimeStamp>{this.state.errand.createdAt}</TimeStamp>
-                </EventMetaData>
+                <DefaultView>
 
-                <TextWrapper>
-                    <Title>
-                        {this.state.errand.title}
-                    </Title>
+                    <EventMetaData>
+                        {this.renderTypeIcon()}
+                        <TimeStamp>{this.state.errand.createdAt}</TimeStamp>
+                    </EventMetaData>
 
-                    <Description>
-                        {this.state.errand.description}
-                    </Description>
-                </TextWrapper>
-                
-                <Status>
-                    {statusText}
-                </Status>
+                    <TextWrapper>
+                        <Title>
+                            {this.state.errand.title}
+                        </Title>
+
+                        <Description>
+                            {this.state.errand.description}
+                        </Description>
+                    </TextWrapper>
+                    
+                    <Status>
+                        {this.renderStatusMarker()}
+                    </Status>
+
+                </DefaultView>
+
+                {this.renderExpandedView()}
 
             </EventItemWrapper>
         );
@@ -161,40 +152,38 @@ class EventItem extends Component {
 
 }
 
-const ExpandedView = styled.div`
-   display: flex; 
-   flex-direction: column;
-   border-radius: 3px;
-   padding: 12px;
-   margin: 6px;
-   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3); 
-`
-
-const ExpandedViewEventItem = styled.div`
-    display: flex; 
-    flex-direction: row;
-    justify-content: space-between;
-`
-
-const InfoWrapper = styled.div`
-    padding: 20px;
-    font-size: 10px;
-`
-
-const InfoTitle = styled.div`
-    font-weight: 800;
-    padding: 4px;
-`
 
 const EventItemWrapper = styled.div`
     display: flex; 
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     padding: 12px;
     margin: 6px;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
     border-radius: 3px;
 `
+
+const DefaultView = styled.div`
+    display: flex; 
+    flex-direction: row;
+`;
+
+const ExpandedView = styled.div`
+   display: flex; 
+   flex-direction: column;
+   padding: 12px;
+   margin: 6px;
+`;
+
+const InfoWrapper = styled.div`
+    padding: 20px;
+    font-size: 10px;
+`;
+
+const InfoTitle = styled.div`
+    font-weight: 800;
+    padding: 4px;
+`;
 
 const TextWrapper = styled.div`
     display: flex; 
@@ -234,7 +223,6 @@ const Status = styled.div`
     font-size: 10px;
     padding-top: 4px;
 `
-
 
 const TimeStamp = styled.div`
     display: flex; 

@@ -70,6 +70,7 @@ client.connect(err => {
 	
     };
 
+
     async function insertErrand(title, description, requester,  type, adress, contact, areaID){
 	var date = new Date();
 	var dateString= date.toISOString().slice(0,10);
@@ -126,9 +127,6 @@ client.connect(err => {
 	var dataToSend = {"testData1":testData, "testdata2": "boll"}
 	insertUser("olle@hotmail.com", "Olle Eriksson", 20, "Sveavägen 1", "Gillar att laga mat", 75757);
 	//insertErrand("Laga mat", "Handla mjölk på Ica", "Anna", "Shopping", "Ringvägen 2", "07567467", 75757);
-	
     });
-
 });
-
 client.close();
