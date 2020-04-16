@@ -1,66 +1,40 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import styled from 'styled-components'
 
-class TextInput extends Component {
+const TextInput = (props) => {
+  let type = props.type; 
+  switch(type){
+    case "number": 
+      return (
+      <StyledInput 
+        type="number" 
+        height={props.height} 
+        width={props.width} 
+        {...props}
+        min="0"
+      />
+      );
 
-  constructor(props) {
-      super(props);
+    case "password": 
+      return (
+      <StyledInput 
+        type="password" 
+        height={props.height} 
+        width={props.width} 
+        {...props}
+      />
+      );
 
-      this.state = {
-        value: '',
-      }
-  }
-
-  saveInput = (event) => {
-    this.setState({value: event.target.value});
-  }
-
-  renderInputType = () => {
-    let type = this.props.type; 
-    switch(type){
-      case "number": 
-        return (
-        <StyledInput 
-          type="number" 
-          value={this.state.value} 
-          onChange={this.saveInput} 
-          height={this.props.height} 
-          width={this.props.width} 
-          min="0"
-        />
-        );
-
-      case "password": 
-        return (
-        <StyledInput 
-          type="password" 
-          value={this.state.value} 
-          onChange={this.saveInput}
-          height={this.props.height} 
-          width={this.props.width} 
-        />
-        );
-
-      default: 
-        return (
-        <StyledInput 
-          type="text" 
-          value={this.state.value} 
-          onChange={this.saveInput}
-          height={this.props.height} 
-          width={this.props.width} 
-        />
-        );
-    }
-  }
-
-  render(){
-    return (
-      <React.Fragment>
-        {this.renderInputType()}
-      </React.Fragment>
-    );
+    default: 
+      return (
+      <StyledInput 
+        type="text" 
+        height={props.height} 
+        width={props.width} 
+        {...props}
+      />
+      );
   }
 }
 
