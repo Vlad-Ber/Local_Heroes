@@ -36,22 +36,12 @@ class ProfileCreation extends React.Component {
         <ConfirmButton />
       </div>
 
-    const ConfirmButtonWrapper = styled.button`
-          background-color: #4CAF50;
-          border: none;
-          color: white;
-          padding: 0px;
-          text-align: center;
-          text-decoration: none;
-          display: inline-block;
-          font-size: 16px;
-          margin: 4px 2px;
-          border-radius: 100%;
-      `;
-
 
     );
   }
 }
+
+
+
 
 export default ProfileCreation;
