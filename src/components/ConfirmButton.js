@@ -7,7 +7,11 @@ class ConfirmButton extends Component {
 
     render(){
         return(
+<<<<<<< HEAD
                 <ConfirmButtonWrapper type="submit" value="Submit" id="confirm" onClick={this.props.onClickFunc}>
+=======
+                <ConfirmButtonWrapper type="submit" value="Submit" id="confirm" onClick={this.props.function}>
+>>>>>>> overhauled profile creation
                     <Checkmark size='large'/>
                 </ConfirmButtonWrapper>
         );
