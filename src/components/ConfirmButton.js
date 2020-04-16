@@ -4,10 +4,10 @@ import styled from 'styled-components'
 import { Checkmark } from 'react-checkmark';
 
 class ConfirmButton extends Component {
-    
+
     render(){
         return(
-                <ConfirmButtonWrapper id="confirm" onClick={() => console.log("confirmButton clicked")}>
+                <ConfirmButtonWrapper type="submit" value="Submit" id="confirm" onClick={this.props.function}>
                     <Checkmark size='large'/>
                 </ConfirmButtonWrapper>
         );
