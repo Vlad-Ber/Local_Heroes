@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 import styled from 'styled-components'
 
-import { Checkmark } from 'react-checkmark';
 
-class ConfirmButton extends Component {
+class ArrowButton extends Component {
     
     render(){
         return(
-                <ConfirmButtonWrapper id="confirm" onClick={() => console.log("confirmButton clicked")}>
-                    <Checkmark size='large'/>
-                </ConfirmButtonWrapper>
+                <ArrowButtonWrapper  id="Arrow" onClick={() => console.log("ArrowButton clicked")}>
+                <img src={""}/> insert image
+                </ArrowButtonWrapper>
         );
     }
 }
 
-const ConfirmButtonWrapper = styled.button`
+const ArrowButtonWrapper = styled.button`
     background-color: #4CAF50;
     border: none;
     color: white;
@@ -28,4 +27,6 @@ const ConfirmButtonWrapper = styled.button`
     
 `;
 
-export default ConfirmButton;
+
+
+export default ArrowButton;
