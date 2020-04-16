@@ -7,41 +7,51 @@ import NavBar from '../components/NavBar.js';
 import ConfirmButton from '../components/ConfirmButton.js';
 
 class ProfileCreation extends React.Component {
+      state = {
+        firstname: '',
+        lastname: '',
+        age: '',
+
+        email: '',
+        mobile: '',
+    }
+
+  saveInput = e => {
+    this.setState({ [e.target.name]: e.target.value })
+  }
 
   render(){
+    console.log(this.state)
     return (
       <div>
         <NavBar />
 
-        <SectionTitle text = "Profile Creation" />
+        <form>
+          <SectionTitle text="Profile Creation" />
 
-        <SectionTitle text = "Given Name" titleType = "variant"/>
-        <TextInput />
+          <SectionTitle text="Given Name" />
+          <TextInput height="24px" name="firstname" value={this.firstname} saveInput={this.saveInput}/>
 
-        <SectionTitle text = "Surname" titleType = "variant"/>
-        <TextInput />
+          <SectionTitle text="Surname" />
+          <TextInput height="24px" name="lastname" value={this.lastname} saveInput={this.saveInput}/>
 
-        <SectionTitle text = "Age" titleType = "variant"/>
-        <TextInput type = "number" />
+          <SectionTitle text="Age" />
+          <TextInput height="24px" name="age" type="number" value={this.age} saveInput={this.saveInput}/>
 
-        <SectionTitle text = "Gender" titleType = "variant"/>
-        <TextInput type = "dropdown"/>
+          <SectionTitle text="Mobile number" />
+          <TextInput height="24px" name="mobile" type="number" value={this.mobile} saveInput={this.saveInput}/>
 
-        <SectionTitle text = "Mobile number" titleType = "variant"/>
-        <TextInput type = "number" />
+          <SectionTitle text="E-mail address" />
+          <TextInput height="24px" name="email" value={this.email} saveInput={this.saveInput}/>
 
-        <SectionTitle text = "E-mail address" titleType = "variant"/>
-        <TextInput />
-
-        <ConfirmButton />
+          <ConfirmButton />
+        </form>
       </div>
 
 
     );
   }
 }
-
-
 
 
 export default ProfileCreation;

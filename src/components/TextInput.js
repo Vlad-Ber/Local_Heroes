@@ -4,52 +4,49 @@ import styled from 'styled-components'
 
 class TextInput extends Component {
 
-  constructor(props) {
-      super(props);
-
-      this.state = {
-        value: '',
-      }
-  }
-
-  saveInput = (event) => {
-    this.setState({value: event.target.value});
-  }
-
   renderInputType = () => {
-    let type = this.props.type; 
+    let type = this.props.type;
     switch(type){
-      case "number": 
+      case "number":
         return (
-        <StyledInput 
-          type="number" 
-          value={this.state.value} 
-          onChange={this.saveInput} 
-          height={this.props.height} 
-          width={this.props.width} 
+        <StyledInput
+          type="number"
+          name={this.props.name}
+
+          value={this.props.value}
+          onChange={this.props.saveInput}
+
+          height={this.props.height}
+          width={this.props.width}
           min="0"
         />
         );
 
-      case "password": 
+      case "password":
         return (
-        <StyledInput 
-          type="password" 
-          value={this.state.value} 
-          onChange={this.saveInput}
-          height={this.props.height} 
-          width={this.props.width} 
+        <StyledInput
+          type="password"
+          name={this.props.name}
+
+          value={this.props.value}
+          onChange={this.props.saveInput}
+
+          height={this.props.height}
+          width={this.props.width}
         />
         );
 
-      default: 
+      default:
         return (
-        <StyledInput 
-          type="text" 
-          value={this.state.value} 
-          onChange={this.saveInput}
-          height={this.props.height} 
-          width={this.props.width} 
+        <StyledInput
+          type="text"
+          name={this.props.name}
+
+          value={this.props.value}
+          onChange={this.props.saveInput}
+
+          height={this.props.height}
+          width={this.props.width}
         />
         );
     }
