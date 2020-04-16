@@ -27,6 +27,7 @@ class EventItem extends Component {
 
     handleHelpNotice = () => {
         console.log("I want to help");
+        // write https request to update errand
     };
 
     renderTypeIcon = (args) => {
