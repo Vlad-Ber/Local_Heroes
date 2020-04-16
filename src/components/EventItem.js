@@ -70,7 +70,7 @@ class EventItem extends Component {
     }
 
     renderActionButton = () => {
-        return this.state.errand.status === "waiting" ? <TextButton function={this.handleHelpNotice} description="I WANT TO HELP"/> : null
+        return this.state.errand.status === "waiting" ? <TextButton onClick={this.handleHelpNotice} description="I WANT TO HELP"/> : null
 
     }
 
