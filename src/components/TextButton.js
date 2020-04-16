@@ -25,6 +25,7 @@ const Button = styled.button`
     margin-bottom: 30px;
     background: #31D285;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+
 `
 
 export default TextButton;
