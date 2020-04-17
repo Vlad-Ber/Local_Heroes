@@ -20,8 +20,11 @@ class ProfileCreation extends React.Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
+  storeSession = e => {
+    sessionStorage.setItem("stateProfileCreation", JSON.stringify(this.state));
+  }
+
   render(){
-    console.log(this.state)
     return (
       <div>
         <NavBar />
@@ -44,7 +47,7 @@ class ProfileCreation extends React.Component {
           <SectionTitle text="E-mail address" />
           <TextInput height="24px" name="email" value={this.email} saveInput={this.saveInput}/>
 
-          <ConfirmButton />
+          <ConfirmButton onClickFunc={this.storeSession}/>
         </form>
       </div>
 
