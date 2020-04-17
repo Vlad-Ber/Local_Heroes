@@ -53,7 +53,7 @@ client.connect(err => {
     }
     
     async function getErrandsEmail(email){
-	
+	      errands.find({})
     }
 
     
@@ -156,7 +156,7 @@ client.connect(err => {
     app.post('getErrands', function(req, res) {
 	var errands = getErrandsArea(req.body.areaID);
 	res.send({errands});
-    }
+    });
     
 });
 client.close();
