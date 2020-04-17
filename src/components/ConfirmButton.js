@@ -7,11 +7,7 @@ class ConfirmButton extends Component {
 
     render(){
         return(
-<<<<<<< HEAD
                 <ConfirmButtonWrapper type="submit" value="Submit" id="confirm" onClick={this.props.onClickFunc}>
-=======
-                <ConfirmButtonWrapper type="submit" value="Submit" id="confirm" onClick={this.props.function}>
->>>>>>> overhauled profile creation
                     <Checkmark size='large'/>
                 </ConfirmButtonWrapper>
         );
@@ -29,8 +25,8 @@ const ConfirmButtonWrapper = styled.button`
     font-size: 16px;
     margin: 4px 2px;
     border-radius: 100%;
-   
-    
+
+
 `;
 
 export default ConfirmButton;
