@@ -10,26 +10,15 @@ class ZipCode extends Component {
   render(){
     return (
       <div>
-        <TitleWrapper>
-          Welcome to LocalHero!
-        </TitleWrapper>
-
         <SectionTitle
-          text="Please enter your zip code"
+          text="Change Location (Zip Code)"
           fontSize="16px"
+          height=""
         />
         <TextInput />
       </div>
     );
   }
 }
-
-const TitleWrapper = styled.div`
-    font-size: 24px;
-    text-align: center;
-    padding-top: 70px;
-    padding-bottom: 40px;
-    font-weight: bold;
-`
 
 export default ZipCode;
