@@ -28,7 +28,6 @@ class App extends Component {
 
             <Route path="/zipcode" component={ZipCode}/>
             <Route path="/profile-creation" component={ProfileCreation}/>
-
           </Switch>
         </div>
       </Router>
