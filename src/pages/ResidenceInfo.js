@@ -8,8 +8,12 @@ import ArrowButton from '../components/ArrowButton.js';
 
 class ResidenceInfo extends React.Component{
 
+   
+    
     render(){
+             
         return (
+            
                 <div>
                 <form>
                 <NavBar />
