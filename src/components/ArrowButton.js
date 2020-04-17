@@ -15,6 +15,7 @@ class ArrowButton extends Component {
 
 const ArrowButtonWrapper = styled.button`
     background-color: #4CAF50;
+    
     border: none;
     color: white;
     padding: 0px;
@@ -24,9 +25,11 @@ const ArrowButtonWrapper = styled.button`
     font-size: 16px;
     margin: 4px 2px;
     border-radius: 100%;
+
+  
     
 `;
 
 
 
-export default ArrowButton;
+export default ArrowButton
