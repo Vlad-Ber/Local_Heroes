@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+
 import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js'
 import TextButton from '../components/TextButton.js'
@@ -47,7 +49,9 @@ class ProfileCreation extends React.Component {
           <SectionTitle text="E-mail address" />
           <TextInput height="24px" name="email" value={this.email} saveInput={this.saveInput}/>
 
-          <ConfirmButton onClickFunc={this.storeSession}/>
+          {/*<Link to="residence-info">*/}
+            <ConfirmButton onClickFunc={this.storeSession}/>
+          {/*</Link>*/}
         </form>
       </div>
 

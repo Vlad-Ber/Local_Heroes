@@ -44,19 +44,19 @@ client.connect(err => {
 	var areaToFind = {"areaID": areaID};
 	areas.updateOne(areaToFind, {"$push": {"users": email } } )
     }
-    
+
     async function getErrandsArea(areaID){
 	errands.find({"areaID": areaID}).toArray(function(err, result) {
 	    if (err) throw err;
 	    return result;
 	});
     }
-    
+
     async function getErrandsEmail(email){
-	
+
     }
 
-    
+
     async function insertUser(email, name, age, adress, description,areaID){
 	var data = {
 	    "email": email,
@@ -84,12 +84,12 @@ client.connect(err => {
 	else{
 	    console.log("A user with this email already exists");
 	}
-	
+
     };
 
 
-   
-    
+
+
     async function insertErrand(title, description, requester,  type, adress, contact, areaID){
 	var date = new Date();
 	var dateString= date.toISOString().slice(0,10);
@@ -109,11 +109,11 @@ client.connect(err => {
 	var insertedId = insert.insertedId;
 	var areaToUpdate = {"areaID": areaID};
 	areas.updateOne(areaToUpdate, {"$push": {"errands": insertedId } } )
-	
+
 
 	console.log("Errand has been created by " + requester);
     }
-    
+
 
     const ObjectID = require("mongodb").ObjectID;
 
@@ -122,7 +122,7 @@ client.connect(err => {
     async function deleteErrands(errandId){
         let arg = {"_id": new ObjectID(errandId)};
         let findErrands = await documentExist("Errands", arg);
-        
+
         if(findErrands == true){
             errands.deleteOne(arg, function(err, result) {
                 if(err){
@@ -130,19 +130,25 @@ client.connect(err => {
                 }
             });
         } else{
-            console.log("Could not found the document");   
+            console.log("Could not found the document");
         }
     };
-    
+
     //app.use(bodyParser.urlencoded({ extended: false })); : DETTA KANSKE BEHÖVS I FRAMTIDEN
     app.use(bodyParser.json());
 
     var router = express.Router();
-    
+
     // create a GET route
     app.get('/api/greeting', (req, res) => {
 	      res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
     });
+
+    app.get('/', (data, res) => {
+      console.log("hejs")
+      let user = data.body;
+      console.log(user)
+    })
 
     app.post('/', function(req, res) {
 	var testData = req.body.data1;
@@ -150,13 +156,7 @@ client.connect(err => {
 	//insertUser("markus@gmail.com", "Markus Ollesson", 20, "Kungsvägen 1", "Lyfter tungt", 75565);
 	//insertUser("olle@gmail.com", "Olle Ollesson", 20, "Sveavägen 1", "Lagar mat", 75757);
 	//insertErrand("Laga mat", "Handla mjölk på Ica", "Anna", "Shopping", "Ringvägen 2", "07567467", 56788);
-	getErrandsArea(75757);
-    });
+  })
+})
 
-    app.post('getErrands', function(req, res) {
-	var errands = getErrandsArea(req.body.areaID);
-	res.send({errands});
-    }
-    
-});
 client.close();

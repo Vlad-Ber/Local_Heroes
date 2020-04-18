@@ -8,9 +8,9 @@ import Signup from './pages/Signup.js';
 import ProfileCreation from './pages/ProfileCreation.js';
 import ResidenceInfo from './pages/ResidenceInfo.js';
 
+import Temp from './pages/Temp.js';
+
 import ZipCode from './pages/ZipCode.js'
-
-
 
 class App extends Component {
 
@@ -28,8 +28,9 @@ class App extends Component {
 
             <Route path="/zipcode" component={ZipCode}/>
             <Route path="/profile-creation" component={ProfileCreation}/>
-            <Route path="/profile-creation" component={ProfileCreation}/>
-          </Switch>
+
+            <Route path="/temp" component={Temp}/>
+         </Switch>
         </div>
       </Router>
 	)}
