@@ -7,6 +7,7 @@ import Signup from './pages/Signup.js';
 
 import ProfileCreation from './pages/ProfileCreation.js';
 import ResidenceInfo from './pages/ResidenceInfo.js';
+import InsertImage from './pages/InsertImage.js';
 
 import Temp from './pages/Temp.js';
 
@@ -21,13 +22,13 @@ class App extends Component {
           <Switch>
             <Route path="/" exact component={Home}/>
             <Route path="/help-request" component={HelpRequest}/>
-            <Route path="/signup" component={Signup}/>
 
+            <Route path="/signup" component={Signup}/>
+            <Route path="/profile-creation" component={ProfileCreation}/>
             <Route path="/residence-info" component={ResidenceInfo}/>
-            <Route path="/profile-info" component={ProfileCreation}/>
+            <Route path="/insert-image" component={InsertImage}/>
 
             <Route path="/zipcode" component={ZipCode}/>
-            <Route path="/profile-creation" component={ProfileCreation}/>
 
             <Route path="/temp" component={Temp}/>
          </Switch>

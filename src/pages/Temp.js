@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import ArrowButton from '../components/ConfirmButton.js';
+import ConfirmButton from '../components/ConfirmButton.js';
 
 class Temp extends React.Component{
 
@@ -71,7 +71,7 @@ class Temp extends React.Component{
     render(){
         return (
           <div>
-            <ArrowButton onClickFunc = {this.sendProfiletoBackend}/>
+            <ConfirmButton onClickFunc = {this.sendProfiletoBackend}/>
           </div>
         );
     }

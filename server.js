@@ -144,10 +144,11 @@ client.connect(err => {
 	      res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
     });
 
-    app.get('/', (data, res) => {
-      console.log("hejs")
-      let user = data.body;
+    // GETs and sends user data to database
+    app.post('/', (userData, res) => {
+      let user = userData.body;
       console.log(user)
+      //users.insertOne(user).catch(error => console.error(error));
     })
 
     app.post('/', function(req, res) {

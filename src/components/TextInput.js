@@ -38,7 +38,7 @@ class TextInput extends Component {
 
       default:
         return (
-        <StyledInput
+        <StyledTextArea
           type="text"
           name={this.props.name}
 
@@ -61,7 +61,7 @@ class TextInput extends Component {
   }
 }
 
-const StyledInput = styled.textarea`
+const StyledTextArea = styled.textarea`
     margin: auto;
     display: flex;
 
@@ -72,5 +72,15 @@ const StyledInput = styled.textarea`
     height: ${props => props.height || '24em'};
     width: ${props => props.width || '18em'};
 `
+const StyledInput = styled.input`
+    margin: auto;
+    display: flex;
 
+    border:  1px solid #31D285;
+    box-sizing: border-box;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.12);
+
+    height: ${props => props.height || '24em'};
+    width: ${props => props.width || '18em'};
+`
 export default TextInput;

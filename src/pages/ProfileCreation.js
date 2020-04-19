@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js'
@@ -10,20 +11,24 @@ import ConfirmButton from '../components/ConfirmButton.js';
 
 class ProfileCreation extends React.Component {
       state = {
+        username: '',
+        password: '',
+
         firstname: '',
         lastname: '',
         age: '',
 
         email: '',
         mobile: '',
-    }
+
+      }
 
   saveInput = e => {
     this.setState({ [e.target.name]: e.target.value })
   }
 
   storeSession = e => {
-    sessionStorage.setItem("stateProfileCreation", JSON.stringify(this.state));
+    window.sessionStorage.setItem("stateProfileCreation", JSON.stringify(this.state));
   }
 
   render(){
@@ -33,6 +38,12 @@ class ProfileCreation extends React.Component {
 
         <form>
           <SectionTitle text="Profile Creation" />
+
+          <SectionTitle text="Username" />
+          <TextInput height="24px" name="username" value={this.username} saveInput={this.saveInput}/>
+
+          <SectionTitle text="Password" />
+          <TextInput type="password" height="24px" name="password" value={this.password} saveInput={this.saveInput}/>
 
           <SectionTitle text="Given Name" />
           <TextInput height="24px" name="firstname" value={this.firstname} saveInput={this.saveInput}/>
@@ -49,9 +60,9 @@ class ProfileCreation extends React.Component {
           <SectionTitle text="E-mail address" />
           <TextInput height="24px" name="email" value={this.email} saveInput={this.saveInput}/>
 
-          {/*<Link to="residence-info">*/}
-            <ConfirmButton onClickFunc={this.storeSession}/>
-          {/*</Link>*/}
+          <Link to="residence-info">
+            <ConfirmButton onClickFunc={this.storeSession} />
+          </Link>
         </form>
       </div>
 

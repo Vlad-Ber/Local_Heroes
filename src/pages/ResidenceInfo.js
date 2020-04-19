@@ -6,7 +6,7 @@ import NavBar from '../components/NavBar.js';
 import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js'
 import TextButton from '../components/TextButton.js'
-import ArrowButton from '../components/ConfirmButton.js'; //TODO Fix Arrow button
+import ConfirmButton from '../components/ConfirmButton.js'; //TODO Fix Arrow button
 
 class ResidenceInfo extends React.Component{
       state = {
@@ -20,7 +20,7 @@ class ResidenceInfo extends React.Component{
       }
 
       storeSession = e => {
-        sessionStorage.setItem("stateResidenceInfo", JSON.stringify(this.state));
+        window.sessionStorage.setItem("stateResidenceInfo", JSON.stringify(this.state));
       }
 
     render(){
@@ -59,7 +59,10 @@ class ResidenceInfo extends React.Component{
               />
 
             </form>
-            <ArrowButton onClickFunc={this.storeSession}/>
+
+            <Link to="insert-image">
+              <ConfirmButton onClickFunc={this.storeSession}/>
+            </Link>
           </div>
         );
     }

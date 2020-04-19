@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { Link } from 'react-router-dom';
+
 import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js'
 import TextButton from '../components/TextButton.js'
@@ -10,13 +12,16 @@ class Signup extends Component {
     return (
       <div>
         <SectionTitle text="USERNAME" />
-        <TextInput />
+        <TextInput height="24 px"/>
 
         <SectionTitle text="PASSWORD" />
-        <TextInput type="password"/>
+        <TextInput height="24 px" type="password"/>
 
         <TextButton description="LOGIN"/>
-        <TextButton description="SIGN UP"/>
+
+        <Link to="profile-creation">
+          <TextButton description="SIGN UP"/>
+        </Link>
       </div>
     );
   }
