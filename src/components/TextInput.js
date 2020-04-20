@@ -9,6 +9,7 @@ const TextInput = (props) => {
       return (
       <StyledInput 
         type="number" 
+        autocomplete="on"
         height={props.height} 
         width={props.width} 
         {...props}
@@ -20,6 +21,7 @@ const TextInput = (props) => {
       return (
       <StyledInput 
         type="password" 
+        autocomplete="on"
         height={props.height} 
         width={props.width} 
         {...props}
@@ -30,6 +32,7 @@ const TextInput = (props) => {
       return (
       <StyledTextArea 
         type="text" 
+        autocomplete="on"
         height={props.height} 
         width={props.width} 
         {...props}

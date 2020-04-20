@@ -25,7 +25,7 @@ class ProfileCreation extends Component {
             mobile: '',
         }
     }
-    
+
     saveInput = e => {
         this.setState({ [e.target.name]: e.target.value })
     }
@@ -64,10 +64,10 @@ class ProfileCreation extends Component {
                     <SectionTitle text="Profile Creation" />
 
                     <SectionTitle fontSize="14px" text="Username" />
-                    <TextInput height="24px" name="username" value={this.username} saveInput={this.saveInput}/>
+                    <TextInput height="24px" name="username" value={this.username} saveInput={this.saveInput} autocomplete="username"/>
 
                     <SectionTitle fontSize="14px" text="Password" />
-                    <TextInput type="password" height="24px" name="password" value={this.password} saveInput={this.saveInput}/>
+                    <TextInput type="password" height="24px" name="password" value={this.password} saveInput={this.saveInput} autocomplete="new-password"/>
 
                     <SectionTitle fontSize="14px" text="Given Name" />
                     <TextInput height="24px" name="firstname" value={this.firstname} saveInput={this.saveInput}/>
