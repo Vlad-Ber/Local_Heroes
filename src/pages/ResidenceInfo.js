@@ -5,6 +5,7 @@ import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js';
 import ConfirmButton from '../components/ConfirmButton.js';
 import LinkWrapper from '../components/LinkWrapper.js';
+import StyledForm from '../components/StyledForm.js';
 
 class ResidenceInfo extends Component {
 
@@ -32,10 +33,10 @@ class ResidenceInfo extends Component {
           <div>
             <NavBar />
 
-            <SectionTitle text = "Residence Info" />
+            <SectionTitle text="Residence Info" />
 
-            <form>
-              <SectionTitle text = "Address" titleType="Variant" />
+            <StyledForm>
+              <SectionTitle text = "Address" fontSize="14px" />
               <TextInput
               height="24px"
               name="address"
@@ -43,7 +44,7 @@ class ResidenceInfo extends Component {
               saveInput={this.saveInput}
               />
 
-              <SectionTitle text = "Area Code" titleType="Variant"/>
+              <SectionTitle text = "Area Code" fontSize="14px"/>
               <TextInput
               type="number"
               pattern="[0-9]"
@@ -53,7 +54,7 @@ class ResidenceInfo extends Component {
               saveInput={this.saveInput}
               />
 
-              <SectionTitle text="City" titletype="Variant"/>
+              <SectionTitle text="City" fontSize="14px"/>
               <TextInput
               height="24px"
               name="city"
@@ -61,11 +62,11 @@ class ResidenceInfo extends Component {
               saveInput={this.saveInput}
               />
 
-            </form>
 
             <LinkWrapper to="insert-image">
               <ConfirmButton onClick={this.storeSession}/>
             </LinkWrapper>
+            </StyledForm>
           </div>
         );
     }

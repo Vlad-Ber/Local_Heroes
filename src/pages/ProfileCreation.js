@@ -8,6 +8,7 @@ import TextInput from '../components/TextInput.js'
 import NavBar from '../components/NavBar.js';
 import ConfirmButton from '../components/ConfirmButton.js';
 import LinkWrapper from '../components/LinkWrapper.js';
+import StyledForm from '../components/StyledForm.js';
 
 class ProfileCreation extends Component {
 
@@ -85,28 +86,15 @@ class ProfileCreation extends Component {
                     <SectionTitle fontSize="14px" text="E-mail address" />
                     <TextInput height="24px" name="email" value={this.email} saveInput={this.saveInput}/>
 
-                    <ButtonWrapper>
-                        <LinkWrapper to="/residence-info">
-                            <ConfirmButton onClick={this.storeSession} />
-                        </LinkWrapper>
-                    </ButtonWrapper>
+                    <LinkWrapper to="/residence-info">
+                        <ConfirmButton onClick={this.storeSession} />
+                    </LinkWrapper>
 
                 </StyledForm>
             </div>
         );
     }
 }
-
-const StyledForm = styled.form`
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
-    align-items: center;
-`;
-
-const ButtonWrapper = styled.div`
-    padding: 40px;
-`; 
 
 
 export default ProfileCreation;
