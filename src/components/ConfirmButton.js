@@ -1,17 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components'
 
 import { Checkmark } from 'react-checkmark';
 
-class ConfirmButton extends Component {
-
-    render(){
-        return(
-                <ConfirmButtonWrapper type="submit" value="Submit" id="confirm" onClick={this.props.onClickFunc}>
-                    <Checkmark size='large'/>
-                </ConfirmButtonWrapper>
-        );
-    }
+const ConfirmButton = (props) => {
+    return (
+        <ConfirmButtonWrapper type="submit" value="Submit" id="confirm" onClick={props.onClickFunc}>
+            <Checkmark size='large'/>
+        </ConfirmButtonWrapper>
+    );
 }
 
 const ConfirmButtonWrapper = styled.button`
