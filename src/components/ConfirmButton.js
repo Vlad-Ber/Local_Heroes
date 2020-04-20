@@ -16,10 +16,7 @@ const ConfirmButtonWrapper = styled.button`
     background-color: white;
     border: #4CAF50;
     color: #4CAF50;
-    padding: 0px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
+    padding: 20px;
     font-size: 48px;
     border-radius: 100%;
 `;
