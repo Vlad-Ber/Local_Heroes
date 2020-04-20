@@ -33,15 +33,15 @@ class Signup extends Component {
 
 
         <SectionTitle text="USERNAME" />
-        <TextInput height="24px" width="240px"/>
+        <TextInput height="32px" width="240px"/>
 
         <SectionTitle text="PASSWORD" />
-        <TextInput type="password" height="24px" width="240px"/>
+        <TextInput type="password" height="32px" width="240px"/>
 
-        <TextButton description="LOGIN" marginTop="40px" marginBottom="10px" width="240px"/>
+        <TextButton description="LOGIN" marginTop="40px" marginBottom="10px" height="32px" width="240px"/>
 
         <Link to="profile-creation">
-          <TextButton description="SIGN UP" marginTop="10px" marginBottom="10px" width="240px"/>
+          <TextButton description="SIGN UP" marginTop="10px" marginBottom="10px" height="32px" width="240px"/>
         </Link>
 
       </SignUpWrapper>

@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const TextButton = (props) => {
-    return <Button marginTop={props.marginTop} marginBottom={props.marginBottom} width={props.width}>{props.description}</Button>
+    return <Button marginTop={props.marginTop} marginBottom={props.marginBottom} width={props.width} height={props.height}>{props.description}</Button>
 }
 
 const Button = styled.button`
@@ -12,7 +12,7 @@ const Button = styled.button`
     justify-content: center;
     align-items: center;
     font-size: 1em;
-    height: 40px;
+    height: ${props => props.height || '18em'};
     width: ${props => props.width || '18em'};
     margin-top: ${props => props.marginTop || '30px'};
     margin-bottom: ${props => props.marginBottom || '30px'};
