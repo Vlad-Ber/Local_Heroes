@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import { Link } from 'react-router-dom';
-
 import data from '../data/data.json';
 
 import NavBar from '../components/NavBar.js';
@@ -10,6 +8,7 @@ import EventItemListView from '../components/EventItemListView.js';
 import SectionTitle from '../components/SectionTitle.js';
 import StatusView from '../components/StatusView.js';
 import TextButton from '../components/TextButton.js';
+import LinkWrapper from '../components/LinkWrapper.js';
 
 class Home extends Component {
 
@@ -62,9 +61,9 @@ class Home extends Component {
                     activeUsers={this.state.activeUsers}
                     activeErrands={this.state.activeErrands}
                 />
-                <Link to="/help-request">
+                <LinkWrapper to="/help-request">
                     <TextButton onClick={this.askForHelp} description="ASK FOR HELP"/>
-                </Link>
+                </LinkWrapper>
 
 		<button onClick={this.vidKnappTryck} id="loginKnapp" type="button" className="input">Server-TestKnapp</button>
                 <SectionTitle text="RECENT ACTIVITY"/>

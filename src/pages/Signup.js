@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 
 import styled from 'styled-components';
 
-import { Link } from 'react-router-dom';
-
 import SectionTitle from '../components/SectionTitle.js';
-import TextInput from '../components/TextInput.js'
-import TextButton from '../components/TextButton.js'
+import TextInput from '../components/TextInput.js';
+import TextButton from '../components/TextButton.js';
+import LinkWrapper from '../components/LinkWrapper.js';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSeedling } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSeedling } from '@fortawesome/free-solid-svg-icons';
 
 class Signup extends Component {
 
@@ -40,9 +39,9 @@ class Signup extends Component {
 
         <TextButton description="LOGIN" marginTop="40px" marginBottom="10px" height="32px" width="240px"/>
 
-        <Link to="profile-creation">
+        <LinkWrapper to="profile-creation">
           <TextButton description="SIGN UP" marginTop="10px" marginBottom="10px" height="32px" width="240px"/>
-        </Link>
+        </LinkWrapper>
 
       </SignUpWrapper>
     );

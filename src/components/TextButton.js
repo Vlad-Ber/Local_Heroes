@@ -12,7 +12,7 @@ const Button = styled.button`
     justify-content: center;
     align-items: center;
     font-size: 1em;
-    height: ${props => props.height || '18em'};
+    height: ${props => props.height || '42px'};
     width: ${props => props.width || '18em'};
     margin-top: ${props => props.marginTop || '30px'};
     margin-bottom: ${props => props.marginBottom || '30px'};
