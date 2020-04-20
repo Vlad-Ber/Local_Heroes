@@ -3,7 +3,18 @@ var bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
+var cors = require('cors');
+app.use(cors());
+app.use(cors({origin: true, credentials: true}));
 
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:5000');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+});
 
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://Vlad-Ber:arneiskogen1@cluster0-76fsx.mongodb.net/test?retryWrites=true&w=majority";
@@ -28,6 +39,17 @@ client.connect(err => {
 	      else{
 	          return true;
 	      }
+    }
+
+    async function checkUser(curUserName, curEmail){
+        let checkUser = await documentExist("Users", curUserName);
+        let checkEmail = await documentExist("Users", curEmail);
+        if(checkUser == true || checkEmail == true){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     async function insertArea(areaID, email){
@@ -72,8 +94,12 @@ client.connect(err => {
             "city": city,
 	      };
 	      var queryToFind = {"email": email};
-	      var findUser = await documentExist("Users", queryToFind);
-	      if( findUser == false){
+        var userNameToFind = {"username": username};
+        
+	      var findEmail = await documentExist("Users", queryToFind);
+        var findUser = await documentExist("Users", userNameToFind);
+	      if( findUser == false && findEmail == false){
+            
 	          await users.insertOne(data).catch(error =>console.error(error));
 	          console.log("User " + name + " has been added!");
 	          var areaToFind = {"areaID": areaID};
@@ -86,7 +112,13 @@ client.connect(err => {
 	          }
 	      }
 	      else{
-	          console.log("A user with this email already exists");
+            if(findUser == true){
+                console.log("A user with this username already exists")
+            }
+            if(findEmail == true){
+                console.log("A user with this email already exists");
+            }
+	          
 	      }
 
     };
@@ -160,6 +192,23 @@ client.connect(err => {
         insertUser(user.username, user.password, user.email, user.name, user.age, user.address,
                    user.description, user.areaId, user.mobile, user.city);
     });
+
+    app.post('/check-user', async (data, res) => {
+        console.log("Check user server");
+        
+        let user = data.body;
+        let curUserName = {"username": user.username };
+        let curEmail = {"email": user.email };
+        let checkUser = await documentExist("Users", curUserName);
+        let checkEmail = await documentExist("Users", curEmail);
+
+        console.log(checkUser);
+        console.log(checkEmail);
+       
+        res.send({ userState: checkUser, emailState: checkEmail });
+        
+    });
+    
 
     app.post('/', function(req, res) {
 	      var testData = req.body.data1;

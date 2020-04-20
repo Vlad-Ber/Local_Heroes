@@ -99,9 +99,9 @@ class InsertImage extends React.Component{
               <SectionTitle text="Short Description" />
                 <TextInput  name="description" value={this.description} saveInput={this.saveInput}/>
 
-              {/*<Link to="signup">*/}
+              <Link to="signup">
                 <ConfirmButton onClickFunc = {this.sendProfiletoBackend}/>
-              {/*</Link>*/}
+              </Link>
 		        </div>
         );
     }
