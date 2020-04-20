@@ -4,6 +4,7 @@ import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js'
 import TextButton from '../components/TextButton.js'
 import NavBar from '../components/NavBar.js';
+import ConfirmButton from '../components/ConfirmButton.js';
 
 class ProfileCreation extends React.Component {
 
@@ -32,6 +33,7 @@ class ProfileCreation extends React.Component {
         <SectionTitle text = "E-mail address" titleType = "variant"/>
         <TextInput />
 
+        <ConfirmButton />
       </div>
 
 
