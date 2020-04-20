@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import SectionTitle from '../components/SectionTitle.js';
 import ConfirmButton from '../components/ConfirmButton.js';
-import TextInput from '../components/TextInput.js'
+import TextInput from '../components/TextInput.js';
+import LinkWrapper from '../components/LinkWrapper.js';
 
 class InsertImage extends React.Component{
 
@@ -99,9 +99,9 @@ class InsertImage extends React.Component{
               <SectionTitle text="Short Description" />
                 <TextInput  name="description" value={this.description} saveInput={this.saveInput}/>
 
-              <Link to="signup">
-                <ConfirmButton onClickFunc = {this.sendProfiletoBackend}/>
-              </Link>
+              <LinkWrapper to="signup">
+                <ConfirmButton onClick={this.sendProfiletoBackend}/>
+              </LinkWrapper>
 		        </div>
         );
     }

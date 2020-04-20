@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 
 import styled from 'styled-components'
+
+import LinkWrapper from './LinkWrapper.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSeedling } from '@fortawesome/free-solid-svg-icons'
@@ -11,14 +12,14 @@ class NavBar extends Component {
     render(){
         return (
             <NavBarWrapper>
-                <Link to="/" style={{ color: 'black' }}>
+                <LinkWrapper to="/" style={{ color: 'black' }}>
                     <FontAwesomeIcon 
                         style={{
                             fontSize: '32px'
                         }} 
                         icon={faSeedling}
                     />
-                </Link>
+                </LinkWrapper>
             </NavBarWrapper>
             
         )
