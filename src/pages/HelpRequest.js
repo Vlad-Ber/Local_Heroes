@@ -54,7 +54,10 @@ class HelpRequest extends Component {
 
         return(
             <div>
-                <NavBar/>
+                <NavBar
+                    leftButtonType="back"
+                    leftButtonLink="/home"
+                />
 
                 <SectionTitle fontSize="14px" text="What do you need help with?"/>
                 <InputWrapper>
