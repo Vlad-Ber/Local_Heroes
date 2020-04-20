@@ -10,6 +10,7 @@ const SectionTitleWrapper = styled.div`
     text-decoration: underline;
     text-transform: uppercase;
     padding-top: 20px;
+    padding-bottom: 10px;
 `
 
 export default SectionTitle;

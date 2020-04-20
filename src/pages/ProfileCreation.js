@@ -1,5 +1,6 @@
 import React from 'react';
 
+import styled from 'styled-components';
 import axios from 'axios';
 
 import SectionTitle from '../components/SectionTitle.js';
@@ -54,37 +55,51 @@ class ProfileCreation extends React.Component {
         return (
             <div>
                 <NavBar />
-                
-                <form>
+    
+                <StyledForm>
                     <SectionTitle text="Profile Creation" />
 
-                    <SectionTitle text="Username" />
+                    <SectionTitle fontSize="14px" text="Username" />
                     <TextInput height="24px" name="username" value={this.username} saveInput={this.saveInput}/>
 
-                    <SectionTitle text="Password" />
+                    <SectionTitle fontSize="14px" text="Password" />
                     <TextInput type="password" height="24px" name="password" value={this.password} saveInput={this.saveInput}/>
 
-                    <SectionTitle text="Given Name" />
+                    <SectionTitle fontSize="14px" text="Given Name" />
                     <TextInput height="24px" name="firstname" value={this.firstname} saveInput={this.saveInput}/>
 
-                    <SectionTitle text="Surname" />
+                    <SectionTitle fontSize="14px" text="Surname" />
                     <TextInput height="24px" name="lastname" value={this.lastname} saveInput={this.saveInput}/>
 
-                    <SectionTitle text="Age" />
+                    <SectionTitle fontSize="14px" text="Age" />
                     <TextInput height="24px" name="age" type="number" value={this.age} saveInput={this.saveInput}/>
 
-                    <SectionTitle text="Mobile number" />
+                    <SectionTitle fontSize="14px" text="Mobile number" />
                     <TextInput height="24px" name="mobile" type="number" value={this.mobile} saveInput={this.saveInput}/>
 
-                    <SectionTitle text="E-mail address" />
+                    <SectionTitle fontSize="14px" text="E-mail address" />
                     <TextInput height="24px" name="email" value={this.email} saveInput={this.saveInput}/>
 
-                    <ConfirmButton onClick={this.storeSession} />
-                </form>
+                    <ButtonWrapper>
+                        <ConfirmButton onClick={this.storeSession} />
+                    </ButtonWrapper>
+
+                </StyledForm>
             </div>
         );
     }
 }
+
+const StyledForm = styled.form`
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+`;
+
+const ButtonWrapper = styled.div`
+    padding: 40px;
+`; 
 
 
 export default ProfileCreation;
