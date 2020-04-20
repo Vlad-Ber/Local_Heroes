@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import NavBar from '../components/NavBar.js';
 import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js'
-import TextButton from '../components/TextButton.js'
-import ConfirmButton from '../components/ConfirmButton.js'; //TODO Fix Arrow button
+import NavBar from '../components/NavBar.js';
+import ArrowButton from '../components/ConfirmButton.js'; //TODO Fix Arrow button
 
 class ResidenceInfo extends React.Component{
       state = {

@@ -1,16 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
+
 import styled from 'styled-components'
 
-
-
-class TextButton extends Component {
-    render(){
-        return (
-            <Button onClick={this.props.function}>
-                    {this.props.description}
-            </Button>
-        );
-    }
+const TextButton = (props) => {
+    return <Button onClick={props.onClick}>{props.description}</Button>
 }
 
 const Button = styled.button`

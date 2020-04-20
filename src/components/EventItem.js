@@ -17,6 +17,8 @@ class EventItem extends Component {
             fullView: false,
             errand: {}
         }
+
+        this.handleHelpNotice = this.handleHelpNotice.bind(this);
     };
 
     toggleView = () => {
@@ -25,6 +27,7 @@ class EventItem extends Component {
 
     handleHelpNotice = () => {
         console.log("I want to help");
+        // write https request to update errand
     };
 
     renderTypeIcon = (args) => {
@@ -70,8 +73,9 @@ class EventItem extends Component {
     }
 
     renderActionButton = () => {
-        return this.state.errand.status === "waiting" ? <TextButton function={this.handleHelpNotice} description="I WANT TO HELP"/> : null
-
+        return this.state.errand.status === "waiting" ? 
+            <TextButton onClick={this.handleHelpNotice} description="I WANT TO HELP"/> 
+            : null
     }
 
     renderExpandedView = () => {
@@ -119,9 +123,9 @@ class EventItem extends Component {
 
         return(
 
-            <EventItemWrapper onClick={this.toggleView}>
+            <EventItemWrapper>
 
-                <DefaultView>
+                <DefaultView onClick={this.toggleView}>
 
                     <EventMetaData>
                         {this.renderTypeIcon()}

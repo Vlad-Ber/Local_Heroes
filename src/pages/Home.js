@@ -63,7 +63,7 @@ class Home extends Component {
                     activeErrands={this.state.activeErrands}
                 />
                 <Link to="/help-request">
-                    <TextButton function={this.askForHelp()} description="ASK FOR HELP"/>
+                    <TextButton onClick={this.askForHelp} description="ASK FOR HELP"/>
                 </Link>
 
 		<button onClick={this.vidKnappTryck} id="loginKnapp" type="button" className="input">Server-TestKnapp</button>

@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import styled from 'styled-components'
 
+<<<<<<< HEAD
 class TextInput extends Component {
 
   renderInputType = () => {
@@ -58,6 +59,41 @@ class TextInput extends Component {
         {this.renderInputType()}
       </React.Fragment>
     );
+=======
+const TextInput = (props) => {
+  let type = props.type; 
+  switch(type){
+    case "number": 
+      return (
+      <StyledInput 
+        type="number" 
+        height={props.height} 
+        width={props.width} 
+        {...props}
+        min="0"
+      />
+      );
+
+    case "password": 
+      return (
+      <StyledInput 
+        type="password" 
+        height={props.height} 
+        width={props.width} 
+        {...props}
+      />
+      );
+
+    default: 
+      return (
+      <StyledInput 
+        type="text" 
+        height={props.height} 
+        width={props.width} 
+        {...props}
+      />
+      );
+>>>>>>> master
   }
 }
 

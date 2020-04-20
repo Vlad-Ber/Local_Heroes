@@ -6,7 +6,6 @@ import styled from 'styled-components';
 
 import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js'
-import TextButton from '../components/TextButton.js'
 import NavBar from '../components/NavBar.js';
 import ConfirmButton from '../components/ConfirmButton.js';
 
@@ -33,6 +32,7 @@ class ProfileCreation extends React.Component {
         window.sessionStorage.setItem("stateProfileCreation", JSON.stringify(this.state));
     }
 
+<<<<<<< HEAD
     checkForNewUsername = e => {
         console.log("inside checkForNewUsername");
         axios.post("check-user",{
@@ -72,6 +72,27 @@ class ProfileCreation extends React.Component {
 
                 <SectionTitle text="Surname" />
                 <TextInput height="24px" name="lastname" value={this.lastname} saveInput={this.saveInput}/>
+=======
+        <SectionTitle text="Profile Creation" />
+
+        <SectionTitle text="Given Name" titleType="variant"/>
+        <TextInput />
+
+        <SectionTitle text="Surname" titleType="variant"/>
+        <TextInput />
+
+        <SectionTitle text="Age" titleType="variant"/>
+        <TextInput type="number" />
+
+        <SectionTitle text="Gender" titleType="variant"/>
+        <TextInput type="dropdown"/>
+
+        <SectionTitle text="Mobile number" titleType="variant"/>
+        <TextInput type="number" />
+
+        <SectionTitle text= "E-mail address" titleType="variant"/>
+        <TextInput />
+>>>>>>> master
 
                 <SectionTitle text="Age" />
                 <TextInput height="24px" name="age" type="number" value={this.age} saveInput={this.saveInput}/>
