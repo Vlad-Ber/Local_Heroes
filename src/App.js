@@ -19,10 +19,11 @@ class App extends Component {
       <Router>
         <div className="App" style={{ fontFamily: 'Inter' }}>
           <Switch>
-            <Route path="/" exact component={Home}/>
-            <Route path="/help-request" component={HelpRequest}/>
-
+            <Route path="/" exact component={Signup}/>
             <Route path="/signup" component={Signup}/>
+
+            <Route path="/home" component={Home} />
+            <Route path="/help-request" component={HelpRequest}/>
             <Route path="/profile-creation" component={ProfileCreation}/>
             <Route path="/residence-info" component={ResidenceInfo}/>
             <Route path="/insert-image" component={InsertImage}/>

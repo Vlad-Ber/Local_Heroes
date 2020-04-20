@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import NavBar from '../components/NavBar.js';
 import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js';
-import ConfirmButton from '../components/ConfirmButton.js';
+import ArrowButton from '../components/ArrowButton.js';
 import LinkWrapper from '../components/LinkWrapper.js';
 import StyledForm from '../components/StyledForm.js';
 
@@ -67,7 +67,7 @@ class ResidenceInfo extends Component {
 
 
             <LinkWrapper to="insert-image">
-              <ConfirmButton onClick={this.storeSession}/>
+              <ArrowButton onClick={this.storeSession}/>
             </LinkWrapper>
             </StyledForm>
           </div>

@@ -1,30 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 
-class ArrowButton extends Component {
-
-    render(){
-        return(
-            <ArrowButtonWrapper  id="Arrow" type="submit" value="Submit" id="confirm" onClick={this.props.onClickFunc}>
-            <img src={""}/> insert image
-            </ArrowButtonWrapper>
-        );
-    }
+const ArrowButton = () => {
+    return (
+        <ArrowButtonWrapper>
+            <FontAwesomeIcon icon={faArrowCircleRight} />
+        </ArrowButtonWrapper>
+    );
 }
 
 const ArrowButtonWrapper = styled.button`
-    background-color: #4CAF50;
-
-    border: none;
-    color: white;
-    padding: 0px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
+    background-color: white;
+    border: #4CAF50;
+    color: #4CAF50;
+    padding: 40px;
+    font-size: 48px;
     border-radius: 100%;
-`
+`;
 
-export default ArrowButton
+export default ArrowButton;

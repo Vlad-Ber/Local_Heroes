@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import axios from 'axios';
 
@@ -7,7 +7,7 @@ import ConfirmButton from '../components/ConfirmButton.js';
 import TextInput from '../components/TextInput.js';
 import LinkWrapper from '../components/LinkWrapper.js';
 
-class InsertImage extends React.Component{
+class InsertImage extends Component {
 
     constructor(props){
 	     super(props);
@@ -31,6 +31,7 @@ class InsertImage extends React.Component{
     }
 
     componentDidMount(){
+      
 	       let prof = JSON.parse(sessionStorage.getItem("stateProfileCreation"));
 
          let updatedUsername = prof.username;
@@ -39,7 +40,6 @@ class InsertImage extends React.Component{
 	       let updatedAge = prof.age;
 	       let updatedEmail = prof.email;
 	       let updatedMobile = prof.mobile;
-
 
 	       let stateRes = JSON.parse(sessionStorage.getItem("stateResidenceInfo"));
 

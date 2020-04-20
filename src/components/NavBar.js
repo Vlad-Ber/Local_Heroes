@@ -30,7 +30,7 @@ class NavBar extends Component {
                 </NavBarSpaceLeft>
 
                 <NavBarSpaceCenter>
-                    <LinkWrapper to="/" style={{ color: 'black' }}>
+                    <LinkWrapper to="/home" style={{ color: 'black' }}>
                         <FontAwesomeIcon 
                             icon={faSeedling}
                             style={{ fontSize: '32px' }} 
