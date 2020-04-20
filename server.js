@@ -203,7 +203,6 @@ client.connect(err => {
     });
     
 
-<<<<<<< HEAD
     /*app.post('/', function(req, res) {
 	      var testData = req.body.data1;
 	      var dataToSend = {"testData1":testData, "testdata2": "boll"}
@@ -211,12 +210,10 @@ client.connect(err => {
 	      //insertUser("olle@gmail.com", "Olle Ollesson", 20, "Sveavägen 1", "Lagar mat", 75757);
 	      //insertErrand("Laga mat", "Handla mjölk på Ica", "Anna", "Shopping", "Ringvägen 2", "07567467", 56788);
     });*/
-=======
     app.post('getErrands', function(req, res) {
 	var errands = getErrandsArea(req.body.areaID);
 	res.send({errands});
     });
->>>>>>> master
     
 })
 

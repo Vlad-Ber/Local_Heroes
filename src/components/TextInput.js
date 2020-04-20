@@ -2,64 +2,6 @@ import React from 'react';
 
 import styled from 'styled-components'
 
-<<<<<<< HEAD
-class TextInput extends Component {
-
-  renderInputType = () => {
-    let type = this.props.type;
-    switch(type){
-      case "number":
-        return (
-        <StyledInput
-          type="number"
-          name={this.props.name}
-
-          value={this.props.value}
-          onChange={this.props.saveInput}
-
-          height={this.props.height}
-          width={this.props.width}
-          min="0"
-        />
-        );
-
-      case "password":
-        return (
-        <StyledInput
-          type="password"
-          name={this.props.name}
-
-          value={this.props.value}
-          onChange={this.props.saveInput}
-
-          height={this.props.height}
-          width={this.props.width}
-        />
-        );
-
-      default:
-        return (
-        <StyledTextArea
-          type="text"
-          name={this.props.name}
-
-          value={this.props.value}
-          onChange={this.props.saveInput}
-
-          height={this.props.height}
-          width={this.props.width}
-        />
-        );
-    }
-  }
-
-  render(){
-    return (
-      <React.Fragment>
-        {this.renderInputType()}
-      </React.Fragment>
-    );
-=======
 const TextInput = (props) => {
   let type = props.type; 
   switch(type){
@@ -86,14 +28,13 @@ const TextInput = (props) => {
 
     default: 
       return (
-      <StyledInput 
+      <StyledTextArea 
         type="text" 
         height={props.height} 
         width={props.width} 
         {...props}
       />
       );
->>>>>>> master
   }
 }
 
