@@ -7,6 +7,7 @@ import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js'
 import NavBar from '../components/NavBar.js';
 import ConfirmButton from '../components/ConfirmButton.js';
+import LinkWrapper from '../components/LinkWrapper.js';
 
 class ProfileCreation extends Component {
 
@@ -85,7 +86,9 @@ class ProfileCreation extends Component {
                     <TextInput height="24px" name="email" value={this.email} saveInput={this.saveInput}/>
 
                     <ButtonWrapper>
-                        <ConfirmButton onClick={this.storeSession} />
+                        <LinkWrapper to="/residence-info">
+                            <ConfirmButton onClick={this.storeSession} />
+                        </LinkWrapper>
                     </ButtonWrapper>
 
                 </StyledForm>

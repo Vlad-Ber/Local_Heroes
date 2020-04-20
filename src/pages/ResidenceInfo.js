@@ -64,7 +64,7 @@ class ResidenceInfo extends Component {
             </form>
 
             <LinkWrapper to="insert-image">
-              <ConfirmButton onClickFunc={this.storeSession}/>
+              <ConfirmButton onClick={this.storeSession}/>
             </LinkWrapper>
           </div>
         );
