@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import styled from 'styled-components';
-
 import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js'
 
