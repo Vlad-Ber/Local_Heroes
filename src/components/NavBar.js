@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import LinkWrapper from './LinkWrapper.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSeedling, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { faSeedling, faArrowLeft, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -17,9 +17,15 @@ class NavBar extends Component {
                 <FontAwesomeIcon icon={faArrowLeft} style={{ fontSize: '24px'}}/>
             </LinkWrapper> 
             : null
-    }
+    };
 
-    // TO DO IF NEEDED: Implement renderRightButton()
+    renderRightButton = (type, link) => {
+        return type === "profile" ?
+            <LinkWrapper to={link}>
+                <FontAwesomeIcon icon={faUserCircle} style={{ fontSize: '24px' }}/>
+            </LinkWrapper>
+            : null
+    };
 
     render(){
         return (
@@ -39,6 +45,7 @@ class NavBar extends Component {
                 </NavBarSpaceCenter>
 
                 <NavBarSpaceRight>
+                    {this.renderRightButton(this.props.rightButtonType, this.props.rightButtonLink)}
                 </NavBarSpaceRight>
 
             </NavBarWrapper>

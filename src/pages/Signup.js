@@ -16,7 +16,6 @@ class Signup extends Component {
     return (
       <SignUpWrapper>
 
-
         <WelcomeMessage>
           <FontAwesomeIcon
             icon={faSeedling}
@@ -37,7 +36,9 @@ class Signup extends Component {
         <SectionTitle text="PASSWORD" />
         <TextInput type="password" height="32px" width="240px"/>
 
-        <TextButton description="LOGIN" marginTop="40px" marginBottom="10px" height="32px" width="240px"/>
+        <LinkWrapper to="/home">
+          <TextButton description="LOGIN" marginTop="40px" marginBottom="10px" height="32px" width="240px"/>
+        </LinkWrapper>
 
         <LinkWrapper to="profile-creation">
           <TextButton description="SIGN UP" marginTop="10px" marginBottom="10px" height="32px" width="240px"/>
