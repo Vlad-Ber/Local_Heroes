@@ -60,7 +60,10 @@ class ProfileCreation extends Component {
     render(){
         return (
             <div>
-                <NavBar />
+                <NavBar 
+                    leftButtonType="back"
+                    leftButtonLink="/signup"
+                />
     
                 <StyledForm>
                     <SectionTitle text="Profile Creation" />

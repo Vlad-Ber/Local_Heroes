@@ -31,12 +31,15 @@ class ResidenceInfo extends Component {
       console.log(this.state)
         return (
           <div>
-            <NavBar />
+            <NavBar 
+              leftButtonType="back"
+              leftButtonLink="/profile-creation"
+            />
 
             <SectionTitle text="Residence Info" />
 
             <StyledForm>
-              <SectionTitle text = "Address" fontSize="14px" />
+              <SectionTitle text="Address" fontSize="14px" />
               <TextInput
               height="24px"
               name="address"
@@ -44,7 +47,7 @@ class ResidenceInfo extends Component {
               saveInput={this.saveInput}
               />
 
-              <SectionTitle text = "Area Code" fontSize="14px"/>
+              <SectionTitle text="Area Code" fontSize="14px"/>
               <TextInput
               type="number"
               pattern="[0-9]"
