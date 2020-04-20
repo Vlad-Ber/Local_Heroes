@@ -61,9 +61,7 @@ class InsertImage extends React.Component{
 	          city: updatedCity,
 
 	       })
-
     }
-
 
     saveInput = e => {
         this.setState({ [e.target.name]: e.target.value })
@@ -72,7 +70,7 @@ class InsertImage extends React.Component{
     sendProfiletoBackend = (userProfile, response) => {
         let user = this.state;
 
-        axios.post("/",{
+        axios.post("/addUserToDB", {
           username: user.username,
           password: user.password,
           email: user.email,

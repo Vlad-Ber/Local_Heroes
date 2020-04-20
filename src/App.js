@@ -9,8 +9,6 @@ import ProfileCreation from './pages/ProfileCreation.js';
 import ResidenceInfo from './pages/ResidenceInfo.js';
 import InsertImage from './pages/InsertImage.js';
 
-import Temp from './pages/Temp.js';
-
 import ZipCode from './pages/ZipCode.js'
 
 class App extends Component {
@@ -29,8 +27,6 @@ class App extends Component {
             <Route path="/insert-image" component={InsertImage}/>
 
             <Route path="/zipcode" component={ZipCode}/>
-
-            <Route path="/temp" component={Temp}/>
          </Switch>
         </div>
       </Router>

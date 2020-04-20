@@ -144,8 +144,14 @@ client.connect(err => {
 	      res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
     });
 
+    // GETs username and checks if it unique
+    app.post('/check-username', (username, res) => {
+      let u = username.body;
+      users.find({username: u}).catch(error => console.error(error));
+    })
+
     // GETs and sends user data to database
-    app.post('/', (userData, res) => {
+    app.get('/addUserToDB', (userData, res) => {
       let user = userData.body;
       console.log(user)
       //users.insertOne(user).catch(error => console.error(error));

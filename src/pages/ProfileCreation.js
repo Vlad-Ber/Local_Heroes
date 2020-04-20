@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import styled from 'styled-components';
 
 import SectionTitle from '../components/SectionTitle.js';
@@ -29,6 +30,16 @@ class ProfileCreation extends React.Component {
 
   storeSession = e => {
     window.sessionStorage.setItem("stateProfileCreation", JSON.stringify(this.state));
+  }
+
+  checkForNewUsername = e => {
+    
+    axios.post("/check-username",{
+      username: this.state.username,
+    })
+    .then((response) => {
+        console.log(response);
+    });
   }
 
   render(){
