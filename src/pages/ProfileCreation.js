@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import styled from 'styled-components';
 import axios from 'axios';
@@ -8,20 +8,24 @@ import TextInput from '../components/TextInput.js'
 import NavBar from '../components/NavBar.js';
 import ConfirmButton from '../components/ConfirmButton.js';
 
-class ProfileCreation extends React.Component {
-    state = {
-        username: '',
-        password: '',
+class ProfileCreation extends Component {
 
-        firstname: '',
-        lastname: '',
-        age: '',
-
-        email: '',
-        mobile: '',
-
+    constructor(props){
+        super(props); 
+        
+        this.state = {
+            username: '',
+            password: '',
+        
+            firstname: '',
+            lastname: '',
+            age: '',
+        
+            email: '',
+            mobile: '',
+        }
     }
-
+    
     saveInput = e => {
         this.setState({ [e.target.name]: e.target.value })
     }
