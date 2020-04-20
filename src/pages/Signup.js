@@ -12,10 +12,10 @@ class Signup extends Component {
     return (
       <div>
         <SectionTitle text="USERNAME" />
-        <TextInput height="24 px"/>
+        <TextInput height="24px"/>
 
         <SectionTitle text="PASSWORD" />
-        <TextInput height="24 px" type="password"/>
+        <TextInput height="24px" type="password"/>
 
         <TextButton description="LOGIN"/>
 
