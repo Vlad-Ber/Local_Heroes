@@ -35,7 +35,7 @@ class ProfileCreation extends React.Component {
 
     checkForNewUsername = e => {
         console.log("inside checkForNewUsername");
-        axios.post("/check-user",{
+        axios.post("check-user",{
             username: this.state.username,
             email: this.state.email,
         })
@@ -46,7 +46,7 @@ class ProfileCreation extends React.Component {
                 
             })
             .catch((error) => {
-                console.log(error);
+                console.log(error.response);
                 while(true){
                     
                 }

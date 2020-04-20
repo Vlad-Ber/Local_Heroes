@@ -8,11 +8,9 @@ app.use(cors());
 app.use(cors({origin: true, credentials: true}));
 
 app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:5000');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
+  res.header("Access-Control-Allow-Origin", "*");
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
@@ -175,11 +173,6 @@ client.connect(err => {
 
     var router = express.Router();
 
-    // create a GET route
-    app.get('/api/greeting', (req, res) => {
-	      res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
-    });
-
     // GETs username and checks if it unique
     app.post('/check-username', (username, res) => {
       let u = username.body;
@@ -210,13 +203,14 @@ client.connect(err => {
     });
     
 
-    app.post('/', function(req, res) {
+    /*app.post('/', function(req, res) {
 	      var testData = req.body.data1;
 	      var dataToSend = {"testData1":testData, "testdata2": "boll"}
 	      //insertUser("markus@gmail.com", "Markus Ollesson", 20, "Kungsvägen 1", "Lyfter tungt", 75565);
 	      //insertUser("olle@gmail.com", "Olle Ollesson", 20, "Sveavägen 1", "Lagar mat", 75757);
 	      //insertErrand("Laga mat", "Handla mjölk på Ica", "Anna", "Shopping", "Ringvägen 2", "07567467", 56788);
-    });
+    });*/
+    
 })
 
 client.close();
