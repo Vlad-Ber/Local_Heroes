@@ -93,11 +93,11 @@ client.connect(err => {
 	      };
 	      var queryToFind = {"email": email};
         var userNameToFind = {"username": username};
-        
+
 	      var findEmail = await documentExist("Users", queryToFind);
         var findUser = await documentExist("Users", userNameToFind);
 	      if( findUser == false && findEmail == false){
-            
+
 	          await users.insertOne(data).catch(error =>console.error(error));
 	          console.log("User " + name + " has been added!");
 	          var areaToFind = {"areaID": areaID};
@@ -116,7 +116,7 @@ client.connect(err => {
             if(findEmail == true){
                 console.log("A user with this email already exists");
             }
-	          
+
 	      }
 
     };
@@ -180,7 +180,7 @@ client.connect(err => {
     })
 
     // GETs and sends user data to database
-    app.post('/addUserToDB', (userData, res) => {
+    app.post('/addUserToDB', async (userData, res) => {
         let user = userData.body;
         insertUser(user.username, user.password, user.email, user.name, user.age, user.address,
                    user.description, user.areaId, user.mobile, user.city);
@@ -188,7 +188,7 @@ client.connect(err => {
 
     app.post('/check-user', async (data, res) => {
         console.log("Check user server");
-        
+
         let user = data.body;
         let curUserName = {"username": user.username };
         let curEmail = {"email": user.email };
@@ -197,11 +197,11 @@ client.connect(err => {
 
         console.log(checkUser);
         console.log(checkEmail);
-       
+
         res.send({ userState: checkUser, emailState: checkEmail });
-        
+
     });
-    
+
 
     /*app.post('/', function(req, res) {
 	      var testData = req.body.data1;
@@ -214,7 +214,7 @@ client.connect(err => {
 	var errands = getErrandsArea(req.body.areaID);
 	res.send({errands});
     });
-    
+
 })
 
 client.close();

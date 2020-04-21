@@ -32,7 +32,7 @@ class InsertImage extends Component {
     }
 
     componentDidMount(){
-      
+
 	       let prof = JSON.parse(sessionStorage.getItem("stateProfileCreation"));
 
          let updatedUsername = prof.username;
@@ -104,7 +104,7 @@ class InsertImage extends Component {
 		          <SectionTitle text="Please insert a profile picture"/>
 
               <SectionTitle text="Short Description"/>
-              <TextInput height="48px" name="description" value={this.description} saveInput={this.saveInput}/>
+              <TextInput height="48px" name="description" value={this.description} onChange={this.saveInput}/>
 
               <ConfirmButton onClick={this.sendProfiletoBackend}/>
 		        </InsertImageWrapper>
@@ -113,8 +113,8 @@ class InsertImage extends Component {
 }
 
 const InsertImageWrapper = styled.div`
-  display: flex; 
-  flex-direction: column; 
+  display: flex;
+  flex-direction: column;
 `;
 
 export default InsertImage;

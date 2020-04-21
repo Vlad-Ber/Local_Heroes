@@ -6,7 +6,7 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 
 const ConfirmButton = (props) => {
     return (
-        <ConfirmButtonWrapper {...props} type="submit" value="Submit" id="confirm">
+        <ConfirmButtonWrapper {...props}>
             <FontAwesomeIcon icon={faCheckCircle} />
         </ConfirmButtonWrapper>
     );

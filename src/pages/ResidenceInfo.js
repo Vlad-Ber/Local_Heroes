@@ -31,7 +31,7 @@ class ResidenceInfo extends Component {
       console.log(this.state)
         return (
           <div>
-            <NavBar 
+            <NavBar
               leftButtonType="back"
               leftButtonLink="/profile-creation"
             />
@@ -44,7 +44,7 @@ class ResidenceInfo extends Component {
               height="24px"
               name="address"
               value={this.address}
-              saveInput={this.saveInput}
+              onChange={this.saveInput}
               />
 
               <SectionTitle text="Area Code" fontSize="14px"/>
@@ -54,7 +54,7 @@ class ResidenceInfo extends Component {
               height="24px"
               name="area"
               value={this.area}
-              saveInput={this.saveInput}
+              onChange={this.saveInput}
               />
 
               <SectionTitle text="City" fontSize="14px"/>
@@ -62,7 +62,7 @@ class ResidenceInfo extends Component {
               height="24px"
               name="city"
               value={this.city}
-              saveInput={this.saveInput}
+              onChange={this.saveInput}
               />
 
               <ArrowButton onClick={this.storeSession}/>

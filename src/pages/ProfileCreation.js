@@ -11,16 +11,16 @@ import StyledForm from '../components/StyledForm.js';
 class ProfileCreation extends Component {
 
     constructor(props){
-        super(props); 
-        
+        super(props);
+
         this.state = {
             username: '',
             password: '',
-        
+
             firstname: '',
             lastname: '',
             age: '',
-        
+
             email: '',
             mobile: '',
         }
@@ -31,15 +31,15 @@ class ProfileCreation extends Component {
     }
 
     storeSession = e => {
+        //this.checkForNewUsername();
         e.preventDefault();
-        this.checkForNewUsername();
         window.sessionStorage.setItem("stateProfileCreation", JSON.stringify(this.state));
         this.props.history.push("/residence-info");
     }
 
     checkForNewUsername = e => {
         console.log("inside checkForNewUsername");
-        axios.post("check-user",{
+        axios.post("/check-user",{
             username: this.state.username,
             email: this.state.email,
         })
@@ -53,36 +53,37 @@ class ProfileCreation extends Component {
     }
 
     render(){
+      console.log('State: ' + this.state)
         return (
             <div>
-                <NavBar 
+                <NavBar
                     leftButtonType="back"
                     leftButtonLink="/signup"
                 />
-    
+
                 <StyledForm>
                     <SectionTitle text="Profile Creation" />
 
                     <SectionTitle fontSize="14px" text="Username" />
-                    <TextInput height="24px" name="username" value={this.username} saveInput={this.saveInput} autocomplete="username"/>
+                    <TextInput height="24px" name="username" value={this.username} onChange={this.saveInput} autocomplete="username"/>
 
                     <SectionTitle fontSize="14px" text="Password" />
-                    <TextInput type="password" height="24px" name="password" value={this.password} saveInput={this.saveInput} autocomplete="new-password"/>
+                    <TextInput type="password" height="24px" name="password" value={this.password} onChange={this.saveInput} autocomplete="new-password"/>
 
                     <SectionTitle fontSize="14px" text="Given Name" />
-                    <TextInput height="24px" name="firstname" value={this.firstname} saveInput={this.saveInput}/>
+                    <TextInput height="24px" name="firstname" value={this.firstname} onChange={this.saveInput}/>
 
                     <SectionTitle fontSize="14px" text="Surname" />
-                    <TextInput height="24px" name="lastname" value={this.lastname} saveInput={this.saveInput}/>
+                    <TextInput height="24px" name="lastname" value={this.lastname} onChange={this.saveInput}/>
 
                     <SectionTitle fontSize="14px" text="Age" />
-                    <TextInput height="24px" name="age" type="number" value={this.age} saveInput={this.saveInput}/>
+                    <TextInput height="24px" name="age" type="number" value={this.age} onChange={this.saveInput}/>
 
                     <SectionTitle fontSize="14px" text="Mobile number" />
-                    <TextInput height="24px" name="mobile" type="number" value={this.mobile} saveInput={this.saveInput}/>
+                    <TextInput height="24px" name="mobile" type="number" value={this.mobile} onChange={this.saveInput}/>
 
                     <SectionTitle fontSize="14px" text="E-mail address" />
-                    <TextInput height="24px" name="email" value={this.email} saveInput={this.saveInput}/>
+                    <TextInput height="24px" name="email" value={this.email} onChange={this.saveInput}/>
 
                     <ArrowButton onClick={this.storeSession} />
 
