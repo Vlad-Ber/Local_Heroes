@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
+import styled from 'styled-components';
 import axios from 'axios';
 
+import NavBar from '../components/NavBar.js';
 import SectionTitle from '../components/SectionTitle.js';
 import ConfirmButton from '../components/ConfirmButton.js';
 import TextInput from '../components/TextInput.js';
@@ -94,16 +96,25 @@ class InsertImage extends Component {
     render(){
       console.log(this.state)
         return(
-		        <div>
+		        <InsertImageWrapper>
+              <NavBar
+                leftButtonType="back"
+                leftButtonLink="/residence-info"
+              />
 		          <SectionTitle text="Please insert a profile picture"/>
 
-              <SectionTitle text="Short Description" />
-              <TextInput  name="description" value={this.description} saveInput={this.saveInput}/>
+              <SectionTitle text="Short Description"/>
+              <TextInput height="48px" name="description" value={this.description} saveInput={this.saveInput}/>
 
               <ConfirmButton onClick={this.sendProfiletoBackend}/>
-		        </div>
+		        </InsertImageWrapper>
         );
     }
 }
+
+const InsertImageWrapper = styled.div`
+  display: flex; 
+  flex-direction: column; 
+`;
 
 export default InsertImage;
