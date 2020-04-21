@@ -4,7 +4,6 @@ import NavBar from '../components/NavBar.js';
 import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js';
 import ArrowButton from '../components/ArrowButton.js';
-import LinkWrapper from '../components/LinkWrapper.js';
 import StyledForm from '../components/StyledForm.js';
 
 class ResidenceInfo extends Component {
@@ -25,6 +24,7 @@ class ResidenceInfo extends Component {
 
       storeSession = e => {
         window.sessionStorage.setItem("stateResidenceInfo", JSON.stringify(this.state));
+        this.props.history.push("/insert-image");
       }
 
     render(){
@@ -65,10 +65,8 @@ class ResidenceInfo extends Component {
               saveInput={this.saveInput}
               />
 
-
-            <LinkWrapper to="insert-image">
               <ArrowButton onClick={this.storeSession}/>
-            </LinkWrapper>
+
             </StyledForm>
           </div>
         );

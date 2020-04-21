@@ -4,9 +4,9 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 
-const ConfirmButton = () => {
+const ConfirmButton = (props) => {
     return (
-        <ConfirmButtonWrapper type="submit" value="Submit" id="confirm">
+        <ConfirmButtonWrapper {...props} type="submit" value="Submit" id="confirm">
             <FontAwesomeIcon icon={faCheckCircle} />
         </ConfirmButtonWrapper>
     );

@@ -4,9 +4,9 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 
-const ArrowButton = () => {
+const ArrowButton = (props) => {
     return (
-        <ArrowButtonWrapper>
+        <ArrowButtonWrapper {...props}>
             <FontAwesomeIcon icon={faArrowCircleRight} />
         </ArrowButtonWrapper>
     );

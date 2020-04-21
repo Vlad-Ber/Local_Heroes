@@ -6,7 +6,6 @@ import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js'
 import NavBar from '../components/NavBar.js';
 import ArrowButton from '../components/ArrowButton.js';
-import LinkWrapper from '../components/LinkWrapper.js';
 import StyledForm from '../components/StyledForm.js';
 
 class ProfileCreation extends Component {
@@ -32,8 +31,10 @@ class ProfileCreation extends Component {
     }
 
     storeSession = e => {
+        e.preventDefault();
         this.checkForNewUsername();
         window.sessionStorage.setItem("stateProfileCreation", JSON.stringify(this.state));
+        this.props.history.push("/residence-info");
     }
 
     checkForNewUsername = e => {
@@ -43,16 +44,11 @@ class ProfileCreation extends Component {
             email: this.state.email,
         })
             .then((response) => {
-                
                 console.log("Inside response");
                 console.log(response);
-                
             })
             .catch((error) => {
                 console.log(error.response);
-                while(true){
-                    
-                }
             });
     }
 
@@ -88,9 +84,7 @@ class ProfileCreation extends Component {
                     <SectionTitle fontSize="14px" text="E-mail address" />
                     <TextInput height="24px" name="email" value={this.email} saveInput={this.saveInput}/>
 
-                    <LinkWrapper to="/residence-info">
-                        <ArrowButton onClick={this.storeSession} />
-                    </LinkWrapper>
+                    <ArrowButton onClick={this.storeSession} />
 
                 </StyledForm>
             </div>

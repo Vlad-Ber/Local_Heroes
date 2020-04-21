@@ -5,7 +5,6 @@ import axios from 'axios';
 import SectionTitle from '../components/SectionTitle.js';
 import ConfirmButton from '../components/ConfirmButton.js';
 import TextInput from '../components/TextInput.js';
-import LinkWrapper from '../components/LinkWrapper.js';
 
 class InsertImage extends Component {
 
@@ -87,6 +86,8 @@ class InsertImage extends Component {
         .then((response) => {
             console.log(response);
         });
+
+        this.props.history.push("/signup");
     }
 
 
@@ -94,14 +95,12 @@ class InsertImage extends Component {
       console.log(this.state)
         return(
 		        <div>
-		          <SectionTitle text = "Please insert a profile picture"/>
+		          <SectionTitle text="Please insert a profile picture"/>
 
               <SectionTitle text="Short Description" />
-                <TextInput  name="description" value={this.description} saveInput={this.saveInput}/>
+              <TextInput  name="description" value={this.description} saveInput={this.saveInput}/>
 
-              <LinkWrapper to="signup">
-                <ConfirmButton onClick={this.sendProfiletoBackend}/>
-              </LinkWrapper>
+              <ConfirmButton onClick={this.sendProfiletoBackend}/>
 		        </div>
         );
     }
