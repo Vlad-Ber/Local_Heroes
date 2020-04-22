@@ -150,20 +150,22 @@ client.connect(err => {
     var router = express.Router();
     
     // create a GET route
-    app.get('/api/greeting', (req, res) => {
+    /*app.get('/api/greeting', (req, res) => {
 	      res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
-    });
+    });*/
 
-    app.post('/', function(req, res) {
+    app.post('/test', async function(req, res) {
+        console.log("Inside the test app.post");
 	      var testData = req.body.data1;
-	      var dataToSend = {"testData1":testData, "testdata2": "boll"}
+	      var dataToSend = {"testData1":testData, "testdata2": "boll"};
+        res.send(dataToSend);
 	      //insertUser("markus@gmail.com", "Markus Ollesson", 20, "Kungsvägen 1", "Lyfter tungt", 75565);
 	      //insertUser("olle@gmail.com", "Olle Ollesson", 20, "Sveavägen 1", "Lagar mat", 75757);
 	      //insertErrand("Laga mat", "Handla mjölk på Ica", "Anna", "Shopping", "Ringvägen 2", "07567467", 56788);
         
 	      //getErrandsArea(75757);
-        let test123 = await getErrandsEmail("anna@gmail.com");
-        console.log(123);
+        
+        
        
        
         

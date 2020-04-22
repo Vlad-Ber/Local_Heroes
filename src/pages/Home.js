@@ -26,50 +26,54 @@ class Home extends Component {
     componentDidMount(){
 
         let updatedActiveUsers = data["users"].filter(user =>
-            user.areaId === this.state.areaId).length;
+                                                      user.areaId === this.state.areaId).length;
 
         let updatedActiveErrands = data["errands"].filter(errand =>
-            errand.areaId === this.state.areaId && errand.status !== "done").length;
+                                                          errand.areaId === this.state.areaId && errand.status !== "done").length;
 
         this.setState({ activeErrands: updatedActiveErrands, activeUsers: updatedActiveUsers })
     }
 
     askForHelp = () => {
-        axios.post("/",{
+        /*axios.post("/",{
             data1: "I want help!",
         }).then((response)=> {
-            console.log("Data submitted successfully");
+            console.log(response);
         }).catch((error)=> {
             console.log("got errr while posting data", error);
-        });
+        });*/
     }
+    
     vidKnappTryck = () => {
-    axios.post("/",{
-       data1: "hej",
-    }).then((response) => {
-        console.log("Data submitted successfully");
-    }).catch((error) => {
-        console.log("got errr while posting data", error);
-    });
+        console.log("Inside the function vidKnappTryck");
+        axios.post("/test",{
+            data1: "hej",
+        })
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+            console.log("got errr while posting data", error);
+            });
     }
-
+    
     render(){
         return(
-            <div>
+                <div>
                 <NavBar/>
                 <StatusView
-                    areaId={this.state.areaId}
-                    activeUsers={this.state.activeUsers}
-                    activeErrands={this.state.activeErrands}
+            areaId={this.state.areaId}
+            activeUsers={this.state.activeUsers}
+            activeErrands={this.state.activeErrands}
                 />
                 <Link to="/help-request">
-                    <TextButton function={this.askForHelp()} description="ASK FOR HELP"/>
+                <TextButton function={this.askForHelp()} description="ASK FOR HELP"/>
                 </Link>
 
-		<button onClick={this.vidKnappTryck} id="loginKnapp" type="button" className="input">Server-TestKnapp</button>
+		            <button onClick={this.vidKnappTryck} id="loginKnapp" type="button" className="input">Server-TestKnapp</button>
                 <SectionTitle text="RECENT ACTIVITY"/>
                 <EventItemListView errands={data["errands"]}/>
-            </div>
+                </div>
         );
     }
 }
