@@ -31,7 +31,7 @@ class ProfileCreation extends Component {
     }
 
     storeSession = e => {
-        //this.checkForNewUsername();
+        this.checkForNewUsername();
         e.preventDefault();
         window.sessionStorage.setItem("stateProfileCreation", JSON.stringify(this.state));
         this.props.history.push("/residence-info");

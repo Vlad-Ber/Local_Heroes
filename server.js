@@ -3,10 +3,10 @@ var bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
-var cors = require('cors');
+/*var cors = require('cors');
 app.use(cors());
 app.use(cors({origin: true, credentials: true}));
-
+*/
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -197,8 +197,9 @@ client.connect(err => {
 
         console.log(checkUser);
         console.log(checkEmail);
+        let dataToSend = ({"userState": checkUser, "emailState": checkEmail});
 
-        res.send({ userState: checkUser, emailState: checkEmail });
+        res.send(dataToSend);
 
     });
 
