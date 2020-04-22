@@ -121,6 +121,17 @@ client.connect(err => {
 
     };
 
+    async function loginFunction(username, password){
+        let userCollection = db.collection("User");
+        let curUser = await userCollection.findOne(username);
+        let curUserPassword = curUser.password;
+        if(curUserPassword === password){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
 
 
 
@@ -201,6 +212,21 @@ client.connect(err => {
 
         res.send(dataToSend);
 
+    });
+
+    app.post("/login-user", async (data, res) => {
+        let dataToSend;
+        let user = data.body;
+        let checkUser = await documentExist("User", user.username);
+        if(checkUser == false){
+            dataToSend = "This username does not exist";
+        } else {
+            let checkLoginInformation = loginFunction(user.username, user.password);
+            if(checkLoginInformation == true){
+                dataToSend = true;
+            }
+        }
+        res.send(dataToSend);
     });
 
 
