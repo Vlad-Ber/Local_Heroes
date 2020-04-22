@@ -17,7 +17,7 @@ class App extends Component {
   render(){
     return (
       <Router>
-        <div className="App" style={{ fontFamily: 'Palatino' }}>
+        <div className="App" style={{ fontFamily: 'Helvetica' }}>
           <Switch>
             <Route path="/" exact component={Signup}/>
             <Route path="/signup" component={Signup}/>

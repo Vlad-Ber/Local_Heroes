@@ -18,7 +18,7 @@ const Button = styled.button`
     margin-bottom: ${props => props.marginBottom || '30px'};
     background: #31D285;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-
+    font-family: 'Helvetica';
 `
 
 export default TextButton;

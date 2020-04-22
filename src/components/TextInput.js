@@ -45,6 +45,9 @@ const StyledTextArea = styled.textarea`
     margin: auto;
     display: flex;
 
+    font-family: 'Helvetica';
+    font-size: 14px;
+
     border:  1px solid #31D285;
     box-sizing: border-box;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.12);
@@ -55,6 +58,9 @@ const StyledTextArea = styled.textarea`
 const StyledInput = styled.input`
     margin: auto;
     display: flex;
+
+    font-family: 'Helvetica';
+    font-size: 14px;
 
     border:  1px solid #31D285;
     box-sizing: border-box;

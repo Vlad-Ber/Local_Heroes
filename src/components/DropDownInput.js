@@ -19,7 +19,9 @@ const DropDown = styled.select`
     margin: auto;
     display: flex;
 
-    font-family: 'Inter';
+    font-family: 'Helvetica';
+
+    font-size: 14px;
 
     border:  1px solid #31D285;
     box-sizing: border-box;
