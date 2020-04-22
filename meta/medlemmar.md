@@ -44,7 +44,7 @@ sidor även ges möjlighet att utveckla följande färdigheter, till exempel:
 
 Bild | Förnamn | Efternamn | Personnummer | Användarnamn (GitHub)
 -----------------------------------------|-----------------------------|-----------|--------------|----------------------
-<img src="images/dsp1.png" width="180"/> | [Daniel](#daba6626) | Bäckner | YYMMDD-XXXX | `daba6626`
+<img src="images/dsp1.jpg" width="180"/> | [Daniel](#daba6626) | Bäckner | YYMMDD-XXXX | `daba6626`
 
 ### Okänd talang
 
