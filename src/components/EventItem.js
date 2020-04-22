@@ -191,7 +191,7 @@ const InfoTitle = styled.div`
 
 const TextWrapper = styled.div`
     display: flex; 
-    flex: 1;
+    flex: 3;
     flex-direction: column; 
     justify-content: start;
     padding-left: 8px; 
@@ -210,7 +210,8 @@ const Description = styled.div`
 `
 
 const EventMetaData = styled.div`
-    display: flex; 
+    display: flex;
+    flex: 1; 
     flex-direction: column; 
     align-items: center;
     justify-content: center;
@@ -218,6 +219,7 @@ const EventMetaData = styled.div`
 
 const Status = styled.div`
     display: flex; 
+    flex: 1;
     width: 20%;
     text-align: center;
     align-items: center; 
