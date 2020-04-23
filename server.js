@@ -130,12 +130,12 @@ client.connect(err => {
         } else{
             return false;
         }
-    }
+    };
 
 
 
 
-    async function insertErrand(title, description, requester,  type, adress, contact, areaID){
+    async function insertErrand(title, description, requester, type, adress, contact, areaID){
 	      var date = new Date();
 	      var dateString= date.toISOString().slice(0,10);
 	      var data = {
@@ -154,10 +154,8 @@ client.connect(err => {
 	      var insertedId = insert.insertedId;
 	      var areaToUpdate = {"areaID": areaID};
 	      areas.updateOne(areaToUpdate, {"$push": {"errands": insertedId } } )
-
-
 	      console.log("Errand has been created by " + requester);
-    }
+    };
 
 
     const ObjectID = require("mongodb").ObjectID;

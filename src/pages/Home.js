@@ -33,25 +33,6 @@ class Home extends Component {
         this.setState({ activeErrands: updatedActiveErrands, activeUsers: updatedActiveUsers })
     }
 
-    askForHelp = () => {
-        axios.post("/",{
-            data1: "I want help!",
-        }).then((response)=> {
-            console.log("Data submitted successfully");
-        }).catch((error)=> {
-            console.log("got errr while posting data", error);
-        });
-    }
-    vidKnappTryck = () => {
-    axios.post("/",{
-       data1: "hej",
-    }).then((response) => {
-        console.log("Data submitted successfully");
-    }).catch((error) => {
-        console.log("got errr while posting data", error);
-    });
-    }
-
     render(){
         return(
             <div>
@@ -65,7 +46,7 @@ class Home extends Component {
                     activeErrands={this.state.activeErrands}
                 />
                 <LinkWrapper to="/help-request">
-                    <TextButton onClick={this.askForHelp} description="ASK FOR HELP"/>
+                    <TextButton description="ASK FOR HELP"/>
                 </LinkWrapper>
                 <SectionTitle text="RECENT ACTIVITY"/>
                 <EventItemListView errands={data["errands"]}/>
