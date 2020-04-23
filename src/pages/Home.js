@@ -35,6 +35,7 @@ class Home extends Component {
     }
 
     askForHelp = () => {
+        //TODO: uncomment this later
         /*axios.post("/",{
             data1: "I want help!",
         }).then((response)=> {
@@ -45,9 +46,8 @@ class Home extends Component {
     }
     
     vidKnappTryck = () => {
-        console.log("Inside the function vidKnappTryck");
-        axios.post("/test",{
-            data1: "hej",
+        axios.post("/getErrandsArea",{
+            data1: 56876,
         })
             .then((response) => {
                 console.log(response);

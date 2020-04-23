@@ -46,25 +46,15 @@ client.connect(err => {
     }
     
     async function getErrandsArea(areaID){
-	      await errands.find({"areaID": areaID}).toArray(function(err, result) {
-	          if (err) throw err;
-	          return result;
-	      });
-    }
-    
-    async function getErrandsEmail(email){
-	      await errands.find({"requester": email }).toArray(function(err, result){
-            if(err) throw err;
-            if(result.length == 0){
-                //TODO: Change this to send information to frontend
-                console.log("Current user does not have any errands");
-            }
-            //TODO: Delete the else here
-            else{
-                return result;
-            }
-        });
+        console.log("inside getErrandsArea");
+	      let findResult = await errands.find({"areaID": areaID}).toArray();
+        console.log(findResult);
+	      return findResult;
     };
+    async function getErrandsEmail(email){
+	      let findResult = await errands.find({"user": email}).toArray();
+	      return findResult;
+    }
 
     
     async function insertUser(email, name, age, adress, description,areaID){
@@ -92,6 +82,7 @@ client.connect(err => {
 	          }
 	      }
 	      else{
+            //TODO: Maybe dont need
 	          console.log("A user with this email already exists");
 	      }
 	      
@@ -112,7 +103,7 @@ client.connect(err => {
 	          "adress": adress,
 	          "contact": contact,
 	          "helper": "",
-	          "requester": requester,    //TODO: koppla requester till userID
+	          "user": requester,    //TODO: koppla requester till userID
 	          "areaID": areaID,
 	      };
 	      var insert = await errands.insertOne(data).catch(error =>console.error(error));
@@ -152,34 +143,18 @@ client.connect(err => {
     // create a GET route
     /*app.get('/api/greeting', (req, res) => {
 	      res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
-    });*/
+        });*/
 
-    app.post('/test', async function(req, res) {
-        console.log("Inside the test app.post");
-	      var testData = req.body.data1;
-	      var dataToSend = {"testData1": testData, "testdata2": "boll"};
-        res.send(dataToSend);
-
-        let errands = getErrandsArea()
+    app.post('/getErrandsArea', async function(req, res) {
+        console.log("Inside apppost gettErrandsAReas")
+        let areaID = req.body.data1;
         
-	      //insertUser("markus@gmail.com", "Markus Ollesson", 20, "Kungsvägen 1", "Lyfter tungt", 75565);
-	      //insertUser("olle@gmail.com", "Olle Ollesson", 20, "Sveavägen 1", "Lagar mat", 75757);
-	     /*insertErrand("Laga mat", "Handla mjölk på Ica", "Anna", "Shopping", "Ringvägen 2",
-                     "07567467", 56788);
-        insertErrand("Handla", "Handla smör ", "gustav11", "Shopping", "Ringvägen 2",
-                     "07567467", 56788);
-        insertErrand("Hjälp med återvinning", "Återvinna gamla möbler", "pavel", "Recycling", "Bordsvägen 2",
-                     "07567467", 56788);*/
+        let errands = await getErrandsArea(areaID);
         
+        console.log(errands);
         
-	      //getErrandsArea(75757);
-        
+        res.send({"errands": errands});
     });
-
-    /*app.post('getErrands', function(req, res) {
-	    var errands = getErrandsArea(req.body.areaID);
-	    res.send({errands});
-      });*/
       
 });
 client.close();
