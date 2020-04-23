@@ -27,7 +27,10 @@ client.connect(err => {
 
     const users = db.collection("Users");
 
-    //Generell function to check if a document exist
+    //FUNC: Check if a document exists
+    //ARG: Collection name in string
+    //ARG: Query to search or in JSON format
+    //RET: True if document_query exists in collection, else false
     async function documentExist(collection, document_query){
 	      const coll = db.collection(collection);
 	      let foundQuery = await coll.findOne(document_query);
@@ -37,8 +40,12 @@ client.connect(err => {
 	      else{
 	          return true;
 	      }
-    }
 
+    }
+    //FUNC: Check if user email/username exists
+    //ARG: Username in JSON format
+    //ARG: Email in JSON-Format
+    //RET: True if either usernamee/email is in Users-collection, else false
     async function checkUser(curUserName, curEmail){
         let checkUser = await documentExist("Users", curUserName);
         let checkEmail = await documentExist("Users", curEmail);
@@ -49,7 +56,10 @@ client.connect(err => {
             return false;
         }
     }
-
+  
+    //FUNC: Insert Area, used by insertUser
+    //ARG: AreaID
+    //ARG: Email to add in Area
     async function insertArea(areaID, email){
 	      var data = {
 	          "areaID": areaID,
@@ -60,23 +70,35 @@ client.connect(err => {
 	      console.log("Area with ID " + areaID + " has been added!");
     }
 
+    //FUNC: Adds user to area
+    //ARG: Area to add user to
+    //ARG: The email of the user to add
     async function updateArea(areaID, email){
 	      var areaToFind = {"areaID": areaID};
 	      areas.updateOne(areaToFind, {"$push": {"users": email } } )
     }
 
+  
+    //FUNC: Get all erands for an Area
+    //ARG: Area to get errands from
+    //RET: Array of errands in area
     async function getErrandsArea(areaID){
-	      errands.find({"areaID": areaID}).toArray(function(err, result) {
-	          if (err) throw err;
-	          return result;
-	      });
-    }
-
+        console.log("inside getErrandsArea");
+	      let findResult = await errands.find({"areaID": areaID}).toArray();
+        console.log(findResult);
+	      return findResult;
+    };
+  
+    //FUNC: Get all erands for a use
+    //ARG: user.email to get errands from
+    //RET: Array of errands created by a user by given email
     async function getErrandsEmail(email){
-
+	      let findResult = await errands.find({"user": email}).toArray();
+	      return findResult;
     }
 
-
+    //FUNC: Adds a user to db. Adds user to given area. If area doesnt exist, create new area.
+    //ARGS: data required
     async function insertUser(username, password, email, name, age, address, description, areaID, mobile, city){
 	      var data = {
             "username": username,
@@ -110,6 +132,10 @@ client.connect(err => {
 	          }
 	      }
 	      else{
+
+            //TODO: Maybe dont need
+	          console.log("A user with this email already exists");
+	      }
             if(findUser == true){
                 console.log("A user with this username already exists")
             }
@@ -118,9 +144,13 @@ client.connect(err => {
             }
 
 	      }
-
     };
 
+               
+    //FUNC: Checks if password is correct for a given user
+    //ARG: username to check password for
+    //ARG: password to check
+    //RET: True if given password matches the password stored for the given username in db
     async function loginFunction(username, password){
         let userCollection = db.collection("User");
         let curUser = await userCollection.findOne(username);
@@ -133,8 +163,8 @@ client.connect(err => {
     }
 
 
-
-
+    //FUNC: Inserts a Errand to errand collection
+    //ARG: Data needed for Errand
     async function insertErrand(title, description, requester,  type, adress, contact, areaID){
 	      var date = new Date();
 	      var dateString= date.toISOString().slice(0,10);
@@ -147,6 +177,7 @@ client.connect(err => {
 	          "adress": adress,
 	          "contact": contact,
 	          "helper": "",
+	          "user": requester,    //TODO: koppla requester till userID
 	          "requester": requester,    //TODO: koppla requester till userID
 	          "areaID": areaID,
 	      };
@@ -154,16 +185,13 @@ client.connect(err => {
 	      var insertedId = insert.insertedId;
 	      var areaToUpdate = {"areaID": areaID};
 	      areas.updateOne(areaToUpdate, {"$push": {"errands": insertedId } } )
-
-
 	      console.log("Errand has been created by " + requester);
     }
-
-
     const ObjectID = require("mongodb").ObjectID;
 
-    //-------------------------------------------------------------------------------------//
-
+    //FUNC: Deletes a errand from db
+    //ARG: ErrandID to remove
+    //TODO: Inte klar
     async function deleteErrands(errandId){
         let arg = {"_id": new ObjectID(errandId)};
         let findErrands = await documentExist("Errands", arg);
@@ -178,11 +206,24 @@ client.connect(err => {
             console.log("Could not found the document");
         }
     };
-
-    //app.use(bodyParser.urlencoded({ extended: false })); : DETTA KANSKE BEHÖVS I FRAMTIDEN
+   //---------------------------------------------------------------------------------------------------------//
+   //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------// 
     app.use(bodyParser.json());
+    var router = express.Router();    
+  
+    app.post('/getErrandsArea', async function(req, res) {
+        console.log("Inside apppost gettErrandsAReas")
+        let areaID = req.body.data1;
+        
+        let errands = await getErrandsArea(areaID);
+        
+        console.log(errands);
+        
+        res.send({"errands": errands});
+    });
+      
+});
 
-    var router = express.Router();
 
     // GETs username and checks if it unique
     app.post('/check-username', (username, res) => {
@@ -229,19 +270,9 @@ client.connect(err => {
         res.send(dataToSend);
     });
 
-
-    /*app.post('/', function(req, res) {
-	      var testData = req.body.data1;
-	      var dataToSend = {"testData1":testData, "testdata2": "boll"}
-	      //insertUser("markus@gmail.com", "Markus Ollesson", 20, "Kungsvägen 1", "Lyfter tungt", 75565);
-	      //insertUser("olle@gmail.com", "Olle Ollesson", 20, "Sveavägen 1", "Lagar mat", 75757);
-	      //insertErrand("Laga mat", "Handla mjölk på Ica", "Anna", "Shopping", "Ringvägen 2", "07567467", 56788);
-    });*/
-    app.post('getErrands', function(req, res) {
+  app.post('getErrands', function(req, res) {
 	var errands = getErrandsArea(req.body.areaID);
 	res.send({errands});
     });
-
 })
-
 client.close();
