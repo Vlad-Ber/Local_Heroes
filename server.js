@@ -162,17 +162,13 @@ client.connect(err => {
     async function takeErrand(errandID, newEmail, status){
 
         //TODO: check if the errand exists and maybe return true or false
-        let updateErrand;
-        let curErrand = await errands.findOne({ "_id": new ObjectID(errandID) });
         
-        if(newEmail !== null){
-            let curHelper = await users.findOne({ "email": helperEmail });
-            updateErrand = { $set: { helper: curHelper.email, status: status } };
-            
-        } else if(newEmail === null){
-            updateErrand = { $set: { helper: curErrand.email, status: status }};
-        }
-        await errands.updateOne(curErrand, updateErrand);
+        let curErrand = await errands.findOne({ "_id": new ObjectID(errandID) });
+        let update = curErrand;
+        
+        Object.keys(curErrand).map(key => { return newErrandData[key] !== null ? update[key] = newErrandData[key]} );
+        
+        await errands.updateOne(curErrand, update);
         
     };
 
