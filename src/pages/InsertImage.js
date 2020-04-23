@@ -71,7 +71,7 @@ class InsertImage extends Component {
     sendProfiletoBackend = (userProfile, response) => {
         let user = this.state;
 
-        axios.post("/addUserToDB", {
+        axios.post("/insertUser", {
           username: user.username,
           password: user.password,
           email: user.email,

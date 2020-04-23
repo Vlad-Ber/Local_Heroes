@@ -6,7 +6,7 @@ import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 
 const ArrowButton = (props) => {
     return (
-        <ArrowButtonWrapper {...props}>
+        <ArrowButtonWrapper type="button" {...props}>
             <FontAwesomeIcon icon={faArrowCircleRight} />
         </ArrowButtonWrapper>
     );

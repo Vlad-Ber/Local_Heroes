@@ -191,35 +191,32 @@ client.connect(err => {
     })
 
     // GETs and sends user data to database
-    app.post('/addUserToDB', async (userData, res) => {
+    app.post('/insertUser', async (userData, res) => {
         let user = userData.body;
         insertUser(user.username, user.password, user.email, user.name, user.age, user.address,
                    user.description, user.areaId, user.mobile, user.city);
     });
 
     app.post('/check-user', async (data, res) => {
-        console.log("Check user server");
-
         let user = data.body;
         let curUserName = {"username": user.username };
         let curEmail = {"email": user.email };
-        let checkUser = await documentExist("Users", curUserName);
-        let checkEmail = await documentExist("Users", curEmail);
 
-        console.log(checkUser);
-        console.log(checkEmail);
-        let dataToSend = ({"userState": checkUser, "emailState": checkEmail});
+        let result = await checkUser(curUserName, curEmail)
+
+        let dataToSend = ({"uniqueUser": result});
 
         res.send(dataToSend);
 
     });
 
     app.post("/login-user", async (data, res) => {
-        let dataToSend;
         let user = data.body;
         let checkUser = await documentExist("User", user.username);
+
         if(checkUser == false){
-            dataToSend = "This username does not exist";
+            let dataToSend = false;
+
         } else {
             let checkLoginInformation = loginFunction(user.username, user.password);
             if(checkLoginInformation == true){
@@ -229,14 +226,6 @@ client.connect(err => {
         res.send(dataToSend);
     });
 
-
-    /*app.post('/', function(req, res) {
-	      var testData = req.body.data1;
-	      var dataToSend = {"testData1":testData, "testdata2": "boll"}
-	      //insertUser("markus@gmail.com", "Markus Ollesson", 20, "Kungsvägen 1", "Lyfter tungt", 75565);
-	      //insertUser("olle@gmail.com", "Olle Ollesson", 20, "Sveavägen 1", "Lagar mat", 75757);
-	      //insertErrand("Laga mat", "Handla mjölk på Ica", "Anna", "Shopping", "Ringvägen 2", "07567467", 56788);
-    });*/
     app.post('getErrands', function(req, res) {
 	var errands = getErrandsArea(req.body.areaID);
 	res.send({errands});
