@@ -1,5 +1,7 @@
 import React, { Component } from 'react'; 
 
+import axios from 'axios';
+
 import styled from 'styled-components';
 
 import NavBar from '../components/NavBar.js';
@@ -24,19 +26,33 @@ class HelpRequest extends Component {
         
     }
 
+    
     handleTypeChange = (e) => {
         console.log("handleTypeChange: " + e.target.value)
         this.setState({ type: e.target.value })
     }
-
+    
     handleDescriptionChange = (e) => {
         console.log("handleDescriptionChange")
         this.setState({ description: e.target.value })
     }
-
+    
+    // server side signature:  async function insertErrand(title, description, requester, type, adress, contact, areaID)
     handlePublish = () => {
         console.log("handlePublish")
-        //write http request to server here
+        axios.post("/insertErrand", {
+            title: this.state.title,
+            description: this.state.description,
+            requester: this.state.requester, 
+            type: this.state.type,
+            adress: this.state.adress, 
+            contact: this.state.adress,
+            areaID: this.state.areaID
+        }).then((response) => {
+            console.log("Data submitted successfully!")
+        }).catch((error) => {
+            console.log("Gott error while posting data", error);
+        });
     }
 
     render(){
