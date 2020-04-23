@@ -7,7 +7,7 @@ import Signup from './pages/Signup.js';
 
 import ProfileCreation from './pages/ProfileCreation.js';
 import ResidenceInfo from './pages/ResidenceInfo.js';
-
+import ConfirmButton from './components/ConfirmButton.js'
 import ZipCode from './pages/ZipCode.js'
 
 
@@ -18,7 +18,8 @@ class App extends Component {
     return (
       <Router>
         <div className="App" style={{ fontFamily: 'Inter' }}>
-          <Switch>
+            
+            <Switch>
             <Route path="/" exact component={Home}/>
             <Route path="/help-request" component={HelpRequest}/>
             <Route path="/signup" component={Signup}/>
@@ -30,6 +31,8 @@ class App extends Component {
             <Route path="/profile-creation" component={ProfileCreation}/>
 
           </Switch>
+            
+            
         </div>
       </Router>
 	)}
