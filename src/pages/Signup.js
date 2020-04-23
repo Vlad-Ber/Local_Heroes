@@ -18,6 +18,8 @@ class Signup extends Component {
         this.state = {
             username: '',
             password: '',
+
+            text: '',
         }
     }
 
@@ -36,14 +38,17 @@ class Signup extends Component {
                 if(!uniqueUser) {
                   e.preventDefault();
                   this.props.history.push("/home");
+                  
                 } else {
-                  console.log("Wrong user")
-                //  document.getElementById("error") = "Username or Email already taken"
+                  this.setState({
+                    text: 'Wrong Username or Password'
+                  })
                 }
             })
      }
 
   render(){
+    console.log(this.state)
     return (
       <SignUpWrapper>
 
@@ -62,10 +67,10 @@ class Signup extends Component {
 
 
         <SectionTitle text="USERNAME" />
-        <TextInput name="username" height="32px" width="240px"/>
+        <TextInput name="username" height="32px" width="240px"  onChange={this.saveInput} autocomplete="username"/>
 
         <SectionTitle text="PASSWORD" />
-        <TextInput name="password" type="password" height="32px" width="240px"/>
+        <TextInput name="password" type="password" height="32px" width="240px" onChange={this.saveInput} autocomplete="new-password"/>
 
         <TextButton onClick={this.checkForUniqueUser} description="LOGIN" marginTop="40px" marginBottom="10px" height="32px" width="240px"/>
 
@@ -73,10 +78,21 @@ class Signup extends Component {
           <TextButton description="SIGN UP" marginTop="10px" marginBottom="10px" height="32px" width="240px"/>
         </LinkWrapper>
 
+        <TextWrapper>{this.state.text}</TextWrapper>
+
       </SignUpWrapper>
     );
   }
 }
+
+const TextWrapper = styled.div`
+    border: #4CAF50;
+    color: red;
+    margin-top: 1em;
+    font-size: 20px;
+    border-radius: 100%;
+`;
+
 
 const SignUpWrapper = styled.div`
   display: flex;

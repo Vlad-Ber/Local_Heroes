@@ -184,11 +184,6 @@ client.connect(err => {
 
     var router = express.Router();
 
-    // GETs username and checks if it unique
-    app.post('/check-username', (username, res) => {
-      let u = username.body;
-      users.find({username: u}).catch(error => console.error(error));
-    })
 
     // GETs and sends user data to database
     app.post('/insertUser', async (userData, res) => {
@@ -211,16 +206,19 @@ client.connect(err => {
     });
 
     app.post("/login-user", async (data, res) => {
+        let dataToSend;
         let user = data.body;
-        let checkUser = await documentExist("User", user.username);
+        let userExists = await documentExist("Users", user.username);
 
-        if(checkUser == false){
-            let dataToSend = false;
+        if(!userExists) {
+             dataToSend = ({"login": false });
 
         } else {
-            let checkLoginInformation = loginFunction(user.username, user.password);
-            if(checkLoginInformation == true){
-                dataToSend = true;
+            let correctLogin = await loginFunction(user.username, user.password);
+            if(correctLogin){
+              let user = await getUser(user.username);
+
+               dataToSend = ({"login": true, "user": user });
             }
         }
         res.send(dataToSend);

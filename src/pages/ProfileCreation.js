@@ -92,6 +92,7 @@ class ProfileCreation extends Component {
                     <TextInput height="24px" name="email" value={this.email} onChange={this.saveInput}/>
 
                     <TextWrapper>{this.state.text}</TextWrapper>
+                    
                     <ArrowButton onClick={this.checkForUniqueUser} />
 
                 </StyledForm>
