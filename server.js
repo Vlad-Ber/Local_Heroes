@@ -159,15 +159,22 @@ client.connect(err => {
         }
     }
 
-    async function takeErrand(errandID, helperEmail){
-       
-        let curErrand = await errands.findOne({"_id": new ObjectID(errandID) });
-        let curHelper = await users.findOne({"email": helperEmail});
+    async function takeErrand(errandID, newEmail, status){
 
-        let updateErrand = { $set: { helper: curHelper.email, status: "inProgress" } };
+        //TODO: check if the errand exists and maybe return true or false
+        let updateErrand;
+        let curErrand = await errands.findOne({ "_id": new ObjectID(errandID) });
+        
+        if(newEmail !== null){
+            let curHelper = await users.findOne({ "email": helperEmail });
+            updateErrand = { $set: { helper: curHelper.email, status: status } };
+            
+        } else if(newEmail === null){
+            updateErrand = { $set: { helper: curErrand.email, status: status }};
+        }
         await errands.updateOne(curErrand, updateErrand);
         
-    }
+    };
 
 
     //FUNC: Inserts a Errand to errand collection
@@ -220,7 +227,7 @@ client.connect(err => {
     app.post('/takeErrand', (req, res) => {
         console.log("takeErrand app.post");
         let helper = req.body;
-        let takeTheErrand = takeErrand("5ea1591ab6e3e2132dcc6893", "jon@jon.com");
+        let doneErrand = takeErrand("5ea1591ab6e3e2132dcc6894", "gustav@gustav.se", "done");
         
     });
 
