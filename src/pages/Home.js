@@ -57,12 +57,12 @@ class Home extends Component {
             });
     }
     
-        render(){
+    render(){
         return(
-            <div>
+                <div>
                 <NavBar
-                    rightButtonType="profile"
-                    rightButtonLink="/profile-page"
+            rightButtonType="profile"
+            rightButtonLink="/profile-page"
                 />
                 <StatusView
                     areaId={this.state.areaId}

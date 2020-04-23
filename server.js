@@ -213,7 +213,6 @@ client.connect(err => {
             console.log("Could not found the document");
         }
     };
-   //---------------------------------------------------------------------------------------------------------//
    //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------// 
     app.use(bodyParser.json());
     var router = express.Router();
@@ -224,6 +223,7 @@ client.connect(err => {
         let takeTheErrand = takeErrand("5ea1591ab6e3e2132dcc6893", "jon@jon.com");
         
     });
+
 
     // GETs username and checks if it unique
     app.post('/check-username', (username, res) => {
@@ -269,6 +269,5 @@ client.connect(err => {
         }
         res.send(dataToSend);
     });
-
 })
 client.close();
