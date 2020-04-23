@@ -15,7 +15,8 @@ class Home extends Component {
         super(props);
 
         this.state = {
-            areaId: 75232,
+            userID: 123456789,
+            areaID: 75232,
             activeUsers: 0,
             activeErrands: 0,
         }
@@ -24,10 +25,10 @@ class Home extends Component {
     componentDidMount(){
 
         let updatedActiveUsers = data["users"].filter(user =>
-            user.areaId === this.state.areaId).length;
+            user.areaID === this.state.areaID).length;
 
         let updatedActiveErrands = data["errands"].filter(errand =>
-            errand.areaId === this.state.areaId && errand.status !== "done").length;
+            errand.areaID === this.state.areaID && errand.status !== "done").length;
 
         this.setState({ activeErrands: updatedActiveErrands, activeUsers: updatedActiveUsers })
     }
@@ -40,7 +41,7 @@ class Home extends Component {
                     rightButtonLink="/profile-page"
                 />
                 <StatusView
-                    areaId={this.state.areaId}
+                    areaID={this.state.areaID}
                     activeUsers={this.state.activeUsers}
                     activeErrands={this.state.activeErrands}
                 />

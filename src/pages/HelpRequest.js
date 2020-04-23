@@ -16,17 +16,35 @@ class HelpRequest extends Component {
         super(props);
 
         this.state = {
+            title: "",
+            description: "",
+            requester: "123456789", // should fetch from app state 
             type: "DEFAULT",
-            description: "", 
+            adress: "",
+            contact: "",
+            areaID: "75232", // should fetch from app state
+            success: null
         }
 
+        this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleTypeChange = this.handleTypeChange.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+        this.handleAdressChange = this.handleAdressChange.bind(this);
+        this.handleContactChange = this.handleContactChange.bind(this);
+
         this.handlePublish = this.handlePublish.bind(this);
         
     }
 
-    
+
+    /*   EVENT HANDLERS   */
+
+
+    handleTitleChange = (e) => {
+        console.log("handleTitleChange")
+        this.setState({ title: e.target.value })
+    }
+
     handleTypeChange = (e) => {
         console.log("handleTypeChange: " + e.target.value)
         this.setState({ type: e.target.value })
@@ -36,10 +54,20 @@ class HelpRequest extends Component {
         console.log("handleDescriptionChange")
         this.setState({ description: e.target.value })
     }
+
+    handleAdressChange = (e) => {
+        console.log("handleAdressChange")
+        this.setState({ adress: e.target.value })
+    }
+
+    handleContactChange = (e) => {
+        console.log("handleContactChange")
+        this.setState({ contact: e.target.value })
+    }
     
-    // server side signature:  async function insertErrand(title, description, requester, type, adress, contact, areaID)
+    // server side signature:  async function insertErrand(errandData)
     handlePublish = () => {
-        console.log("handlePublish")
+        console.log("handlePublish");
         axios.post("/insertErrand", {
             title: this.state.title,
             description: this.state.description,
@@ -49,10 +77,22 @@ class HelpRequest extends Component {
             contact: this.state.adress,
             areaID: this.state.areaID
         }).then((response) => {
-            console.log("Data submitted successfully!")
+            console.log("Data submitted successfully!", response)
+            this.setState({ success: true });
         }).catch((error) => {
             console.log("Gott error while posting data", error);
+            this.setState({ success: false });
         });
+    }
+
+    renderResponse = () => {
+        if(this.state.success === true){
+            return <div>Success!</div>
+        } else if (this.state.success === false){
+            return <div>False!</div>
+        } else {
+            return null;
+        }
     }
 
     render(){
@@ -75,6 +115,16 @@ class HelpRequest extends Component {
                     leftButtonLink="/home"
                 />
 
+                <SectionTitle fontSize="14px" text="Name your help request"/>
+                <InputWrapper>
+                    <TextInput 
+                        type="text"
+                        height="3em" 
+                        onChange={this.handleTitleChange}
+                        value={this.state.title}
+                    />
+                </InputWrapper>
+
                 <SectionTitle fontSize="14px" text="What do you need help with?"/>
                 <InputWrapper>
                     <DropDownInput 
@@ -87,13 +137,35 @@ class HelpRequest extends Component {
                 <SectionTitle fontSize="14px" text="Describe more in detail please"/>
                 <InputWrapper>
                     <TextInput 
-                        height="20em" 
+                        type="text"
+                        height="6em" 
                         onChange={this.handleDescriptionChange}
                         value={this.state.description}
                     />
                 </InputWrapper>
 
+                <SectionTitle fontSize="14px" text="What is the adress of the errand?"/>
+                <InputWrapper>
+                    <TextInput 
+                        type="text"
+                        height="3em" 
+                        onChange={this.handleAdressChange}
+                        value={this.state.adress}
+                    />
+                </InputWrapper>
+
+                <SectionTitle fontSize="14px" text="Contact details"/>
+                <InputWrapper>
+                    <TextInput 
+                        type="text"
+                        height="3em" 
+                        onChange={this.handleContactChange}
+                        value={this.state.contact}
+                    />
+                </InputWrapper>
+
                 <TextButton onClick={this.handlePublish} description="PUBLISH HELP REQUEST"/>
+                {this.renderResponse()}
 
             </div>
         );

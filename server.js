@@ -135,26 +135,25 @@ client.connect(err => {
 
 
 
-    async function insertErrand(title, description, requester, type, adress, contact, areaID){
+    async function insertErrand(errandData){
 	      var date = new Date();
 	      var dateString= date.toISOString().slice(0,10);
 	      var data = {
 	          "createdAt": dateString, //Future improvement, show hours ago created
 	          "closedAt": "",
 	          "status": "Waiting",
-	          "title": title,
-	          "description": description,
-	          "adress": adress,
-	          "contact": contact,
+	          "title": errandData.title,
+	          "description": errandData.description,
+	          "adress": errandData.adress,
+	          "contact": errandData.contact,
 	          "helper": "",
-	          "requester": requester,    //TODO: koppla requester till userID
-	          "areaID": areaID,
+	          "requester": errandData.requester,    //TODO: koppla requester till userID
+	          "areaID": errandData.areaID,
 	      };
 	      var insert = await errands.insertOne(data).catch(error =>console.error(error));
 	      var insertedId = insert.insertedId;
-	      var areaToUpdate = {"areaID": areaID};
+	      var areaToUpdate = {"areaID": errandData.areaID};
 	      areas.updateOne(areaToUpdate, {"$push": {"errands": insertedId } } )
-	      console.log("Errand has been created by " + requester);
     };
 
 
@@ -225,6 +224,13 @@ client.connect(err => {
             }
         }
         res.send(dataToSend);
+    });
+
+    app.post("/insertErrand", async (data, res) => {
+        let errandData = data.body;
+        console.log(JSON.stringify(errandData));
+        await insertErrand(errandData);
+        res.send(errandData);
     });
 
 
