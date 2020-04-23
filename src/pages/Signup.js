@@ -27,18 +27,21 @@ class Signup extends Component {
         this.setState({ [e.target.name]: e.target.value })
     }
 
-    checkForUniqueUser = e => {
+    checkLogin = e => {
         axios.post("/login-user", {
             username: this.state.username,
-            email: this.state.email,
+            password: this.state.password
         })
             .then((response) => {
-                let uniqueUser =  response.data.uniqueUser;
+                let login =  response.data.login;
 
-                if(!uniqueUser) {
+                if(login) {
+                  let user = response.data.user;
+
                   e.preventDefault();
+                  window.localStorage.setItem("loggedInUser", JSON.stringify(user));
                   this.props.history.push("/home");
-                  
+
                 } else {
                   this.setState({
                     text: 'Wrong Username or Password'
@@ -72,7 +75,7 @@ class Signup extends Component {
         <SectionTitle text="PASSWORD" />
         <TextInput name="password" type="password" height="32px" width="240px" onChange={this.saveInput} autocomplete="new-password"/>
 
-        <TextButton onClick={this.checkForUniqueUser} description="LOGIN" marginTop="40px" marginBottom="10px" height="32px" width="240px"/>
+        <TextButton onClick={this.checkLogin} description="LOGIN" marginTop="40px" marginBottom="10px" height="32px" width="240px"/>
 
         <LinkWrapper to="profile-creation">
           <TextButton description="SIGN UP" marginTop="10px" marginBottom="10px" height="32px" width="240px"/>
@@ -88,9 +91,10 @@ class Signup extends Component {
 const TextWrapper = styled.div`
     border: #4CAF50;
     color: red;
-    margin-top: 1em;
     font-size: 20px;
     border-radius: 100%;
+    margin: auto;
+    padding-top: 0.8em;
 `;
 
 

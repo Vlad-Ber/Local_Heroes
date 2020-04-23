@@ -30,18 +30,18 @@ client.connect(err => {
     //Generell function to check if a document exist
     async function documentExist(collection, document_query){
 	      const coll = db.collection(collection);
-	      let foundQuery = await coll.findOne(document_query);
-	      if (foundQuery == null){
-	          return false;
-	      }
-	      else{
-	          return true;
-	      }
+
+          let foundQuery = await coll.findOne(document_query).catch(error => console.error(error));
+          if(foundQuery) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     async function checkUser(curUserName, curEmail){
-        let checkUser = await documentExist("Users", curUserName);
-        let checkEmail = await documentExist("Users", curEmail);
+        let checkUser = await documentExist("Users", {"username": curUserName});
+        let checkEmail = await documentExist("Users", {"email": curEmail});
         if(checkUser == true || checkEmail == true){
             return true;
         }
@@ -56,7 +56,7 @@ client.connect(err => {
 	          "users": [email],
 	          "errands": [],
 	      };
-	      await areas.insertOne(data).catch(error =>console.error(error));
+	      await areas.insertOne(data).catch(error => console.error(error));
 	      console.log("Area with ID " + areaID + " has been added!");
     }
 
@@ -74,6 +74,10 @@ client.connect(err => {
 
     async function getErrandsEmail(email){
 
+    }
+
+    async function getUser(username){
+        return users.find({"username": username});
     }
 
 
@@ -96,20 +100,18 @@ client.connect(err => {
 
 	      var findEmail = await documentExist("Users", queryToFind);
         var findUser = await documentExist("Users", userNameToFind);
-	      if( findUser == false && findEmail == false){
+	      if(findUser == false && findEmail == false){
 
-	          await users.insertOne(data).catch(error =>console.error(error));
+	          await users.insertOne(data).catch(error => console.error(error));
 	          console.log("User " + name + " has been added!");
 	          var areaToFind = {"areaID": areaID};
 	          var findArea = await documentExist("Areas", areaToFind);
-	          if (findArea == false){
+	          if (findArea == false) {
 		            await insertArea(areaID, email);
-	          }
-	          else{
+	          } else {
 		            await updateArea(areaID, email);
 	          }
-	      }
-	      else{
+	      } else {
             if(findUser == true){
                 console.log("A user with this username already exists")
             }
@@ -123,11 +125,13 @@ client.connect(err => {
 
     async function loginFunction(username, password){
         let userCollection = db.collection("User");
-        let curUser = await userCollection.findOne(username);
+
+        let curUser = await users.findOne({"username":username}).catch(error => console.log(error));
         let curUserPassword = curUser.password;
+
         if(curUserPassword === password){
             return true;
-        } else{
+        } else {
             return false;
         }
     }
@@ -174,7 +178,7 @@ client.connect(err => {
                     throw err;
                 }
             });
-        } else{
+        } else {
             console.log("Could not found the document");
         }
     };
@@ -206,27 +210,30 @@ client.connect(err => {
     });
 
     app.post("/login-user", async (data, res) => {
-        let dataToSend;
         let user = data.body;
-        let userExists = await documentExist("Users", user.username);
+        let username = user.username;
+        let userExists = await documentExist("Users", {"username": username});
 
-        if(!userExists) {
-             dataToSend = ({"login": false });
+        let dataToSend;
 
-        } else {
-            let correctLogin = await loginFunction(user.username, user.password);
-            if(correctLogin){
-              let user = await getUser(user.username);
-
-               dataToSend = ({"login": true, "user": user });
+        if(userExists) {
+            let correctLogin = await loginFunction(username, user.password);
+            if(correctLogin) {
+              let user = await getUser(username);
+              console.log("User: " + user)
+              dataToSend = ({ "login": userExists, "user": user});
+              res.send(dataToSend);
             }
+        } else {
+              dataToSend = ({ "login": false });
+              res.send(dataToSend);
         }
-        res.send(dataToSend);
+
     });
 
     app.post('getErrands', function(req, res) {
-	var errands = getErrandsArea(req.body.areaID);
-	res.send({errands});
+	     var errands = getErrandsArea(req.body.areaID);
+	     res.send({errands});
     });
 
 })
