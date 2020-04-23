@@ -159,16 +159,15 @@ client.connect(err => {
         }
     }
 
-    async function takeErrand(errandID, newEmail, status){
+    async function takeErrand(errandID, newErrandData){
 
         //TODO: check if the errand exists and maybe return true or false
+        let currentErrand = await errands.findOne({ "_id": new ObjectID(errandID) });
+        let updatedErrand = currentErrand;
+
+        Object.keys(currentErrand).map(key => newErrandData[key] !== null ? updatedErrand[key] = newErrandData[key] : updateErrand[key]);
         
-        let curErrand = await errands.findOne({ "_id": new ObjectID(errandID) });
-        let update = curErrand;
-        
-        Object.keys(curErrand).map(key => { return newErrandData[key] !== null ? update[key] = newErrandData[key]} );
-        
-        await errands.updateOne(curErrand, update);
+        await errands.updateOne(currentErrand, updatedErrand);
         
     };
 
