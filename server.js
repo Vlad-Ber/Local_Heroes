@@ -134,15 +134,12 @@ client.connect(err => {
 	      else{
 
             //TODO: Maybe dont need
-	          console.log("A user with this email already exists");
-	      }
-            if(findUser == true){
+             if(findUser == true){
                 console.log("A user with this username already exists")
             }
             if(findEmail == true){
                 console.log("A user with this email already exists");
             }
-
 	      }
     };
 
@@ -210,20 +207,6 @@ client.connect(err => {
    //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------// 
     app.use(bodyParser.json());
     var router = express.Router();    
-  
-    app.post('/getErrandsArea', async function(req, res) {
-        console.log("Inside apppost gettErrandsAReas")
-        let areaID = req.body.data1;
-        
-        let errands = await getErrandsArea(areaID);
-        
-        console.log(errands);
-        
-        res.send({"errands": errands});
-    });
-      
-});
-
 
     // GETs username and checks if it unique
     app.post('/check-username', (username, res) => {
@@ -270,9 +253,5 @@ client.connect(err => {
         res.send(dataToSend);
     });
 
-  app.post('getErrands', function(req, res) {
-	var errands = getErrandsArea(req.body.areaID);
-	res.send({errands});
-    });
 })
 client.close();
