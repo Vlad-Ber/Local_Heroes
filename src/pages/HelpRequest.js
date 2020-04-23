@@ -10,8 +10,33 @@ import TextButton from '../components/TextButton.js';
 
 class HelpRequest extends Component {
 
-    handleHelpRequest = () => {
-        console.log("handleHelpRequest")
+    constructor(props){
+        super(props);
+
+        this.state = {
+            type: "DEFAULT",
+            description: "", 
+        }
+
+        this.handleTypeChange = this.handleTypeChange.bind(this);
+        this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+        this.handlePublish = this.handlePublish.bind(this);
+        
+    }
+
+    handleTypeChange = (e) => {
+        console.log("handleTypeChange: " + e.target.value)
+        this.setState({ type: e.target.value })
+    }
+
+    handleDescriptionChange = (e) => {
+        console.log("handleDescriptionChange")
+        this.setState({ description: e.target.value })
+    }
+
+    handlePublish = () => {
+        console.log("handlePublish")
+        //write http request to server here
     }
 
     render(){
@@ -29,19 +54,30 @@ class HelpRequest extends Component {
 
         return(
             <div>
-                <NavBar/>
+                <NavBar
+                    leftButtonType="back"
+                    leftButtonLink="/home"
+                />
 
                 <SectionTitle fontSize="14px" text="What do you need help with?"/>
                 <InputWrapper>
-                    <DropDownInput options={options}/>
+                    <DropDownInput 
+                        options={options}
+                        onChange={this.handleTypeChange}
+                        value={this.state.type}
+                    />
                 </InputWrapper>
 
                 <SectionTitle fontSize="14px" text="Describe more in detail please"/>
                 <InputWrapper>
-                    <TextInput height="20em"/>
+                    <TextInput 
+                        height="20em" 
+                        onChange={this.handleDescriptionChange}
+                        value={this.state.description}
+                    />
                 </InputWrapper>
 
-                <TextButton function={this.handleHelpRequest()} description="PUBLISH HELP REQUEST"/>
+                <TextButton onClick={this.handlePublish} description="PUBLISH HELP REQUEST"/>
 
             </div>
         );

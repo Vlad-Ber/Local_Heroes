@@ -1,42 +1,97 @@
-import React from 'react';
+import React, { Component } from 'react';
+
+import axios from 'axios';
 
 import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js'
-import TextButton from '../components/TextButton.js'
 import NavBar from '../components/NavBar.js';
+import ArrowButton from '../components/ArrowButton.js';
+import StyledForm from '../components/StyledForm.js';
 
-class ProfileCreation extends React.Component {
+class ProfileCreation extends Component {
 
-  render(){
-    return (
-      <div>
-        <NavBar />
+    constructor(props){
+        super(props);
 
-        <SectionTitle text = "Profile Creation" />
+        this.state = {
+            username: '',
+            password: '',
 
-        <SectionTitle text = "Given Name" titleType = "variant"/>
-        <TextInput />
+            firstname: '',
+            lastname: '',
+            age: '',
 
-        <SectionTitle text = "Surname" titleType = "variant"/>
-        <TextInput />
+            email: '',
+            mobile: '',
+        }
+    }
 
-        <SectionTitle text = "Age" titleType = "variant"/>
-        <TextInput type = "number" />
+    saveInput = e => {
+        this.setState({ [e.target.name]: e.target.value })
+    }
 
-        <SectionTitle text = "Gender" titleType = "variant"/>
-        <TextInput type = "dropdown"/>
+    storeSession = e => {
+        this.checkForNewUsername();
+        e.preventDefault();
+        window.sessionStorage.setItem("stateProfileCreation", JSON.stringify(this.state));
+        this.props.history.push("/residence-info");
+    }
 
-        <SectionTitle text = "Mobile number" titleType = "variant"/>
-        <TextInput type = "number" />
+    checkForNewUsername = e => {
+        console.log("inside checkForNewUsername");
+        axios.post("/check-user",{
+            username: this.state.username,
+            email: this.state.email,
+        })
+            .then((response) => {
+                console.log("Inside response");
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error.response);
+            });
+    }
 
-        <SectionTitle text = "E-mail address" titleType = "variant"/>
-        <TextInput />
+    render(){
+      console.log('State: ' + this.state)
+        return (
+            <div>
+                <NavBar
+                    leftButtonType="back"
+                    leftButtonLink="/signup"
+                />
 
-      </div>
+                <StyledForm>
+                    <SectionTitle text="Profile Creation" />
 
+                    <SectionTitle fontSize="14px" text="Username" />
+                    <TextInput height="24px" name="username" value={this.username} onChange={this.saveInput} autocomplete="username"/>
 
-    );
-  }
+                    <SectionTitle fontSize="14px" text="Password" />
+                    <TextInput type="password" height="24px" name="password" value={this.password} onChange={this.saveInput} autocomplete="new-password"/>
+
+                    <SectionTitle fontSize="14px" text="Given Name" />
+                    <TextInput height="24px" name="firstname" value={this.firstname} onChange={this.saveInput}/>
+
+                    <SectionTitle fontSize="14px" text="Surname" />
+                    <TextInput height="24px" name="lastname" value={this.lastname} onChange={this.saveInput}/>
+
+                    <SectionTitle fontSize="14px" text="Age" />
+                    <TextInput height="24px" name="age" type="number" value={this.age} onChange={this.saveInput}/>
+
+                    <SectionTitle fontSize="14px" text="Mobile number" />
+                    <TextInput height="24px" name="mobile" type="number" value={this.mobile} onChange={this.saveInput}/>
+
+                    <SectionTitle fontSize="14px" text="E-mail address" />
+                    <TextInput height="24px" name="email" value={this.email} onChange={this.saveInput}/>
+
+                    <ArrowButton onClick={this.storeSession} />
+
+                </StyledForm>
+            </div>
+        );
+    }
 }
+
 
 export default ProfileCreation;

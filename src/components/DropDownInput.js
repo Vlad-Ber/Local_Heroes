@@ -1,37 +1,27 @@
-import React, { Component } from 'react'; 
+import React from 'react'; 
 
 import styled from 'styled-components';
 
-class DropDownInput extends Component {
+const DropDownInput = (props) => {
 
-    constructor(props){
-        super(props); 
-
-        this.state = {
-            value: ""
-        } 
-    }
-
-    renderOptions = () => {
-        return this.props.options.map((option, i) => 
-        <option value={option.value} key={i}>{option.text}</option>);
-    }
-
-    render(){
-        return(
-            <DropDown>
-                <option value="" selected disabled hidden>Choose here</option>
-                {this.renderOptions()}
-            </DropDown>
+    return (
+            <DropDown onChange={props.onChange} value={props.value}>
+                <option value="DEFAULT" disabled>Choose here</option>
+                {props.options.map(option => 
+                    <option value={option.value} key={option.value}>{option.text}</option>
+                )}
+            </DropDown> 
         )
-    }
 }
+
 
 const DropDown = styled.select`
     margin: auto;
     display: flex;
 
-    font-family: 'Inter';
+    font-family: 'Helvetica';
+
+    font-size: 14px;
 
     border:  1px solid #31D285;
     box-sizing: border-box;
