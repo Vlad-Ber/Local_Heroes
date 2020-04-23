@@ -45,8 +45,9 @@ class Home extends Component {
     }
     
     vidKnappTryck = () => {
-        axios.post("/getErrandsArea",{
-            data1: 56876,
+        console.log("Inside vidKnappTryck function");
+        axios.post('/takeErrand',{
+            data1: 5687,
         })
             .then((response) => {
                 console.log(response);
@@ -69,10 +70,11 @@ class Home extends Component {
                     activeErrands={this.state.activeErrands}
                 />
                 <LinkWrapper to="/help-request">
-                    <TextButton onClick={this.askForHelp} description="ASK FOR HELP"/>
+                <TextButton onClick={this.askForHelp} description="ASK FOR HELP"/>
                 </LinkWrapper>
                 <SectionTitle text="RECENT ACTIVITY"/>
                 <EventItemListView errands={data["errands"]}/>
+                <button onClick={this.vidKnappTryck} id="loginKnapp" type="button" className="input">Server-TestKnapp</button>
             </div>
         );
     }

@@ -159,6 +159,16 @@ client.connect(err => {
         }
     }
 
+    async function takeErrand(errandID, helperEmail){
+       
+        let curErrand = await errands.findOne({"_id": new ObjectID(errandID) });
+        let curHelper = await users.findOne({"email": helperEmail});
+
+        let updateErrand = { $set: { helper: curHelper.email, status: "inProgress" } };
+        await errands.updateOne(curErrand, updateErrand);
+        
+    }
+
 
     //FUNC: Inserts a Errand to errand collection
     //ARG: Data needed for Errand
@@ -206,7 +216,14 @@ client.connect(err => {
    //---------------------------------------------------------------------------------------------------------//
    //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------// 
     app.use(bodyParser.json());
-    var router = express.Router();    
+    var router = express.Router();
+
+    app.post('/takeErrand', (req, res) => {
+        console.log("takeErrand app.post");
+        let helper = req.body;
+        let takeTheErrand = takeErrand("5ea1591ab6e3e2132dcc6893", "jon@jon.com");
+        
+    });
 
     // GETs username and checks if it unique
     app.post('/check-username', (username, res) => {
