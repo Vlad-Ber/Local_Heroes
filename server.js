@@ -159,16 +159,16 @@ client.connect(err => {
         }
     }
 
-    async function takeErrand(errandID, newErrandData){
+    async function updateErrand(errandID, newErrandData){
 
         //TODO: check if the errand exists and maybe return true or false
         let currentErrand = await errands.findOne({ "_id": new ObjectID(errandID) });
         let updatedErrand = currentErrand;
 
-        Object.keys(currentErrand).map(key => newErrandData[key] !== null ? updatedErrand[key] = newErrandData[key] : updateErrand[key]);
-        
-        await errands.updateOne(currentErrand, updatedErrand);
-        
+        // Map over fields in current errand and replace with new data
+        Object.keys(newErrandData).map(key => updatedErrand[key] = newErrandData[key]);
+
+        await errands.replaceOne({"_id": new ObjectID(errandID)}, updatedErrand);
     };
 
 
@@ -219,11 +219,10 @@ client.connect(err => {
     app.use(bodyParser.json());
     var router = express.Router();
 
-    app.post('/takeErrand', (req, res) => {
-        console.log("takeErrand app.post");
-        let helper = req.body;
-        let doneErrand = takeErrand("5ea1591ab6e3e2132dcc6894", "gustav@gustav.se", "done");
-        
+    app.post('/updateErrand', (data, res) => {
+        console.log("updateErrand app.post");
+        let doneErrand = updateErrand(data.body.errandID, data.body.newErrandData).catch(error => console.error(error));
+        res.send(doneErrand);
     });
 
 

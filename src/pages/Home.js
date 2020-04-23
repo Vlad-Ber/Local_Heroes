@@ -45,9 +45,13 @@ class Home extends Component {
     }
     
     vidKnappTryck = () => {
-        console.log("Inside vidKnappTryck function");
-        axios.post('/takeErrand',{
-            data1: 5687,
+        console.log("Inside vidKnappTryck function ....");
+        axios.post('/updateErrand',{
+            errandID: "5ea1591ab6e3e2132dcc6893",
+            newErrandData: {
+                status: "inProgress",
+                adress: "New Street 111"
+            }
         })
             .then((response) => {
                 console.log(response);
