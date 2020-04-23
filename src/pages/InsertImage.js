@@ -108,11 +108,12 @@ class InsertImage extends Component {
             selectedFile: event.target.files[0]  
         })
     }
+    
 
     fileUploadHandler = () =>{
         const fd = new FormData();
         fd.append('image', this.state.selectedFile, this.state.selectedFile.name);
-        axios.post('', fd, {
+        axios.post('/uploadImage', fd, {
 
             onUploadProgress: progressEvent => {
                 console.log('Upload Progress' + (progressEvent.loaded / progressEvent.total*100)  + '%')
@@ -136,14 +137,10 @@ class InsertImage extends Component {
                 leftButtonLink="/residence-info"
               />
 		          <SectionTitle text="Please insert a profile picture"/>
+
                 <div className="InsertImage">
                 <input type="file" onChange={this.fileSelectHandler} />
-                
-            </div>
-
-
-            
-               
+                </div>
 
               <ConfirmButton onClick={this.sendProfiletoBackend}/>
 		        </InsertImageWrapper>
@@ -151,9 +148,14 @@ class InsertImage extends Component {
     }
 }
 
+
+
 const InsertImageWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  aligin: center;
+  align-items: center;
+
 `;
 
 export default InsertImage;

@@ -250,5 +250,10 @@ client.connect(err => {
         }
         res.send(dataToSend);
     });
+
+    app.post("/uploadImage", async, (data, res) => {
+
+        let image = data.body;
+    })
 })
 client.close();
