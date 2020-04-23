@@ -9,6 +9,7 @@ import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js';
 import DropDownInput from '../components/DropDownInput.js';
 import TextButton from '../components/TextButton.js';
+import ServerResponse from '../components/ServerResponse.js';
 
 class HelpRequest extends Component {
 
@@ -80,20 +81,18 @@ class HelpRequest extends Component {
             console.log("Data submitted successfully!", response)
             this.setState({ success: true });
         }).catch((error) => {
-            console.log("Gott error while posting data", error);
+            console.log("Got error while posting data", error);
             this.setState({ success: false });
         });
     }
 
-    renderResponse = () => {
-        if(this.state.success === true){
-            return <div>Success!</div>
-        } else if (this.state.success === false){
-            return <div>False!</div>
-        } else {
-            return null;
-        }
-    }
+    renderResponse = () => (
+        <ServerResponse 
+            success={this.state.success} 
+            successResponse="Your help request was published." 
+            failResponse="Something went wrong, try again."
+        />
+    );
 
     render(){
 
