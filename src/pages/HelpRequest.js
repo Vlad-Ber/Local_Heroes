@@ -138,7 +138,7 @@ class HelpRequest extends Component {
                 <InputWrapper>
                     <TextInput 
                         type="text"
-                        height="6em" 
+                        height="8em" 
                         onChange={this.handleDescriptionChange}
                         value={this.state.description}
                     />
@@ -173,7 +173,7 @@ class HelpRequest extends Component {
 }
 
 const InputWrapper = styled.div`
-    padding: 30px;
+    padding: 5px;
 `;
 
 export default HelpRequest;
