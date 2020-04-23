@@ -157,17 +157,22 @@ client.connect(err => {
     app.post('/test', async function(req, res) {
         console.log("Inside the test app.post");
 	      var testData = req.body.data1;
-	      var dataToSend = {"testData1":testData, "testdata2": "boll"};
+	      var dataToSend = {"testData1": testData, "testdata2": "boll"};
         res.send(dataToSend);
+
+        let errands = getErrandsArea()
+        
 	      //insertUser("markus@gmail.com", "Markus Ollesson", 20, "Kungsvägen 1", "Lyfter tungt", 75565);
 	      //insertUser("olle@gmail.com", "Olle Ollesson", 20, "Sveavägen 1", "Lagar mat", 75757);
-	      //insertErrand("Laga mat", "Handla mjölk på Ica", "Anna", "Shopping", "Ringvägen 2", "07567467", 56788);
+	     /*insertErrand("Laga mat", "Handla mjölk på Ica", "Anna", "Shopping", "Ringvägen 2",
+                     "07567467", 56788);
+        insertErrand("Handla", "Handla smör ", "gustav11", "Shopping", "Ringvägen 2",
+                     "07567467", 56788);
+        insertErrand("Hjälp med återvinning", "Återvinna gamla möbler", "pavel", "Recycling", "Bordsvägen 2",
+                     "07567467", 56788);*/
+        
         
 	      //getErrandsArea(75757);
-        
-        
-       
-       
         
     });
 
