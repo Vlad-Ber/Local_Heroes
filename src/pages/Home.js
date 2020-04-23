@@ -45,8 +45,9 @@ class Home extends Component {
     }
     
     vidKnappTryck = () => {
-        axios.post("/getErrandsArea",{
-            data1: 56876,
+        console.log("Inside vidKnappTryck function");
+        axios.post('/takeErrand',{
+            data1: 5687,
         })
             .then((response) => {
                 console.log(response);
@@ -55,6 +56,7 @@ class Home extends Component {
                 console.log("got errr while posting data", error);
             });
     }
+    
     render(){
         return(
                 <div>
@@ -63,16 +65,17 @@ class Home extends Component {
             rightButtonLink="/profile-page"
                 />
                 <StatusView
-            areaId={this.state.areaId}
-            activeUsers={this.state.activeUsers}
-            activeErrands={this.state.activeErrands}
+                    areaId={this.state.areaId}
+                    activeUsers={this.state.activeUsers}
+                    activeErrands={this.state.activeErrands}
                 />
                 <LinkWrapper to="/help-request">
                 <TextButton onClick={this.askForHelp} description="ASK FOR HELP"/>
                 </LinkWrapper>
                 <SectionTitle text="RECENT ACTIVITY"/>
                 <EventItemListView errands={data["errands"]}/>
-                </div>
+                <button onClick={this.vidKnappTryck} id="loginKnapp" type="button" className="input">Server-TestKnapp</button>
+            </div>
         );
     }
 }
