@@ -36,12 +36,12 @@ class Home extends Component {
     askForHelp = () => {
         //TODO: uncomment this later
         /*axios.post("/",{
-            data1: "I want help!",
-        }).then((response)=> {
-            console.log(response);
-        }).catch((error)=> {
-            console.log("got errr while posting data", error);
-        });*/
+          data1: "I want help!",
+          }).then((response)=> {
+          console.log(response);
+          }).catch((error)=> {
+          console.log("got errr while posting data", error);
+          });*/
     }
     
     vidKnappTryck = () => {
@@ -52,36 +52,24 @@ class Home extends Component {
                 console.log(response);
             })
             .catch((error) => {
-            console.log("got errr while posting data", error);
+                console.log("got errr while posting data", error);
             });
     }
-    
     render(){
         return(
                 <div>
-                <NavBar/>
-
-            <div>
                 <NavBar
-                    rightButtonType="profile"
-                    rightButtonLink="/profile-page"
+            rightButtonType="profile"
+            rightButtonLink="/profile-page"
                 />
                 <StatusView
             areaId={this.state.areaId}
             activeUsers={this.state.activeUsers}
             activeErrands={this.state.activeErrands}
                 />
-
-                <Link to="/help-request">
-                <TextButton function={this.askForHelp()} description="ASK FOR HELP"/>
-                </Link>
-
-		            <button onClick={this.vidKnappTryck} id="loginKnapp" type="button" className="input">Server-TestKnapp</button>
-
                 <LinkWrapper to="/help-request">
-                    <TextButton onClick={this.askForHelp} description="ASK FOR HELP"/>
+                <TextButton onClick={this.askForHelp} description="ASK FOR HELP"/>
                 </LinkWrapper>
-
                 <SectionTitle text="RECENT ACTIVITY"/>
                 <EventItemListView errands={data["errands"]}/>
                 </div>
