@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+
+import LinkWrapper from '../components/LinkWrapper.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationArrow } from '@fortawesome/free-solid-svg-icons'
-
-
 
 class StatusView extends Component {
 
@@ -14,12 +13,12 @@ class StatusView extends Component {
         return (
             <StatusViewWrapper>
 
-              <Link to="zipcode">
+              <LinkWrapper to="zipcode">
                 <DisplayAreaId>
                     <FontAwesomeIcon icon={faLocationArrow} style={{ color: "#31D285", fontSize: '12px', padding: '4px'}}/>
                     <div style={{ fontSize: "14px", padding: '4px' }}>{this.props.areaId}</div>
                 </DisplayAreaId>
-              </Link>
+              </LinkWrapper>
 
                 <StatusBoxWrapper>
                     <StatusBox>

@@ -1,24 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import styled from 'styled-components';
-
+import NavBar from '../components/NavBar.js';
 import SectionTitle from '../components/SectionTitle.js';
-import TextInput from '../components/TextInput.js'
+import TextInput from '../components/TextInput.js';
 
-class ZipCode extends Component {
-
-  render(){
-    return (
+const ZipCode = () => {
+  return (
       <div>
+        <NavBar 
+          leftButtonType="back"
+          leftButtonLink="/home"
+        /> 
         <SectionTitle
           text="Change Location (Zip Code)"
+          paddingTop="30px"
           fontSize="16px"
-          height=""
         />
-        <TextInput />
+        <TextInput
+          height="32px"
+        />
       </div>
-    );
-  }
+  );
 }
 
 export default ZipCode;
