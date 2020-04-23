@@ -112,7 +112,12 @@ class InsertImage extends Component {
     fileUploadHandler = () =>{
         const fd = new FormData();
         fd.append('image', this.state.selectedFile, this.state.selectedFile.name);
-        axios.post('', fd)
+        axios.post('', fd, {
+
+            onUploadProgress: progressEvent => {
+                console.log('Upload Progress' + (progressEvent.loaded / progressEvent.total*100)  + '%')
+            }
+        })
             .then((response) => {
                 console.log("Inside response");
                 console.log(response);
