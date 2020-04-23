@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -27,7 +28,9 @@ class InsertImage extends Component {
 
 	         address: '',
 	         area: '',
-	         city: '',
+	          city: '',
+
+            image: ''
 	      }
     }
 
@@ -92,6 +95,32 @@ class InsertImage extends Component {
         this.props.history.push("/signup");
     }
 
+    /*onChange(e)
+    {
+        let files = e.target.files;
+        console.log("data file", files)
+        }
+  <input type="file" name="file" onChange={(e)=>this.onChange(e)} />*/
+
+
+    fileSelectHandler = event=>{
+        this.setState({
+            selectedFile: event.target.files[0]  
+        })
+    }
+
+    fileUploadHandler = () =>{
+        const fd = new FormData();
+        fd.append('image', this.state.selectedFile, this.state.selectedFile.name);
+        axios.post('', fd)
+            .then((response) => {
+                console.log("Inside response");
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error.response);
+            });
+    }
 
     render(){
       console.log(this.state)
@@ -102,9 +131,14 @@ class InsertImage extends Component {
                 leftButtonLink="/residence-info"
               />
 		          <SectionTitle text="Please insert a profile picture"/>
+                <div className="InsertImage">
+                <input type="file" onChange={this.fileSelectHandler} />
+                
+            </div>
 
-              <SectionTitle text="Short Description"/>
-              <TextInput height="48px" name="description" value={this.description} onChange={this.saveInput}/>
+
+            
+               
 
               <ConfirmButton onClick={this.sendProfiletoBackend}/>
 		        </InsertImageWrapper>
