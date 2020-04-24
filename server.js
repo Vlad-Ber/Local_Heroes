@@ -274,5 +274,10 @@ client.connect(err => {
 	     var errands = getErrandsArea(req.body.areaID);
 	     res.send({errands});
     });
+
+    app.post("/uploadImage", async, (data, res) => {
+
+        let image = data.body;
+    })
 })
 client.close();
