@@ -46,15 +46,19 @@ class ProfileCreation extends Component {
       })
           .then((response) => {
               let uniqueUser =  response.data.uniqueUser;
+              let uniqueEmail = response.data.uniqueEmail;
 
-              if(!uniqueUser) {
-                console.log("hi")
-                this.storeUser(e);
+              if(uniqueUser && uniqueEmail) {
+                this.setState({text: 'Username and Email already taken'});
+
+              } else if(uniqueUser){
+                this.setState({text: 'Username already taken'});
+
+              } else if(uniqueEmail){
+                this.setState({text: 'Email already taken'});
 
               } else {
-                this.setState({
-                  text: 'Username or Email already taken'
-                })
+                this.storeUser(e);
               }
           })
    }
@@ -92,7 +96,7 @@ class ProfileCreation extends Component {
                     <TextInput height="24px" name="email" value={this.email} onChange={this.saveInput}/>
 
                     <TextWrapper>{this.state.text}</TextWrapper>
-                    
+
                     <ArrowButton onClick={this.checkForUniqueUser} />
 
                 </StyledForm>

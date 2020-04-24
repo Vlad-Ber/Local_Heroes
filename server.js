@@ -54,7 +54,7 @@ client.connect(err => {
             return false;
         }
     }
-  
+
     //FUNC: Insert Area, used by insertUser
     //ARG: AreaID
     //ARG: Email to add in Area
@@ -76,7 +76,7 @@ client.connect(err => {
 	      areas.updateOne(areaToFind, {"$push": {"users": email } } )
     }
 
-  
+
     //FUNC: Get all erands for an Area
     //ARG: Area to get errands from
     //RET: Array of errands in area
@@ -86,7 +86,7 @@ client.connect(err => {
         console.log(findResult);
 	      return findResult;
     };
-  
+
     //FUNC: Get all erands for a use
     //ARG: user.email to get errands from
     //RET: Array of errands created by a user by given email
@@ -140,11 +140,11 @@ client.connect(err => {
 	    }
 	    if(findEmail == true){
                 console.log("A user with this email already exists");
-	    }  
+	    }
 	}
     };
 
-               
+
     //FUNC: Checks if password is correct for a given user
     //ARG: username to check password for
     //ARG: password to check
@@ -163,13 +163,13 @@ client.connect(err => {
     }
 
     async function takeErrand(errandID, helperEmail){
-       
+
         let curErrand = await errands.findOne({"_id": new ObjectID(errandID) });
         let curHelper = await users.findOne({"email": helperEmail});
 
         let updateErrand = { $set: { helper: curHelper.email, status: "inProgress" } };
         await errands.updateOne(curErrand, updateErrand);
-        
+
     }
 
 
@@ -216,7 +216,7 @@ client.connect(err => {
             console.log("Could not found the document");
         }
     };
-   //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------// 
+   //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------//
     app.use(bodyParser.json());
     var router = express.Router();
 
@@ -235,12 +235,13 @@ client.connect(err => {
 
     app.post('/check-user', async (data, res) => {
         let user = data.body;
-        let curUserName = {"username": user.username };
+        let curUsername = {"username": user.username };
         let curEmail = {"email": user.email };
 
-        let result = await checkUser(curUserName, curEmail)
+        let userExists = await documentExist("Users", curUsername);
+        let emailExists = await documentExist("Users", curEmail);
 
-        let dataToSend = ({"uniqueUser": result});
+        let dataToSend = ({"uniqueUser": userExists, "uniqueEmail": emailExists});
 
         res.send(dataToSend);
 
