@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import styled from 'styled-components'
 import axios from 'axios';
 
 import SectionTitle from '../components/SectionTitle.js';
@@ -23,6 +24,8 @@ class ProfileCreation extends Component {
 
             email: '',
             mobile: '',
+
+            text: '',
         }
     }
 
@@ -30,30 +33,33 @@ class ProfileCreation extends Component {
         this.setState({ [e.target.name]: e.target.value })
     }
 
-    storeSession = e => {
-        this.checkForNewUsername();
-        e.preventDefault();
-        window.sessionStorage.setItem("stateProfileCreation", JSON.stringify(this.state));
-        this.props.history.push("/residence-info");
-    }
+  storeUser = e => {
+    e.preventDefault();
+    window.sessionStorage.setItem("stateProfileCreation", JSON.stringify(this.state));
+    this.props.history.push("/residence-info");
+  }
 
-    checkForNewUsername = e => {
-        console.log("inside checkForNewUsername");
-        axios.post("/check-user",{
-            username: this.state.username,
-            email: this.state.email,
-        })
-            .then((response) => {
-                console.log("Inside response");
-                console.log(response);
-            })
-            .catch((error) => {
-                console.log(error.response);
-            });
-    }
+  checkForUniqueUser = e => {
+      axios.post("/check-user", {
+          username: this.state.username,
+          email: this.state.email,
+      })
+          .then((response) => {
+              let uniqueUser =  response.data.uniqueUser;
+
+              if(!uniqueUser) {
+                console.log("hi")
+                this.storeUser(e);
+
+              } else {
+                this.setState({
+                  text: 'Username or Email already taken'
+                })
+              }
+          })
+   }
 
     render(){
-      console.log('State: ' + this.state)
         return (
             <div>
                 <NavBar
@@ -64,8 +70,8 @@ class ProfileCreation extends Component {
                 <StyledForm>
                     <SectionTitle text="Profile Creation" />
 
-                    <SectionTitle fontSize="14px" text="Username" />
-                    <TextInput height="24px" name="username" value={this.username} onChange={this.saveInput} autocomplete="username"/>
+                    <SectionTitle id="username" fontSize="14px" text="Username" />
+                    <TextInput height="24px" name="username"  onChange={this.saveInput} autocomplete="username"/>
 
                     <SectionTitle fontSize="14px" text="Password" />
                     <TextInput type="password" height="24px" name="password" value={this.password} onChange={this.saveInput} autocomplete="new-password"/>
@@ -85,13 +91,24 @@ class ProfileCreation extends Component {
                     <SectionTitle fontSize="14px" text="E-mail address" />
                     <TextInput height="24px" name="email" value={this.email} onChange={this.saveInput}/>
 
-                    <ArrowButton onClick={this.storeSession} />
+                    <TextWrapper>{this.state.text}</TextWrapper>
+                    
+                    <ArrowButton onClick={this.checkForUniqueUser} />
 
                 </StyledForm>
             </div>
         );
     }
 }
+
+
+const TextWrapper = styled.div`
+    border: #4CAF50;
+    color: red;
+    margin-top: 1em;
+    font-size: 20px;
+    border-radius: 100%;
+`;
 
 
 export default ProfileCreation;
