@@ -275,7 +275,7 @@ client.connect(err => {
 	     res.send({errands});
     });
 
-    app.post("/uploadImage", async, (data, res) => {
+    app.post("/uploadImage", async (data, res) => {
 
         let image = data.body;
     })
