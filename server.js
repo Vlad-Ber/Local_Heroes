@@ -77,7 +77,9 @@ client.connect(err => {
     }
 
     async function getUser(username){
-        return users.find({"username": username});
+	var user =  await users.findOne({"username": username}).catch(error => console.error(error));
+	console.log("User in getUser is: " + user);
+        return user;
     }
 
 
@@ -219,10 +221,10 @@ client.connect(err => {
         if(userExists) {
             let correctLogin = await loginFunction(username, user.password);
             if(correctLogin) {
-              let user = await getUser(username);
-              console.log("User: " + user)
-              dataToSend = ({ "login": userExists, "user": user});
-              res.send(dataToSend);
+		let user = await getUser(username);
+		console.log(user);
+		dataToSend = ({ "login": userExists, "user": user});
+		res.send(dataToSend);
             }
         } else {
               dataToSend = ({ "login": false });
