@@ -27,18 +27,23 @@ client.connect(err => {
 
     const users = db.collection("Users");
 
-    //Generell function to check if a document exist
+    //FUNC: Check if a document exists
+    //ARG: Collection name in string
+    //ARG: Query to search or in JSON format
+    //RET: True if document_query exists in collection, else false
     async function documentExist(collection, document_query){
-	      const coll = db.collection(collection);
-
-          let foundQuery = await coll.findOne(document_query).catch(error => console.error(error));
-          if(foundQuery) {
+	const coll = db.collection(collection);
+        let foundQuery = await coll.findOne(document_query).catch(error => console.error(error));
+        if(foundQuery) {
             return true;
         } else {
             return false;
         }
     }
-
+    //FUNC: Check if user email/username exists
+    //ARG: Username in JSON format
+    //ARG: Email in JSON-Format
+    //RET: True if either usernamee/email is in Users-collection, else false
     async function checkUser(curUserName, curEmail){
         let checkUser = await documentExist("Users", {"username": curUserName});
         let checkEmail = await documentExist("Users", {"email": curEmail});
@@ -49,7 +54,10 @@ client.connect(err => {
             return false;
         }
     }
-
+  
+    //FUNC: Insert Area, used by insertUser
+    //ARG: AreaID
+    //ARG: Email to add in Area
     async function insertArea(areaID, email){
 	      var data = {
 	          "areaID": areaID,
@@ -60,21 +68,33 @@ client.connect(err => {
 	      console.log("Area with ID " + areaID + " has been added!");
     }
 
+    //FUNC: Adds user to area
+    //ARG: Area to add user to
+    //ARG: The email of the user to add
     async function updateArea(areaID, email){
 	      var areaToFind = {"areaID": areaID};
 	      areas.updateOne(areaToFind, {"$push": {"users": email } } )
     }
 
+  
+    //FUNC: Get all erands for an Area
+    //ARG: Area to get errands from
+    //RET: Array of errands in area
     async function getErrandsArea(areaID){
-	      errands.find({"areaID": areaID}).toArray(function(err, result) {
-	          if (err) throw err;
-	          return result;
-	      });
-    }
-
+        console.log("inside getErrandsArea");
+	      let findResult = await errands.find({"areaID": areaID}).toArray();
+        console.log(findResult);
+	      return findResult;
+    };
+  
+    //FUNC: Get all erands for a use
+    //ARG: user.email to get errands from
+    //RET: Array of errands created by a user by given email
     async function getErrandsEmail(email){
-
+	      let findResult = await errands.find({"user": email}).toArray();
+	      return findResult;
     }
+
 
     async function getUser(username){
 	var user =  await users.findOne({"username": username}).catch(error => console.error(error));
@@ -82,7 +102,8 @@ client.connect(err => {
         return user;
     }
 
-
+    //FUNC: Adds a user to db. Adds user to given area. If area doesnt exist, create new area.
+    //ARGS: data required
     async function insertUser(username, password, email, name, age, address, description, areaID, mobile, city){
 	      var data = {
             "username": username,
@@ -94,37 +115,40 @@ client.connect(err => {
 	          "desription": description,
 	          "virtuePoints": 0,
 	          "areaID": areaID,
-            "mobile": mobile,
-            "city": city,
+		  "mobile": mobile,
+		  "city": city,
 	      };
-	      var queryToFind = {"email": email};
+	var queryToFind = {"email": email};
         var userNameToFind = {"username": username};
 
-	      var findEmail = await documentExist("Users", queryToFind);
+	var findEmail = await documentExist("Users", queryToFind);
         var findUser = await documentExist("Users", userNameToFind);
-	      if(findUser == false && findEmail == false){
+	if(findUser == false && findEmail == false){
 
-	          await users.insertOne(data).catch(error => console.error(error));
-	          console.log("User " + name + " has been added!");
-	          var areaToFind = {"areaID": areaID};
-	          var findArea = await documentExist("Areas", areaToFind);
-	          if (findArea == false) {
-		            await insertArea(areaID, email);
-	          } else {
-		            await updateArea(areaID, email);
-	          }
-	      } else {
-            if(findUser == true){
+	    await users.insertOne(data).catch(error => console.error(error));
+	    console.log("User " + name + " has been added!");
+	    var areaToFind = {"areaID": areaID};
+	    var findArea = await documentExist("Areas", areaToFind);
+	    if (findArea == false) {
+		await insertArea(areaID, email);
+	    } else {
+		await updateArea(areaID, email);
+	    }
+	    //TODO: Maybe dont need
+	    if(findUser == true){
                 console.log("A user with this username already exists")
-            }
-            if(findEmail == true){
+	    }
+	    if(findEmail == true){
                 console.log("A user with this email already exists");
-            }
-
-	      }
-
+	    }  
+	}
     };
 
+               
+    //FUNC: Checks if password is correct for a given user
+    //ARG: username to check password for
+    //ARG: password to check
+    //RET: True if given password matches the password stored for the given username in db
     async function loginFunction(username, password){
         let userCollection = db.collection("User");
 
@@ -138,9 +162,19 @@ client.connect(err => {
         }
     }
 
+    async function takeErrand(errandID, helperEmail){
+       
+        let curErrand = await errands.findOne({"_id": new ObjectID(errandID) });
+        let curHelper = await users.findOne({"email": helperEmail});
+
+        let updateErrand = { $set: { helper: curHelper.email, status: "inProgress" } };
+        await errands.updateOne(curErrand, updateErrand);
+        
+    }
 
 
-
+    //FUNC: Inserts a Errand to errand collection
+    //ARG: Data needed for Errand
     async function insertErrand(title, description, requester,  type, adress, contact, areaID){
 	      var date = new Date();
 	      var dateString= date.toISOString().slice(0,10);
@@ -153,6 +187,7 @@ client.connect(err => {
 	          "adress": adress,
 	          "contact": contact,
 	          "helper": "",
+	          "user": requester,    //TODO: koppla requester till userID
 	          "requester": requester,    //TODO: koppla requester till userID
 	          "areaID": areaID,
 	      };
@@ -160,16 +195,13 @@ client.connect(err => {
 	      var insertedId = insert.insertedId;
 	      var areaToUpdate = {"areaID": areaID};
 	      areas.updateOne(areaToUpdate, {"$push": {"errands": insertedId } } )
-
-
 	      console.log("Errand has been created by " + requester);
     }
-
-
     const ObjectID = require("mongodb").ObjectID;
 
-    //-------------------------------------------------------------------------------------//
-
+    //FUNC: Deletes a errand from db
+    //ARG: ErrandID to remove
+    //TODO: Inte klar
     async function deleteErrands(errandId){
         let arg = {"_id": new ObjectID(errandId)};
         let findErrands = await documentExist("Errands", arg);
@@ -184,12 +216,15 @@ client.connect(err => {
             console.log("Could not found the document");
         }
     };
-
-    //app.use(bodyParser.urlencoded({ extended: false })); : DETTA KANSKE BEHÖVS I FRAMTIDEN
+   //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------// 
     app.use(bodyParser.json());
-
     var router = express.Router();
 
+    // GETs username and checks if it unique
+    app.post('/check-username', (username, res) => {
+      let u = username.body;
+      users.find({username: u}).catch(error => console.error(error));
+    })
 
     // GETs and sends user data to database
     app.post('/insertUser', async (userData, res) => {
@@ -231,13 +266,12 @@ client.connect(err => {
               res.send(dataToSend);
         }
 
+
     });
 
     app.post('getErrands', function(req, res) {
 	     var errands = getErrandsArea(req.body.areaID);
 	     res.send({errands});
     });
-
 })
-
 client.close();
