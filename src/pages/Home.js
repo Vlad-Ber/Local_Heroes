@@ -34,10 +34,10 @@ class Home extends Component {
 
     render(){
         return(
-                <div>
+            <div>
                 <NavBar
-            rightButtonType="profile"
-            rightButtonLink="/profile-page"
+                    rightButtonType="profile"
+                    rightButtonLink="/profile-page"
                 />
                 <StatusView
                     areaID={this.state.areaID}
@@ -49,7 +49,6 @@ class Home extends Component {
                 </LinkWrapper>
                 <SectionTitle text="RECENT ACTIVITY"/>
                 <EventItemListView errands={data["errands"]}/>
-                <button onClick={this.vidKnappTryck} id="loginKnapp" type="button" className="input">Server-TestKnapp</button>
             </div>
         );
     }
