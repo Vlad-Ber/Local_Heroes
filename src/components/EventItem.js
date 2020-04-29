@@ -3,6 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components'
 
 import TextButton from './TextButton.js'
+import ServerResponse from '../components/ServerResponse.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPeopleCarry, faShoppingCart, faInfo } from '@fortawesome/free-solid-svg-icons'
@@ -15,10 +16,12 @@ class EventItem extends Component {
 
         this.state = {
             fullView: false,
-            errand: {}
+            errand: {}, 
+            success: null
         }
 
         this.handleHelpNotice = this.handleHelpNotice.bind(this);
+
     };
 
     toggleView = () => {
@@ -40,6 +43,14 @@ class EventItem extends Component {
             this.setState({ success: false });
         });
     };
+
+    renderResponse = () => (
+        <ServerResponse 
+            success={this.state.success} 
+            successResponse="Thank you for helping out!" 
+            failResponse="Something went wrong, try again."
+        />
+    );
 
     renderTypeIcon = () => {
 
@@ -120,6 +131,7 @@ class EventItem extends Component {
             </InfoWrapper>
 
             {this.renderActionButton()}
+            {this.renderResponse()}
 
         </ExpandedView> 
         
