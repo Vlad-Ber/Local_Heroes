@@ -82,17 +82,16 @@ client.connect(err => {
     //RET: Array of errands in area
     async function getErrandsArea(areaID){
         console.log("inside getErrandsArea");
-	      let findResult = await errands.find({"areaID": areaID}).toArray();
-        console.log(findResult);
-	      return findResult;
+	    let findResult = await errands.find({"areaID": areaID}).toArray();
+	    return findResult;
     };
 
     //FUNC: Get all erands for a use
     //ARG: user.email to get errands from
     //RET: Array of errands created by a user by given email
     async function getErrandsEmail(email){
-	      let findResult = await errands.find({"user": email}).toArray();
-	      return findResult;
+	    let findResult = await errands.find({"user": email}).toArray();
+	    return findResult;
     }
 
 
@@ -282,8 +281,9 @@ client.connect(err => {
 
     });
 
-    app.post('getErrands', function(req, res) {
-	     var errands = getErrandsArea(req.body.areaID);
+    app.post('/getErrandsArea', async function(req, res) {
+         var errands = await getErrandsArea(req.body.areaID);
+         console.log("errands: " + JSON.stringify(errands));
 	     res.send({errands});
     });
 
