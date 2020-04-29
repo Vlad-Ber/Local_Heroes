@@ -13,7 +13,7 @@
             "requester": "user1",
             "helpers": [],    
             "type": "shopping", 
-            "areaId": 75232
+            "areaID": 75232
         },
         {    
             "_id": "5e8d9b19bf2ed5257ff40428", 
@@ -28,7 +28,7 @@
             "requester": "user1",
             "helpers": [],    
             "type": "carrying", 
-            "areaId": 75232
+            "areaID": 75232
         },
         {    
             "_id": "5e8d9b19bf2ed5257ff40428", 
@@ -43,7 +43,7 @@
             "requester": "user1",
             "helpers": [],    
             "type": "shopping", 
-            "areaId": 75232
+            "areaID": 75232
         }
     ], 
     "users": [
@@ -55,7 +55,7 @@
             "adress": "Marias gata 1",
             "description": "I am in self-isolation because of Corona and need help with various things", 
             "virtuePoints": 0,
-            "areaId": 75232
+            "areaID": 75232
         },
         {
             "_id": "5e8dc80bbf2ed5257ff40429",
@@ -65,7 +65,7 @@
             "adress": "Marias gata 1",
             "description": "I am in self-isolation because of Corona and need help with various things", 
             "virtuePoints": 0,
-            "areaId": 75232
+            "areaID": 75232
         },
         {
             "_id": "5e8dc80bbf2ed5257ff40429",
@@ -75,7 +75,7 @@
             "adress": "Marias gata 1",
             "description": "I am in self-isolation because of Corona and need help with various things", 
             "virtuePoints": 0,
-            "areaId": 75232
+            "areaID": 75232
         },
         {
             "_id": "5e8dc80bbf2ed5257ff40429",
@@ -85,7 +85,7 @@
             "adress": "Marias gata 1",
             "description": "I am in self-isolation because of Corona and need help with various things", 
             "virtuePoints": 0,
-            "areaId": 75232
+            "areaID": 75232
         }
     ]
         

@@ -3,14 +3,11 @@ import React from 'react'
 import styled from 'styled-components'
 
 const TextButton = (props) => {
-    return <Button
-    {...props}
-    marginTop={props.marginTop}
-    marginBottom={props.marginBottom}
-    width={props.width}
-    height={props.height}>
-    {props.description}
-    </Button>
+    return (
+        <Button {...props}>
+            {props.description}
+        </Button>
+    );
 }
 
 const Button = styled.button`
