@@ -162,15 +162,17 @@ client.connect(err => {
         }
     };
 
-    async function takeErrand(errandID, helperEmail){
+    async function updateErrand(errandID, newErrandData){
 
-        let curErrand = await errands.findOne({"_id": new ObjectID(errandID) });
-        let curHelper = await users.findOne({"email": helperEmail});
+        //TODO: check if the errand exists and maybe return true or false
+        let currentErrand = await errands.findOne({ "_id": new ObjectID(errandID) });
+        let updatedErrand = currentErrand;
 
-        let updateErrand = { $set: { helper: curHelper.email, status: "inProgress" } };
-        await errands.updateOne(curErrand, updateErrand);
+        // Map over fields in current errand and replace with new data
+        Object.keys(newErrandData).map(key => updatedErrand[key] = newErrandData[key]);
 
-    }
+        await errands.replaceOne({"_id": new ObjectID(errandID)}, updatedErrand);
+    };
 
     async function insertErrand(errandData){
 	      var date = new Date();
@@ -216,6 +218,12 @@ client.connect(err => {
    //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------//
     app.use(bodyParser.json());
     var router = express.Router();
+
+    app.post('/updateErrand', (data, res) => {
+        console.log("updateErrand app.post");
+        let doneErrand = updateErrand(data.body.errandID, data.body.newErrandData).catch(error => console.error(error));
+        res.send(doneErrand);
+    });
 
     // GETs username and checks if it unique
     app.post('/check-username', (username, res) => {
