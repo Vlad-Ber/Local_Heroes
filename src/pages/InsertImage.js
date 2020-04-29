@@ -7,7 +7,6 @@ import axios from 'axios';
 import NavBar from '../components/NavBar.js';
 import SectionTitle from '../components/SectionTitle.js';
 import ConfirmButton from '../components/ConfirmButton.js';
-import TextInput from '../components/TextInput.js';
 
 class InsertImage extends Component {
 
@@ -36,10 +35,10 @@ class InsertImage extends Component {
 
     componentDidMount(){
 
-	       let prof = JSON.parse(sessionStorage.getItem("stateProfileCreation"));
-
-         let updatedUsername = prof.username;
-         let updatedPassword = prof.password;
+           let prof = JSON.parse(sessionStorage.getItem("stateProfileCreation"));
+           
+           let updatedUsername = prof.username;
+           let updatedPassword = prof.password;
 	       let updatedName = prof.firstname + ' ' + prof.lastname;
 	       let updatedAge = prof.age;
 	       let updatedEmail = prof.email;
@@ -153,9 +152,8 @@ class InsertImage extends Component {
 const InsertImageWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  aligin: center;
   align-items: center;
-
+  align-items: center;
 `;
 
 export default InsertImage;
