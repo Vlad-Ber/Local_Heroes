@@ -28,7 +28,10 @@ class EventItem extends Component {
     handleHelpNotice = () => {
         console.log("handleHelpNotice");
         axios.post("/updateErrand", {
-            // data
+            errandID: this.state.errand["errandID"],
+            newErrandData: {
+                status: "inProgress"
+            }
         }).then((response) => {
             console.log("Data submitted successfully!", response)
             this.setState({ success: true });
@@ -38,7 +41,7 @@ class EventItem extends Component {
         });
     };
 
-    renderTypeIcon = (args) => {
+    renderTypeIcon = () => {
 
         let type = this.state.errand.type;
         let typeIconStyle = {
