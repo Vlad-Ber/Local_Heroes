@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import styled from 'styled-components';
+import axios from 'axios';
 
 import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js';
@@ -11,8 +12,46 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSeedling } from '@fortawesome/free-solid-svg-icons';
 
 class Signup extends Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+            username: '',
+            password: '',
+
+            text: '',
+        }
+    }
+
+    saveInput = e => {
+        this.setState({ [e.target.name]: e.target.value })
+    }
+
+    checkLogin = e => {
+        axios.post("/login-user", {
+            username: this.state.username,
+            password: this.state.password
+        })
+            .then((response) => {
+                let login =  response.data.login;
+
+                if(login) {
+                  let user = response.data.user;
+
+                  e.preventDefault();
+                  window.localStorage.setItem("loggedInUser", JSON.stringify(user));
+                  this.props.history.push("/home");
+
+                } else {
+                  this.setState({
+                    text: 'Wrong Username or Password'
+                  })
+                }
+            })
+     }
 
   render(){
+    console.log(this.state)
     return (
       <SignUpWrapper>
 
@@ -31,36 +70,46 @@ class Signup extends Component {
 
 
         <SectionTitle text="USERNAME" />
-        <TextInput height="32px" width="240px"/>
+        <TextInput name="username" height="32px" width="240px"  onChange={this.saveInput} autocomplete="username"/>
 
         <SectionTitle text="PASSWORD" />
-        <TextInput type="password" height="32px" width="240px"/>
+        <TextInput name="password" type="password" height="32px" width="240px" onChange={this.saveInput} autocomplete="new-password"/>
 
-        <LinkWrapper to="/home">
-          <TextButton description="LOGIN" marginTop="40px" marginBottom="10px" height="32px" width="240px"/>
-        </LinkWrapper>
+        <TextButton onClick={this.checkLogin} description="LOGIN" marginTop="40px" marginBottom="10px" height="32px" width="240px"/>
 
         <LinkWrapper to="profile-creation">
           <TextButton description="SIGN UP" marginTop="10px" marginBottom="10px" height="32px" width="240px"/>
         </LinkWrapper>
+
+        <TextWrapper>{this.state.text}</TextWrapper>
 
       </SignUpWrapper>
     );
   }
 }
 
+const TextWrapper = styled.div`
+    border: #4CAF50;
+    color: red;
+    font-size: 20px;
+    border-radius: 100%;
+    margin: auto;
+    padding-top: 0.8em;
+`;
+
+
 const SignUpWrapper = styled.div`
-  display: flex; 
-  flex-direction: column; 
-`; 
+  display: flex;
+  flex-direction: column;
+`;
 
 const WelcomeMessage = styled.div`
   display: flex;
   flex-direction: column;
-  font-size: 24px; 
+  font-size: 24px;
   font-weight: 800;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   padding-top: 80px;
   padding-bottom: 10px;
 `;

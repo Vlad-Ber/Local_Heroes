@@ -1,6 +1,6 @@
-import React from 'react'; 
+import React from 'react';
 
-import NavBar from '../components/NavBar.js'; 
+import NavBar from '../components/NavBar.js';
 import TextButton from '../components/TextButton.js';
 import LinkWrapper from '../components/LinkWrapper.js';
 
@@ -12,7 +12,7 @@ const ProfilePage = (props) => {
                 leftButtonLink="/home"
             />
             <LinkWrapper to="/">
-                <TextButton description="LOG OUT"/>
+                <TextButton onClick={localStorage.clear()} description="LOG OUT"/>
             </LinkWrapper>
         </div>
     );

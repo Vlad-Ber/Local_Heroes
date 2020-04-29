@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
 import data from '../data/data.json';
 
@@ -16,7 +15,7 @@ class Home extends Component {
         super(props);
 
         this.state = {
-            areaId: 75232,
+            areaID: 75232,
             activeUsers: 0,
             activeErrands: 0,
         }
@@ -25,60 +24,31 @@ class Home extends Component {
     componentDidMount(){
 
         let updatedActiveUsers = data["users"].filter(user =>
-                                                      user.areaId === this.state.areaId).length;
+            user.areaID === this.state.areaID).length;
 
         let updatedActiveErrands = data["errands"].filter(errand =>
-                                                          errand.areaId === this.state.areaId && errand.status !== "done").length;
+            errand.areaID === this.state.areaID && errand.status !== "done").length;
 
         this.setState({ activeErrands: updatedActiveErrands, activeUsers: updatedActiveUsers })
     }
 
-    askForHelp = () => {
-        //TODO: uncomment this later
-        /*axios.post("/",{
-          data1: "I want help!",
-          }).then((response)=> {
-          console.log(response);
-          }).catch((error)=> {
-          console.log("got errr while posting data", error);
-          });*/
-    }
-    
-    vidKnappTryck = () => {
-        console.log("Inside vidKnappTryck function ....");
-        axios.post('/updateErrand',{
-            errandID: "5ea1591ab6e3e2132dcc6893",
-            newErrandData: {
-                status: "inProgress",
-                adress: "New Street 111"
-            }
-        })
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.log("got errr while posting data", error);
-            });
-    }
-    
     render(){
         return(
-                <div>
+            <div>
                 <NavBar
-            rightButtonType="profile"
-            rightButtonLink="/profile-page"
+                    rightButtonType="profile"
+                    rightButtonLink="/profile-page"
                 />
                 <StatusView
-                    areaId={this.state.areaId}
+                    areaID={this.state.areaID}
                     activeUsers={this.state.activeUsers}
                     activeErrands={this.state.activeErrands}
                 />
                 <LinkWrapper to="/help-request">
-                <TextButton onClick={this.askForHelp} description="ASK FOR HELP"/>
+                    <TextButton description="ASK FOR HELP"/>
                 </LinkWrapper>
                 <SectionTitle text="RECENT ACTIVITY"/>
                 <EventItemListView errands={data["errands"]}/>
-                <button onClick={this.vidKnappTryck} id="loginKnapp" type="button" className="input">Server-TestKnapp</button>
             </div>
         );
     }

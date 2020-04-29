@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
+
 import styled from 'styled-components';
 import axios from 'axios';
 
 import NavBar from '../components/NavBar.js';
 import SectionTitle from '../components/SectionTitle.js';
 import ConfirmButton from '../components/ConfirmButton.js';
-import TextInput from '../components/TextInput.js';
 
 class InsertImage extends Component {
 
@@ -27,16 +27,18 @@ class InsertImage extends Component {
 
 	         address: '',
 	         area: '',
-	         city: '',
+	          city: '',
+
+            image: ''
 	      }
     }
 
     componentDidMount(){
 
-	       let prof = JSON.parse(sessionStorage.getItem("stateProfileCreation"));
-
-         let updatedUsername = prof.username;
-         let updatedPassword = prof.password;
+           let prof = JSON.parse(sessionStorage.getItem("stateProfileCreation"));
+           
+           let updatedUsername = prof.username;
+           let updatedPassword = prof.password;
 	       let updatedName = prof.firstname + ' ' + prof.lastname;
 	       let updatedAge = prof.age;
 	       let updatedEmail = prof.email;
@@ -71,7 +73,7 @@ class InsertImage extends Component {
     sendProfiletoBackend = (userProfile, response) => {
         let user = this.state;
 
-        axios.post("/addUserToDB", {
+        axios.post("/insertUser", {
           username: user.username,
           password: user.password,
           email: user.email,
@@ -92,6 +94,38 @@ class InsertImage extends Component {
         this.props.history.push("/signup");
     }
 
+    /*onChange(e)
+    {
+        let files = e.target.files;
+        console.log("data file", files)
+        }
+  <input type="file" name="file" onChange={(e)=>this.onChange(e)} />*/
+
+
+    fileSelectHandler = event=>{
+        this.setState({
+            selectedFile: event.target.files[0]  
+        })
+    }
+    
+
+    fileUploadHandler = () =>{
+        const fd = new FormData();
+        fd.append('image', this.state.selectedFile, this.state.selectedFile.name);
+        axios.post('/uploadImage', fd, {
+
+            onUploadProgress: progressEvent => {
+                console.log('Upload Progress' + (progressEvent.loaded / progressEvent.total*100)  + '%')
+            }
+        })
+            .then((response) => {
+                console.log("Inside response");
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error.response);
+            });
+    }
 
     render(){
       console.log(this.state)
@@ -103,8 +137,9 @@ class InsertImage extends Component {
               />
 		          <SectionTitle text="Please insert a profile picture"/>
 
-              <SectionTitle text="Short Description"/>
-              <TextInput height="48px" name="description" value={this.description} onChange={this.saveInput}/>
+                <div className="InsertImage">
+                <input type="file" onChange={this.fileSelectHandler} />
+                </div>
 
               <ConfirmButton onClick={this.sendProfiletoBackend}/>
 		        </InsertImageWrapper>
@@ -112,9 +147,13 @@ class InsertImage extends Component {
     }
 }
 
+
+
 const InsertImageWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  align-items: center;
 `;
 
 export default InsertImage;

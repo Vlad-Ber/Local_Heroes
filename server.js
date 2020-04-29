@@ -32,23 +32,21 @@ client.connect(err => {
     //ARG: Query to search or in JSON format
     //RET: True if document_query exists in collection, else false
     async function documentExist(collection, document_query){
-	      const coll = db.collection(collection);
-	      let foundQuery = await coll.findOne(document_query);
-	      if (foundQuery == null){
-	          return false;
-	      }
-	      else{
-	          return true;
-	      }
-
+	const coll = db.collection(collection);
+        let foundQuery = await coll.findOne(document_query).catch(error => console.error(error));
+        if(foundQuery) {
+            return true;
+        } else {
+            return false;
+        }
     }
     //FUNC: Check if user email/username exists
     //ARG: Username in JSON format
     //ARG: Email in JSON-Format
     //RET: True if either usernamee/email is in Users-collection, else false
     async function checkUser(curUserName, curEmail){
-        let checkUser = await documentExist("Users", curUserName);
-        let checkEmail = await documentExist("Users", curEmail);
+        let checkUser = await documentExist("Users", {"username": curUserName});
+        let checkEmail = await documentExist("Users", {"email": curEmail});
         if(checkUser == true || checkEmail == true){
             return true;
         }
@@ -56,7 +54,7 @@ client.connect(err => {
             return false;
         }
     }
-  
+
     //FUNC: Insert Area, used by insertUser
     //ARG: AreaID
     //ARG: Email to add in Area
@@ -66,7 +64,7 @@ client.connect(err => {
 	          "users": [email],
 	          "errands": [],
 	      };
-	      await areas.insertOne(data).catch(error =>console.error(error));
+	      await areas.insertOne(data).catch(error => console.error(error));
 	      console.log("Area with ID " + areaID + " has been added!");
     }
 
@@ -78,7 +76,7 @@ client.connect(err => {
 	      areas.updateOne(areaToFind, {"$push": {"users": email } } )
     }
 
-  
+
     //FUNC: Get all erands for an Area
     //ARG: Area to get errands from
     //RET: Array of errands in area
@@ -88,13 +86,20 @@ client.connect(err => {
         console.log(findResult);
 	      return findResult;
     };
-  
+
     //FUNC: Get all erands for a use
     //ARG: user.email to get errands from
     //RET: Array of errands created by a user by given email
     async function getErrandsEmail(email){
 	      let findResult = await errands.find({"user": email}).toArray();
 	      return findResult;
+    }
+
+
+    async function getUser(username){
+	var user =  await users.findOne({"username": username}).catch(error => console.error(error));
+	console.log("User in getUser is: " + user);
+        return user;
     }
 
     //FUNC: Adds a user to db. Adds user to given area. If area doesnt exist, create new area.
@@ -110,54 +115,52 @@ client.connect(err => {
 	          "desription": description,
 	          "virtuePoints": 0,
 	          "areaID": areaID,
-            "mobile": mobile,
-            "city": city,
+		  "mobile": mobile,
+		  "city": city,
 	      };
-	      var queryToFind = {"email": email};
+	var queryToFind = {"email": email};
         var userNameToFind = {"username": username};
 
-	      var findEmail = await documentExist("Users", queryToFind);
+	var findEmail = await documentExist("Users", queryToFind);
         var findUser = await documentExist("Users", userNameToFind);
-	      if( findUser == false && findEmail == false){
+	if(findUser == false && findEmail == false){
 
-	          await users.insertOne(data).catch(error =>console.error(error));
-	          console.log("User " + name + " has been added!");
-	          var areaToFind = {"areaID": areaID};
-	          var findArea = await documentExist("Areas", areaToFind);
-	          if (findArea == false){
-		            await insertArea(areaID, email);
-	          }
-	          else{
-		            await updateArea(areaID, email);
-	          }
-	      }
-	      else{
-
-            //TODO: Maybe dont need
-             if(findUser == true){
+	    await users.insertOne(data).catch(error => console.error(error));
+	    console.log("User " + name + " has been added!");
+	    var areaToFind = {"areaID": areaID};
+	    var findArea = await documentExist("Areas", areaToFind);
+	    if (findArea == false) {
+		await insertArea(areaID, email);
+	    } else {
+		await updateArea(areaID, email);
+	    }
+	    //TODO: Maybe dont need
+	    if(findUser == true){
                 console.log("A user with this username already exists")
-            }
-            if(findEmail == true){
+	    }
+	    if(findEmail == true){
                 console.log("A user with this email already exists");
-            }
-	      }
+	    }
+	}
     };
 
-               
+
     //FUNC: Checks if password is correct for a given user
     //ARG: username to check password for
     //ARG: password to check
     //RET: True if given password matches the password stored for the given username in db
     async function loginFunction(username, password){
         let userCollection = db.collection("User");
-        let curUser = await userCollection.findOne(username);
+
+        let curUser = await users.findOne({"username":username}).catch(error => console.log(error));
         let curUserPassword = curUser.password;
+
         if(curUserPassword === password){
             return true;
-        } else{
+        } else {
             return false;
         }
-    }
+    };
 
     async function updateErrand(errandID, newErrandData){
 
@@ -171,31 +174,28 @@ client.connect(err => {
         await errands.replaceOne({"_id": new ObjectID(errandID)}, updatedErrand);
     };
 
-
-    //FUNC: Inserts a Errand to errand collection
-    //ARG: Data needed for Errand
-    async function insertErrand(title, description, requester,  type, adress, contact, areaID){
+    async function insertErrand(errandData){
 	      var date = new Date();
 	      var dateString= date.toISOString().slice(0,10);
 	      var data = {
 	          "createdAt": dateString, //Future improvement, show hours ago created
 	          "closedAt": "",
 	          "status": "Waiting",
-	          "title": title,
-	          "description": description,
-	          "adress": adress,
-	          "contact": contact,
+	          "title": errandData.title,
+	          "description": errandData.description,
+	          "adress": errandData.adress,
+	          "contact": errandData.contact,
 	          "helper": "",
-	          "user": requester,    //TODO: koppla requester till userID
-	          "requester": requester,    //TODO: koppla requester till userID
-	          "areaID": areaID,
+	          "requester": errandData.requester,    //TODO: koppla requester till userID
+	          "areaID": errandData.areaID,
 	      };
 	      var insert = await errands.insertOne(data).catch(error =>console.error(error));
 	      var insertedId = insert.insertedId;
-	      var areaToUpdate = {"areaID": areaID};
+	      var areaToUpdate = {"areaID": errandData.areaID};
 	      areas.updateOne(areaToUpdate, {"$push": {"errands": insertedId } } )
-	      console.log("Errand has been created by " + requester);
-    }
+    };
+
+
     const ObjectID = require("mongodb").ObjectID;
 
     //FUNC: Deletes a errand from db
@@ -211,11 +211,11 @@ client.connect(err => {
                     throw err;
                 }
             });
-        } else{
+        } else {
             console.log("Could not found the document");
         }
     };
-   //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------// 
+   //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------//
     app.use(bodyParser.json());
     var router = express.Router();
 
@@ -225,7 +225,6 @@ client.connect(err => {
         res.send(doneErrand);
     });
 
-
     // GETs username and checks if it unique
     app.post('/check-username', (username, res) => {
       let u = username.body;
@@ -233,42 +232,64 @@ client.connect(err => {
     })
 
     // GETs and sends user data to database
-    app.post('/addUserToDB', async (userData, res) => {
+    app.post('/insertUser', async (userData, res) => {
         let user = userData.body;
         insertUser(user.username, user.password, user.email, user.name, user.age, user.address,
                    user.description, user.areaId, user.mobile, user.city);
     });
 
     app.post('/check-user', async (data, res) => {
-        console.log("Check user server");
-
         let user = data.body;
-        let curUserName = {"username": user.username };
+        let curUsername = {"username": user.username };
         let curEmail = {"email": user.email };
-        let checkUser = await documentExist("Users", curUserName);
-        let checkEmail = await documentExist("Users", curEmail);
 
-        console.log(checkUser);
-        console.log(checkEmail);
-        let dataToSend = ({"userState": checkUser, "emailState": checkEmail});
+        let userExists = await documentExist("Users", curUsername);
+        let emailExists = await documentExist("Users", curEmail);
+
+        let dataToSend = ({"uniqueUser": userExists, "uniqueEmail": emailExists});
 
         res.send(dataToSend);
 
     });
 
     app.post("/login-user", async (data, res) => {
-        let dataToSend;
         let user = data.body;
-        let checkUser = await documentExist("User", user.username);
-        if(checkUser == false){
-            dataToSend = "This username does not exist";
-        } else {
-            let checkLoginInformation = loginFunction(user.username, user.password);
-            if(checkLoginInformation == true){
-                dataToSend = true;
+        let username = user.username;
+        let userExists = await documentExist("Users", {"username": username});
+
+        let dataToSend;
+
+        if(userExists) {
+            let correctLogin = await loginFunction(username, user.password);
+            if(correctLogin) {
+		let user = await getUser(username);
+		console.log(user);
+		dataToSend = ({ "login": userExists, "user": user});
+		res.send(dataToSend);
             }
+        } else {
+              dataToSend = ({ "login": false });
+              res.send(dataToSend);
         }
-        res.send(dataToSend);
+
+    app.post("/insertErrand", async (data, res) => {
+        let errandData = data.body;
+        console.log(JSON.stringify(errandData));
+        await insertErrand(errandData);
+        res.send(errandData);
     });
+
+
+    });
+
+    app.post('getErrands', function(req, res) {
+	     var errands = getErrandsArea(req.body.areaID);
+	     res.send({errands});
+    });
+
+    app.post("/uploadImage", async (data, res) => {
+
+        let image = data.body;
+    })
 })
 client.close();
