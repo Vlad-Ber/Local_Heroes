@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import axios from 'axios';
 import styled from 'styled-components'
 
 import TextButton from './TextButton.js'
@@ -26,8 +26,16 @@ class EventItem extends Component {
     };
 
     handleHelpNotice = () => {
-        console.log("I want to help");
-        // write https request to update errand
+        console.log("handleHelpNotice");
+        axios.post("/updateErrand", {
+            // data
+        }).then((response) => {
+            console.log("Data submitted successfully!", response)
+            this.setState({ success: true });
+        }).catch((error) => {
+            console.log("Got error while posting data", error);
+            this.setState({ success: false });
+        });
     };
 
     renderTypeIcon = (args) => {
