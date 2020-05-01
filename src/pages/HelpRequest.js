@@ -1,7 +1,5 @@
 import React, { Component } from 'react'; 
-
 import axios from 'axios';
-
 import styled from 'styled-components';
 
 import NavBar from '../components/NavBar.js';
@@ -32,9 +30,7 @@ class HelpRequest extends Component {
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
         this.handleAdressChange = this.handleAdressChange.bind(this);
         this.handleContactChange = this.handleContactChange.bind(this);
-
         this.handlePublish = this.handlePublish.bind(this);
-        
     }
 
 

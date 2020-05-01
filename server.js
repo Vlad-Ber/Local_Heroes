@@ -214,9 +214,69 @@ client.connect(err => {
             console.log("Could not found the document");
         }
     };
-   //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------//
+  
+    //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------//
+  
     app.use(bodyParser.json());
     var router = express.Router();
+    
+    // GETs username and checks if it unique
+    app.post('/check-username', (username, res) => {
+        let u = username.body;
+        users.find({username: u}).catch(error => console.error(error));
+    })
+    
+    // GETs and sends user data to database
+    app.post('/insertUser', async (userData, res) => {
+        let user = userData.body;
+        insertUser(user.username, user.password, user.email, user.name, user.age, user.address,
+            user.description, user.areaId, user.mobile, user.city);
+    });
+        
+    app.post('/check-user', async (data, res) => {
+        let user = data.body;
+        let curUsername = {"username": user.username };
+        let curEmail = {"email": user.email };
+        
+        let userExists = await documentExist("Users", curUsername);
+        let emailExists = await documentExist("Users", curEmail);
+        
+        let dataToSend = ({"uniqueUser": userExists, "uniqueEmail": emailExists});
+        
+        res.send(dataToSend);
+        
+    });
+
+    app.post("/login-user", async (data, res) => {
+        let user = data.body;
+        let username = user.username;
+        let userExists = await documentExist("Users", {"username": username});
+        
+        let dataToSend;
+        
+        if(userExists) {
+            let correctLogin = await loginFunction(username, user.password);
+            if(correctLogin) {
+                let user = await getUser(username);
+                console.log(user);
+                dataToSend = ({ "login": userExists, "user": user});
+                res.send(dataToSend);
+            }
+        } else {
+            dataToSend = ({ "login": false });
+            res.send(dataToSend);
+        }
+        
+        
+    });
+
+    app.post("/insertErrand", async (data, res) => {
+        console.log("insertErrand request heard");
+        let errandData = data.body;
+        console.log(JSON.stringify(errandData));
+        await insertErrand(errandData);
+        res.send(errandData);
+    });
 
     app.post('/updateErrand', (data, res) => {
         console.log("updateErrand app.post");
@@ -224,72 +284,16 @@ client.connect(err => {
         res.send(doneErrand);
     });
 
-    // GETs username and checks if it unique
-    app.post('/check-username', (username, res) => {
-      let u = username.body;
-      users.find({username: u}).catch(error => console.error(error));
-    })
-
-    // GETs and sends user data to database
-    app.post('/insertUser', async (userData, res) => {
-        let user = userData.body;
-        insertUser(user.username, user.password, user.email, user.name, user.age, user.address,
-                   user.description, user.areaId, user.mobile, user.city);
-    });
-
-    app.post('/check-user', async (data, res) => {
-        let user = data.body;
-        let curUsername = {"username": user.username };
-        let curEmail = {"email": user.email };
-
-        let userExists = await documentExist("Users", curUsername);
-        let emailExists = await documentExist("Users", curEmail);
-
-        let dataToSend = ({"uniqueUser": userExists, "uniqueEmail": emailExists});
-
-        res.send(dataToSend);
-
-    });
-
-    app.post("/login-user", async (data, res) => {
-        let user = data.body;
-        let username = user.username;
-        let userExists = await documentExist("Users", {"username": username});
-
-        let dataToSend;
-
-        if(userExists) {
-            let correctLogin = await loginFunction(username, user.password);
-            if(correctLogin) {
-		let user = await getUser(username);
-		console.log(user);
-		dataToSend = ({ "login": userExists, "user": user});
-		res.send(dataToSend);
-            }
-        } else {
-              dataToSend = ({ "login": false });
-              res.send(dataToSend);
-        }
-
-    app.post("/insertErrand", async (data, res) => {
-        let errandData = data.body;
-        console.log(JSON.stringify(errandData));
-        await insertErrand(errandData);
-        res.send(errandData);
-    });
-
-
-    });
-
     app.post('/getErrandsArea', async function(req, res) {
-         var errands = await getErrandsArea(req.body.areaID);
-         console.log("errands: " + JSON.stringify(errands));
-	     res.send({errands});
+        var errands = await getErrandsArea(req.body.areaID);
+        console.log("errands: " + JSON.stringify(errands));
+        res.send({errands});
     });
 
     app.post("/uploadImage", async (data, res) => {
-
         let image = data.body;
-    })
+    });
+    
 })
+
 client.close();
