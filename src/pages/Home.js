@@ -14,7 +14,8 @@ class Home extends Component {
         super(props);
 
         this.state = {
-            areaID: 56788,
+            userID: "",
+            areaID: "",
             errands: [],
             fetchSuccess: null
         }
