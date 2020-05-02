@@ -1,10 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
+import { useAuth0 } from "./react-auth0-spa";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
 import { WithUserContext, UserProvider } from './components/UserContext.js'
+import history from "./utils/history";
 
 import Home from './pages/Home.js';
+import NavBar from './components/NavBar.js';
+import Profile from "./components/Profile";
 import HelpRequest from './pages/HelpRequest.js';
 import HelpNotice from './pages/HelpNotice.js';
 import Signup from './pages/Signup.js';
@@ -14,41 +17,39 @@ import ResidenceInfo from './pages/ResidenceInfo.js';
 import InsertImage from './pages/InsertImage.js';
 import ZipCode from './pages/ZipCode.js'
 
-class App extends Component {
+const App = () => {
+
+  const { loading } = useAuth0();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   
-  render(){
-    return (
-      <Router>
-        {
-        
-        /* READ ME: 
-        
-          EXPERIMENTING WITH CONTEXT, NEEDS REFACTORING IN CONJUNCTION WITH LOGIN etc.  
-
-          UserProvider value should be fetched from login-state 
-
-          Break out login from Signup and handle login right here in root? 
-        
-        */}
-        <UserProvider value={
-          {
-            _id: "5ea067e7331fa10de7cc0644",
-            username: "ZiggyStardust",
-            password: "secret",
-            email: "davidbowie@localhero.com",
-            name: "David Bowie",
-            age: "68",
-            adress: "David Bowie Street",
-            description: "David Bowie was a legend", 
-            virtuePoints: "784",
-            areaID: "99999",
-            mobile: "123456789",
-            city: "Mars",
-          }
-        }>
-          <div className="App" style={{ fontFamily: 'Helvetica' }}>
+  return (
+    <div className="App" style={{ fontFamily: 'Helvetica' }}>
+      <Router history={history}>
+          <header>
+            <NavBar/>
+          </header>
+          <UserProvider value={
+            {
+              _id: "5ea067e7331fa10de7cc0644",
+              username: "ZiggyStardust",
+              password: "secret",
+              email: "davidbowie@localhero.com",
+              name: "David Bowie",
+              age: "68",
+              adress: "David Bowie Street",
+              description: "David Bowie was a legend", 
+              virtuePoints: "784",
+              areaID: "99999",
+              mobile: "123456789",
+              city: "Mars",
+            }
+          }>
             <Switch>
-                <Route path="/" exact component={Signup}/>
+                <Route path="/" exact/>
+                <Route path="/profile" component={Profile}/>
                 <Route path="/signup" component={Signup}/>
                 <Route path="/home" component={WithUserContext(Home)} />
                 <Route path="/profile-page" component={ProfilePage} />
@@ -59,10 +60,10 @@ class App extends Component {
                 <Route path="/insert-image" component={InsertImage}/>
                 <Route path="/zipcode" component={WithUserContext(ZipCode)}/>
           </Switch>
-          </div>
         </UserProvider>
       </Router>
-	)}
+    </div>
+	);
 
 };
 

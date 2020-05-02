@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-
+import React from 'react'
+import { useAuth0 } from "../react-auth0-spa";
 import styled from 'styled-components'
 
 import LinkWrapper from './LinkWrapper.js';
@@ -9,9 +9,12 @@ import { faSeedling, faArrowLeft, faUserCircle } from '@fortawesome/free-solid-s
 
 
 
-class NavBar extends Component {
+const NavBar = (props) => {
 
-    renderLeftButton = (type, link) => {
+    const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+
+
+    function renderLeftButton(type, link){
         return type === "back" ? 
             <LinkWrapper to={link}>
                 <FontAwesomeIcon icon={faArrowLeft} style={{ fontSize: '24px'}}/>
@@ -19,7 +22,7 @@ class NavBar extends Component {
             : null
     };
 
-    renderRightButton = (type, link) => {
+    function renderRightButton(type, link){
         return type === "profile" ?
             <LinkWrapper to={link}>
                 <FontAwesomeIcon icon={faUserCircle} style={{ fontSize: '24px' }}/>
@@ -27,12 +30,11 @@ class NavBar extends Component {
             : null
     };
 
-    render(){
-        return (
+    return (
             <NavBarWrapper>
 
                 <NavBarSpaceLeft>
-                    {this.renderLeftButton(this.props.leftButtonType, this.props.leftButtonLink)}
+                    {renderLeftButton(props.leftButtonType, props.leftButtonLink)}
                 </NavBarSpaceLeft>
 
                 <NavBarSpaceCenter>
@@ -45,13 +47,21 @@ class NavBar extends Component {
                 </NavBarSpaceCenter>
 
                 <NavBarSpaceRight>
-                    {this.renderRightButton(this.props.rightButtonType, this.props.rightButtonLink)}
+                    {/*this.renderRightButton(this.props.rightButtonType, this.props.rightButtonLink)*/}
+                    <div>
+                        {!isAuthenticated && (<button onClick={() => loginWithRedirect({})}>Log in</button>)}
+                        {isAuthenticated && (
+                            <span>
+                                <LinkWrapper to="/">Home</LinkWrapper>&nbsp;
+                                <LinkWrapper to="/profile">Profile</LinkWrapper>
+                            </span>
+                        )}
+                    </div>
                 </NavBarSpaceRight>
 
             </NavBarWrapper>
-            
-        )
-    }
+        );
+    
 }
 
 const NavBarWrapper = styled.div`
