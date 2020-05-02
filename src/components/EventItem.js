@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import TextButton from './TextButton.js'
@@ -19,30 +19,11 @@ class EventItem extends Component {
             errand: {}, 
             success: null
         }
-
-        this.handleHelpNotice = this.handleHelpNotice.bind(this);
-
+        
     };
 
     toggleView = () => {
         this.setState({ fullView: !this.state.fullView});
-    };
-
-    handleHelpNotice = () => {
-        console.log("handleHelpNotice");
-        console.log("ErrandID: " + this.state.errand["_id"])
-        axios.post("/updateErrand", {
-            errandID: this.state.errand["_id"],
-            newErrandData: {
-                status: "inProgress"
-            }
-        }).then((response) => {
-            console.log("Data submitted successfully!", response)
-            this.setState({ success: true });
-        }).catch((error) => {
-            console.log("Got error while posting data", error);
-            this.setState({ success: false });
-        });
     };
 
     renderResponse = () => (
@@ -97,7 +78,14 @@ class EventItem extends Component {
 
     renderActionButton = () => {
         return this.state.errand.status === "waiting" ? 
-            <TextButton onClick={this.handleHelpNotice} description="I WANT TO HELP"/> 
+            <Link to={{
+                pathname: '/help-notice',
+                state: {
+                    errand: this.state.errand
+                }
+            }}>
+            <TextButton description="I WANT TO HELP"/> 
+            </Link>
             : null
     }
 

@@ -9,12 +9,13 @@ import ServerResponse from '../components/ServerResponse.js';
 const HelpNotice = (props) => {
 
     const [success, setSuccess] = useState(null);
+    const { errand } = props.location.state;
 
     function handleHelpNotice() {
         console.log("handleHelpNotice");
-        console.log("ErrandID: " + this.state.errand["_id"])
+        console.log("ErrandID: " + errand._id)
         axios.post("/updateErrand", {
-            errandID: this.state.errand["_id"],
+            errandID: errand._id,
             newErrandData: {
                 status: "inProgress",
                 helper: props.activeUser._id
