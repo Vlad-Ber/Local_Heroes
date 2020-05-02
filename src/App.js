@@ -18,6 +18,7 @@ class App extends Component {
   render(){
     return (
       <Router>
+        {/* EXPERIMENTING WITH CONTEXT, NEEDS REFACTORING IN CONJUNCTION WITH LOGIN etc.  */}
         <UserProvider value={
           {
             _id: "5ea067e7331fa10de7cc0644",
