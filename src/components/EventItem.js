@@ -30,8 +30,9 @@ class EventItem extends Component {
 
     handleHelpNotice = () => {
         console.log("handleHelpNotice");
+        console.log("ErrandID: " + this.state.errand["_id"])
         axios.post("/updateErrand", {
-            errandID: this.state.errand["errandID"],
+            errandID: this.state.errand["_id"],
             newErrandData: {
                 status: "inProgress"
             }
