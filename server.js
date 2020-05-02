@@ -149,7 +149,6 @@ client.connect(err => {
     //ARG: password to check
     //RET: True if given password matches the password stored for the given username in db
     async function loginFunction(username, password){
-        let userCollection = db.collection("User");
 
         let curUser = await users.findOne({"username":username}).catch(error => console.log(error));
         let curUserPassword = curUser.password;
@@ -172,6 +171,17 @@ client.connect(err => {
 
         await errands.replaceOne({"_id": new ObjectID(errandID)}, updatedErrand);
     };
+
+    async function updateUser(data){
+        console.log("USER ID:  "  + JSON.stringify(data.userID));
+        console.log("newUserData:  " + JSON.stringify(data.newUserData));
+        let currentUser = await users.findOne({"_id": new ObjectID(data.userID)})
+        let updatedUser = currentUser; 
+
+        Object.keys(data.newUserData).map(key => updatedUser[key] = data.newUserData[key]);
+
+        await users.replaceOne({"_id": new ObjectID(data.userID)}, updatedUser);
+    }
     
     async function insertErrand(errandData){
 	      var date = new Date();
@@ -186,7 +196,7 @@ client.connect(err => {
 	          "adress": errandData.adress,
 	          "contact": errandData.contact,
 	          "helper": "",
-	          "requester": errandData.requester,    //TODO: koppla requester till userID
+	          "requester": errandData.requester, 
 	          "areaID": errandData.areaID,
 	      };
 	      var insert = await errands.insertOne(data).catch(error =>console.error(error));
@@ -267,8 +277,13 @@ client.connect(err => {
             dataToSend = ({ "login": false });
             res.send(dataToSend);
         }
-        
-        
+    });
+
+    app.post("/updateUser", async (data, res) => {
+        console.log("updateUser request heard"); 
+        let newUserData = data.body;
+        await updateUser(newUserData); 
+        res.send(newUserData); //non-sensical line?
     });
 
     app.post("/insertErrand", async (data, res) => {

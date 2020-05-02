@@ -1,10 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
 import NavBar from '../components/NavBar.js';
 import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js';
+import TextButton from '../components/TextButton.js';
+import ServerResponse from '../components/ServerResponse.js';
 
-const ZipCode = () => {
+const ZipCode = (props) => {
+
+  const [zipCode, setZipCode] = useState("");
+  const [success, setSuccess] = useState(null);
+
+  function updateZipCode() {
+    axios.post("/updateUser", {
+      userID: props.activeUser._id,
+      newUserData: {
+          areaID: zipCode
+      }
+    }).then((response) => {
+      console.log("Zip code updated successfully!", response)
+      setSuccess(true);
+    }).catch((error) => {
+      console.log("Got error while updating zip code", error);
+      setSuccess(false);
+    });
+  }
+
+  function renderResponse(){
+    return <ServerResponse 
+              success={success} 
+              successResponse="Sucessfully updated zip code." 
+              failResponse="Something went wrong, try again."
+            />
+  };
+
   return (
       <div>
         <NavBar 
@@ -18,7 +48,15 @@ const ZipCode = () => {
         />
         <TextInput
           height="32px"
+          value={zipCode}
+          onChange={(e) => setZipCode(e.target.value)}
         />
+        <TextButton
+          description="Update zip code"
+          onClick={updateZipCode}
+        />
+        {renderResponse()}
+        
       </div>
   );
 }

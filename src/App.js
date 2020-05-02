@@ -20,7 +20,7 @@ class App extends Component {
       <Router>
         <UserProvider value={
           {
-            _id: "5ead292b9f954885d045ab75",
+            _id: "5ea067e7331fa10de7cc0644",
             username: "ZiggyStardust",
             password: "secret",
             email: "davidbowie@localhero.com",
@@ -44,7 +44,7 @@ class App extends Component {
                 <Route path="/profile-creation" component={ProfileCreation}/>
                 <Route path="/residence-info" component={ResidenceInfo}/>
                 <Route path="/insert-image" component={InsertImage}/>
-                <Route path="/zipcode" component={ZipCode}/>
+                <Route path="/zipcode" component={WithUserContext(ZipCode)}/>
           </Switch>
           </div>
         </UserProvider>
