@@ -18,7 +18,17 @@ class App extends Component {
   render(){
     return (
       <Router>
-        {/* EXPERIMENTING WITH CONTEXT, NEEDS REFACTORING IN CONJUNCTION WITH LOGIN etc.  */}
+        {
+        
+        /* READ ME: 
+        
+          EXPERIMENTING WITH CONTEXT, NEEDS REFACTORING IN CONJUNCTION WITH LOGIN etc.  
+
+          UserProvider value should be fetched from login-state 
+
+          Break out login from Signup and handle login right here in root? 
+        
+        */}
         <UserProvider value={
           {
             _id: "5ea067e7331fa10de7cc0644",
@@ -30,7 +40,7 @@ class App extends Component {
             adress: "David Bowie Street",
             description: "David Bowie was a legend", 
             virtuePoints: "784",
-            areaID: "1111",
+            areaID: "99999",
             mobile: "123456789",
             city: "Mars",
           }
