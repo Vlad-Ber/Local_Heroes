@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import NavBar from '../components/NavBar.js';
 import SectionTitle from '../components/SectionTitle.js';
+import EventItem from '../components/EventItem.js';
 import TextButton from '../components/TextButton.js';
 import ServerResponse from '../components/ServerResponse.js';
 
@@ -27,6 +28,7 @@ const HelpNotice = (props) => {
             console.log("Got error while handling help notice", error);
             setSuccess(false);
         });
+        props.history.push("/home");
     };
 
   function renderResponse(){
@@ -44,12 +46,17 @@ const HelpNotice = (props) => {
           leftButtonLink="/home"
         /> 
         <SectionTitle
-          text="HELP A LOCAL" 
+          text="ERRAND INFORMATION" 
           paddingTop="30px"
           fontSize="16px"
         />
+        <EventItem
+            fullView={true}
+            errand={errand}
+            disableAction={true}
+         />
         <TextButton
-          description="I want to help out"
+          description="GIVE NOTICE"
           onClick={handleHelpNotice}
         />
         {renderResponse()}

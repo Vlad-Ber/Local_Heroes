@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import TextButton from './TextButton.js'
+import LinkWrapper from './LinkWrapper.js';
 import ServerResponse from '../components/ServerResponse.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -19,7 +19,7 @@ class EventItem extends Component {
             errand: {}, 
             success: null
         }
-        
+
     };
 
     toggleView = () => {
@@ -77,16 +77,22 @@ class EventItem extends Component {
     }
 
     renderActionButton = () => {
-        return this.state.errand.status === "waiting" ? 
-            <Link to={{
-                pathname: '/help-notice',
-                state: {
-                    errand: this.state.errand
-                }
-            }}>
-            <TextButton description="I WANT TO HELP"/> 
-            </Link>
-            : null
+        if (this.props.disableAction){
+            return null
+        } else if (this.state.errand.status === "waiting"){
+            return (
+                <LinkWrapper to={{
+                    pathname: '/help-notice',
+                    state: {
+                        errand: this.state.errand
+                    }
+                }}>
+                <TextButton description="I WANT TO HELP"/> 
+                </LinkWrapper>
+            );
+        } else {
+            return null;
+        }
     }
 
     renderExpandedView = () => {
