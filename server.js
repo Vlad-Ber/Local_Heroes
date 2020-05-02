@@ -172,14 +172,15 @@ client.connect(err => {
 
         await errands.replaceOne({"_id": new ObjectID(errandID)}, updatedErrand);
     };
-
+    
     async function insertErrand(errandData){
 	      var date = new Date();
 	      var dateString= date.toISOString().slice(0,10);
 	      var data = {
 	          "createdAt": dateString, //Future improvement, show hours ago created
 	          "closedAt": "",
-	          "status": "Waiting",
+              "status": "waiting",
+              "type": errandData.type,
 	          "title": errandData.title,
 	          "description": errandData.description,
 	          "adress": errandData.adress,
