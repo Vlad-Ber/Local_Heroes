@@ -17,11 +17,11 @@ class HelpRequest extends Component {
         this.state = {
             title: "",
             description: "",
-            requester: "123456789", // should fetch from app state 
+            requester: this.props.activeUser.username,
             type: "DEFAULT",
             adress: "",
             contact: "",
-            areaID: "75232", // should fetch from app state
+            areaID: this.props.activeUser.areaID,
             success: null
         }
 
@@ -109,7 +109,6 @@ class HelpRequest extends Component {
                     leftButtonType="back"
                     leftButtonLink="/home"
                 />
-
                 <SectionTitle fontSize="14px" text="Name your help request"/>
                 <InputWrapper>
                     <TextInput 

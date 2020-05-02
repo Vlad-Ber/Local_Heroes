@@ -5,4 +5,12 @@ const UserContext = React.createContext();
 const UserProvider = UserContext.Provider;
 const UserConsumer = UserContext.Consumer; 
 
-export default { UserProvider, UserConsumer };
+const WithUserContext = (Component) => {
+    return (props) => (
+        <UserConsumer>
+            { (user) => <Component {...props} activeUser={user}/> }
+        </UserConsumer>
+    );
+}
+
+export { WithUserContext, UserContext, UserProvider, UserConsumer };

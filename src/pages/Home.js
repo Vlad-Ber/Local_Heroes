@@ -14,8 +14,7 @@ class Home extends Component {
         super(props);
 
         this.state = {
-            userID: "",
-            areaID: "",
+            areaID: this.props.activeUser.areaID,
             errands: [],
             fetchSuccess: null
         }
@@ -49,7 +48,6 @@ class Home extends Component {
                     rightButtonLink="/profile-page"
                 />
                 <StatusView
-                    areaID={this.state.areaID}
                     activeUsers={0}
                     activeErrands={this.state.errands.length}
                 />
