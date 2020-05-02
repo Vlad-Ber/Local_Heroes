@@ -1,7 +1,5 @@
 import React, { Component } from 'react'; 
-
 import axios from 'axios';
-
 import styled from 'styled-components';
 
 import NavBar from '../components/NavBar.js';
@@ -19,11 +17,11 @@ class HelpRequest extends Component {
         this.state = {
             title: "",
             description: "",
-            requester: "123456789", // should fetch from app state 
+            requester: this.props.activeUser.username,
             type: "DEFAULT",
             adress: "",
             contact: "",
-            areaID: "75232", // should fetch from app state
+            areaID: this.props.activeUser.areaID,
             success: null
         }
 
@@ -32,9 +30,7 @@ class HelpRequest extends Component {
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
         this.handleAdressChange = this.handleAdressChange.bind(this);
         this.handleContactChange = this.handleContactChange.bind(this);
-
         this.handlePublish = this.handlePublish.bind(this);
-        
     }
 
 
@@ -113,7 +109,6 @@ class HelpRequest extends Component {
                     leftButtonType="back"
                     leftButtonLink="/home"
                 />
-
                 <SectionTitle fontSize="14px" text="Name your help request"/>
                 <InputWrapper>
                     <TextInput 

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import LinkWrapper from '../components/LinkWrapper.js';
+import { UserConsumer } from "../components/UserContext.js";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationArrow } from '@fortawesome/free-solid-svg-icons'
@@ -12,13 +13,17 @@ class StatusView extends Component {
     render(){
         return (
             <StatusViewWrapper>
-
-              <LinkWrapper to="zipcode">
-                <DisplayAreaId>
-                    <FontAwesomeIcon icon={faLocationArrow} style={{ color: "#31D285", fontSize: '12px', padding: '4px'}}/>
-                    <div style={{ fontSize: "14px", padding: '4px' }}>{this.props.areaID}</div>
-                </DisplayAreaId>
-              </LinkWrapper>
+                
+                <LinkWrapper to="zipcode">
+                    <DisplayAreaId>
+                        <FontAwesomeIcon icon={faLocationArrow} style={{ color: "#31D285", fontSize: '12px', padding: '4px'}}/>
+                        <div style={{ fontSize: "14px", padding: '4px' }}>
+                            <UserConsumer>
+                                { (user) => <div>{user.areaID}</div>}
+                            </UserConsumer>
+                        </div>
+                    </DisplayAreaId>
+                </LinkWrapper>
 
                 <StatusBoxWrapper>
                     <StatusBox>
