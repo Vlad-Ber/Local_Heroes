@@ -15,8 +15,10 @@ class Home extends Component {
 
         this.state = {
             areaID: this.props.activeUser.areaID,
+            users: [],
             errands: [],
-            fetchSuccess: null
+            fetchErrandsSuccess: null,
+            fetchUsersSuccess: null
         }
 
         this.fetchErrands = this.fetchErrands.bind(this);
@@ -29,15 +31,29 @@ class Home extends Component {
         }).then((response) => {
             console.log("Errands fetched successfully!", response)
             console.log("data: " + JSON.stringify(response.data))
-            this.setState({ fetchSuccess: true, errands: response.data["errands"] });
+            this.setState({ fetchErrandsSuccess: true, errands: response.data["errands"] });
         }).catch((error) => {
             console.log("Got error while fetching errands", error);
-            this.setState({ fetchSuccess: false });
+            this.setState({ fetchErrandsSuccess: false });
+        });
+    }
+
+    fetchUsers = () => {
+        axios.post("/getUsersArea", {
+            areaID: this.state.areaID
+        }).then((response) => {
+            console.log("Users fetched successfully!", response)
+            console.log("data: " + JSON.stringify(response.data))
+            this.setState({ fetchUsersSuccess: true, users: response.data["users"] });
+        }).catch((error) => {
+            console.log("Got error while fetching users", error);
+            this.setState({ fetchUsersSuccess: false });
         });
     }
 
     componentDidMount(){
         this.fetchErrands();
+        this.fetchUsers();
     }
 
     render(){
@@ -48,7 +64,7 @@ class Home extends Component {
                     rightButtonLink="/profile-page"
                 />
                 <StatusView
-                    activeUsers={0}
+                    activeUsers={this.state.users.length}
                     activeErrands={this.state.errands.length}
                 />
                 <LinkWrapper to="/help-request">

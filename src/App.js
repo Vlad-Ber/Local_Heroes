@@ -29,7 +29,7 @@ class App extends Component {
             adress: "David Bowie Street",
             description: "David Bowie was a legend", 
             virtuePoints: "784",
-            areaID: "99999",
+            areaID: "1111",
             mobile: "123456789",
             city: "Mars",
           }

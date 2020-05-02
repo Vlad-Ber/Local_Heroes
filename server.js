@@ -101,6 +101,14 @@ client.connect(err => {
         return user;
     }
 
+    //FUNC: Get all users for an Area
+    //ARG: Area to get users from
+    //RET: Array of users in area
+    async function getUsersArea(areaID){
+	    let findResult = await users.find({"areaID": areaID}).toArray();
+	    return findResult;
+    };
+
     //FUNC: Adds a user to db. Adds user to given area. If area doesnt exist, create new area.
     //ARGS: data required
     async function insertUser(username, password, email, name, age, address, description, areaID, mobile, city){
@@ -285,6 +293,13 @@ client.connect(err => {
         await updateUser(newUserData); 
         res.send(newUserData); //non-sensical line?
     });
+
+    app.post('/getUsersArea', async function(req, res) {
+        var users = await getUsersArea(req.body.areaID);
+        console.log("errands: " + JSON.stringify(users));
+        res.send({users});
+    });
+
 
     app.post("/insertErrand", async (data, res) => {
         console.log("insertErrand request heard");
