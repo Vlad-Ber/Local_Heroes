@@ -1,17 +1,20 @@
 const express = require('express');
 var bodyParser = require('body-parser');
+const crypto = require('crypto');
+const csprng = require('csprng');
+
 const app = express();
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
 /*var cors = require('cors');
-app.use(cors());
-app.use(cors({origin: true, credentials: true}));
+  app.use(cors());
+  app.use(cors({origin: true, credentials: true}));
 */
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+    res.header("Access-Control-Allow-Origin", "*");
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
 
 const MongoClient = require('mongodb').MongoClient;
@@ -32,7 +35,7 @@ client.connect(err => {
     //ARG: Query to search or in JSON format
     //RET: True if document_query exists in collection, else false
     async function documentExist(collection, document_query){
-	const coll = db.collection(collection);
+	      const coll = db.collection(collection);
         let foundQuery = await coll.findOne(document_query).catch(error => console.error(error));
         if(foundQuery) {
             return true;
@@ -97,14 +100,14 @@ client.connect(err => {
 
 
     async function getUser(username){
-	var user =  await users.findOne({"username": username}).catch(error => console.error(error));
-	console.log("User in getUser is: " + user);
+	      var user =  await users.findOne({"username": username}).catch(error => console.error(error));
+	      console.log("User in getUser is: " + user);
         return user;
     }
 
     //FUNC: Adds a user to db. Adds user to given area. If area doesnt exist, create new area.
     //ARGS: data required
-    async function insertUser(username, password, email, name, age, address, description, areaID, mobile, city){
+    async function insertUser(username, password, email, name, age, address, description, areaID, mobile, city, salt){
 	      var data = {
             "username": username,
             "password": password,
@@ -115,33 +118,34 @@ client.connect(err => {
 	          "desription": description,
 	          "virtuePoints": 0,
 	          "areaID": areaID,
-		  "mobile": mobile,
-		  "city": city,
+		        "mobile": mobile,
+		        "city": city,
+            "SaltValue": salt,
 	      };
-	var queryToFind = {"email": email};
+	      var queryToFind = {"email": email};
         var userNameToFind = {"username": username};
 
-	var findEmail = await documentExist("Users", queryToFind);
+	      var findEmail = await documentExist("Users", queryToFind);
         var findUser = await documentExist("Users", userNameToFind);
-	if(findUser == false && findEmail == false){
+	      if(findUser == false && findEmail == false){
 
-	    await users.insertOne(data).catch(error => console.error(error));
-	    console.log("User " + name + " has been added!");
-	    var areaToFind = {"areaID": areaID};
-	    var findArea = await documentExist("Areas", areaToFind);
-	    if (findArea == false) {
-		await insertArea(areaID, email);
-	    } else {
-		await updateArea(areaID, email);
-	    }
-	    //TODO: Maybe dont need
-	    if(findUser == true){
+	          await users.insertOne(data).catch(error => console.error(error));
+	          console.log("User " + name + " has been added!");
+	          var areaToFind = {"areaID": areaID};
+	          var findArea = await documentExist("Areas", areaToFind);
+	          if (findArea == false) {
+		            await insertArea(areaID, email);
+	          } else {
+		            await updateArea(areaID, email);
+	          }
+	          //TODO: Maybe dont need
+	          if(findUser == true){
                 console.log("A user with this username already exists")
-	    }
-	    if(findEmail == true){
+	          }
+	          if(findEmail == true){
                 console.log("A user with this email already exists");
-	    }
-	}
+	          }
+	      }
     };
 
 
@@ -150,12 +154,19 @@ client.connect(err => {
     //ARG: password to check
     //RET: True if given password matches the password stored for the given username in db
     async function loginFunction(username, password){
+        console.log("Inside loginFunction");
         let userCollection = db.collection("User");
 
         let curUser = await users.findOne({"username":username}).catch(error => console.log(error));
+        
         let curUserPassword = curUser.password;
+        let saltValue = curUser.saltValue;
 
-        if(curUserPassword === password){
+        let hashedQueryPassword = hash('${saltValue}${password}');
+        
+
+        if(curUserPassword === hashedQueryPassword){
+            console.log("inside the if-statement(loginFunction)");
             return true;
         } else {
             return false;
@@ -215,7 +226,7 @@ client.connect(err => {
             console.log("Could not found the document");
         }
     };
-   //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------//
+    //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------//
     app.use(bodyParser.json());
     var router = express.Router();
 
@@ -227,15 +238,19 @@ client.connect(err => {
 
     // GETs username and checks if it unique
     app.post('/check-username', (username, res) => {
-      let u = username.body;
-      users.find({username: u}).catch(error => console.error(error));
+        let u = username.body;
+        users.find({username: u}).catch(error => console.error(error));
     })
 
     // GETs and sends user data to database
     app.post('/insertUser', async (userData, res) => {
         let user = userData.body;
-        insertUser(user.username, user.password, user.email, user.name, user.age, user.address,
-                   user.description, user.areaId, user.mobile, user.city);
+
+        const salt = csprng(160, 36);
+        //hash the password with the salt prepended
+        let hashedPassword = hash('${salt}${user.password}');
+        insertUser(user.username, hashedPassword, user.email, user.name, user.age, user.address,
+                   user.description, user.areaId, user.mobile, user.city, salt);
     });
 
     app.post('/check-user', async (data, res) => {
@@ -253,6 +268,7 @@ client.connect(err => {
     });
 
     app.post("/login-user", async (data, res) => {
+        console.log("inside login-user")
         let user = data.body;
         let username = user.username;
         let userExists = await documentExist("Users", {"username": username});
@@ -262,29 +278,30 @@ client.connect(err => {
         if(userExists) {
             let correctLogin = await loginFunction(username, user.password);
             if(correctLogin) {
-		let user = await getUser(username);
-		console.log(user);
-		dataToSend = ({ "login": userExists, "user": user});
-		res.send(dataToSend);
+                console.log("inside the if-statement(login-user)");
+		            let user = await getUser(username);
+		            console.log(user);
+		            dataToSend = ({ "login": userExists, "user": user});
+		            res.send(dataToSend);
             }
         } else {
-              dataToSend = ({ "login": false });
-              res.send(dataToSend);
+            dataToSend = ({ "login": false });
+            res.send(dataToSend);
         }
 
-    app.post("/insertErrand", async (data, res) => {
-        let errandData = data.body;
-        console.log(JSON.stringify(errandData));
-        await insertErrand(errandData);
-        res.send(errandData);
-    });
+        app.post("/insertErrand", async (data, res) => {
+            let errandData = data.body;
+            console.log(JSON.stringify(errandData));
+            await insertErrand(errandData);
+            res.send(errandData);
+        });
 
 
     });
 
     app.post('getErrands', function(req, res) {
-	     var errands = getErrandsArea(req.body.areaID);
-	     res.send({errands});
+	      var errands = getErrandsArea(req.body.areaID);
+	      res.send({errands});
     });
 
     app.post("/uploadImage", async (data, res) => {
@@ -292,4 +309,12 @@ client.connect(err => {
         let image = data.body;
     })
 })
+
+//hashes strings with sha256(Secure Hash Algorithm 2) bit encryption for storing passwords
+function hash(pwd) {
+    return crypto
+        .createHash("sha256")
+        .update(pwd)
+        .digest("base64");
+}
 client.close();
