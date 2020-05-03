@@ -1,12 +1,12 @@
+
+    //-------------------------------- CONFIG EXPRESS (FOR HTTP REQUESTS) -------------------------------------------//
+
+
 const express = require('express');
 var bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
-/*var cors = require('cors');
-app.use(cors());
-app.use(cors({origin: true, credentials: true}));
-*/
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -14,18 +14,24 @@ app.use(function(req, res, next) {
   next();
 });
 
+
+    //--------------------------------SET UP MONGODB CONNECTION (DATABSE)-------------------------------------------//
+
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://Vlad-Ber:arneiskogen1@cluster0-76fsx.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, {
     useUnifiedTopology: true,
     useNewUrlParser: true });
 client.connect(err => {
-    //----------------------------MONGODB FUNKTIONER-------------------------------------------------------------
+
+    //-------------------------------- MONGODB FUNCTIONS  -------------------------------------------//
+
     const db = client.db("LocalHeroes");
     const areas = db.collection("Areas");
     const errands = db.collection("Errands");
-
     const users = db.collection("Users");
+    
+    const ObjectID = require("mongodb").ObjectID;
 
     //FUNC: Check if a document exists
     //ARG: Collection name in string
@@ -168,6 +174,9 @@ client.connect(err => {
         }
     };
 
+    //FUNC: Updates errand with any new data
+    //ARG: errandID 
+    //ARG: newErrandData - a JSON object with the fields you want updated populated with new data 
     async function updateErrand(errandID, newErrandData){
 
         //TODO: check if the errand exists and maybe return true or false
@@ -180,6 +189,8 @@ client.connect(err => {
         await errands.replaceOne({"_id": new ObjectID(errandID)}, updatedErrand);
     };
 
+    //FUNC: Updates user with any new data
+    //ARG: JSON object data: { userID: "...", newUserData: { ... } } 
     async function updateUser(data){
         console.log("USER ID:  "  + JSON.stringify(data.userID));
         console.log("newUserData:  " + JSON.stringify(data.newUserData));
@@ -191,6 +202,8 @@ client.connect(err => {
         await users.replaceOne({"_id": new ObjectID(data.userID)}, updatedUser);
     }
     
+    //FUNC: Inserts a new errand document into db
+    //ARG: errandData - JSON object with all the errand data
     async function insertErrand(errandData){
 	      var date = new Date();
 	      var dateString= date.toISOString().slice(0,10);
@@ -213,9 +226,6 @@ client.connect(err => {
 	      areas.updateOne(areaToUpdate, {"$push": {"errands": insertedId } } )
     };
 
-
-    const ObjectID = require("mongodb").ObjectID;
-
     //FUNC: Deletes a errand from db
     //ARG: ErrandID to remove
     //TODO: Inte klar
@@ -234,18 +244,16 @@ client.connect(err => {
         }
     };
   
-    //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------//
+    //--------------------------------MESSAGING FUNCTIONS (AXIOS & EXPRESS)-------------------------------------------//
   
     app.use(bodyParser.json());
-    var router = express.Router();
+    var router = express.Router(); // never used? 
     
-    // GETs username and checks if it unique
     app.post('/check-username', (username, res) => {
         let u = username.body;
         users.find({username: u}).catch(error => console.error(error));
     })
     
-    // GETs and sends user data to database
     app.post('/insertUser', async (userData, res) => {
         let user = userData.body;
         insertUser(user.username, user.password, user.email, user.name, user.age, user.address,
