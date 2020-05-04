@@ -38,13 +38,9 @@ class ProfilePage extends Component {
       })
       .catch((error) => {
         console.log("You have no errands!", error);
-        this.setState({
-          fetchErrandsSuccess: false,
-          errands: "You have no errands!",
-        });
+        this.setState({ fetchErrandsSuccess: false });
       });
   };
-
   componentDidMount() {
     this.getUserErrands();
   }
@@ -58,7 +54,9 @@ class ProfilePage extends Component {
         <StyledText>Area: {this.state.address} </StyledText>
         <StyledText>E-mail: {this.state.email} </StyledText>
         <StyledTextHeadLine>My Requests:</StyledTextHeadLine>
-
+        {this.state.errands.length === 0 && (
+          <StyledText>You have no errands Currently!</StyledText>
+        )}
         <EventItemListView errands={this.state.errands} />
         <LinkWrapper to="/">
           <TextButton onClick={localStorage.clear()} description="LOG OUT" />
