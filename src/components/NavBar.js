@@ -42,7 +42,7 @@ const NavBar = (props) => {
                         <FontAwesomeIcon 
                             icon={faSeedling}
                             style={{ fontSize: '32px' }} 
-                            />
+                        />
                     </LinkWrapper>
                 </NavBarSpaceCenter>
 
@@ -53,7 +53,12 @@ const NavBar = (props) => {
                         {isAuthenticated && (
                             <span>
                                 <LinkWrapper to="/">Home</LinkWrapper>&nbsp;
-                                <LinkWrapper to="/profile">Profile</LinkWrapper>
+                                <LinkWrapper to="/profile">
+                                    <FontAwesomeIcon
+                                        icon={faUserCircle}
+                                        style={{ fontSize: '32px' }} 
+                                    />
+                                </LinkWrapper>
                             </span>
                         )}
                     </div>
@@ -73,7 +78,7 @@ const NavBarWrapper = styled.div`
     height: 60px;
     background: #31D285;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-`
+`;
 
 const NavBarSpaceCenter = styled.div`
     display: flex; 

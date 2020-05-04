@@ -4,6 +4,7 @@ import { useAuth0 } from "./react-auth0-spa";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { WithUserContext, UserProvider } from './components/UserContext.js'
 import history from "./utils/history";
+import PrivateRoute from "./components/PrivateRoute";
 
 import Home from './pages/Home.js';
 import NavBar from './components/NavBar.js';
@@ -31,6 +32,9 @@ const App = () => {
           <header>
             <NavBar/>
           </header>
+          <div>
+            Landing page
+          </div>
           <UserProvider value={
             {
               _id: "5ea067e7331fa10de7cc0644",
@@ -49,16 +53,16 @@ const App = () => {
           }>
             <Switch>
                 <Route path="/" exact/>
-                <Route path="/profile" component={Profile}/>
+                <PrivateRoute path="/profile" component={Profile}/>
+                <PrivateRoute path="/home" component={WithUserContext(Home)} />
+                <PrivateRoute path="/profile-page" component={ProfilePage} />
+                <PrivateRoute path="/help-request" component={WithUserContext(HelpRequest)}/>
+                <PrivateRoute path="/help-notice" component={WithUserContext(HelpNotice)}/>
+                <PrivateRoute path="/zipcode" component={WithUserContext(ZipCode)}/>
                 <Route path="/signup" component={Signup}/>
-                <Route path="/home" component={WithUserContext(Home)} />
-                <Route path="/profile-page" component={ProfilePage} />
-                <Route path="/help-request" component={WithUserContext(HelpRequest)}/>
-                <Route path="/help-notice" component={WithUserContext(HelpNotice)}/>
                 <Route path="/profile-creation" component={ProfileCreation}/>
                 <Route path="/residence-info" component={ResidenceInfo}/>
                 <Route path="/insert-image" component={InsertImage}/>
-                <Route path="/zipcode" component={WithUserContext(ZipCode)}/>
           </Switch>
         </UserProvider>
       </Router>
