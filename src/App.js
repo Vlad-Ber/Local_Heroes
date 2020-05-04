@@ -1,27 +1,24 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import { WithUserContext, UserProvider } from './components/UserContext.js'
+import { WithUserContext, UserProvider } from "./components/UserContext.js";
 
-import Home from './pages/Home.js';
-import HelpRequest from './pages/HelpRequest.js';
-import HelpNotice from './pages/HelpNotice.js';
-import Signup from './pages/Signup.js';
-import ProfilePage from './pages/ProfilePage.js';
-import ProfileCreation from './pages/ProfileCreation.js';
-import ResidenceInfo from './pages/ResidenceInfo.js';
-import InsertImage from './pages/InsertImage.js';
-import ZipCode from './pages/ZipCode.js'
+import Home from "./pages/Home.js";
+import HelpRequest from "./pages/HelpRequest.js";
+import HelpNotice from "./pages/HelpNotice.js";
+import Signup from "./pages/Signup.js";
+import ProfilePage from "./pages/ProfilePage.js";
+import ProfileCreation from "./pages/ProfileCreation.js";
+import ResidenceInfo from "./pages/ResidenceInfo.js";
+import InsertImage from "./pages/InsertImage.js";
+import ZipCode from "./pages/ZipCode.js";
 
 class App extends Component {
-  
-  render(){
+  render() {
     return (
       <Router>
-        {
-        
-        /* READ ME: 
+        {/* READ ME: 
         
           EXPERIMENTING WITH CONTEXT, NEEDS REFACTORING IN CONJUNCTION WITH LOGIN etc.  
 
@@ -30,8 +27,8 @@ class App extends Component {
           Break out login from Signup and handle login right here in root? 
         
         */}
-        <UserProvider value={
-          {
+        <UserProvider
+          value={{
             _id: "5ea067e7331fa10de7cc0644",
             username: "ZiggyStardust",
             password: "secret",
@@ -39,31 +36,41 @@ class App extends Component {
             name: "David Bowie",
             age: "68",
             adress: "David Bowie Street",
-            description: "David Bowie was a legend", 
+            description: "David Bowie was a legend",
             virtuePoints: "784",
             areaID: "99999",
             mobile: "123456789",
             city: "Mars",
-          }
-        }>
-          <div className="App" style={{ fontFamily: 'Helvetica' }}>
+          }}
+        >
+          <div className="App" style={{ fontFamily: "Helvetica" }}>
             <Switch>
-                <Route path="/" exact component={Signup}/>
-                <Route path="/signup" component={Signup}/>
-                <Route path="/home" component={WithUserContext(Home)} />
-                <Route path="/profile-page" component={ProfilePage} />
-                <Route path="/help-request" component={WithUserContext(HelpRequest)}/>
-                <Route path="/help-notice" component={WithUserContext(HelpNotice)}/>
-                <Route path="/profile-creation" component={ProfileCreation}/>
-                <Route path="/residence-info" component={ResidenceInfo}/>
-                <Route path="/insert-image" component={InsertImage}/>
-                <Route path="/zipcode" component={WithUserContext(ZipCode)}/>
-          </Switch>
+              <Route path="/" exact component={Signup} />
+              <Route path="/signup" component={Signup} />
+              <Route path="/home" component={WithUserContext(Home)} />
+              <Route
+                path="/profile-page"
+                component={WithUserContext(ProfilePage)}
+              />
+              <Route
+                path="/help-request"
+                component={WithUserContext(HelpRequest)}
+              />
+              <Route
+                path="/help-notice"
+                component={WithUserContext(HelpNotice)}
+              />
+              <Route path="/profile-creation" component={ProfileCreation} />
+              <Route path="/residence-info" component={ResidenceInfo} />
+              <Route path="/insert-image" component={InsertImage} />
+              <Route path="/zipcode" component={WithUserContext(ZipCode)} />
+              />
+            </Switch>
           </div>
         </UserProvider>
       </Router>
-	)}
-
-};
+    );
+  }
+}
 
 export default App;
