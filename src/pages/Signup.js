@@ -27,6 +27,8 @@ class Signup extends Component {
         this.setState({ [e.target.name]: e.target.value })
     }
 
+    
+
     checkLogin = e => {
         axios.post("/login-user", {
             username: this.state.username,
@@ -39,6 +41,7 @@ class Signup extends Component {
                   let user = response.data.user;
 
                   e.preventDefault();
+                  window.localStorage.clear();
                   window.localStorage.setItem("loggedInUser", JSON.stringify(user));
                   this.props.history.push("/home");
 
@@ -51,7 +54,6 @@ class Signup extends Component {
      }
 
   render(){
-    console.log(this.state)
     return (
       <SignUpWrapper>
 

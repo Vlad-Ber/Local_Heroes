@@ -35,10 +35,10 @@ class InsertImage extends Component {
 
     componentDidMount(){
 
-           let prof = JSON.parse(sessionStorage.getItem("stateProfileCreation"));
-           
-           let updatedUsername = prof.username;
-           let updatedPassword = prof.password;
+         let prof = JSON.parse(sessionStorage.getItem("stateProfileCreation"));
+
+         let updatedUsername = prof.username;
+         let updatedPassword = prof.password;
 	       let updatedName = prof.firstname + ' ' + prof.lastname;
 	       let updatedAge = prof.age;
 	       let updatedEmail = prof.email;
@@ -82,7 +82,7 @@ class InsertImage extends Component {
           address: user.address,
           description: user.description,
           virtuePoints: 0,
-          areaId: user.area,
+          areaID: user.area,
           mobile: user.mobile,
           city: user.city,
           image: ''
@@ -104,10 +104,10 @@ class InsertImage extends Component {
 
     fileSelectHandler = event=>{
         this.setState({
-            selectedFile: event.target.files[0]  
+            selectedFile: event.target.files[0]
         })
     }
-    
+
 
     fileUploadHandler = () =>{
         const fd = new FormData();

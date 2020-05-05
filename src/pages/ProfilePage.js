@@ -13,7 +13,7 @@ class ProfilePage extends Component {
     super(props);
 
     this.state = {
-      user: this.props.activeUser.name,
+      user: this.props.activeUser.username,
       address: this.props.activeUser.adress,
       email: this.props.activeUser.email,
       fetchErrandsSuccess: null,
@@ -59,7 +59,7 @@ class ProfilePage extends Component {
         )}
         <EventItemListView errands={this.state.errands} />
         <LinkWrapper to="/">
-          <TextButton onClick={localStorage.clear()} description="LOG OUT" />
+          <TextButton onClick={window.localStorage.clear()} description="LOG OUT" />
         </LinkWrapper>
       </div>
     );

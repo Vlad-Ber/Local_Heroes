@@ -279,7 +279,7 @@ client.connect((err) => {
       user.age,
       user.address,
       user.description,
-      user.areaId,
+      user.areaID,
       user.mobile,
       user.city
     );

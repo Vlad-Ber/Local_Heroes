@@ -15,33 +15,31 @@ import InsertImage from "./pages/InsertImage.js";
 import ZipCode from "./pages/ZipCode.js";
 
 class App extends Component {
+  constructor(props){
+      super(props);
+
+      this.state = {
+        user: ''
+      }
+  }
+
+
+
+  componentDidMount(){
+    let user = JSON.parse(window.localStorage.getItem("loggedInUser"));
+
+    this.setState({
+      user: user
+    })
+  }
+
+
   render() {
+    //console.log("User: "  + this.state.user.username)
     return (
       <Router>
-        {/* READ ME: 
-        
-          EXPERIMENTING WITH CONTEXT, NEEDS REFACTORING IN CONJUNCTION WITH LOGIN etc.  
-
-          UserProvider value should be fetched from login-state 
-
-          Break out login from Signup and handle login right here in root? 
-        
-        */}
         <UserProvider
-          value={{
-            _id: "5ea067e7331fa10de7cc0644",
-            username: "ZiggyStardust",
-            password: "secret",
-            email: "davidbowie@localhero.com",
-            name: "David Bowie",
-            age: "68",
-            adress: "David Bowie Street",
-            description: "David Bowie was a legend",
-            virtuePoints: "784",
-            areaID: "99999",
-            mobile: "123456789",
-            city: "Mars",
-          }}
+          value={this.state.user}
         >
           <div className="App" style={{ fontFamily: "Helvetica" }}>
             <Switch>

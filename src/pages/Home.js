@@ -14,7 +14,7 @@ class Home extends Component {
         super(props);
 
         this.state = {
-            areaID: this.props.activeUser.areaID,
+            areaID: 0,//this.props.activeUser.areaID,
             users: [],
             errands: [],
             fetchErrandsSuccess: null,
