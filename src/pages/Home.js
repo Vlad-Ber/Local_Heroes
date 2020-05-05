@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-
-import data from '../data/data.json';
+import axios from 'axios';
 
 import NavBar from '../components/NavBar.js';
 import EventItemListView from '../components/EventItemListView.js';
@@ -15,21 +14,46 @@ class Home extends Component {
         super(props);
 
         this.state = {
-            areaID: 75232,
-            activeUsers: 0,
-            activeErrands: 0,
+            areaID: this.props.activeUser.areaID,
+            users: [],
+            errands: [],
+            fetchErrandsSuccess: null,
+            fetchUsersSuccess: null
         }
+
+        this.fetchErrands = this.fetchErrands.bind(this);
+
+    }
+
+    fetchErrands = () => {
+        axios.post("/getErrandsArea", {
+            areaID: this.state.areaID
+        }).then((response) => {
+            console.log("Errands fetched successfully!", response)
+            console.log("data: " + JSON.stringify(response.data))
+            this.setState({ fetchErrandsSuccess: true, errands: response.data["errands"] });
+        }).catch((error) => {
+            console.log("Got error while fetching errands", error);
+            this.setState({ fetchErrandsSuccess: false });
+        });
+    }
+
+    fetchUsers = () => {
+        axios.post("/getUsersArea", {
+            areaID: this.state.areaID
+        }).then((response) => {
+            console.log("Users fetched successfully!", response)
+            console.log("data: " + JSON.stringify(response.data))
+            this.setState({ fetchUsersSuccess: true, users: response.data["users"] });
+        }).catch((error) => {
+            console.log("Got error while fetching users", error);
+            this.setState({ fetchUsersSuccess: false });
+        });
     }
 
     componentDidMount(){
-
-        let updatedActiveUsers = data["users"].filter(user =>
-            user.areaID === this.state.areaID).length;
-
-        let updatedActiveErrands = data["errands"].filter(errand =>
-            errand.areaID === this.state.areaID && errand.status !== "done").length;
-
-        this.setState({ activeErrands: updatedActiveErrands, activeUsers: updatedActiveUsers })
+        this.fetchErrands();
+        this.fetchUsers();
     }
 
     render(){
@@ -40,17 +64,17 @@ class Home extends Component {
                     rightButtonLink="/profile-page"
                 />
                 <StatusView
-                    areaID={this.state.areaID}
-                    activeUsers={this.state.activeUsers}
-                    activeErrands={this.state.activeErrands}
+                    activeUsers={this.state.users.length}
+                    activeErrands={this.state.errands.length}
                 />
                 <LinkWrapper to="/help-request">
                     <TextButton description="ASK FOR HELP"/>
                 </LinkWrapper>
                 <SectionTitle text="RECENT ACTIVITY"/>
-                <EventItemListView errands={data["errands"]}/>
+                <EventItemListView errands={this.state.errands}/>
             </div>
         );
     }
 }
+
 export default Home;
