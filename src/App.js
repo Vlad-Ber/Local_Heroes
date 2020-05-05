@@ -35,7 +35,7 @@ class App extends Component {
 
 
   render() {
-    //console.log("User: "  + this.state.user.username)
+    console.log("User: "  + this.state.user.username)
     return (
       <Router>
         <UserProvider

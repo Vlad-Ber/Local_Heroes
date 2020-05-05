@@ -29,7 +29,7 @@ class Signup extends Component {
 
 
 
-    async checkLogin(e) {
+     checkLogin = e => {
         axios.post("/login-user", {
             username: this.state.username,
             password: this.state.password
