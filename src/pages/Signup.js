@@ -27,14 +27,14 @@ class Signup extends Component {
         this.setState({ [e.target.name]: e.target.value })
     }
 
-    
 
-    checkLogin = e => {
+
+    async checkLogin(e) {
         axios.post("/login-user", {
             username: this.state.username,
             password: this.state.password
         })
-            .then((response) => {
+            .then(async (response) => {
                 let login =  response.data.login;
 
                 if(login) {
@@ -42,7 +42,7 @@ class Signup extends Component {
 
                   e.preventDefault();
                   window.localStorage.clear();
-                  window.localStorage.setItem("loggedInUser", JSON.stringify(user));
+                  await window.localStorage.setItem("loggedInUser", JSON.stringify(user));
                   this.props.history.push("/home");
 
                 } else {
