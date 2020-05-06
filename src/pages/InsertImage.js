@@ -112,7 +112,7 @@ class InsertImage extends Component {
     fileUploadHandler = () =>{
         const fd = new FormData();
         fd.append('image', this.state.selectedFile, this.state.selectedFile.name);
-        axios.post('/uploadImage', fd, {
+        axios.post('CLOUDINARY_URL=cloudinary://594611264789651:EyafADcycAngHs3DGo-ZKRLfxp8@group-fess', fd, {
 
             onUploadProgress: progressEvent => {
                 console.log('Upload Progress' + (progressEvent.loaded / progressEvent.total*100)  + '%')
