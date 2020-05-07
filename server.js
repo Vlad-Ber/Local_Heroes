@@ -1,15 +1,15 @@
 const express = require('express');
 var bodyParser = require('body-parser');
-const crypto = require('crypto');
-const csprng = require('csprng');
-
+const bcrypt = require('bcrypt');
 const app = express();
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
+
 /*var cors = require('cors');
   app.use(cors());
   app.use(cors({origin: true, credentials: true}));
 */
+
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -85,16 +85,16 @@ client.connect(err => {
     //RET: Array of errands in area
     async function getErrandsArea(areaID){
         console.log("inside getErrandsArea");
-	    let findResult = await errands.find({"areaID": areaID}).toArray();
-	    return findResult;
+	      let findResult = await errands.find({"areaID": areaID}).toArray();
+	      return findResult;
     };
 
     //FUNC: Get all erands for a use
     //ARG: user.email to get errands from
     //RET: Array of errands created by a user by given email
     async function getErrandsEmail(email){
-	    let findResult = await errands.find({"user": email}).toArray();
-	    return findResult;
+	      let findResult = await errands.find({"user": email}).toArray();
+	      return findResult;
     }
 
 
@@ -108,13 +108,13 @@ client.connect(err => {
     //ARG: Area to get users from
     //RET: Array of users in area
     async function getUsersArea(areaID){
-	    let findResult = await users.find({"areaID": areaID}).toArray();
-	    return findResult;
+	      let findResult = await users.find({"areaID": areaID}).toArray();
+	      return findResult;
     };
 
     //FUNC: Adds a user to db. Adds user to given area. If area doesnt exist, create new area.
     //ARGS: data required
-    async function insertUser(username, password, email, name, age, address, description, areaID, mobile, city, salt){
+    async function insertUser(username, password, email, name, age, address, description, areaID, mobile, city){
 	      var data = {
             "username": username,
             "password": password,
@@ -127,16 +127,19 @@ client.connect(err => {
 	          "areaID": areaID,
 		        "mobile": mobile,
 		        "city": city,
-            "SaltValue": salt,
 	      };
+        
 	      var queryToFind = {"email": email};
         var userNameToFind = {"username": username};
 
 	      var findEmail = await documentExist("Users", queryToFind);
         var findUser = await documentExist("Users", userNameToFind);
+
+        //TODO: Maybe don't need this check
 	      if(findUser == false && findEmail == false){
 
 	          await users.insertOne(data).catch(error => console.error(error));
+            
 	          console.log("User " + name + " has been added!");
 	          var areaToFind = {"areaID": areaID};
 	          var findArea = await documentExist("Areas", areaToFind);
@@ -144,13 +147,6 @@ client.connect(err => {
 		            await insertArea(areaID, email);
 	          } else {
 		            await updateArea(areaID, email);
-	          }
-	          //TODO: Maybe dont need
-	          if(findUser == true){
-                console.log("A user with this username already exists")
-	          }
-	          if(findEmail == true){
-                console.log("A user with this email already exists");
 	          }
 	      }
     };
@@ -169,7 +165,8 @@ client.connect(err => {
         let saltValue = curUser.saltValue;
 
         let hashedQueryPassword = hash('${saltValue}${password}');
-        
+        console.log("Send password:" +  hashedQueryPassword);
+        console.log("Finded password:" + curUserPassword);
 
         if(curUserPassword === hashedQueryPassword){
             console.log("inside the if-statement(loginFunction)");
@@ -208,8 +205,8 @@ client.connect(err => {
 	      var data = {
 	          "createdAt": dateString, //Future improvement, show hours ago created
 	          "closedAt": "",
-              "status": "waiting",
-              "type": errandData.type,
+            "status": "waiting",
+            "type": errandData.type,
 	          "title": errandData.title,
 	          "description": errandData.description,
 	          "adress": errandData.adress,
@@ -244,8 +241,9 @@ client.connect(err => {
             console.log("Could not found the document");
         }
     };
-  
-    //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------//
+    
+    //--------------------------------MESSAGING FUNKTIONER--------------------------------------//
+    
     app.use(bodyParser.json());
     var router = express.Router();
     
@@ -258,15 +256,22 @@ client.connect(err => {
     // GETs and sends user data to database
     app.post('/insertUser', async (userData, res) => {
         let user = userData.body;
+        try{
 
-        const salt = csprng(160, 36);
-        //hash the password with the salt prepended
-        let hashedPassword = hash('${salt}${user.password}');
-        insertUser(user.username, hashedPassword, user.email, user.name, user.age, user.address,
-                   user.description, user.areaId, user.mobile, user.city, salt);
-
-    });
+            //Hash userpassword, first argument is userpassword
+            //second argument number of rounds to use when generating a salt
+            let hashedPassword = await bcrypt.hash(user.password, 10);
+            
+            insertUser(user.username, hashedPassword, user.email, user.name, user.age, user.address,
+                       user.description, user.areaId, user.mobile, user.city);
+            res.send({ message: "User Created" });
+        } catch(err){
+            
+            res.send({ error: '${err.message}'});
+        }
         
+    });
+    
     app.post('/check-user', async (data, res) => {
         let user = data.body;
         let curUsername = {"username": user.username };
@@ -281,26 +286,23 @@ client.connect(err => {
         
     });
 
-    app.post("/login-user", async (data, res) => {
+    app.post("/loginUser", async (data, res) => {
         console.log("inside login-user")
         let user = data.body;
-        let username = user.username;
-        let userExists = await documentExist("Users", {"username": username});
-        
-        let dataToSend;
-        
-        if(userExists) {
-            let correctLogin = await loginFunction(username, user.password);
-            if(correctLogin) {
-                let user = await getUser(username);
-                console.log(user);
-                dataToSend = ({ "login": userExists, "user": user});
-                res.send(dataToSend);
-            }
-        } else {
-            dataToSend = ({ "login": false });
-            res.send(dataToSend);
+
+        try {
+            let checkUser = await users.findOne({ "username": user.username });
+            if(!checkUser) throw new Error("User does not exist");
+
+            let comparePassword = await bcrypt.compare(user.password, checkUser.password);
+            if(!comparePassword) throw new Error("Password not correct");
+
+            res.send({ "login": true, "user": checkUser });
+            
+        } catch (err) {
+            res.send({ "login": false });
         }
+
     });
 
     app.post("/updateUser", async (data, res) => {
@@ -343,12 +345,4 @@ client.connect(err => {
     
 })
 
-
-//hashes strings with sha256(Secure Hash Algorithm 2) bit encryption for storing passwords
-function hash(pwd) {
-    return crypto
-        .createHash("sha256")
-        .update(pwd)
-        .digest("base64");
-}
 client.close();
