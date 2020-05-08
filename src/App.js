@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { WithUserContext, UserProvider } from "./components/UserContext.js";
@@ -18,22 +19,37 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fetchLoggedInUser: JSON.parse(window.localStorage.getItem("loggedInUser"))
+      fetchLoggedInUser: JSON.parse(window.localStorage.getItem("loggedInUser")),
+      userData: {}
     };
+
+    this.updateUserContext = this.updateUserContext.bind(this);
+
   };
 
-  setLoggedInUser = (user) => {
-    this.setState({
-      fetchLoggedInUser: user,
+  setLoggedInUser = (user) => { this.setState({ userData: user }) };
+
+  updateUserContext = () => {
+    axios.post("/getUser", {
+        username: this.state.fetchLoggedInUser.username
+    }).then((response) => {
+        console.log("User updated successfully!", response);
+        this.setState({ userData: response.data });
+    }).catch((error) => {
+        console.log("Got error while updating user data", error);
     });
-  };
+  }
+
+  componentDidMount(){
+    this.updateUserContext();
+  }
 
   render() {
     return (
       <Router>
         <UserProvider
           value={{
-            ...this.state.fetchLoggedInUser,
+            ...this.state.userData,
             onSetLoggedInUser: this.setLoggedInUser,
           }}
         >
@@ -58,7 +74,6 @@ class App extends Component {
               <Route path="/residence-info" component={ResidenceInfo} />
               <Route path="/insert-image" component={InsertImage} />
               <Route path="/zipcode" component={WithUserContext(ZipCode)} />
-              />
             </Switch>
           </div>
         </UserProvider>

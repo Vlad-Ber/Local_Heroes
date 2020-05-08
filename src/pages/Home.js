@@ -53,7 +53,6 @@ class Home extends Component {
             console.log("Got error while fetching users", error);
             this.setState({ fetchUsersSuccess: false });
         });
-        console.log("AREA ID ------ : " + this.props.activeUser.areaID);
         this.fetchUsersTimeout = setTimeout(this.fetchUsers, 2000);
     }
 
