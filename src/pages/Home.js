@@ -32,7 +32,7 @@ class Home extends Component {
             areaID: this.state.areaID
         }).then((response) => {
             console.log("Errands fetched successfully!", response)
-            console.log("data: " + JSON.stringify(response.data))
+            //console.log("errands: " + JSON.stringify(response.data))
             this.setState({ fetchErrandsSuccess: true, errands: response.data["errands"] });
         }).catch((error) => {
             console.log("Got error while fetching errands", error);
@@ -47,7 +47,7 @@ class Home extends Component {
             areaID: this.state.areaID
         }).then((response) => {
             console.log("Users fetched successfully!", response)
-            console.log("data: " + JSON.stringify(response.data))
+            //console.log("users: " + JSON.stringify(response.data))
             this.setState({ fetchUsersSuccess: true, users: response.data["users"] });
         }).catch((error) => {
             console.log("Got error while fetching users", error);
