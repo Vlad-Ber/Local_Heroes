@@ -133,9 +133,9 @@ class InsertImage extends Component {
         <NavBar leftButtonType="back" leftButtonLink="/residence-info" />
         <SectionTitle text="Please insert a profile picture" />
 
-        <div className="InsertImage">
-          <input type="file" onChange={this.fileSelectHandler} />
-        </div>
+        <ImageSelect>
+          <StyledInput type="file" onChange={this.fileSelectHandler} />
+        </ImageSelect>
 
         <ConfirmButton onClick={this.sendProfiletoBackend} />
       </InsertImageWrapper>
@@ -146,8 +146,20 @@ class InsertImage extends Component {
 const InsertImageWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  align-items: center;
 `;
+
+const ImageSelect = styled.div`
+    display: flex; 
+    flex: 1;
+    justify-content: center; 
+    align-items: center;
+`;
+
+const StyledInput = styled.input`
+    font-size: 14px; 
+    border-style: solid;
+    border-width: 3px;
+    border-color: #31D285;
+`; 
 
 export default InsertImage;
