@@ -26,6 +26,7 @@ class Home extends Component {
     }
 
     fetchErrands = () => {
+        console.log("fetchErrands");
         axios.post("/getErrandsArea", {
             areaID: this.state.areaID
         }).then((response) => {
@@ -36,9 +37,11 @@ class Home extends Component {
             console.log("Got error while fetching errands", error);
             this.setState({ fetchErrandsSuccess: false });
         });
-    }
+        setTimeout(this.fetchErrands, 2000);
+    }   
 
     fetchUsers = () => {
+        console.log("fetchUsers");
         axios.post("/getUsersArea", {
             areaID: this.state.areaID
         }).then((response) => {
@@ -49,6 +52,7 @@ class Home extends Component {
             console.log("Got error while fetching users", error);
             this.setState({ fetchUsersSuccess: false });
         });
+        setTimeout(this.fetchUsers, 2000);
     }
 
     componentDidMount(){
