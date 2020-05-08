@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { WithUserContext, UserProvider } from "./components/UserContext.js";
@@ -15,14 +14,14 @@ import InsertImage from "./pages/InsertImage.js";
 import ZipCode from "./pages/ZipCode.js";
 
 class App extends Component {
+
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      fetchLoggedInUser: JSON.parse(
-        window.localStorage.getItem("loggedInUser")
-      ),
+      fetchLoggedInUser: JSON.parse(window.localStorage.getItem("loggedInUser"))
     };
-  }
+  };
+
   setLoggedInUser = (user) => {
     this.setState({
       fetchLoggedInUser: user,
@@ -32,15 +31,6 @@ class App extends Component {
   render() {
     return (
       <Router>
-        {/* READ ME: 
-        
-          EXPERIMENTING WITH CONTEXT, NEEDS REFACTORING IN CONJUNCTION WITH LOGIN etc.  
-
-          UserProvider value should be fetched from login-state 
-
-          Break out login from Signup and handle login right here in root? 
-        
-        */}
         <UserProvider
           value={{
             ...this.state.fetchLoggedInUser,

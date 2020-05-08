@@ -53,6 +53,7 @@ class Home extends Component {
             console.log("Got error while fetching users", error);
             this.setState({ fetchUsersSuccess: false });
         });
+        console.log("AREA ID ------ : " + this.props.activeUser.areaID);
         this.fetchUsersTimeout = setTimeout(this.fetchUsers, 2000);
     }
 
@@ -76,6 +77,7 @@ class Home extends Component {
                 <StatusView
                     activeUsers={this.state.users.length}
                     activeErrands={this.state.errands.length}
+                    areaID={this.state.areaID}
                 />
                 <LinkWrapper to="/help-request">
                     <TextButton description="ASK FOR HELP"/>

@@ -11,9 +11,9 @@ const ZipCode = (props) => {
 
   const [zipCode, setZipCode] = useState("");
   const [success, setSuccess] = useState(null);
-  
-  function updateZipCode() {
-    axios.post("/updateUser", {
+
+  async function updateZipCode() {
+    await axios.post("/updateUser", {
       userID: props.activeUser._id,
       newUserData: {
           areaID: zipCode
@@ -24,6 +24,21 @@ const ZipCode = (props) => {
     }).catch((error) => {
       console.log("Got error while updating zip code", error);
       setSuccess(false);
+    });
+    await updateUserContext();
+    props.history.push("/home");
+  }
+  
+  function updateUserContext(){
+    console.log("updateLoggedInUser");
+    axios.post("/getUser", {
+        username: props.activeUser.username
+    }).then((response) => {
+        console.log("User updated successfully!", response)
+        console.log("updateUserContext with: " + JSON.stringify(response.data));
+        props.activeUser.onSetLoggedInUser(response.data);
+    }).catch((error) => {
+        console.log("Got error while updating logged in user", error);
     });
   }
 
