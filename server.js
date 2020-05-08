@@ -1,5 +1,6 @@
 const express = require("express");
 var bodyParser = require("body-parser");
+const bcrypt = require('bcrypt');
 const app = express();
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
@@ -269,21 +270,24 @@ client.connect((err) => {
   });
 
   // GETs and sends user data to database
-  app.post("/insertUser", async (userData, res) => {
-    let user = userData.body;
-    insertUser(
-      user.username,
-      user.password,
-      user.email,
-      user.name,
-      user.age,
-      user.address,
-      user.description,
-      user.areaId,
-      user.mobile,
-      user.city
-    );
-  });
+    app.post('/insertUser', async (userData, res) => {
+        let user = userData.body;
+        try{
+
+            //Hash userpassword, first argument is userpassword
+            //second argument number of rounds to use when generating a salt
+            let hashedPassword = await bcrypt.hash(user.password, 10);
+            
+            insertUser(user.username, hashedPassword, user.email, user.name, user.age, user.address,
+                       user.description, user.areaId, user.mobile, user.city);
+            res.send({ message: "User Created" });
+        } catch(err){
+            
+            res.send({ error: '${err.message}'});
+        }
+        
+    });
+    
 
   app.post("/check-user", async (data, res) => {
     let user = data.body;
@@ -298,26 +302,25 @@ client.connect((err) => {
     res.send(dataToSend);
   });
 
-  app.post("/login-user", async (data, res) => {
-    let user = data.body;
-    let username = user.username;
-    let userExists = await documentExist("Users", { username: username });
+    app.post("/loginUser", async (data, res) => {
+        console.log("inside login-user")
+        let user = data.body;
 
-    let dataToSend;
+        try {
+            let checkUser = await users.findOne({ "username": user.username });
+            if(!checkUser) throw new Error("User does not exist");
 
-    if (userExists) {
-      let correctLogin = await loginFunction(username, user.password);
-      if (correctLogin) {
-        let user = await getUser(username);
-        console.log(user);
-        dataToSend = { login: userExists, user: user };
-        res.send(dataToSend);
-      }
-    } else {
-      dataToSend = { login: false };
-      res.send(dataToSend);
-    }
-  });
+            let comparePassword = await bcrypt.compare(user.password, checkUser.password);
+            if(!comparePassword) throw new Error("Password not correct");
+
+            res.send({ "login": true, "user": checkUser });
+            
+        } catch (err) {
+            res.send({ "login": false });
+        }
+
+    });
+
 
   app.post("/updateUser", async (data, res) => {
     console.log("updateUser request heard");
