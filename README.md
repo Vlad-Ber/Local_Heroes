@@ -1,4 +1,6 @@
-# Grannhjälpen (FESS)
+# LocalHero
+
+Help out in your local area and become a local hero! 
 
 Projektarbete på kursen Datorsystem med projektarbete (1DT003) 
 (1DT096) våren 2020, Uppsala universitet.
