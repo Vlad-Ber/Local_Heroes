@@ -5,14 +5,26 @@ Projektarbete på kursen Datorsystem med projektarbete (1DT003)
 
 ## Kom igång
 
-**TODO:** Lägg till kortfattade instruktioner som beskriver hur projektet byggs
-(kompileras eller liknande), testas (automatiska tester) och startas. Lägg gärna
-till lämpliga underrubriker.
+Setup
+```
+$ git glone https://github.com/uu-dsp-os-ospp-2020/dsp-fess.git
+$ cd dsp-fess
+$ npm install 
+```
+
+Then run
+
+```
+// Terminal #1
+$ npm start
+// Terminal #2 
+$ node server.js
+```
+
+Then access via post `http://localhost:3000/`
+
+
 
 ## Katalogstruktur
 
 **TODO:** Lägg till en kortfattad beskrivning över katalogstrukturen.
-
-## Färdigställ 
-
-- Färdigställ dokumentet [meta/medlemmar.md](./meta/medlemmar.md).
