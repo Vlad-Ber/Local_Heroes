@@ -15,6 +15,20 @@ import InsertImage from "./pages/InsertImage.js";
 import ZipCode from "./pages/ZipCode.js";
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      fetchLoggedInUser: JSON.parse(
+        window.localStorage.getItem("loggedInUser")
+      ),
+    };
+  }
+  setLoggedInUser = (user) => {
+    this.setState({
+      fetchLoggedInUser: user,
+    });
+  };
+
   render() {
     return (
       <Router>
@@ -29,24 +43,14 @@ class App extends Component {
         */}
         <UserProvider
           value={{
-            _id: "5ea067e7331fa10de7cc0644",
-            username: "ZiggyStardust",
-            password: "secret",
-            email: "davidbowie@localhero.com",
-            name: "David Bowie",
-            age: "68",
-            adress: "David Bowie Street",
-            description: "David Bowie was a legend",
-            virtuePoints: "784",
-            areaID: "99999",
-            mobile: "123456789",
-            city: "Mars",
+            ...this.state.fetchLoggedInUser,
+            onSetLoggedInUser: this.setLoggedInUser,
           }}
         >
           <div className="App" style={{ fontFamily: "Helvetica" }}>
             <Switch>
-              <Route path="/" exact component={Signup} />
-              <Route path="/signup" component={Signup} />
+              <Route path="/" exact component={WithUserContext(Signup)} />
+              <Route path="/signup" component={WithUserContext(Signup)} />
               <Route path="/home" component={WithUserContext(Home)} />
               <Route
                 path="/profile-page"

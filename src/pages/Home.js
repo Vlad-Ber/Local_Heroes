@@ -22,6 +22,7 @@ class Home extends Component {
         }
 
         this.fetchErrands = this.fetchErrands.bind(this);
+        this.fetchUsers = this.fetchUsers.bind(this);
 
     }
 
@@ -37,7 +38,7 @@ class Home extends Component {
             console.log("Got error while fetching errands", error);
             this.setState({ fetchErrandsSuccess: false });
         });
-        setTimeout(this.fetchErrands, 2000);
+        this.fetchErrandsTimeOut = setTimeout(this.fetchErrands, 2000);
     }   
 
     fetchUsers = () => {
@@ -52,12 +53,17 @@ class Home extends Component {
             console.log("Got error while fetching users", error);
             this.setState({ fetchUsersSuccess: false });
         });
-        setTimeout(this.fetchUsers, 2000);
+        this.fetchUsersTimeout = setTimeout(this.fetchUsers, 2000);
     }
 
     componentDidMount(){
         this.fetchErrands();
         this.fetchUsers();
+    }
+
+    componentWillUnmount(){
+        clearTimeout(this.fetchErrandsTimeOut);
+        clearTimeout(this.fetchUsersTimeout);
     }
 
     render(){
