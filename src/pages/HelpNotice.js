@@ -22,7 +22,8 @@ const HelpNotice = (props) => {
                 helper: props.activeUser._id
             }
         }).then((response) => {
-            console.log("Help notice submitted successfully!", response)
+            console.log("Help notice submitted successfully!", response);
+            console.log("response.data: " + JSON.stringify(response.data))
             setSuccess(true);
         }).catch((error) => {
             console.log("Got error while handling help notice", error);
