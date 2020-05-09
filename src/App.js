@@ -21,13 +21,17 @@ class App extends Component {
     this.state = {
       fetchLoggedInUser: {},
       userData: {},
-      startRoute: WithUserContext(Signup)
     };
 
     this.updateUserContext = this.updateUserContext.bind(this);
     this.setLoggedInUser = this.setLoggedInUser.bind(this);
+    this.checkInitialLogin = this.checkInitialLogin.bind(this);
 
   };
+  
+  checkInitialLogin = async () => {
+    await this.setState({ fetchLoggedInUser: JSON.parse(window.localStorage.getItem("loggedInUser")) });
+  }
 
   setLoggedInUser = (user) => { 
     this.setState({ userData: user }) 
@@ -46,7 +50,7 @@ class App extends Component {
 
   componentDidMount(){
     console.log("---------- APP.JS DID MOUNT --------------")
-    this.setState({ fetchLoggedInUser: JSON.parse(window.localStorage.getItem("loggedInUser")) });
+    this.checkInitialLogin();
     if(this.state.fetchLoggedInUser){
       this.updateUserContext()
     }
@@ -63,7 +67,7 @@ class App extends Component {
         >
           <div className="App" style={{ fontFamily: "Helvetica" }}>
             <Switch>
-              <Route path="/" exact component={this.state.startRoute} />
+              <Route path="/" exact component={WithUserContext(Signup)} />
               <Route path="/signup" component={WithUserContext(Signup)} />
               <Route path="/home" component={WithUserContext(Home)} />
               <Route
