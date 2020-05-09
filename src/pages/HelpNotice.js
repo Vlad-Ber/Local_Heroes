@@ -28,7 +28,6 @@ const HelpNotice = (props) => {
             console.log("Got error while handling help notice", error);
             setSuccess(false);
         });
-        props.history.push("/home");
     };
 
   function renderResponse(){

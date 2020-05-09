@@ -19,29 +19,37 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fetchLoggedInUser: JSON.parse(window.localStorage.getItem("loggedInUser")),
-      userData: {}
+      fetchLoggedInUser: {},
+      userData: {},
+      startRoute: WithUserContext(Signup)
     };
 
     this.updateUserContext = this.updateUserContext.bind(this);
+    this.setLoggedInUser = this.setLoggedInUser.bind(this);
 
   };
 
-  setLoggedInUser = (user) => { this.setState({ userData: user }) };
+  setLoggedInUser = (user) => { 
+    this.setState({ userData: user }) 
+  };
 
   updateUserContext = () => {
     axios.post("/getUser", {
         username: this.state.fetchLoggedInUser.username
     }).then((response) => {
-        console.log("User updated successfully!", response);
-        this.setState({ userData: response.data });
+      console.log("User updated successfully!", response);
+      this.setState({ userData: response.data });
     }).catch((error) => {
         console.log("Got error while updating user data", error);
     });
   }
 
   componentDidMount(){
-    this.updateUserContext();
+    console.log("---------- APP.JS DID MOUNT --------------")
+    this.setState({ fetchLoggedInUser: JSON.parse(window.localStorage.getItem("loggedInUser")) });
+    if(this.state.fetchLoggedInUser){
+      this.updateUserContext()
+    }
   }
 
   render() {
@@ -55,7 +63,7 @@ class App extends Component {
         >
           <div className="App" style={{ fontFamily: "Helvetica" }}>
             <Switch>
-              <Route path="/" exact component={WithUserContext(Signup)} />
+              <Route path="/" exact component={this.state.startRoute} />
               <Route path="/signup" component={WithUserContext(Signup)} />
               <Route path="/home" component={WithUserContext(Home)} />
               <Route
