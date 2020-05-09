@@ -21,7 +21,7 @@ $ npm start
 $ node server.js
 ```
 
-Then access via post `http://localhost:3000/`
+Then access app via `http://localhost:3000/`
 
 
 
