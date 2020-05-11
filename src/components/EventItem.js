@@ -39,7 +39,18 @@ class EventItem extends Component {
         }).then((response) => {
             console.log("Errand marked as done successfully!", response);
         }).catch((error) => {
-            console.log("EventItem, handleMarkAsDone: Got error while handling updating errand", error);
+            console.log("EventItem, handleMarkAsDone: Got error while updating errand", error);
+        });
+    };
+
+    handleDeleteErrand = () => {
+        console.log("handleDeleteErrand");
+        axios.post("/deleteErrand", {
+            errandID: this.state.errand._id
+        }).then((response) => {
+            console.log("Errand deleted successfully", response);
+        }).catch((error) => {
+            console.log("EventItem, handleDeleteErrand: Got error while deleting errand", error);
         });
     };
 
@@ -100,7 +111,7 @@ class EventItem extends Component {
             return (
                 <div>
                     {this.state.errand.status !== "done" ? <TextButton onClick={this.handleMarkAsDone} description="MARK AS DONE"/> : null}
-                    <TextButton description="DELETE ERRAND"/>
+                    <TextButton onClick={this.handleDeleteErrand} description="DELETE ERRAND"/>
                 </div>
             );
         } else if (this.state.errand.status === "waiting"){

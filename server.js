@@ -240,22 +240,18 @@ client.connect((err) => {
 
   const ObjectID = require("mongodb").ObjectID;
 
-  //FUNC: Deletes a errand from db
+  //FUNC: Deletes an errand from db
   //ARG: ErrandID to remove
   //TODO: Inte klar
-  async function deleteErrands(errandId) {
-    let arg = { _id: new ObjectID(errandId) };
-    let findErrands = await documentExist("Errands", arg);
-
-    if (findErrands == true) {
-      errands.deleteOne(arg, function (err, result) {
-        if (err) {
-          throw err;
-        }
-      });
-    } else {
-      console.log("Could not found the document");
-    }
+  async function deleteErrand(errandID) {
+    console.log("deleteErrand")
+    let errandToRemove = ObjectID(errandID);
+    console.log("errandToRemove: " + JSON.stringify(errandToRemove))
+    await errands.deleteOne({
+       _id: errandToRemove 
+    }).catch((error) => {
+      console.log("Could not delete errand", error)
+    });
   }
 
   //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------//
@@ -357,6 +353,12 @@ client.connect((err) => {
       data.body.newErrandData
     ).catch((error) => console.error(error));
     res.send(doneErrand);
+  });
+
+  app.post("/deleteErrand", async function (data, res) {
+    console.log("deleteErrand request heard")
+    console.log("data.body.errandID: " + data.body.errandID);
+    await deleteErrand(data.body.errandID);
   });
 
   app.post("/getErrandsArea", async function (req, res) {
