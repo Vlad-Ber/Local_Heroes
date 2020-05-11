@@ -8,7 +8,7 @@ import LinkWrapper from './LinkWrapper.js';
 import ServerResponse from '../components/ServerResponse.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPeopleCarry, faShoppingCart, faInfo } from '@fortawesome/free-solid-svg-icons'
+import { faPeopleCarry, faShoppingCart, faInfo, faTools, faUserFriends } from '@fortawesome/free-solid-svg-icons'
 
 
 class EventItem extends Component {
@@ -73,15 +73,23 @@ class EventItem extends Component {
             color: '#31D285'
         }
 
-        switch(type){
+        switch (type) {
+
             case "carrying": 
             return <FontAwesomeIcon icon={faPeopleCarry} style={typeIconStyle}/>
 
             case "shopping": 
             return <FontAwesomeIcon icon={faShoppingCart} style={typeIconStyle}/>
 
+            case "repair":
+            return <FontAwesomeIcon icon={faTools} style={typeIconStyle}/>
+
+            case "socialising": 
+            return <FontAwesomeIcon icon={faUserFriends} style={typeIconStyle}/>
+
             default: 
             return <FontAwesomeIcon icon={faInfo} style={typeIconStyle}/>
+            
         }
 
     };

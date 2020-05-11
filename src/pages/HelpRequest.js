@@ -102,6 +102,14 @@ class HelpRequest extends Component {
                 text: "Shopping",
                 value: "shopping"
             }, 
+            {
+                text: "Repair work",
+                value: "repair"
+            },
+            {
+                text: "Social stimuli",
+                value: "socialising"
+            }
         ]
 
         return(
