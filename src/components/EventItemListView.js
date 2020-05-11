@@ -8,26 +8,21 @@ function EventItemListView(props){
 
   const [parameter, setParameter] = useState("all");
 
-  const getAllErrands = () => {
-    setParameter("all")
-  }
-  const getWaitingErrands = () => {
-    setParameter("waiting")
-  }
-  const getInProgressErrands = () => {
-    setParameter("inProgress")
-  }
-  const getDoneErrands = () => {
-    setParameter("done")
-  }
-  
   return (
     <div>
       <ParameterButtonsWrapper>
-        <ParameterButton active={parameter === "all" ? true : false} onClick={getAllErrands}>All</ParameterButton>
-        <ParameterButton active={parameter === "waiting" ? true : false} onClick={getWaitingErrands}>Waiting</ParameterButton>
-        <ParameterButton active={parameter === "inProgress" ? true : false} onClick={getInProgressErrands}>In progress</ParameterButton>
-        <ParameterButton active={parameter === "done" ? true : false} onClick={getDoneErrands}>Done</ParameterButton>
+        <ParameterButton active={parameter === "all" ? true : false} onClick={() => { setParameter("all") } }>
+            All
+        </ParameterButton>
+        <ParameterButton active={parameter === "waiting" ? true : false} onClick={() => { setParameter("waiting") } }>
+          Waiting
+        </ParameterButton>
+        <ParameterButton active={parameter === "inProgress" ? true : false} onClick={() => { setParameter("inProgress") } }>
+          In progress
+        </ParameterButton>
+        <ParameterButton active={parameter === "done" ? true : false} onClick={() => { setParameter("done") } }>
+          Done
+        </ParameterButton>
       </ParameterButtonsWrapper>
       <EventItemList errands={parameter === "all" ? props.errands : props.errands.filter(errand => errand.status === parameter)}/>
     </div>
