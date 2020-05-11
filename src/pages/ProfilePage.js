@@ -3,9 +3,7 @@ import NavBar from "../components/NavBar.js";
 import TextButton from "../components/TextButton.js";
 import LinkWrapper from "../components/LinkWrapper.js";
 import styled from "styled-components";
-import data from "../data/data.json";
 import EventItemListView from "../components/EventItemListView.js";
-import { render } from "@testing-library/react";
 import axios from "axios";
 
 class ProfilePage extends Component {
