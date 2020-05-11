@@ -104,6 +104,7 @@ client.connect((err) => {
   }
 
   async function getUser(username) {
+    console.log("username in getUser: " + username)
     var user = await users
       .findOne({ username: username })
       .catch((error) => console.error(error));
@@ -321,6 +322,13 @@ client.connect((err) => {
 
     });
 
+
+  app.post("/getUser", async(data, res) => {
+    console.log("getUser request heard");
+    var user = await getUser(data.body.username);
+    console.log("res.send: " + JSON.stringify(user))
+    res.send(user);
+  });
 
   app.post("/updateUser", async (data, res) => {
     console.log("updateUser request heard");

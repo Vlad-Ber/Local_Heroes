@@ -18,7 +18,6 @@ class Signup extends Component {
     this.state = {
       username: "",
       password: "",
-
       text: "",
     };
   }
@@ -39,7 +38,6 @@ class Signup extends Component {
 
         if (login) {
           let user = response.data.user;
-
           window.localStorage.setItem("loggedInUser", JSON.stringify(user));
           this.props.activeUser.onSetLoggedInUser(user);
           this.props.history.push("/home");
@@ -52,7 +50,6 @@ class Signup extends Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <SignUpWrapper>
         <WelcomeMessage>

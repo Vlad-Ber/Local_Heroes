@@ -137,6 +137,11 @@ class EventItem extends Component {
         this.setState({ fullView: this.props.fullView, errand: this.props.errand });
     };
 
+    componentWillReceiveProps(nextProps) {
+        console.log("--------- EVENT ITEM WILL RECEIVE PROPS ----------- ")
+        this.setState({ errand: nextProps.errand });  
+    }
+
     render(){
 
         return(

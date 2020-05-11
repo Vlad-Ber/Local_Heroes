@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import axios from "axios";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { WithUserContext, UserProvider } from "./components/UserContext.js";
@@ -15,35 +15,53 @@ import InsertImage from "./pages/InsertImage.js";
 import ZipCode from "./pages/ZipCode.js";
 
 class App extends Component {
+
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      fetchLoggedInUser: JSON.parse(
-        window.localStorage.getItem("loggedInUser")
-      ),
+      fetchLoggedInUser: {},
+      userData: {},
     };
-  }
-  setLoggedInUser = (user) => {
-    this.setState({
-      fetchLoggedInUser: user,
-    });
+
+    this.updateUserContext = this.updateUserContext.bind(this);
+    this.setLoggedInUser = this.setLoggedInUser.bind(this);
+    this.checkInitialLogin = this.checkInitialLogin.bind(this);
+
   };
+  
+  checkInitialLogin = async () => {
+    await this.setState({ fetchLoggedInUser: JSON.parse(window.localStorage.getItem("loggedInUser")) });
+  }
+
+  setLoggedInUser = (user) => { 
+    this.setState({ userData: user }) 
+  };
+
+  updateUserContext = () => {
+    axios.post("/getUser", {
+        username: this.state.fetchLoggedInUser.username
+    }).then((response) => {
+      console.log("User updated successfully!", response);
+      this.setState({ userData: response.data });
+    }).catch((error) => {
+        console.log("Got error while updating user data", error);
+    });
+  }
+
+  componentDidMount(){
+    console.log("---------- APP.JS DID MOUNT --------------")
+    this.checkInitialLogin();
+    if(this.state.fetchLoggedInUser){
+      this.updateUserContext()
+    }
+  }
 
   render() {
     return (
       <Router>
-        {/* READ ME: 
-        
-          EXPERIMENTING WITH CONTEXT, NEEDS REFACTORING IN CONJUNCTION WITH LOGIN etc.  
-
-          UserProvider value should be fetched from login-state 
-
-          Break out login from Signup and handle login right here in root? 
-        
-        */}
         <UserProvider
           value={{
-            ...this.state.fetchLoggedInUser,
+            ...this.state.userData,
             onSetLoggedInUser: this.setLoggedInUser,
           }}
         >
@@ -68,7 +86,6 @@ class App extends Component {
               <Route path="/residence-info" component={ResidenceInfo} />
               <Route path="/insert-image" component={InsertImage} />
               <Route path="/zipcode" component={WithUserContext(ZipCode)} />
-              />
             </Switch>
           </div>
         </UserProvider>

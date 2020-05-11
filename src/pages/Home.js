@@ -18,7 +18,7 @@ class Home extends Component {
             users: [],
             errands: [],
             fetchErrandsSuccess: null,
-            fetchUsersSuccess: null
+            fetchUsersSuccess: null,
         }
 
         this.fetchErrands = this.fetchErrands.bind(this);
@@ -32,13 +32,13 @@ class Home extends Component {
             areaID: this.state.areaID
         }).then((response) => {
             console.log("Errands fetched successfully!", response)
-            console.log("data: " + JSON.stringify(response.data))
+            //console.log("errands: " + JSON.stringify(response.data))
             this.setState({ fetchErrandsSuccess: true, errands: response.data["errands"] });
         }).catch((error) => {
             console.log("Got error while fetching errands", error);
             this.setState({ fetchErrandsSuccess: false });
         });
-        this.fetchErrandsTimeOut = setTimeout(this.fetchErrands, 2000);
+        this.fetchErrandsTimeout = setTimeout(this.fetchErrands, 2000);
     }   
 
     fetchUsers = () => {
@@ -47,7 +47,7 @@ class Home extends Component {
             areaID: this.state.areaID
         }).then((response) => {
             console.log("Users fetched successfully!", response)
-            console.log("data: " + JSON.stringify(response.data))
+            //console.log("users: " + JSON.stringify(response.data))   
             this.setState({ fetchUsersSuccess: true, users: response.data["users"] });
         }).catch((error) => {
             console.log("Got error while fetching users", error);
@@ -57,12 +57,14 @@ class Home extends Component {
     }
 
     componentDidMount(){
+        console.log("---------- HOME.JS DID MOUNT ----------------")
         this.fetchErrands();
         this.fetchUsers();
     }
 
     componentWillUnmount(){
-        clearTimeout(this.fetchErrandsTimeOut);
+        console.log("---------- HOME.JS WILL UNMOUNT ----------------")
+        clearTimeout(this.fetchErrandsTimeout);
         clearTimeout(this.fetchUsersTimeout);
     }
 
@@ -76,6 +78,7 @@ class Home extends Component {
                 <StatusView
                     activeUsers={this.state.users.length}
                     activeErrands={this.state.errands.length}
+                    areaID={this.state.areaID}
                 />
                 <LinkWrapper to="/help-request">
                     <TextButton description="ASK FOR HELP"/>
