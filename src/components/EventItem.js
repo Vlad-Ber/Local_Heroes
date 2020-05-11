@@ -99,7 +99,7 @@ class EventItem extends Component {
         } else if (this.state.errand.requester === username){
             return (
                 <div>
-                    <TextButton onClick={this.handleMarkAsDone} description="MARK AS DONE"/>
+                    {this.state.errand.status !== "done" ? <TextButton onClick={this.handleMarkAsDone} description="MARK AS DONE"/> : null}
                     <TextButton description="DELETE ERRAND"/>
                 </div>
             );
