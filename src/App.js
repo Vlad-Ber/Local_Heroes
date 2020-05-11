@@ -28,34 +28,40 @@ class App extends Component {
     this.checkInitialLogin = this.checkInitialLogin.bind(this);
 
   };
-  
-  checkInitialLogin = async () => {
-    await this.setState({ fetchLoggedInUser: JSON.parse(window.localStorage.getItem("loggedInUser")) });
-  }
 
+  // setLoggedInUser 
+  // accessed via prop onSetLoggedInUser in UserContext
+  // PARAM: user object to update state with  
   setLoggedInUser = (user) => { 
-    this.setState({ userData: user }) 
+    console.log("setLoggedInUser in App.js")
+    this.setState({ fetchLoggedInUser: user, userData: user }) 
   };
 
+  // When App mounts (e.g. on refresh), fetches logged in user from localStorage and updates state and context
+  checkInitialLogin = async () => {
+    console.log("checkInitialLogin in App.js")
+    let fetchedUser = await JSON.parse(window.localStorage.getItem("loggedInUser"));
+    await this.setState({ fetchLoggedInUser: fetchedUser });
+    this.updateUserContext();
+  }
+
+  // Gets the latest data from db for the logged in user as fetched by checkInitialLogin
   updateUserContext = () => {
     axios.post("/getUser", {
-        username: this.state.fetchLoggedInUser.username
+      username: this.state.fetchLoggedInUser.username
     }).then((response) => {
       console.log("User updated successfully!", response);
       this.setState({ userData: response.data });
     }).catch((error) => {
-        console.log("Got error while updating user data", error);
+      console.log("Got error while updating user data", error);
     });
   }
-
+  
   componentDidMount(){
     console.log("---------- APP.JS DID MOUNT --------------")
     this.checkInitialLogin();
-    if(this.state.fetchLoggedInUser){
-      this.updateUserContext()
-    }
   }
-
+  
   render() {
     return (
       <Router>

@@ -89,7 +89,6 @@ client.connect((err) => {
   //ARG: Area to get errands from
   //RET: Array of errands in area
   async function getErrandsArea(areaID) {
-    console.log("inside getErrandsArea");
     let findResult = await errands.find({ areaID: areaID }).toArray();
     return findResult;
   }
