@@ -77,13 +77,12 @@ class Home extends Component {
                 />
                 <StatusView
                     activeUsers={this.state.users.length}
-                    activeErrands={this.state.errands.length}
+                    activeErrands={this.state.errands.filter(errand => errand.status !== "done").length}
                     areaID={this.state.areaID}
                 />
                 <LinkWrapper to="/help-request">
                     <TextButton description="ASK FOR HELP"/>
                 </LinkWrapper>
-                <SectionTitle text="RECENT ACTIVITY"/>
                 <EventItemListView errands={this.state.errands}/>
             </div>
         );
