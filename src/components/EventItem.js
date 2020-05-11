@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import axios from "axios"
 import styled from 'styled-components'
 
+import { UserConsumer } from "./UserContext.js"
 import TextButton from './TextButton.js'
 import LinkWrapper from './LinkWrapper.js';
 import ServerResponse from '../components/ServerResponse.js';
@@ -24,6 +26,21 @@ class EventItem extends Component {
 
     toggleView = () => {
         this.setState({ fullView: !this.state.fullView});
+    };
+
+    handleMarkAsDone = () => {
+        console.log("handleMarkAsDone");
+        axios.post("/updateErrand", {
+            errandID: this.state.errand._id,
+            newErrandData: {
+                status: "done",
+                helper: "unknown"
+            }
+        }).then((response) => {
+            console.log("Errand marked as done successfully!", response);
+        }).catch((error) => {
+            console.log("EventItem, handleMarkAsDone: Got error while handling updating errand", error);
+        });
     };
 
     renderResponse = () => (
@@ -76,9 +93,16 @@ class EventItem extends Component {
 
     }
 
-    renderActionButton = () => {
+    renderActionButton = (username) => {
         if (this.props.disableAction){
             return null
+        } else if (this.state.errand.requester === username){
+            return (
+                <div>
+                    <TextButton onClick={this.handleMarkAsDone} description="MARK AS DONE"/>
+                    <TextButton description="DELETE ERRAND"/>
+                </div>
+            );
         } else if (this.state.errand.status === "waiting"){
             return (
                 <LinkWrapper to={{
@@ -125,7 +149,9 @@ class EventItem extends Component {
 
             </InfoWrapper>
 
-            {this.renderActionButton()}
+            <UserConsumer>
+                {(user) => this.renderActionButton(user.username)}
+            </UserConsumer>
             {this.renderResponse()}
 
         </ExpandedView> 
