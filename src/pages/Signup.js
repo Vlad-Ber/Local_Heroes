@@ -29,7 +29,7 @@ class Signup extends Component {
   checkLogin = (e) => {
     e.preventDefault();
     axios
-      .post("/login-user", {
+      .post("/loginUser", {
         username: this.state.username,
         password: this.state.password,
       })
