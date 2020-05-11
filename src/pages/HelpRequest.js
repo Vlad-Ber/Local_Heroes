@@ -76,6 +76,7 @@ class HelpRequest extends Component {
         }).then((response) => {
             console.log("Data submitted successfully!", response)
             this.setState({ success: true });
+            this.props.history.push("/home")
         }).catch((error) => {
             console.log("Got error while posting data", error);
             this.setState({ success: false });

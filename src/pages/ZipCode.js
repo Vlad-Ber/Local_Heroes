@@ -18,15 +18,16 @@ const ZipCode = (props) => {
       newUserData: {
           areaID: zipCode
       }
-    }).then((response) => {
+    }).then(async (response) => {
       console.log("Zip code updated successfully!", response)
       setSuccess(true);
+      await updateUserContext();
+      console.log("switching route from zipcode to home")
+      props.history.push("/home");
     }).catch((error) => {
       console.log("Got error while updating zip code", error);
       setSuccess(false);
     });
-    await updateUserContext();
-    props.history.push("/home");
   }
   
   function updateUserContext(){
@@ -40,6 +41,7 @@ const ZipCode = (props) => {
     }).catch((error) => {
         console.log("Got error while updating logged in user", error);
     });
+    console.log("finished updatingUserContext in ZipCode")
   }
 
   function renderResponse(){
