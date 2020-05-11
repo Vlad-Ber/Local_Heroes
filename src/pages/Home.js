@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import NavBar from '../components/NavBar.js';
 import EventItemListView from '../components/EventItemListView.js';
-import SectionTitle from '../components/SectionTitle.js';
 import StatusView from '../components/StatusView.js';
 import TextButton from '../components/TextButton.js';
 import LinkWrapper from '../components/LinkWrapper.js';
