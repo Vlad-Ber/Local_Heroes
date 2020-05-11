@@ -34,7 +34,7 @@ class App extends Component {
   // PARAM: user object to update state with  
   setLoggedInUser = (user) => { 
     console.log("setLoggedInUser in App.js")
-    this.setState({ fetchLoggedInUser: user, userData: user }) 
+    this.setState({ userData: user }) 
   };
 
   // When App mounts (e.g. on refresh), fetches logged in user from localStorage and updates state and context
@@ -42,7 +42,7 @@ class App extends Component {
     console.log("checkInitialLogin in App.js")
     let fetchedUser = await JSON.parse(window.localStorage.getItem("loggedInUser"));
     await this.setState({ fetchLoggedInUser: fetchedUser });
-    this.updateUserContext();
+    fetchedUser !== null ? this.updateUserContext() : console.log("No user logged in")
   }
 
   // Gets the latest data from db for the logged in user as fetched by checkInitialLogin
