@@ -111,6 +111,20 @@ client.connect((err) => {
     return user;
   }
 
+  async function fetchUserByID(userID) {
+    console.log("userID in fetchUserByID: " + userID)
+    try {
+      let _userID = ObjectID(userID)
+      var user = await users
+        .findOne({ _id: _userID })
+        .catch((error) => console.error(error));
+      console.log("User in fetchUserByID is: " + user);
+      return user;
+    } catch (e) {
+      console.log("in fetchUserByID: " + e);
+    }
+  }
+
   //FUNC: Get all users for an Area
   //ARG: Area to get users from
   //RET: Array of users in area
@@ -240,22 +254,18 @@ client.connect((err) => {
 
   const ObjectID = require("mongodb").ObjectID;
 
-  //FUNC: Deletes a errand from db
+  //FUNC: Deletes an errand from db
   //ARG: ErrandID to remove
   //TODO: Inte klar
-  async function deleteErrands(errandId) {
-    let arg = { _id: new ObjectID(errandId) };
-    let findErrands = await documentExist("Errands", arg);
-
-    if (findErrands == true) {
-      errands.deleteOne(arg, function (err, result) {
-        if (err) {
-          throw err;
-        }
-      });
-    } else {
-      console.log("Could not found the document");
-    }
+  async function deleteErrand(errandID) {
+    console.log("deleteErrand")
+    let errandToRemove = ObjectID(errandID);
+    console.log("errandToRemove: " + JSON.stringify(errandToRemove))
+    await errands.deleteOne({
+       _id: errandToRemove 
+    }).catch((error) => {
+      console.log("Could not delete errand", error)
+    });
   }
 
   //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------//
@@ -329,6 +339,13 @@ client.connect((err) => {
     res.send(user);
   });
 
+  app.post("/fetchUserByID", async(data, res) => {
+    console.log("fetchUserByID request heard");
+    var user = await fetchUserByID(data.body.userID);
+    console.log("res.send: " + JSON.stringify(user))
+    res.send(user);
+  });
+
   app.post("/updateUser", async (data, res) => {
     console.log("updateUser request heard");
     let newUserData = data.body;
@@ -337,6 +354,7 @@ client.connect((err) => {
   });
 
   app.post("/getUsersArea", async function (req, res) {
+    console.log("getUsersArea request heard");
     var users = await getUsersArea(req.body.areaID);
     //  console.log("errands: " + JSON.stringify(users));
     res.send({ users });
@@ -359,6 +377,12 @@ client.connect((err) => {
     res.send(doneErrand);
   });
 
+  app.post("/deleteErrand", async function (data, res) {
+    console.log("deleteErrand request heard")
+    console.log("data.body.errandID: " + data.body.errandID);
+    await deleteErrand(data.body.errandID);
+  });
+
   app.post("/getErrandsArea", async function (req, res) {
     var errands = await getErrandsArea(req.body.areaID);
     //console.log("errands: " + JSON.stringify(errands));
@@ -370,6 +394,7 @@ client.connect((err) => {
   });
 
   app.post("/getUserErrand", async (data, res) => {
+    console.log("getUserErrand request heard");
     var errands = await getErrandsUsername(data.body.username);
     res.send({ errands });
   });

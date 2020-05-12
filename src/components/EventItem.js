@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
+import axios from "axios"
 import styled from 'styled-components'
 
+import { UserConsumer } from "./UserContext.js"
 import TextButton from './TextButton.js'
 import LinkWrapper from './LinkWrapper.js';
 import ServerResponse from '../components/ServerResponse.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPeopleCarry, faShoppingCart, faInfo } from '@fortawesome/free-solid-svg-icons'
+import { faPeopleCarry, faShoppingCart, faInfo, faTools, faUserFriends } from '@fortawesome/free-solid-svg-icons'
 
 
 class EventItem extends Component {
@@ -16,7 +18,7 @@ class EventItem extends Component {
 
         this.state = {
             fullView: false,
-            errand: {}, 
+            errand: {},
             success: null
         }
 
@@ -24,6 +26,32 @@ class EventItem extends Component {
 
     toggleView = () => {
         this.setState({ fullView: !this.state.fullView});
+    };
+
+    handleMarkAsDone = () => {
+        console.log("handleMarkAsDone");
+        axios.post("/updateErrand", {
+            errandID: this.state.errand._id,
+            newErrandData: {
+                status: "done",
+                helper: "unknown"
+            }
+        }).then((response) => {
+            console.log("Errand marked as done successfully!", response);
+        }).catch((error) => {
+            console.log("EventItem, handleMarkAsDone: Got error while updating errand", error);
+        });
+    };
+
+    handleDeleteErrand = () => {
+        console.log("handleDeleteErrand");
+        axios.post("/deleteErrand", {
+            errandID: this.state.errand._id
+        }).then((response) => {
+            console.log("Errand deleted successfully", response);
+        }).catch((error) => {
+            console.log("EventItem, handleDeleteErrand: Got error while deleting errand", error);
+        });
     };
 
     renderResponse = () => (
@@ -45,15 +73,23 @@ class EventItem extends Component {
             color: '#31D285'
         }
 
-        switch(type){
+        switch (type) {
+
             case "carrying": 
             return <FontAwesomeIcon icon={faPeopleCarry} style={typeIconStyle}/>
 
             case "shopping": 
             return <FontAwesomeIcon icon={faShoppingCart} style={typeIconStyle}/>
 
+            case "repair":
+            return <FontAwesomeIcon icon={faTools} style={typeIconStyle}/>
+
+            case "socialising": 
+            return <FontAwesomeIcon icon={faUserFriends} style={typeIconStyle}/>
+
             default: 
             return <FontAwesomeIcon icon={faInfo} style={typeIconStyle}/>
+
         }
 
     };
@@ -76,9 +112,16 @@ class EventItem extends Component {
 
     }
 
-    renderActionButton = () => {
+    renderActionButton = (username) => {
         if (this.props.disableAction){
             return null
+        } else if (this.state.errand.requester === username){
+            return (
+                <div>
+                    {this.state.errand.status !== "done" ? <TextButton onClick={this.handleMarkAsDone} description="MARK AS DONE"/> : null}
+                    <TextButton onClick={this.handleDeleteErrand} description="DELETE ERRAND"/>
+                </div>
+            );
         } else if (this.state.errand.status === "waiting"){
             return (
                 <LinkWrapper to={{
@@ -109,6 +152,20 @@ class EventItem extends Component {
                     {this.state.errand.requester}
                 </Description>
 
+                { 
+                    this.state.errand.status !== "waiting" ?
+                    <div>
+                        <InfoTitle>
+                            Helper
+                        </InfoTitle>
+                        <Description>
+                            {this.state.errand.helper}
+                        </Description>
+                    </div>
+                    : 
+                    null
+                }
+
                 <InfoTitle>
                     Adress
                 </InfoTitle>
@@ -125,7 +182,9 @@ class EventItem extends Component {
 
             </InfoWrapper>
 
-            {this.renderActionButton()}
+            <UserConsumer>
+                { (user) => this.renderActionButton(user.username) }
+            </UserConsumer>
             {this.renderResponse()}
 
         </ExpandedView> 

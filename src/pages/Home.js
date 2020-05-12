@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import NavBar from '../components/NavBar.js';
 import EventItemListView from '../components/EventItemListView.js';
-import SectionTitle from '../components/SectionTitle.js';
 import StatusView from '../components/StatusView.js';
 import TextButton from '../components/TextButton.js';
 import LinkWrapper from '../components/LinkWrapper.js';
@@ -77,14 +76,16 @@ class Home extends Component {
                 />
                 <StatusView
                     activeUsers={this.state.users.length}
-                    activeErrands={this.state.errands.length}
+                    activeErrands={this.state.errands.filter(errand => errand.status !== "done").length}
                     areaID={this.state.areaID}
                 />
                 <LinkWrapper to="/help-request">
                     <TextButton description="ASK FOR HELP"/>
                 </LinkWrapper>
-                <SectionTitle text="RECENT ACTIVITY"/>
-                <EventItemListView errands={this.state.errands}/>
+                <EventItemListView 
+                    errands={this.state.errands}
+                    emptyStateMessage="No errands in this area"
+                />
             </div>
         );
     }
