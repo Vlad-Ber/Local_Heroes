@@ -36,7 +36,9 @@ const ParameterButtonsWrapper = styled.div`
   display: flex; 
   justify-content: space-between;
   padding-top: 0px;
-  padding: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 `;
 
