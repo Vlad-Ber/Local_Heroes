@@ -18,7 +18,7 @@ class EventItem extends Component {
 
         this.state = {
             fullView: false,
-            errand: {}, 
+            errand: {},
             success: null
         }
 
@@ -89,7 +89,7 @@ class EventItem extends Component {
 
             default: 
             return <FontAwesomeIcon icon={faInfo} style={typeIconStyle}/>
-            
+
         }
 
     };
@@ -152,6 +152,20 @@ class EventItem extends Component {
                     {this.state.errand.requester}
                 </Description>
 
+                { 
+                    this.state.errand.status !== "waiting" ?
+                    <div>
+                        <InfoTitle>
+                            Helper
+                        </InfoTitle>
+                        <Description>
+                            {this.state.errand.helper}
+                        </Description>
+                    </div>
+                    : 
+                    null
+                }
+
                 <InfoTitle>
                     Adress
                 </InfoTitle>
@@ -169,7 +183,7 @@ class EventItem extends Component {
             </InfoWrapper>
 
             <UserConsumer>
-                {(user) => this.renderActionButton(user.username)}
+                { (user) => this.renderActionButton(user.username) }
             </UserConsumer>
             {this.renderResponse()}
 

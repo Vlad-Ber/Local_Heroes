@@ -82,7 +82,10 @@ class Home extends Component {
                 <LinkWrapper to="/help-request">
                     <TextButton description="ASK FOR HELP"/>
                 </LinkWrapper>
-                <EventItemListView errands={this.state.errands}/>
+                <EventItemListView 
+                    errands={this.state.errands}
+                    emptyStateMessage="No errands in this area"
+                />
             </div>
         );
     }

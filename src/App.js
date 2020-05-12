@@ -17,7 +17,9 @@ import ZipCode from "./pages/ZipCode.js";
 class App extends Component {
 
   constructor(props) {
+
     super(props);
+    
     this.state = {
       fetchLoggedInUser: {},
       userData: {},
@@ -50,7 +52,7 @@ class App extends Component {
     axios.post("/getUser", {
       username: this.state.fetchLoggedInUser.username
     }).then((response) => {
-      console.log("User updated successfully!", response);
+      console.log("User context updated successfully!", response);
       this.setState({ userData: response.data });
     }).catch((error) => {
       console.log("Got error while updating user data", error);
