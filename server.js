@@ -271,7 +271,11 @@ client.connect((err) => {
   //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------//
 
   app.use(bodyParser.json());
-  var router = express.Router();
+    var router = express.Router();
+
+    app.post("/", (req, res) => {
+        res.send({ "status": true })
+    })
 
   // GETs username and checks if it unique
   app.post("/check-username", (username, res) => {
