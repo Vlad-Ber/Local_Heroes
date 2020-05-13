@@ -31,7 +31,6 @@ const client = new MongoClient(uri, {
 client.connect((err) => {
   //----------------------------MONGODB FUNKTIONER-------------------------------------------------------------
   const db = client.db("LocalHeroes");
-  const areas = db.collection("Areas");
   const errands = db.collection("Errands");
 
   const users = db.collection("Users");
@@ -65,26 +64,6 @@ client.connect((err) => {
     }
   }
 
-  //FUNC: Insert Area, used by insertUser
-  //ARG: AreaID
-  //ARG: Email to add in Area
-  async function insertArea(areaID, email) {
-    var data = {
-      areaID: areaID,
-      users: [email],
-      errands: [],
-    };
-    await areas.insertOne(data).catch((error) => console.error(error));
-    console.log("Area with ID " + areaID + " has been added!");
-  }
-
-  //FUNC: Adds user to area
-  //ARG: Area to add user to
-  //ARG: The email of the user to add
-  async function updateArea(areaID, email) {
-    var areaToFind = { areaID: areaID };
-    areas.updateOne(areaToFind, { $push: { users: email } });
-  }
 
   //FUNC: Get all erands for an Area
   //ARG: Area to get errands from
@@ -168,13 +147,7 @@ client.connect((err) => {
     if (findUser == false && findEmail == false) {
       await users.insertOne(data).catch((error) => console.error(error));
       console.log("User " + name + " has been added!");
-      var areaToFind = { areaID: areaID };
-      var findArea = await documentExist("Areas", areaToFind);
-      if (findArea == false) {
-        await insertArea(areaID, email);
-      } else {
-        await updateArea(areaID, email);
-      }
+      
       //TODO: Maybe dont need
       if (findUser == true) {
         console.log("A user with this username already exists");
@@ -247,9 +220,6 @@ client.connect((err) => {
     var insert = await errands
       .insertOne(data)
       .catch((error) => console.error(error));
-    var insertedId = insert.insertedId;
-    var areaToUpdate = { areaID: errandData.areaID };
-    areas.updateOne(areaToUpdate, { $push: { errands: insertedId } });
   }
 
   const ObjectID = require("mongodb").ObjectID;
@@ -353,7 +323,8 @@ client.connect((err) => {
     res.send(newUserData); //non-sensical line?
   });
 
-  app.post("/getUsersArea", async function (req, res) {
+    app.post("/getUsersArea", async function (req, res) {
+        //TODO: Maybe dont need the console log?
     console.log("getUsersArea request heard");
     var users = await getUsersArea(req.body.areaID);
     //  console.log("errands: " + JSON.stringify(users));
