@@ -26,7 +26,7 @@ class ProfilePage extends Component {
   getUserErrands = () => {
     axios
       .post("/getUserErrand", {
-        username: this.props.activeUser.username
+        username: this.state.user.username
       })
       .then((response) => {
         this.setState({
@@ -86,7 +86,7 @@ class ProfilePage extends Component {
         </ProfileInfoWrapper>
 
         <LinkWrapper to="/">
-          <TextButton onClick={localStorage.clear()} description="LOG OUT" />
+          <TextButton onClick={() => localStorage.clear()} description="LOG OUT" />
         </LinkWrapper>
 
         <StyledTextHeadLine>MY ERRANDS</StyledTextHeadLine>
