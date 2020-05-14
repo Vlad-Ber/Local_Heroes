@@ -8,7 +8,7 @@ import LinkWrapper from './LinkWrapper.js';
 import ServerResponse from '../components/ServerResponse.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPeopleCarry, faShoppingCart, faInfo, faTools, faUserFriends, faThList } from '@fortawesome/free-solid-svg-icons'
+import { faPeopleCarry, faShoppingCart, faInfo, faTools, faUserFriends } from '@fortawesome/free-solid-svg-icons'
 
 
 class EventItem extends Component {
