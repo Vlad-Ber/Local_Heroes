@@ -89,7 +89,9 @@ class ProfilePage extends Component {
           <TextButton onClick={() => localStorage.clear()} description="LOG OUT" />
         </LinkWrapper>
 
-        <StyledTextHeadLine>MY ERRANDS</StyledTextHeadLine>
+        <StyledTextHeadLine>
+          MY ERRANDS
+        </StyledTextHeadLine>
         <EventItemListView 
           errands={this.state.errands}
           emptyStateMessage="You currently have no errands" 
@@ -127,6 +129,7 @@ const StyledTextHeadLine = styled.div`
   display: flex; 
   justify-content: center;
   font-size: 18px;
+  padding-bottom: 20px;
 `;
 
 const StyledImage = styled.img`
