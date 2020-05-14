@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-
+import {Image, CloudinaryContext, Transformation} from 'cloudinary-react';
 import styled from "styled-components";
 
 import NavBar from "../components/NavBar.js";
@@ -58,7 +58,13 @@ class ProfilePage extends Component {
         <NavBar leftButtonType="back" leftButtonLink="/home" />
 
         <ProfileInfoWrapper>
-          <StyledImage src={this.state.profilePic} />
+
+            <CloudinaryContext cloudName="demo">
+            <Image publicId="sample">
+            <Transformation width="200" crop="scale" angle="0"/>
+            </Image>
+            </CloudinaryContext>
+            
           <StyledText>
             <Descriptor>
               Name

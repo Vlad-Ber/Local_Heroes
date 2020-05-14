@@ -2,11 +2,11 @@ import React, { Component } from "react";
 
 import styled from "styled-components";
 import axios from "axios";
-
+import {Image, CloudinaryContext, Transformation} from 'cloudinary-react';
 import NavBar from "../components/NavBar.js";
 import SectionTitle from "../components/SectionTitle.js";
 import ConfirmButton from "../components/ConfirmButton.js";
-import {Image} from 'cloudinary-react';
+
 
 class InsertImage extends Component {
   constructor(props) {
@@ -135,15 +135,11 @@ class InsertImage extends Component {
                 <NavBar leftButtonType="back" leftButtonLink="/residence-info" />
                 <SectionTitle text="Please insert a profile picture" />
 
-            /* <ImageSelect>
-               <StyledInput type="file" onChange={this.fileSelectHandler} />
-               </ImageSelect>*/
-
-                <ImageSelect cloudName="group-fess">
-                <Image publicId="sample">
-                 <StyledInput type="file" onChange={this.fileSelectHandler}/>
-                </Image>
+                <ImageSelect >//cloudName="group-fess">
+                <StyledInput type="file" onChange={this.fileSelectHandler} />
                 </ImageSelect>
+
+
 
                 <ConfirmButton onClick={this.sendProfiletoBackend} />
                 </InsertImageWrapper>
