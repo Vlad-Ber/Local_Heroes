@@ -19,16 +19,17 @@ const HelpNotice = (props) => {
             errandID: errand._id,
             newErrandData: {
                 status: "inProgress",
-                helper: props.activeUser._id
+                helper: props.activeUser.username
             }
         }).then((response) => {
-            console.log("Help notice submitted successfully!", response)
+            console.log("Help notice submitted successfully!", response);
+            console.log("response.data: " + JSON.stringify(response.data))
             setSuccess(true);
+            props.history.push("/home")
         }).catch((error) => {
             console.log("Got error while handling help notice", error);
             setSuccess(false);
         });
-        props.history.push("/home");
     };
 
   function renderResponse(){

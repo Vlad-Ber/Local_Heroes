@@ -71,11 +71,12 @@ class HelpRequest extends Component {
             requester: this.state.requester, 
             type: this.state.type,
             adress: this.state.adress, 
-            contact: this.state.adress,
+            contact: this.state.contact,
             areaID: this.state.areaID
         }).then((response) => {
             console.log("Data submitted successfully!", response)
             this.setState({ success: true });
+            this.props.history.push("/home")
         }).catch((error) => {
             console.log("Got error while posting data", error);
             this.setState({ success: false });
@@ -101,6 +102,14 @@ class HelpRequest extends Component {
                 text: "Shopping",
                 value: "shopping"
             }, 
+            {
+                text: "Repair work",
+                value: "repair"
+            },
+            {
+                text: "Social stimuli",
+                value: "socialising"
+            }
         ]
 
         return(
