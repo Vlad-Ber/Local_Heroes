@@ -6,6 +6,7 @@ import axios from "axios";
 import NavBar from "../components/NavBar.js";
 import SectionTitle from "../components/SectionTitle.js";
 import ConfirmButton from "../components/ConfirmButton.js";
+import {Image} from 'cloudinary-react';
 
 class InsertImage extends Component {
   constructor(props) {
@@ -127,21 +128,27 @@ class InsertImage extends Component {
       });
   };
 
-  render() {
-    console.log(this.state);
-    return (
-      <InsertImageWrapper>
-        <NavBar leftButtonType="back" leftButtonLink="/residence-info" />
-        <SectionTitle text="Please insert a profile picture" />
+    render() {
+        console.log(this.state);
+        return (
+                <InsertImageWrapper>
+                <NavBar leftButtonType="back" leftButtonLink="/residence-info" />
+                <SectionTitle text="Please insert a profile picture" />
 
-        <ImageSelect>
-          <StyledInput type="file" onChange={this.fileSelectHandler} />
-        </ImageSelect>
+            /* <ImageSelect>
+               <StyledInput type="file" onChange={this.fileSelectHandler} />
+               </ImageSelect>*/
 
-        <ConfirmButton onClick={this.sendProfiletoBackend} />
-      </InsertImageWrapper>
-    );
-  }
+                <ImageSelect cloudName="group-fess">
+                <Image publicId="sample">
+                 <StyledInput type="file" onChange={this.fileSelectHandler}/>
+                </Image>
+                </ImageSelect>
+
+                <ConfirmButton onClick={this.sendProfiletoBackend} />
+                </InsertImageWrapper>
+        );
+    }
 
 }
 
