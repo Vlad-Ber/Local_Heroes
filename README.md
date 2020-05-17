@@ -5,9 +5,7 @@ Help out in your local area and become a local hero!
 Project for Computer Systems with Project Work (1DT003)
 Spring 2020, Uppsala University.
 
-## Kom igång
-
-###Setup
+## Setup 
 
 Install [Node JS](https://nodejs.org)
 
