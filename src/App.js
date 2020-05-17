@@ -4,22 +4,22 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { WithUserContext, UserProvider } from "./components/UserContext.js";
 
-import Home from "./pages/Home.js";
-import HelpRequest from "./pages/HelpRequest.js";
-import HelpNotice from "./pages/HelpNotice.js";
-import Signup from "./pages/Signup.js";
-import ProfilePage from "./pages/ProfilePage.js";
-import ProfileCreation from "./pages/ProfileCreation.js";
-import ResidenceInfo from "./pages/ResidenceInfo.js";
-import InsertImage from "./pages/InsertImage.js";
-import ZipCode from "./pages/ZipCode.js";
+import Home from "./views/Home.js";
+import HelpRequest from "./views/HelpRequest.js";
+import HelpNotice from "./views/HelpNotice.js";
+import Signup from "./views/Signup.js";
+import ProfilePage from "./views/ProfilePage.js";
+import ProfileCreation from "./views/ProfileCreation.js";
+import ResidenceInfo from "./views/ResidenceInfo.js";
+import InsertImage from "./views/InsertImage.js";
+import ZipCode from "./views/ZipCode.js";
 
 class App extends Component {
 
   constructor(props) {
 
     super(props);
-    
+
     this.state = {
       fetchLoggedInUser: {},
       userData: {},
@@ -31,12 +31,12 @@ class App extends Component {
 
   };
 
-  // setLoggedInUser 
+  // setLoggedInUser
   // accessed via prop onSetLoggedInUser in UserContext
-  // PARAM: user object to update state with  
-  setLoggedInUser = (user) => { 
+  // PARAM: user object to update state with
+  setLoggedInUser = (user) => {
     console.log("setLoggedInUser in App.js")
-    this.setState({ userData: user }) 
+    this.setState({ userData: user })
   };
 
   // When App mounts (e.g. on refresh), fetches logged in user from localStorage and updates state and context
@@ -58,12 +58,12 @@ class App extends Component {
       console.log("Got error while updating user data", error);
     });
   }
-  
+
   componentDidMount(){
     console.log("---------- APP.JS DID MOUNT --------------")
     this.checkInitialLogin();
   }
-  
+
   render() {
     return (
       <Router>
