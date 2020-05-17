@@ -40,10 +40,10 @@ Then access app via `http://localhost:3000/`
  │   └── index.html + other HTML files
  |
  └── src
-      └── components
-          └── react components used in views
-      └── data
-          └── data for development
+      ├── components
+      |    └── react components used in views
+      ├── data
+      |    └── data for development
       └── views
           └── different views for website
 </pre>
