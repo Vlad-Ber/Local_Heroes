@@ -2,7 +2,7 @@
 
 Help out in your local area and become a local hero!
 
-Project for Computer Systems with Project Work (1DT003)
+Project for Computer Systems with Project Work (1DT003),
 Spring 2020, Uppsala University.
 
 ## Setup
@@ -40,9 +40,9 @@ Then access app via `http://localhost:3000/`
  │   └── index.html + other HTML files
  |
  └── src
-      ├── components
+      └── components
           └── react components used in views
-      ├── data
+      └── data
           └── data for development
       └── views
           └── different views for website
