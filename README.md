@@ -5,7 +5,7 @@ Help out in your local area and become a local hero!
 Project for Computer Systems with Project Work (1DT003)
 Spring 2020, Uppsala University.
 
-## Setup 
+## Setup
 
 Install [Node JS](https://nodejs.org)
 
@@ -32,8 +32,7 @@ Then access app via `http://localhost:3000/`
  ├── README.md
  ├── server.js
  ├── meta
-
- │   ├── gruppkontrakt.md
+ |   ├── gruppkontrakt.md
  │   ├── medlemmar.md
  |   └── images
  |       └── images of FESS group members
