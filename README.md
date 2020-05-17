@@ -7,7 +7,7 @@ Spring 2020, Uppsala University.
 
 ## Setup
 
-Install [Node JS](https://nodejs.org)
+1. In Terminal
 
 ```
 $ git glone https://github.com/uu-dsp-os-ospp-2020/dsp-fess.git
@@ -15,7 +15,9 @@ $ cd dsp-fess
 $ npm install
 ```
 
-Then run
+2. Install [Node JS](https://nodejs.org)
+
+3. Run in terminal
 
 ```
 // Terminal #1
@@ -48,7 +50,7 @@ Then access app via `http://localhost:3000/`
           └── different views for website
 </pre>
 
-## Medlemmar
+## Members
 - Benny Lam
 - Daniel Bäckner
 - Fabian Haglund
