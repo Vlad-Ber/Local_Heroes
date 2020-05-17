@@ -47,7 +47,7 @@ Then access app via `http://localhost:3000/`
           └── react components used in views
       ├── data
           └── data for development
-      ├── views
+      └── views
           └── different views for website
 </pre>
 
