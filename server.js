@@ -1,13 +1,47 @@
+require('dotenv').config()
 const express = require("express");
+const cloudinary = require('cloudinary')
 var bodyParser = require("body-parser");
 const bcrypt = require('bcrypt');
 const app = express();
+const formData = require('express-form-data')
+const cors = require('cors')
+const { CLIENT_ORIGIN } = require('./config')
+const app = express()
+
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
 /*var cors = require('cors');
 app.use(cors());
 app.use(cors({origin: true, credentials: true}));
 */
+
+cloudinary.config({ 
+  cloud_name: process.env.CLOUD_NAME, 
+  api_key: process.env.API_KEY, 
+  api_secret: process.env.API_SECRET
+});
+
+app.use(cors({ 
+  origin: CLIENT_ORIGIN 
+})) 
+
+app.use(formData.parse())
+
+app.get('/wake-up', (req, res) => res.send('👌'))
+
+app.post('/image-upload', (req, res) => {
+
+  const values = Object.values(req.files)
+  const promises = values.map(image => cloudinary.uploader.upload(image.path))
+  
+  Promise
+    .all(promises)
+    .then(results => res.json(results))
+    .catch((err) => res.status(400).json(err))
+})
+
+
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.setHeader(
