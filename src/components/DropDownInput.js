@@ -1,16 +1,16 @@
-import React from 'react'; 
+import React from 'react';
 
 import styled from 'styled-components';
 
 const DropDownInput = (props) => {
 
     return (
-            <DropDown onChange={props.onChange} value={props.value}>
+            <DropDown onChange={props.onChange} {...props} value={props.value}>
                 <option value="DEFAULT" disabled>Choose here</option>
-                {props.options.map(option => 
+                {props.options.map(option =>
                     <option value={option.value} key={option.value}>{option.text}</option>
                 )}
-            </DropDown> 
+            </DropDown>
         )
 }
 

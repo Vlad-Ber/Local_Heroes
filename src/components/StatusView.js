@@ -11,7 +11,7 @@ class StatusView extends Component {
     render(){
         return (
             <StatusViewWrapper>
-                
+
                 <LinkWrapper to="zipcode">
                     <DisplayAreaId>
                         <FontAwesomeIcon icon={faLocationArrow} style={{ color: "#31D285", fontSize: '12px', padding: '4px'}}/>
