@@ -19,6 +19,10 @@ const ArrowButtonWrapper = styled.button`
     padding: 40px;
     font-size: 48px;
     border-radius: 100%;
+
+    &:hover {
+      cursor: pointer;
+    }
 `;
 
 export default ArrowButton;

@@ -34,7 +34,7 @@ class EventItem extends Component {
             errandID: this.state.errand._id,
             newErrandData: {
                 status: "done",
-                helper: "unknown"
+                helper: this.state.errand.helper ? this.state.errand.helper : "unknown"
             }
         }).then((response) => {
             console.log("Errand marked as done successfully!", response);

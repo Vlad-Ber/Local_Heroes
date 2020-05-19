@@ -7,7 +7,6 @@ const SectionTitle = (props) => <SectionTitleWrapper paddingTop={props.paddingTo
 const SectionTitleWrapper = styled.div`
     font-size: ${props => props.fontSize || '18px'};
     text-align: center;
-    text-decoration: underline;
     text-transform: uppercase;
     padding-top: ${props => props.paddingTop || '20px'};
     padding-bottom: 10px;
