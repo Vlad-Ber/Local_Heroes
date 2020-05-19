@@ -14,6 +14,8 @@ import ResidenceInfo from "./pages/ResidenceInfo.js";
 import InsertImage from "./pages/InsertImage.js";
 import ZipCode from "./pages/ZipCode.js";
 
+import uploadImage from './components/uploadImage'
+
 class App extends Component {
 
   constructor(props) {

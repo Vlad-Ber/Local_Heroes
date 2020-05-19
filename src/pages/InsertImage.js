@@ -6,7 +6,7 @@ import {Image, CloudinaryContext, Transformation} from 'cloudinary-react';
 import NavBar from "../components/NavBar.js";
 import SectionTitle from "../components/SectionTitle.js";
 import ConfirmButton from "../components/ConfirmButton.js";
-
+import uploadImage from "../components/uploadImage.js"
 
 class InsertImage extends Component {
             
@@ -166,28 +166,22 @@ class InsertImage extends Component {
     const content = () => {
       switch(true) {
         case loading:
-          return <WakeUp />
+          //return <WakeUp />
         case uploading:
-          return <Spinner />
+         // return <Spinner />
         case images.length > 0:
-          return <Images 
-                  images={images} 
+          return <uploadImage 
+                  uploadImage={uploadImage} 
                   removeImage={this.removeImage} 
                   onError={this.onError}
                  />
         default:
-          return <Buttons onChange={this.onChange} />
+          return < StyledInput type="file" onChange={this.onChange} />
       }
     }
 
     return (
-      <div className='container'>
-        <Notifications />
-        <div className='buttons'>
-          {content()}
-        </div>
-        <Footer />
-      </div>
+      < StyledInput type="file" onChange={this.onChange} />
     )
   }
     }
