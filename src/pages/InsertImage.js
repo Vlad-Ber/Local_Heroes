@@ -9,6 +9,8 @@ import ConfirmButton from "../components/ConfirmButton.js";
 
 
 class InsertImage extends Component {
+            
+       
   constructor(props) {
     super(props);
 
@@ -92,6 +94,7 @@ class InsertImage extends Component {
     this.props.history.push("/signup");
   };
 
+ 
   /*onChange(e)
     {
         let files = e.target.files;
@@ -128,9 +131,16 @@ class InsertImage extends Component {
       });
   };
 
+    uploadWidget() {
+   /*     cloudinary.openUploadWidget({ cloud_name: 'group-fess', upload_preset: 'preset', tags:['xmas']},
+                                    function(error, result) {
+                                        console.log(result);
+                                    });
+   */ }
+
     render() {
         console.log(this.state);
-        return (
+       /* return (
                 <InsertImageWrapper>
                 <NavBar leftButtonType="back" leftButtonLink="/residence-info" />
                 <SectionTitle text="Please insert a profile picture" />
@@ -139,14 +149,50 @@ class InsertImage extends Component {
                 <StyledInput type="file" onChange={this.fileSelectHandler} />
                 </ImageSelect>
 
+                            <button onClick={this.uploadWidget.bind(this)} className="upload-button">
+                    Add Image
+                </button>
+
 
 
                 <ConfirmButton onClick={this.sendProfiletoBackend} />
                 </InsertImageWrapper>
-        );
+  
+            
+                );*/
+
+         const { loading, uploading, images } = this.state
+    
+    const content = () => {
+      switch(true) {
+        case loading:
+          return <WakeUp />
+        case uploading:
+          return <Spinner />
+        case images.length > 0:
+          return <Images 
+                  images={images} 
+                  removeImage={this.removeImage} 
+                  onError={this.onError}
+                 />
+        default:
+          return <Buttons onChange={this.onChange} />
+      }
     }
 
-}
+    return (
+      <div className='container'>
+        <Notifications />
+        <div className='buttons'>
+          {content()}
+        </div>
+        <Footer />
+      </div>
+    )
+  }
+    }
+
+
 
 const InsertImageWrapper = styled.div`
   display: flex;

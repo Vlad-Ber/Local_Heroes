@@ -59,11 +59,11 @@ class ProfilePage extends Component {
 
         <ProfileInfoWrapper>
 
-            <CloudinaryContext cloudName="demo">
+          <CloudinaryContext cloudName="demo">
             <Image publicId="sample">
-            <Transformation width="200" crop="scale" angle="0"/>
+              <Transformation width="200" crop="scale" angle="0"/>
             </Image>
-            </CloudinaryContext>
+          </CloudinaryContext>
             
           <StyledText>
             <Descriptor>
