@@ -100,7 +100,9 @@ class Signup extends Component {
             width="240px"
           />
         </LinkWrapper>
-        <div>Build Vlad</div>
+        <BuildVersion>
+          Regular build
+        </BuildVersion>
         <TextWrapper>{this.state.text}</TextWrapper>
       </SignUpWrapper>
     );
@@ -131,5 +133,11 @@ const WelcomeMessage = styled.div`
   padding-top: 80px;
   padding-bottom: 10px;
 `;
+
+const BuildVersion = styled.div`
+  display: flex; 
+  justify-content: flex-end; 
+  font-size: 6px;
+`; 
 
 export default Signup;
