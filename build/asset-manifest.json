@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/dsp-fess/static/css/main.5ecd60fb.chunk.css",
+    "main.js": "/dsp-fess/static/js/main.baee6dc3.chunk.js",
+    "main.js.map": "/dsp-fess/static/js/main.baee6dc3.chunk.js.map",
+    "runtime-main.js": "/dsp-fess/static/js/runtime-main.4d867b34.js",
+    "runtime-main.js.map": "/dsp-fess/static/js/runtime-main.4d867b34.js.map",
+    "static/js/2.a35e2d16.chunk.js": "/dsp-fess/static/js/2.a35e2d16.chunk.js",
+    "static/js/2.a35e2d16.chunk.js.map": "/dsp-fess/static/js/2.a35e2d16.chunk.js.map",
+    "index.html": "/dsp-fess/index.html",
+    "precache-manifest.e61100db3967b6f42bba5df113d4a2d4.js": "/dsp-fess/precache-manifest.e61100db3967b6f42bba5df113d4a2d4.js",
+    "service-worker.js": "/dsp-fess/service-worker.js",
+    "static/css/main.5ecd60fb.chunk.css.map": "/dsp-fess/static/css/main.5ecd60fb.chunk.css.map",
+    "static/js/2.a35e2d16.chunk.js.LICENSE.txt": "/dsp-fess/static/js/2.a35e2d16.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4d867b34.js",
+    "static/js/2.a35e2d16.chunk.js",
+    "static/css/main.5ecd60fb.chunk.css",
+    "static/js/main.baee6dc3.chunk.js"
+  ]
+}
