@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import config from "../config"
 
 import NavBar from '../components/NavBar.js';
 import SectionTitle from '../components/SectionTitle.js';
@@ -15,7 +16,7 @@ const HelpNotice = (props) => {
     function handleHelpNotice() {
         console.log("handleHelpNotice");
         console.log("ErrandID: " + errand._id)
-        axios.post("/updateErrand", {
+        axios.post(config.baseUrl + "/updateErrand", {
             errandID: errand._id,
             newErrandData: {
                 status: "inProgress",

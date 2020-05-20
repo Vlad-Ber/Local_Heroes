@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import config from "../config"
 
 import NavBar from '../components/NavBar.js';
 import SectionTitle from '../components/SectionTitle.js';
@@ -13,7 +14,7 @@ const ZipCode = (props) => {
   const [success, setSuccess] = useState(null);
 
   async function updateZipCode() {
-    await axios.post("/updateUser", {
+    await axios.post(config.baseUrl + "/updateUser", {
       userID: props.activeUser._id,
       newUserData: {
           areaID: zipCode

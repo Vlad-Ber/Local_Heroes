@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-
 import styled from "styled-components";
+import config from "../config"
 
 import NavBar from "../components/NavBar.js";
 import TextButton from "../components/TextButton.js";
@@ -25,7 +25,7 @@ class ProfilePage extends Component {
 
   getUserErrands = () => {
     axios
-      .post("/getUserErrand", {
+      .post(config.baseUrl + "/getUserErrand", {
         username: this.state.user.username
       })
       .then((response) => {

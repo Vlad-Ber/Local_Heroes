@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import config from "../config"
 
 import NavBar from '../components/NavBar.js';
 import EventItemListView from '../components/EventItemListView.js';
@@ -27,7 +28,7 @@ class Home extends Component {
 
     fetchErrands = () => {
         console.log("fetchErrands");
-        axios.post("/getErrandsArea", {
+        axios.post(config.baseUrl + "/getErrandsArea", {
             areaID: this.state.areaID
         }).then((response) => {
             console.log("Errands fetched successfully!", response)

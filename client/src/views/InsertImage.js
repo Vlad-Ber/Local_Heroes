@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import styled from "styled-components";
 import axios from "axios";
+import config from "../config"
 
 import NavBar from "../components/NavBar.js";
 import SectionTitle from "../components/SectionTitle.js";
@@ -70,7 +71,7 @@ class InsertImage extends Component {
     let user = this.state;
 
     axios
-      .post("/insertUser", {
+      .post(config.baseUrl + "/insertUser", {
         username: user.username,
         password: user.password,
         email: user.email,

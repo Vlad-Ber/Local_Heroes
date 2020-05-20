@@ -243,6 +243,10 @@ client.connect((err) => {
   app.use(bodyParser.json());
   var router = express.Router();
 
+  app.get("/health", (req, res) => {
+    res.send("health check good")
+  })
+
   // GETs username and checks if it unique
   app.post("/check-username", (username, res) => {
     let u = username.body;

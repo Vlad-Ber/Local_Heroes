@@ -6,6 +6,7 @@ import { UserConsumer } from "./UserContext.js"
 import TextButton from './TextButton.js'
 import LinkWrapper from './LinkWrapper.js';
 import ServerResponse from '../components/ServerResponse.js';
+import config from "../config"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPeopleCarry, faShoppingCart, faInfo, faTools, faUserFriends } from '@fortawesome/free-solid-svg-icons'
@@ -30,7 +31,7 @@ class EventItem extends Component {
 
     handleMarkAsDone = () => {
         console.log("handleMarkAsDone");
-        axios.post("/updateErrand", {
+        axios.post(config.baseUrl + "/updateErrand", {
             errandID: this.state.errand._id,
             newErrandData: {
                 status: "done",
@@ -45,7 +46,7 @@ class EventItem extends Component {
 
     handleDeleteErrand = () => {
         console.log("handleDeleteErrand");
-        axios.post("/deleteErrand", {
+        axios.post(config.baseUrl + "/deleteErrand", {
             errandID: this.state.errand._id
         }).then((response) => {
             console.log("Errand deleted successfully", response);

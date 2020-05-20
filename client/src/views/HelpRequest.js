@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; 
 import axios from 'axios';
 import styled from 'styled-components';
+import config from "../config"
 
 import NavBar from '../components/NavBar.js';
 import SectionTitle from '../components/SectionTitle.js';
@@ -65,7 +66,7 @@ class HelpRequest extends Component {
     // server side signature:  async function insertErrand(errandData)
     handlePublish = () => {
         console.log("handlePublish");
-        axios.post("/insertErrand", {
+        axios.post(config.baseUrl + "/insertErrand", {
             title: this.state.title,
             description: this.state.description,
             requester: this.state.requester, 
