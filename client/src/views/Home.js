@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import config from "../config"
+import { config } from "../config"
 
 import NavBar from '../components/NavBar.js';
 import EventItemListView from '../components/EventItemListView.js';

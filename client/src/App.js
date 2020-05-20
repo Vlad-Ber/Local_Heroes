@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import config from "./config"
+import { config } from "./config"
 
 import { WithUserContext, UserProvider } from "./components/UserContext.js";
 

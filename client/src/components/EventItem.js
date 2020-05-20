@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import axios from "axios"
 import styled from 'styled-components'
+import { config } from "../config"
 
 import { UserConsumer } from "./UserContext.js"
 import TextButton from './TextButton.js'
 import LinkWrapper from './LinkWrapper.js';
 import ServerResponse from '../components/ServerResponse.js';
-import config from "../config"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPeopleCarry, faShoppingCart, faInfo, faTools, faUserFriends } from '@fortawesome/free-solid-svg-icons'
