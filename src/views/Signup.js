@@ -100,7 +100,7 @@ class Signup extends Component {
             width="240px"
           />
         </LinkWrapper>
-
+        <div>Build Vlad</div>
         <TextWrapper>{this.state.text}</TextWrapper>
       </SignUpWrapper>
     );

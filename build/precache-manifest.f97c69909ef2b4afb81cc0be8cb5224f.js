@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "2398e707b7adca0b28315cd6730bfdfd",
+    "revision": "04a260fb12a0b6a50fae1fd96874aa29",
     "url": "/dsp-fess/index.html"
   },
   {
-    "revision": "fa4c0aee21cb2416edc1",
+    "revision": "5f7db000c6424a53ab51",
     "url": "/dsp-fess/static/css/main.5ecd60fb.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/dsp-fess/static/js/2.a35e2d16.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "fa4c0aee21cb2416edc1",
-    "url": "/dsp-fess/static/js/main.b8abbebd.chunk.js"
+    "revision": "5f7db000c6424a53ab51",
+    "url": "/dsp-fess/static/js/main.0220fd69.chunk.js"
   },
   {
     "revision": "7ce22c78280a0c5f322f",
