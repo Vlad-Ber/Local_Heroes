@@ -1,5 +1,5 @@
 const prodConfig = {
-    baseUrl: "https://localhero.ew.r.appspot.com",
+    baseUrl: "https://api-dot-localhero.ew.r.appspot.com",
     production: true
 }
 

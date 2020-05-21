@@ -33,7 +33,7 @@ const ZipCode = (props) => {
   
   function updateUserContext(){
     console.log("updateLoggedInUser");
-    axios.post("/getUser", {
+    axios.post(config.baseUrl + "/getUser", {
         username: props.activeUser.username
     }).then((response) => {
         console.log("User updated successfully!", response)

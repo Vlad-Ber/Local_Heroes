@@ -43,7 +43,7 @@ class Home extends Component {
 
     fetchUsers = () => {
         console.log("fetchUsers");
-        axios.post("/getUsersArea", {
+        axios.post(config.baseUrl + "/getUsersArea", {
             areaID: this.state.areaID
         }).then((response) => {
             console.log("Users fetched successfully!", response)
