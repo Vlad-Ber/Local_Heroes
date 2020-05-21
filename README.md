@@ -2,7 +2,7 @@
 
 Help out in your local area and become a local hero!
 
-Sign up now!
+Sign up now!  
 https://localhero.ew.r.appspot.com/
 
 Project for Computer Systems with Project Work (1DT003),
@@ -50,7 +50,7 @@ $ gcloud app deploy
 
 ```
 
-App URL: https://localhero.ew.r.appspot.com/
+App URL: https://localhero.ew.r.appspot.com/  
 You can perform backend health check at: https://api-dot-localhero.ew.r.appspot.com/health
 
 ## Katalogstruktur
