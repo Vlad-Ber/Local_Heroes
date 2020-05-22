@@ -60,6 +60,8 @@ You can perform backend health check at: https://api-dot-localhero.ew.r.appspot.
     ├── build
         └── build files, updated on "npm run build"
     ├── node_modules
+    ├── Makefile 
+    ├── package.json
     ├── public
         └── index.html + other HTML files
     └── src
