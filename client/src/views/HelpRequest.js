@@ -20,7 +20,9 @@ class HelpRequest extends Component {
             description: "",
             requester: this.props.activeUser.username,
             type: "DEFAULT",
-            contact: "DEFAULT",
+            number: this.props.activeUser.mobile,
+            email: this.props.activeUser.email,
+
             adress: this.props.activeUser.address,
             areaID: this.props.activeUser.areaID,
             success: null
@@ -46,7 +48,8 @@ class HelpRequest extends Component {
             requester: this.state.requester,
             type: this.state.type,
             adress: this.state.adress,
-            contact: this.state.contact,
+            number: this.state.number,
+            email: this.state.email,
             areaID: this.state.areaID
         }).then((response) => {
             console.log("Data submitted successfully!", response)
@@ -87,21 +90,6 @@ class HelpRequest extends Component {
             }
         ]
 
-        let contactInfo = [
-            {
-                text: "Mobile number",
-                value: "" + this.props.activeUser.mobile
-            },
-            {
-                text: "Email address",
-                value: "" + this.props.activeUser.email
-            },
-            {
-              text: "Both",
-              value: "Number: " + this.props.activeUser.mobile +
-                    "\nAddress: " + this.props.activeUser.address
-            }
-        ]
 
         return(
             <div>
@@ -130,15 +118,6 @@ class HelpRequest extends Component {
                     />
                 </InputWrapper>
 
-                <SectionTitle fontSize="14px" text="Contact information"/>
-                <InputWrapper>
-                    <DropDownInput
-                        options={contactInfo}
-                        onChange={this.handleChange}
-                        value={this.state.contact}
-                        name="contact"
-                    />
-                </InputWrapper>
 
                 <SectionTitle fontSize="14px" text="Describe more in detail please"/>
                 <InputWrapper>
@@ -151,6 +130,25 @@ class HelpRequest extends Component {
                     />
                 </InputWrapper>
 
+                <SectionTitle fontSize="14px" text="Phone Number"/>
+                <TextInput
+                    type="text"
+                    height="32px"
+                    width="240px"
+                    onChange={this.handleChange}
+                    value={this.state.number}
+                    name="number"
+                />
+
+                <SectionTitle fontSize="14px" text="E-mail"/>
+                <TextInput
+                    type="text"
+                    height="32px"
+                    width="240px"
+                    onChange={this.handleChange}
+                    value={this.state.email}
+                    name="email"
+                />
 
                 <TextButton onClick={this.handlePublish} description="PUBLISH HELP REQUEST"/>
                 {this.renderResponse()}

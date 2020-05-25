@@ -147,7 +147,7 @@ client.connect((err) => {
     if (findUser == false && findEmail == false) {
       await users.insertOne(data).catch((error) => console.error(error));
       console.log("User " + name + " has been added!");
-      
+
       //TODO: Maybe dont need
       if (findUser == true) {
         console.log("A user with this username already exists");
@@ -212,11 +212,15 @@ client.connect((err) => {
       title: errandData.title,
       description: errandData.description,
       adress: errandData.adress,
-      contact: errandData.contact,
+      mobile: errandData.number,
+      email: errandData.email,
       helper: "",
       requester: errandData.requester,
       areaID: errandData.areaID,
     };
+    console.log(errandData.email)
+    console.log(errandData.number)
+
     var insert = await errands
       .insertOne(data)
       .catch((error) => console.error(error));
@@ -232,7 +236,7 @@ client.connect((err) => {
     let errandToRemove = ObjectID(errandID);
     console.log("errandToRemove: " + JSON.stringify(errandToRemove))
     await errands.deleteOne({
-       _id: errandToRemove 
+       _id: errandToRemove
     }).catch((error) => {
       console.log("Could not delete errand", error)
     });
@@ -261,17 +265,17 @@ client.connect((err) => {
             //Hash userpassword, first argument is userpassword
             //second argument number of rounds to use when generating a salt
             let hashedPassword = await bcrypt.hash(user.password, 10);
-            
+
             insertUser(user.username, hashedPassword, user.email, user.name, user.age, user.address,
                        user.description, user.areaId, user.mobile, user.city);
             res.send({ message: "User Created" });
         } catch(err){
-            
+
             res.send({ error: '${err.message}'});
         }
-        
+
     });
-    
+
 
   app.post("/check-user", async (data, res) => {
     let user = data.body;
@@ -298,7 +302,7 @@ client.connect((err) => {
             if(!comparePassword) throw new Error("Password not correct");
 
             res.send({ "login": true, "user": checkUser });
-            
+
         } catch (err) {
             res.send({ "login": false });
         }

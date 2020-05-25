@@ -15,7 +15,7 @@ import { faPeopleCarry, faShoppingCart, faInfo, faTools, faUserFriends } from '@
 class EventItem extends Component {
 
     constructor(props){
-        super(props); 
+        super(props);
 
         this.state = {
             fullView: false,
@@ -56,9 +56,9 @@ class EventItem extends Component {
     };
 
     renderResponse = () => (
-        <ServerResponse 
-            success={this.state.success} 
-            successResponse="Thank you for helping out!" 
+        <ServerResponse
+            success={this.state.success}
+            successResponse="Thank you for helping out!"
             failResponse="Something went wrong, try again."
         />
     );
@@ -67,7 +67,7 @@ class EventItem extends Component {
 
         let type = this.state.errand.type;
         let typeIconStyle = {
-            display: 'flex', 
+            display: 'flex',
             justifyContent: 'center',
             padding: '4px',
             fontSize: '18px',
@@ -76,19 +76,19 @@ class EventItem extends Component {
 
         switch (type) {
 
-            case "carrying": 
+            case "carrying":
             return <FontAwesomeIcon icon={faPeopleCarry} style={typeIconStyle}/>
 
-            case "shopping": 
+            case "shopping":
             return <FontAwesomeIcon icon={faShoppingCart} style={typeIconStyle}/>
 
             case "repair":
             return <FontAwesomeIcon icon={faTools} style={typeIconStyle}/>
 
-            case "socialising": 
+            case "socialising":
             return <FontAwesomeIcon icon={faUserFriends} style={typeIconStyle}/>
 
-            default: 
+            default:
             return <FontAwesomeIcon icon={faInfo} style={typeIconStyle}/>
 
         }
@@ -98,16 +98,16 @@ class EventItem extends Component {
     renderStatusMarker = () => {
 
         switch(this.state.errand.status){
-            case "waiting": 
+            case "waiting":
             return <div style={{ color: 'red' }}>WAITING FOR HELP</div>
 
-            case "inProgress": 
+            case "inProgress":
             return <div style={{ color: '#31D285' }}>HELP UNDER WAY!</div>
 
-            case "done": 
+            case "done":
             return <div>DONE</div>
 
-            default: 
+            default:
             return <div>STATUS UNKOWN</div>
         }
 
@@ -131,7 +131,7 @@ class EventItem extends Component {
                         errand: this.state.errand
                     }
                 }}>
-                <TextButton description="I WANT TO HELP"/> 
+                <TextButton description="I WANT TO HELP"/>
                 </LinkWrapper>
             );
         } else {
@@ -140,12 +140,12 @@ class EventItem extends Component {
     }
 
     renderExpandedView = () => {
-        return this.state.fullView ? 
+        return this.state.fullView ?
 
         <ExpandedView>
 
             <InfoWrapper onClick={this.toggleView}>
-                
+
                 <InfoTitle>
                     Requested by
                 </InfoTitle>
@@ -153,7 +153,7 @@ class EventItem extends Component {
                     {this.state.errand.requester}
                 </Description>
 
-                { 
+                {
                     this.state.errand.status !== "waiting" ?
                     <div>
                         <InfoTitle>
@@ -163,7 +163,7 @@ class EventItem extends Component {
                             {this.state.errand.helper}
                         </Description>
                     </div>
-                    : 
+                    :
                     null
                 }
 
@@ -175,10 +175,17 @@ class EventItem extends Component {
                 </Description>
 
                 <InfoTitle>
-                    Contact
+                    Phone number
                 </InfoTitle>
                 <Description>
-                    {this.state.errand.contact}
+                    {this.state.errand.mobile}
+                </Description>
+
+                <InfoTitle>
+                    E-mail address
+                </InfoTitle>
+                <Description>
+                    {this.state.errand.email}
                 </Description>
 
             </InfoWrapper>
@@ -188,8 +195,8 @@ class EventItem extends Component {
             </UserConsumer>
             {this.renderResponse()}
 
-        </ExpandedView> 
-        
+        </ExpandedView>
+
         : null
     }
 
@@ -199,7 +206,7 @@ class EventItem extends Component {
 
     componentWillReceiveProps(nextProps) {
         console.log("--------- EVENT ITEM WILL RECEIVE PROPS ----------- ")
-        this.setState({ errand: nextProps.errand });  
+        this.setState({ errand: nextProps.errand });
     }
 
     render(){
@@ -224,7 +231,7 @@ class EventItem extends Component {
                             {this.state.errand.description}
                         </Description>
                     </TextWrapper>
-                    
+
                     <Status>
                         {this.renderStatusMarker()}
                     </Status>
@@ -241,7 +248,7 @@ class EventItem extends Component {
 
 
 const EventItemWrapper = styled.div`
-    display: flex; 
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 12px;
@@ -251,12 +258,12 @@ const EventItemWrapper = styled.div`
 `
 
 const DefaultView = styled.div`
-    display: flex; 
+    display: flex;
     flex-direction: row;
 `;
 
 const ExpandedView = styled.div`
-   display: flex; 
+   display: flex;
    flex-direction: column;
    padding: 12px;
    margin: 6px;
@@ -273,11 +280,11 @@ const InfoTitle = styled.div`
 `;
 
 const TextWrapper = styled.div`
-    display: flex; 
+    display: flex;
     flex: 3;
-    flex-direction: column; 
+    flex-direction: column;
     justify-content: start;
-    padding-left: 8px; 
+    padding-left: 8px;
 `
 
 const Title = styled.div`
@@ -294,18 +301,18 @@ const Description = styled.div`
 
 const EventMetaData = styled.div`
     display: flex;
-    flex: 1; 
-    flex-direction: column; 
+    flex: 1;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 `
 
 const Status = styled.div`
-    display: flex; 
+    display: flex;
     flex: 1;
     width: 20%;
     text-align: center;
-    align-items: center; 
+    align-items: center;
     justify-content: center;
     flex-direction: end;
     font-weight: 700;
@@ -314,8 +321,8 @@ const Status = styled.div`
 `
 
 const TimeStamp = styled.div`
-    display: flex; 
-    justify-content: center; 
+    display: flex;
+    justify-content: center;
     font-size: 8px;
     padding-top: 4px;
 `
