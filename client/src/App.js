@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { config } from "./config"
 
 import { WithUserContext, UserProvider } from "./components/UserContext.js";
 
@@ -49,7 +50,7 @@ class App extends Component {
 
   // Gets the latest data from db for the logged in user as fetched by checkInitialLogin
   updateUserContext = () => {
-    axios.post("/getUser", {
+    axios.post(config.baseUrl + "/getUser", {
       username: this.state.fetchLoggedInUser.username
     }).then((response) => {
       console.log("User context updated successfully!", response);
@@ -66,7 +67,7 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <UserProvider
           value={{
             ...this.state.userData,

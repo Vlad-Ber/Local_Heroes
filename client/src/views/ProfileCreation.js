@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import styled from 'styled-components'
 import axios from 'axios';
+import { config } from "../config"
 
 import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js'
@@ -39,7 +40,7 @@ class ProfileCreation extends Component {
   }
 
   checkForUniqueUser = e => {
-      axios.post("/check-user", {
+      axios.post(config.baseUrl + "/check-user", {
           username: this.state.username,
           email: this.state.email,
       })

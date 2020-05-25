@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import styled from "styled-components";
 import axios from "axios";
+import { config }  from "../config"
 
 import SectionTitle from "../components/SectionTitle.js";
 import TextInput from "../components/TextInput.js";
@@ -29,7 +30,7 @@ class Signup extends Component {
   checkLogin = (e) => {
     e.preventDefault();
     axios
-      .post("/loginUser", {
+      .post(config.baseUrl + "/loginUser", {
         username: this.state.username,
         password: this.state.password,
       })
@@ -100,7 +101,9 @@ class Signup extends Component {
             width="240px"
           />
         </LinkWrapper>
-
+        <BuildVersion>
+          Regular build
+        </BuildVersion>
         <TextWrapper>{this.state.text}</TextWrapper>
       </SignUpWrapper>
     );
@@ -131,5 +134,11 @@ const WelcomeMessage = styled.div`
   padding-top: 80px;
   padding-bottom: 10px;
 `;
+
+const BuildVersion = styled.div`
+  display: flex; 
+  justify-content: flex-end; 
+  font-size: 6px;
+`; 
 
 export default Signup;

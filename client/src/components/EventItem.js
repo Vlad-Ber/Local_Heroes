@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from "axios"
 import styled from 'styled-components'
+import { config } from "../config"
 
 import { UserConsumer } from "./UserContext.js"
 import TextButton from './TextButton.js'
@@ -30,7 +31,7 @@ class EventItem extends Component {
 
     handleMarkAsDone = () => {
         console.log("handleMarkAsDone");
-        axios.post("/updateErrand", {
+        axios.post(config.baseUrl + "/updateErrand", {
             errandID: this.state.errand._id,
             newErrandData: {
                 status: "done",
@@ -45,7 +46,7 @@ class EventItem extends Component {
 
     handleDeleteErrand = () => {
         console.log("handleDeleteErrand");
-        axios.post("/deleteErrand", {
+        axios.post(config.baseUrl + "/deleteErrand", {
             errandID: this.state.errand._id
         }).then((response) => {
             console.log("Errand deleted successfully", response);
