@@ -18,8 +18,7 @@ class ProfileCreation extends Component {
             username: '',
             password: '',
 
-            firstname: '',
-            lastname: '',
+            name: '',
             age: '',
 
             email: '',
@@ -80,11 +79,8 @@ class ProfileCreation extends Component {
                     <SectionTitle fontSize="14px" text="Password" />
                     <TextInput type="password" height="24px" name="password" value={this.password} onChange={this.saveInput} autocomplete="new-password"/>
 
-                    <SectionTitle fontSize="14px" text="Given Name" />
-                    <TextInput height="24px" name="firstname" value={this.firstname} onChange={this.saveInput}/>
-
-                    <SectionTitle fontSize="14px" text="Surname" />
-                    <TextInput height="24px" name="lastname" value={this.lastname} onChange={this.saveInput}/>
+                    <SectionTitle fontSize="14px" text="Full Name" />
+                    <TextInput height="24px" name="name" value={this.name} onChange={this.saveInput}/>
 
                     <SectionTitle fontSize="14px" text="Age" />
                     <TextInput height="24px" name="age" type="number" value={this.age} onChange={this.saveInput}/>

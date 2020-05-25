@@ -36,7 +36,7 @@ class InsertImage extends Component {
 
     let updatedUsername = prof.username;
     let updatedPassword = prof.password;
-    let updatedName = prof.firstname + " " + prof.lastname;
+    let updatedName = prof.name;
     let updatedAge = prof.age;
     let updatedEmail = prof.email;
     let updatedMobile = prof.mobile;
@@ -149,17 +149,17 @@ const InsertImageWrapper = styled.div`
 `;
 
 const ImageSelect = styled.div`
-    display: flex; 
+    display: flex;
     flex: 1;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
 `;
 
 const StyledInput = styled.input`
-    font-size: 14px; 
+    font-size: 14px;
     border-style: solid;
     border-width: 3px;
     border-color: #31D285;
-`; 
+`;
 
 export default InsertImage;
