@@ -91,6 +91,7 @@ class HelpRequest extends Component {
         ]
 
 
+
         return(
             <div>
                 <NavBar
@@ -117,7 +118,6 @@ class HelpRequest extends Component {
                         name="type"
                     />
                 </InputWrapper>
-
 
                 <SectionTitle fontSize="14px" text="Describe more in detail please"/>
                 <InputWrapper>
