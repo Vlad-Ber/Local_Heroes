@@ -1,4 +1,4 @@
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { config } from "../config"
@@ -20,59 +20,36 @@ class HelpRequest extends Component {
             description: "",
             requester: this.props.activeUser.username,
             type: "DEFAULT",
-            adress: "",
-            contact: "",
+            number: this.props.activeUser.mobile,
+            email: this.props.activeUser.email,
+
+            adress: this.props.activeUser.address,
             areaID: this.props.activeUser.areaID,
             success: null
         }
 
-        this.handleTitleChange = this.handleTitleChange.bind(this);
-        this.handleTypeChange = this.handleTypeChange.bind(this);
-        this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-        this.handleAdressChange = this.handleAdressChange.bind(this);
-        this.handleContactChange = this.handleContactChange.bind(this);
-        this.handlePublish = this.handlePublish.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
 
-    /*   EVENT HANDLERS   */
+    /*   EVENT HANDLER   */
 
-
-    handleTitleChange = (e) => {
-        console.log("handleTitleChange")
-        this.setState({ title: e.target.value })
+    handleChange = e => {
+        this.setState({ [e.target.name]: e.target.value })
     }
 
-    handleTypeChange = (e) => {
-        console.log("handleTypeChange: " + e.target.value)
-        this.setState({ type: e.target.value })
-    }
-    
-    handleDescriptionChange = (e) => {
-        console.log("handleDescriptionChange")
-        this.setState({ description: e.target.value })
-    }
 
-    handleAdressChange = (e) => {
-        console.log("handleAdressChange")
-        this.setState({ adress: e.target.value })
-    }
-
-    handleContactChange = (e) => {
-        console.log("handleContactChange")
-        this.setState({ contact: e.target.value })
-    }
-    
     // server side signature:  async function insertErrand(errandData)
     handlePublish = () => {
         console.log("handlePublish");
         axios.post(config.baseUrl + "/insertErrand", {
             title: this.state.title,
             description: this.state.description,
-            requester: this.state.requester, 
+            requester: this.state.requester,
             type: this.state.type,
-            adress: this.state.adress, 
-            contact: this.state.contact,
+            adress: this.state.adress,
+            number: this.state.number,
+            email: this.state.email,
             areaID: this.state.areaID
         }).then((response) => {
             console.log("Data submitted successfully!", response)
@@ -85,9 +62,9 @@ class HelpRequest extends Component {
     }
 
     renderResponse = () => (
-        <ServerResponse 
-            success={this.state.success} 
-            successResponse="Your help request was published." 
+        <ServerResponse
+            success={this.state.success}
+            successResponse="Your help request was published."
             failResponse="Something went wrong, try again."
         />
     );
@@ -97,12 +74,12 @@ class HelpRequest extends Component {
         let options = [
             {
                 text: "Carrying",
-                value: "carrying", 
-            }, 
+                value: "carrying",
+            },
             {
                 text: "Shopping",
                 value: "shopping"
-            }, 
+            },
             {
                 text: "Repair work",
                 value: "repair"
@@ -113,6 +90,8 @@ class HelpRequest extends Component {
             }
         ]
 
+
+
         return(
             <div>
                 <NavBar
@@ -121,52 +100,55 @@ class HelpRequest extends Component {
                 />
                 <SectionTitle fontSize="14px" text="Name your help request"/>
                 <InputWrapper>
-                    <TextInput 
+                    <TextInput
                         type="text"
-                        height="3em" 
-                        onChange={this.handleTitleChange}
+                        height="3em"
+                        onChange={this.handleChange}
                         value={this.state.title}
+                        name="title"
                     />
                 </InputWrapper>
 
                 <SectionTitle fontSize="14px" text="What do you need help with?"/>
                 <InputWrapper>
-                    <DropDownInput 
+                    <DropDownInput
                         options={options}
-                        onChange={this.handleTypeChange}
+                        onChange={this.handleChange}
                         value={this.state.type}
+                        name="type"
                     />
                 </InputWrapper>
 
                 <SectionTitle fontSize="14px" text="Describe more in detail please"/>
                 <InputWrapper>
-                    <TextInput 
+                    <TextInput
                         type="text"
-                        height="8em" 
-                        onChange={this.handleDescriptionChange}
+                        height="8em"
+                        onChange={this.handleChange}
                         value={this.state.description}
+                        name="description"
                     />
                 </InputWrapper>
 
-                <SectionTitle fontSize="14px" text="What is the adress of the errand?"/>
-                <InputWrapper>
-                    <TextInput 
-                        type="text"
-                        height="3em" 
-                        onChange={this.handleAdressChange}
-                        value={this.state.adress}
-                    />
-                </InputWrapper>
+                <SectionTitle fontSize="14px" text="Phone Number"/>
+                <TextInput
+                    type="text"
+                    height="32px"
+                    width="240px"
+                    onChange={this.handleChange}
+                    value={this.state.number}
+                    name="number"
+                />
 
-                <SectionTitle fontSize="14px" text="Contact details"/>
-                <InputWrapper>
-                    <TextInput 
-                        type="text"
-                        height="3em" 
-                        onChange={this.handleContactChange}
-                        value={this.state.contact}
-                    />
-                </InputWrapper>
+                <SectionTitle fontSize="14px" text="E-mail"/>
+                <TextInput
+                    type="text"
+                    height="32px"
+                    width="240px"
+                    onChange={this.handleChange}
+                    value={this.state.email}
+                    name="email"
+                />
 
                 <TextButton onClick={this.handlePublish} description="PUBLISH HELP REQUEST"/>
                 {this.renderResponse()}
