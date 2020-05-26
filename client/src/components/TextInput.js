@@ -3,38 +3,38 @@ import React from 'react';
 import styled from 'styled-components'
 
 const TextInput = (props) => {
-  let type = props.type; 
+  let type = props.type;
   switch(type){
-    case "number": 
+    case "number":
       return (
-      <StyledInput 
-        type="number" 
+      <StyledInput
+        type="number"
         autocomplete="on"
-        height={props.height} 
-        width={props.width} 
+        height={props.height}
+        width={props.width}
         {...props}
         min="0"
       />
       );
 
-    case "password": 
+    case "password":
       return (
-      <StyledInput 
-        type="password" 
+      <StyledInput
+        type="password"
         autocomplete="on"
-        height={props.height} 
-        width={props.width} 
+        height={props.height}
+        width={props.width}
         {...props}
       />
       );
 
-    default: 
+    default:
       return (
-      <StyledTextArea 
-        type="text" 
+      <StyledTextArea
+        type="text"
         autocomplete="on"
-        height={props.height} 
-        width={props.width} 
+        height={props.height}
+        width={props.width}
         {...props}
       />
       );
@@ -54,6 +54,9 @@ const StyledTextArea = styled.textarea`
 
     height: ${props => props.height || '24em'};
     width: ${props => props.width || '18em'};
+    
+    resize: ${props => props.resize || 'none'};
+
 `
 const StyledInput = styled.input`
     margin: auto;
