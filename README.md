@@ -36,7 +36,7 @@ Then access client via `http://localhost:3000/` in browser of choice
 
 ## Deployment
 
-LocalHeroes is running on two services deployed att Google Cloud Platform. Deploy like so: 
+LocalHeroes is running on two services deployed att Google Cloud Platform. Note that you need Google Cloud SDK installed in your environment in order to be able to deploy with the following instructions. If you do, deploy like so: 
 
 ```
 // Deploy client 
