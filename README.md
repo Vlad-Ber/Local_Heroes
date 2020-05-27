@@ -62,8 +62,11 @@ You can perform backend health check at: https://api-dot-localhero.ew.r.appspot.
     ├── node_modules
     ├── Makefile 
     ├── package.json
+        └── client dependencies
     ├── public
-        └── index.html + other HTML files
+        └── index.html - entry HTML file, renders root element rendered by index.js
+        └── manifest.json 
+        └── robots.txt
     └── src
       ├── components
       |    └── react components used in client
@@ -71,6 +74,9 @@ You can perform backend health check at: https://api-dot-localhero.ew.r.appspot.
       |    └── data for development
       └── views
           └── different views for website
+      ├── App.js - root component in app
+      ├── index.js - renders root component App among other setup things
+      ├── config.js - sets environemnt variable to "local" or "production"
       ├── _config.yml
       ├── app.yaml
           └── deployment config for client service
