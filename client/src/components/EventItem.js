@@ -29,8 +29,20 @@ class EventItem extends Component {
         this.setState({ fullView: !this.state.fullView});
     };
 
+    updateVirtuePoints = () => {
+	if(this.state.errand.helper){
+	    axios.post(config.baseUrl + "/updateVirtuePoints", {
+		userToUpdate: this.state.errand.helper,
+            })
+		.catch((error) => {
+		    console.log("EventItem, uptadeVirtuepoints: Got error while updating Virtue Points ", error);
+		});
+	}
+    }
+
     handleMarkAsDone = () => {
         console.log("handleMarkAsDone");
+	this.updateVirtuePoints();
         axios.post(config.baseUrl + "/updateErrand", {
             errandID: this.state.errand._id,
             newErrandData: {
@@ -206,11 +218,12 @@ class EventItem extends Component {
 
     componentWillReceiveProps(nextProps) {
         console.log("--------- EVENT ITEM WILL RECEIVE PROPS ----------- ")
+	console.log("Helper: " + this.state.errand.helper)
+
         this.setState({ errand: nextProps.errand });
     }
 
     render(){
-
         return(
 
             <EventItemWrapper>
