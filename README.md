@@ -36,7 +36,7 @@ Then access client via `http://localhost:3000/` in browser of choice
 
 ## Deployment
 
-LocalHeroes is running on two services deployed att Google Cloud Platform. Deploy like so: 
+LocalHeroes is running on two services deployed att Google Cloud Platform. Note that you need Google Cloud SDK installed in your environment in order to be able to deploy with the following instructions. If you do, deploy like so: 
 
 ```
 // Deploy client 
@@ -62,8 +62,11 @@ You can perform backend health check at: https://api-dot-localhero.ew.r.appspot.
     ├── node_modules
     ├── Makefile 
     ├── package.json
+        └── client dependencies
     ├── public
-        └── index.html + other HTML files
+        └── index.html - entry HTML file, renders root element rendered by index.js
+        └── manifest.json 
+        └── robots.txt
     └── src
       ├── components
       |    └── react components used in client
@@ -71,6 +74,9 @@ You can perform backend health check at: https://api-dot-localhero.ew.r.appspot.
       |    └── data for development
       └── views
           └── different views for website
+      ├── App.js - root component in app
+      ├── index.js - renders root component App among other setup things
+      ├── config.js - sets environemnt variable to "local" or "production"
       ├── _config.yml
       ├── app.yaml
           └── deployment config for client service
