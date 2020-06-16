@@ -14,6 +14,7 @@ import ProfileCreation from "./views/ProfileCreation.js";
 import ResidenceInfo from "./views/ResidenceInfo.js";
 import InsertImage from "./views/InsertImage.js";
 import ZipCode from "./views/ZipCode.js";
+import Leaderboard from "./views/Leaderboard.js";
 
 class App extends Component {
 
@@ -91,7 +92,8 @@ class App extends Component {
                 path="/help-notice"
                 component={WithUserContext(HelpNotice)}
               />
-              <Route path="/profile-creation" component={ProfileCreation} />
+            <Route path="/profile-creation" component={ProfileCreation} />
+	    <Route path="/leader-board" component={Leaderboard} />
               <Route path="/residence-info" component={ResidenceInfo} />
               <Route path="/insert-image" component={InsertImage} />
               <Route path="/zipcode" component={WithUserContext(ZipCode)} />
