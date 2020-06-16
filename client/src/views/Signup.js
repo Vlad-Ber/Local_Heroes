@@ -136,9 +136,9 @@ const WelcomeMessage = styled.div`
 `;
 
 const BuildVersion = styled.div`
-  display: flex; 
-  justify-content: flex-end; 
+  display: flex;
+  justify-content: flex-end;
   font-size: 6px;
-`; 
+`;
 
 export default Signup;

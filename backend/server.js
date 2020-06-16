@@ -188,11 +188,10 @@ client.connect((err) => {
 
     
 
-    async function updateUser(data) {
-	console.log("USER ID:  " + JSON.stringify(data.userID));
-	console.log("newUserData:  " + JSON.stringify(data.newUserData));
+    async function updateUser(data) { 
 	let currentUser = await users.findOne({ _id: new ObjectID(data.userID) });
 	let updatedUser = currentUser;
+	console.log("Updated user: " + updatedUser);
 
 	Object.keys(data.newUserData).map(
 	    (key) => (updatedUser[key] = data.newUserData[key])
@@ -201,6 +200,13 @@ client.connect((err) => {
 	await users.replaceOne({ _id: new ObjectID(data.userID) }, updatedUser);
     }
 
+
+    async function updateUserByName(user) {
+	
+	await users.replaceOne({ username: user.username }, user);
+    }
+
+    
     async function insertErrand(errandData) {
 	var date = new Date();
 	var dateString = date.toISOString().slice(0, 10);
@@ -363,16 +369,9 @@ client.connect((err) => {
     app.post("/updateVirtuePoints", async (data, res) => {
 	let userToUpdate = await getUser(data.body.userToUpdate);
 
-	console.log("Helper: " + data.body.userToUpdate)
-	console.log("Old User to update: " + userToUpdate.username);
-	console.log("Old User VP: " + userToUpdate.virtuePoints);
-
 	userToUpdate.virtuePoints = userToUpdate.virtuePoints + 2;
-
-	console.log("New User to update: " + userToUpdate.username);
-	console.log("New User VP: " + userToUpdate.virtuePoints);
 	
-	await updateUser(userToUpdate);
+	await updateUserByName(userToUpdate);
     });
     
     app.post("/getErrandsArea", async function (req, res) {
