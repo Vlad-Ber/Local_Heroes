@@ -93,7 +93,7 @@ class App extends Component {
         component={WithUserContext(HelpNotice)}
             />
             <Route path="/profile-creation" component={ProfileCreation} />
-	    <Route path="/leader-board" component={Leaderboard} />
+	    <Route path="/leader-board" component={WithUserContext(Leaderboard)} />
             <Route path="/residence-info" component={ResidenceInfo} />
             <Route path="/insert-image" component={InsertImage} />
             <Route path="/zipcode" component={WithUserContext(ZipCode)} />
