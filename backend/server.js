@@ -253,6 +253,7 @@ client.connect((err) => {
 
       await users.replaceOne({ _id: new ObjectID(data.userID) }, updatedUser);
       await insertUserToArea(updatedUser);
+      await updateLeaderboardRanking(updatedUser);
     }
 
 
