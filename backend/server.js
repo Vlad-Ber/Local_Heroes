@@ -291,6 +291,16 @@ client.connect((err) => {
         console.log(a);
     }
 
+    //FUNC: Returns 10 users with most VP in order in local area
+    async function returnTop10(areaID) {
+
+      let localArea = await areas.findOne( { areaID: areaID } );
+
+      let top10 = localArea.users.slice(0, 10);
+
+      return top10;
+    }
+
 
 
     async function insertErrand(errandData) {
@@ -479,6 +489,14 @@ client.connect((err) => {
 	var errands = await getErrandsUsername(data.body.username);
 	res.send({ errands });
     });
+
+    /*app.post("/getTop10", async (data, res) => {
+      	var areaID = await getErrandsUsername(data.body.areaID);
+        var top10 = await returnTop10(areaID);
+
+      	res.send({ top10 });
+    });*/
+
 });
 
 client.close();
