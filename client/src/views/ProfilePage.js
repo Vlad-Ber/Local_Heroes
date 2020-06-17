@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { config } from "../config"
+import { config } from "../config";
 
 import NavBar from "../components/NavBar.js";
 import TextButton from "../components/TextButton.js";
@@ -9,7 +9,6 @@ import LinkWrapper from "../components/LinkWrapper.js";
 import EventItemListView from "../components/EventItemListView.js";
 
 class ProfilePage extends Component {
-
   constructor(props) {
     super(props);
 
@@ -26,7 +25,7 @@ class ProfilePage extends Component {
   getUserErrands = () => {
     axios
       .post(config.baseUrl + "/getUserErrand", {
-        username: this.state.user.username
+        username: this.state.user.username,
       })
       .then((response) => {
         this.setState({
@@ -38,17 +37,16 @@ class ProfilePage extends Component {
         console.log("You have no errands!", error);
         this.setState({ fetchErrandsSuccess: false });
       });
-      this.getUserErrandsTimeout = setTimeout(this.getUserErrands, 2000);
+    this.getUserErrandsTimeout = setTimeout(this.getUserErrands, 2000);
   };
 
-
   componentDidMount() {
-    console.log("---------- PROFILEPAGE.JS DID MOUNT ----------------")
+    console.log("---------- PROFILEPAGE.JS DID MOUNT ----------------");
     this.getUserErrands();
   }
 
   componentWillUnmount() {
-    console.log("---------- PROFILEPAGE.JS WILL UNMOUNT ----------------")
+    console.log("---------- PROFILEPAGE.JS WILL UNMOUNT ----------------");
     clearTimeout(this.getUserErrandsTimeout);
   }
 
@@ -60,41 +58,34 @@ class ProfilePage extends Component {
         <ProfileInfoWrapper>
           <StyledImage src={this.state.profilePic} />
           <StyledText>
-            <Descriptor>
-              Name
-            </Descriptor>
-            <Info>
-              {this.state.user.name} 
-            </Info>
+            <Descriptor>Name: </Descriptor>
+            <Info>{this.state.user.name}</Info>
           </StyledText>
           <StyledText>
-            <Descriptor>
-              Area 
-            </Descriptor>
-            <Info>
-              {this.state.user.areaID} 
-            </Info>
+            <Descriptor>Area: </Descriptor>
+            <Info>{this.state.user.areaID}</Info>
           </StyledText>
           <StyledText>
-            <Descriptor>
-              E-mail 
-            </Descriptor>
-            <Info>
-              {this.state.user.email} 
-            </Info>
+            <Descriptor>E-mail: </Descriptor>
+            <Info>{this.state.user.email}</Info>
+          </StyledText>
+          <StyledText>
+            <Descriptor>My VP: </Descriptor>
+            <Info>{this.state.user.virtuePoints}</Info>
           </StyledText>
         </ProfileInfoWrapper>
 
         <LinkWrapper to="/">
-          <TextButton onClick={() => localStorage.clear()} description="LOG OUT" />
+          <TextButton
+            onClick={() => localStorage.clear()}
+            description="LOG OUT"
+          />
         </LinkWrapper>
 
-        <StyledTextHeadLine>
-          MY ERRANDS
-        </StyledTextHeadLine>
-        <EventItemListView 
+        <StyledTextHeadLine>MY ERRANDS</StyledTextHeadLine>
+        <EventItemListView
           errands={this.state.errands}
-          emptyStateMessage="You currently have no errands" 
+          emptyStateMessage="You currently have no errands"
         />
       </div>
     );
@@ -102,14 +93,14 @@ class ProfilePage extends Component {
 }
 
 const ProfileInfoWrapper = styled.div`
-  display: flex; 
-  justify-content: center; 
+  display: flex;
+  justify-content: center;
   padding-left: 10px;
   flex-direction: column;
-`; 
+`;
 
 const StyledText = styled.div`
-  display: flex; 
+  display: flex;
   flex-direction: row;
   margin: 0.5em;
   font-size: 18px;
@@ -121,12 +112,10 @@ const Descriptor = styled.div`
   padding-right: 10px;
 `;
 
-const Info = styled.div`
-
-`;
+const Info = styled.div``;
 
 const StyledTextHeadLine = styled.div`
-  display: flex; 
+  display: flex;
   justify-content: center;
   font-size: 18px;
   padding-bottom: 20px;
