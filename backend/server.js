@@ -122,6 +122,7 @@ client.connect((err) => {
 	    }
 	    
 	    await areas.insertOne(areaData).catch((error) => console.error(error));
+
 	}
     }
 
@@ -130,8 +131,15 @@ client.connect((err) => {
     //TODO: Initialize area (in insertuser?), push reference of user to areas 
     async function insertUserToArea(user){
 
-	createArea(user.areaID);
-	await areas.update({ areaID: user.areaID }, { $push: { users: user }})
+	console.log(user);
+	
+	await createArea(user.areaID);
+	
+	await areas.updateOne({ areaID: user.areaID }, { $push: { users: user._id }});
+
+	let a = await areas.findOne({ areaID: user.areaID });
+	
+	console.log(a);
     }
 
     //FUNC: Adds a user to db. Adds user to given area. If area doesnt exist, create new area.
@@ -167,7 +175,10 @@ client.connect((err) => {
 	var findEmail = await documentExist("Users", queryToFind);
 	var findUser = await documentExist("Users", userNameToFind);
 	if (findUser == false && findEmail == false) {
+
 	    await users.insertOne(data).catch((error) => console.error(error));
+	    insertUserToArea(data);
+	    
 	    console.log("User " + name + " has been added!");
 
 	    //TODO: Maybe dont need
@@ -260,7 +271,7 @@ client.connect((err) => {
     //FUNC: Sorts the leaderboard for area with corresponding areaID
     async function updateLeaderboardRanking(areaID) {
 
-	await areas.update( { areaID: areaID },  { $push: { users: { $each: [], $sort: 1 } } } )
+	await areas.updateOne( { areaID: areaID },  { $push: { users: { $each: [], $sort: 1 } } } )
     }
 
     const ObjectID = require("mongodb").ObjectID;
