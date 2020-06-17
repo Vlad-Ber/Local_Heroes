@@ -14,6 +14,7 @@ import ProfileCreation from "./views/ProfileCreation.js";
 import ResidenceInfo from "./views/ResidenceInfo.js";
 import InsertImage from "./views/InsertImage.js";
 import ZipCode from "./views/ZipCode.js";
+import Leaderboard from "./views/Leaderboard.js";
 
 class App extends Component {
 
@@ -78,27 +79,28 @@ class App extends Component {
             <Switch>
               <Route path="/" exact component={WithUserContext(Signup)} />
               <Route path="/signup" component={WithUserContext(Signup)} />
-              <Route path="/home" component={WithUserContext(Home)} />
-              <Route
-                path="/profile-page"
-                component={WithUserContext(ProfilePage)}
-              />
-              <Route
-                path="/help-request"
-                component={WithUserContext(HelpRequest)}
-              />
-              <Route
-                path="/help-notice"
-                component={WithUserContext(HelpNotice)}
-              />
-              <Route path="/profile-creation" component={ProfileCreation} />
-              <Route path="/residence-info" component={ResidenceInfo} />
-              <Route path="/insert-image" component={InsertImage} />
-              <Route path="/zipcode" component={WithUserContext(ZipCode)} />
+            <Route path="/home" component={WithUserContext(Home)} />
+            <Route
+        path="/profile-page"
+        component={WithUserContext(ProfilePage)}
+            />
+            <Route
+        path="/help-request"
+        component={WithUserContext(HelpRequest)}
+            />
+            <Route
+        path="/help-notice"
+        component={WithUserContext(HelpNotice)}
+            />
+            <Route path="/profile-creation" component={ProfileCreation} />
+	    <Route path="/leader-board" component={WithUserContext(Leaderboard)} />
+            <Route path="/residence-info" component={ResidenceInfo} />
+            <Route path="/insert-image" component={InsertImage} />
+            <Route path="/zipcode" component={WithUserContext(ZipCode)} />
             </Switch>
-          </div>
-        </UserProvider>
-      </Router>
+            </div>
+            </UserProvider>
+	    </Router>
     );
   }
 }
