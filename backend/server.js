@@ -30,8 +30,8 @@ const client = new MongoClient(uri, {
 client.connect((err) => {
     //----------------------------MONGODB FUNKTIONER-------------------------------------------------------------
     const db = client.db("LocalHeroes");
-    const errands = db.collection("Errands");
 
+    const errands = db.collection("Errands");
     const areas = db.collection("Areas");
     const users = db.collection("Users");
 
@@ -65,7 +65,7 @@ client.connect((err) => {
     }
 
 
-    //FUNC: Get all erands for an Area
+    //FUNC: Get all errands for an Area
     //ARG: Area to get errands from
     //RET: Array of errands in area
     async function getErrandsArea(areaID) {
@@ -110,6 +110,30 @@ client.connect((err) => {
 	return findResult;
     }
 
+
+    //FUNC: Create new area if area doesnt exist.
+    async function createArea(areaID){
+	let areaExist = await documentExist("Areas", {areaID: areaID});
+
+	if(!areaExist) {
+	    var areaData = {
+		areaID: areaID,
+		users: [],
+	    }
+	    
+	    await areas.insertOne(areaData).catch((error) => console.error(error));
+	}
+    }
+
+    
+    //FUNC: Adds a user to virtuepoints ranking of area.
+    //TODO: Initialize area (in insertuser?), push reference of user to areas 
+    async function insertUserToArea(user){
+
+	createArea(user.areaID);
+	await areas.update({ areaID: user.areaID }, { $push: { users: user }})
+    }
+
     //FUNC: Adds a user to db. Adds user to given area. If area doesnt exist, create new area.
     //ARGS: data required
     async function insertUser(
@@ -122,7 +146,7 @@ client.connect((err) => {
 	description,
 	areaID,
 	mobile,
-	city
+	city,
     ) {
 	var data = {
 	    username: username,
@@ -186,9 +210,9 @@ client.connect((err) => {
 	await errands.replaceOne({ _id: new ObjectID(errandID) }, updatedErrand);
     }
 
-    
 
-    async function updateUser(data) { 
+
+    async function updateUser(data) {
 	let currentUser = await users.findOne({ _id: new ObjectID(data.userID) });
 	let updatedUser = currentUser;
 	console.log("Updated user: " + updatedUser);
@@ -202,11 +226,11 @@ client.connect((err) => {
 
 
     async function updateUserByName(user) {
-	
+
 	await users.replaceOne({ username: user.username }, user);
     }
 
-    
+
     async function insertErrand(errandData) {
 	var date = new Date();
 	var dateString = date.toISOString().slice(0, 10);
@@ -230,6 +254,13 @@ client.connect((err) => {
 	var insert = await errands
 	    .insertOne(data)
 	    .catch((error) => console.error(error));
+    }
+
+
+    //FUNC: Sorts the leaderboard for area with corresponding areaID
+    async function updateLeaderboardRanking(areaID) {
+
+	await areas.update( { areaID: areaID },  { $push: { users: { $each: [], $sort: 1 } } } )
     }
 
     const ObjectID = require("mongodb").ObjectID;
@@ -370,10 +401,10 @@ client.connect((err) => {
 	let userToUpdate = await getUser(data.body.userToUpdate);
 
 	userToUpdate.virtuePoints = userToUpdate.virtuePoints + 2;
-	
+
 	await updateUserByName(userToUpdate);
     });
-    
+
     app.post("/getErrandsArea", async function (req, res) {
 	var errands = await getErrandsArea(req.body.areaID);
 	res.send({ errands });
