@@ -120,25 +120,28 @@ client.connect((err) => {
 		areaID: areaID,
 		users: [],
 	    }
-	    
+
 	    await areas.insertOne(areaData).catch((error) => console.error(error));
 
 	}
     }
 
-    
+
     //FUNC: Adds a user to virtuepoints ranking of area.
-    //TODO: Initialize area (in insertuser?), push reference of user to areas 
+    //TODO: Initialize area (in insertuser?), push reference of user to areas
     async function insertUserToArea(user){
 
-	console.log(user);
-	
 	await createArea(user.areaID);
-	
-	await areas.updateOne({ areaID: user.areaID }, { $push: { users: user._id }});
+
+  var data = {
+    _id: user._id,
+    virtuePoints: user.virtuePoints,
+    username: user.username,
+  }
+	await areas.updateOne({ areaID: user.areaID }, { $push: { users: data }});
 
 	let a = await areas.findOne({ areaID: user.areaID });
-	
+
 	console.log(a);
     }
 
@@ -178,7 +181,7 @@ client.connect((err) => {
 
 	    await users.insertOne(data).catch((error) => console.error(error));
 	    insertUserToArea(data);
-	    
+
 	    console.log("User " + name + " has been added!");
 
 	    //TODO: Maybe dont need
@@ -238,9 +241,26 @@ client.connect((err) => {
 
     async function updateUserByName(user) {
 
-	await users.replaceOne({ username: user.username }, user);
+	     await users.replaceOne({ username: user.username }, user);
     }
 
+    async function updateVirtuePointsInAreas(user) {
+        await areas.updateOne(
+          { areaID: user.areaID, "users._id": user._id },
+          { $set: { "users.$.virtuePoints": user.virtuePoints } },
+        );
+    }
+
+    async function updateVirtuePoints(user) {
+
+        await updateUserByName(user);
+        await updateVirtuePointsInAreas(user);
+
+        let a = await areas.findOne({ areaID: user.areaID });
+
+        console.log(user)
+        console.log(a);
+    }
 
     async function insertErrand(errandData) {
 	var date = new Date();
@@ -268,10 +288,15 @@ client.connect((err) => {
     }
 
 
-    //FUNC: Sorts the leaderboard for area with corresponding areaID
-    async function updateLeaderboardRanking(areaID) {
 
-	await areas.updateOne( { areaID: areaID },  { $push: { users: { $each: [], $sort: 1 } } } )
+
+    //FUNC: Sorts the leaderboard for area with corresponding areaID
+    async function updateLeaderboardRanking(user) {
+
+	     await areas.updateOne(
+         { areaID: user.areaID },
+         { $push: { users: { $each: [], $sort: { virtuePoints: -1 } } } }
+       );
     }
 
     const ObjectID = require("mongodb").ObjectID;
@@ -413,7 +438,8 @@ client.connect((err) => {
 
 	userToUpdate.virtuePoints = userToUpdate.virtuePoints + 2;
 
-	await updateUserByName(userToUpdate);
+	await updateVirtuePoints(userToUpdate);
+	await updateLeaderboardRanking(userToUpdate);
     });
 
     app.post("/getErrandsArea", async function (req, res) {
