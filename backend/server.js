@@ -136,13 +136,10 @@ client.connect((err) => {
   var data = {
     _id: user._id,
     virtuePoints: user.virtuePoints,
-    username: user.username,
   }
+
 	await areas.updateOne({ areaID: user.areaID }, { $push: { users: data }});
 
-	let a = await areas.findOne({ areaID: user.areaID });
-
-	console.log(a);
     }
 
     //FUNC: Adds a user to db. Adds user to given area. If area doesnt exist, create new area.
@@ -224,43 +221,76 @@ client.connect((err) => {
 	await errands.replaceOne({ _id: new ObjectID(errandID) }, updatedErrand);
     }
 
+  async function deleteEmptyArray() {
+      await areas.remove(
+        { users: { $exists: true, $eq: [] } }
+      )
+      .catch((error) => {
+    	    console.log("Could not delete area", error)
+    	});
+  }
 
+    async function removeUserFromOldArea(areaID, userID) {
+        await areas.updateOne(
+          { areaID: areaID},
+          { $pull: { users: { _id: new ObjectID(userID) } } },
+        );
 
-    async function updateUser(data) {
-	let currentUser = await users.findOne({ _id: new ObjectID(data.userID) });
-	let updatedUser = currentUser;
-	console.log("Updated user: " + updatedUser);
+        await deleteEmptyArray();
+      }
 
-	Object.keys(data.newUserData).map(
-	    (key) => (updatedUser[key] = data.newUserData[key])
-	);
+   async function updateUser(data) {
+    	let oldUser = await users.findOne({ _id: new ObjectID(data.userID) });
+    	let updatedUser = oldUser;
 
-	await users.replaceOne({ _id: new ObjectID(data.userID) }, updatedUser);
+      await removeUserFromOldArea(oldUser.areaID, data.userID);
+
+    	Object.keys(data.newUserData).map(
+    	    (key) => (updatedUser[key] = data.newUserData[key])
+    	);
+
+      console.log(updatedUser);
+
+      await users.replaceOne({ _id: new ObjectID(data.userID) }, updatedUser);
+      await insertUserToArea(updatedUser);
     }
 
 
-    async function updateUserByName(user) {
-
+    async function updateVPInUsers(user) {
 	     await users.replaceOne({ username: user.username }, user);
     }
 
-    async function updateVirtuePointsInAreas(user) {
+    async function updateVPInAreas(user) {
         await areas.updateOne(
           { areaID: user.areaID, "users._id": user._id },
           { $set: { "users.$.virtuePoints": user.virtuePoints } },
         );
     }
 
+    //FUNC: Sorts the leaderboard for area with corresponding areaID
+    async function updateLeaderboardRanking(user) {
+
+       await areas.updateOne(
+         { areaID: user.areaID },
+         { $push: { users: { $each: [], $sort: { virtuePoints: -1 } } } }
+       );
+    }
+
+
+    /*  FUNC: Updates value of virtuepoints (VP) in
+    *   Areas and Users collection for specific user
+    *   and updates leaderboard for VP
+    */
     async function updateVirtuePoints(user) {
+        await updateVPInUsers(user);
+        await updateVPInAreas(user);
+        await updateLeaderboardRanking(user);
 
-        await updateUserByName(user);
-        await updateVirtuePointsInAreas(user);
-
-        let a = await areas.findOne({ areaID: user.areaID });
-
-        console.log(user)
+        let a = await areas.findOne( { areaID: user.areaID } );
         console.log(a);
     }
+
+
 
     async function insertErrand(errandData) {
 	var date = new Date();
@@ -288,16 +318,6 @@ client.connect((err) => {
     }
 
 
-
-
-    //FUNC: Sorts the leaderboard for area with corresponding areaID
-    async function updateLeaderboardRanking(user) {
-
-	     await areas.updateOne(
-         { areaID: user.areaID },
-         { $push: { users: { $each: [], $sort: { virtuePoints: -1 } } } }
-       );
-    }
 
     const ObjectID = require("mongodb").ObjectID;
 
@@ -398,10 +418,14 @@ client.connect((err) => {
     });
 
     app.post("/updateUser", async (data, res) => {
-	console.log("updateUser request heard");
-	let newUserData = data.body;
-	await updateUser(newUserData);
-	res.send(newUserData); //non-sensical line?
+      	console.log("updateUser request heard");
+      	let newUserData = data.body;
+
+        await updateUser(newUserData);
+        //await updateVirtuePoints(newUserData.user);
+
+        console.log(newUserData.user)
+      	res.send(newUserData); //non-sensical line?
     });
 
     app.post("/getUsersArea", async function (req, res) {
@@ -439,7 +463,6 @@ client.connect((err) => {
 	userToUpdate.virtuePoints = userToUpdate.virtuePoints + 2;
 
 	await updateVirtuePoints(userToUpdate);
-	await updateLeaderboardRanking(userToUpdate);
     });
 
     app.post("/getErrandsArea", async function (req, res) {

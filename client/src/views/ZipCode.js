@@ -15,6 +15,7 @@ const ZipCode = (props) => {
 
   async function updateZipCode() {
     await axios.post(config.baseUrl + "/updateUser", {
+      user:   props.activeUser,
       userID: props.activeUser._id,
       newUserData: {
           areaID: zipCode
@@ -30,7 +31,7 @@ const ZipCode = (props) => {
       setSuccess(false);
     });
   }
-  
+
   function updateUserContext(){
     console.log("updateLoggedInUser");
     axios.post(config.baseUrl + "/getUser", {
@@ -46,19 +47,19 @@ const ZipCode = (props) => {
   }
 
   function renderResponse(){
-    return <ServerResponse 
-              success={success} 
-              successResponse="Sucessfully updated zip code." 
+    return <ServerResponse
+              success={success}
+              successResponse="Sucessfully updated zip code."
               failResponse="Something went wrong, try again."
             />
   };
 
   return (
       <div>
-        <NavBar 
+        <NavBar
           leftButtonType="back"
           leftButtonLink="/home"
-        /> 
+        />
         <SectionTitle
           text="Change Location (Zip Code)"
           paddingTop="30px"
@@ -74,7 +75,7 @@ const ZipCode = (props) => {
           onClick={updateZipCode}
         />
         {renderResponse()}
-        
+
       </div>
   );
 }
