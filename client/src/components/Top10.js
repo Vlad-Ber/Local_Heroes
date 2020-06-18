@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 
 import styled from 'styled-components'
+import axios from 'axios';
 import { config } from "../config"
 
 class Top10 extends Component {
+    _isMounted = false;
     constructor(props) {
 	super(props)
 	this.state = {
-            heroes: [
+	    user: this.props.activeUser,
+            /*heroes: [
 		{ id: 1, name: 'Stefan', VP: 98},
 		{ id: 2, name: 'Ali', VP: 20},
 		{ id: 3, name: 'Olle', VP: 15},
@@ -18,28 +21,63 @@ class Top10 extends Component {
 		{ id: 8, name: 'Sven', VP: 3},
 		{ id: 9, name: 'Rigmor', VP: 2},
 		{ id: 10, name: 'Åsa', VP: 2},
-            ]
+            ],*/
+	    top10array: [],
+	  
+	};
+    }
+
+    getTop10Info = () => {
+	console.log("getTop10Request");
+	axios.post(config.baseUrl + "/getTop10", {
+	    areaID: this.state.user.areaID,
+	}).then((response) => {
+	    this.setState({
+		top10array: response.data.top10,
+	    });
+	}).catch((error) => {
+	    console.log("EventItem, uptadeVirtuepoints: Got error while updating Virtue Points ", error);
+	});
+    };
+
+    componentDidMount() {
+	this._isMounted = true;
+	if(this._isMounted) {
+	    
+	    console.log("getTop10Request");
+	    axios.post(config.baseUrl + "/getTop10", {
+		areaID: this.state.user.areaID,
+	    }).then((response) => {
+		this.setState({
+		    top10array: response.data.top10,
+		});
+	    }).catch((error) => {
+		console.log("EventItem, uptadeVirtuepoints: Got error while updating Virtue Points ", error);
+	    });
 	}
     }
-    
+    componentWillUnmount () {
+	this._isMounted = false;
+    }
+
     renderTableData() {
-      return this.state.heroes.map((user, index) => {
-         const { id, name, VP } = user //destructuring
-         return (
-            <tr key={id}>
-               <td>{id}</td>
-               <td>{name}</td>
-               <td>{VP}</td>
-            </tr>
-         )
-      })
-   }
+	console.log("----Printing top10array:-----");
+	console.log(this.state.top10array);
+	return this.state.top10array.map((user, index) => {
+            const {username, virtuePoints } = user //destructuring
+            return (
+		    <tr key={index}>
+		    <td>{index}</td>
+		    <td>{username}</td>
+		    <td>{virtuePoints}</td>
+		    </tr>
+            )
+	})
+    }
 
     render(){
         return (
-	    
 		<LeaderboardWrapper>
-
 	    <TitleWrapper>
 		<h1>Leaderboard</h1>
 		</TitleWrapper>

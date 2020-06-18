@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 
-import { UserConsumer } from "./UserContext.js"
 import styled from 'styled-components'
-import { config } from "../config"
 
 class MyRanking extends Component {
     constructor(props) {
