@@ -46,8 +46,8 @@ class Top10 extends Component {
     	return this.state.top10array.map((user, index) => {
                 const {username, virtuePoints } = user //destructuring
                 return (
-    		    <tr key={index}>
-    		    <td>{index}</td>
+    		    <tr key={index+1}>
+    		    <td>{index+1}</td>
     		    <td>{username}</td>
     		    <td>{virtuePoints}</td>
     		    </tr>

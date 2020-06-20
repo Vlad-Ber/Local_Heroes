@@ -305,8 +305,8 @@ client.connect((err) => {
     	}
     }
 
-    async function myRanking(user){
-      let localArea = await areas.findOne( { areaID: user.areaID } )
+    async function myRanking(currentUser){
+      let localArea = await areas.findOne( { areaID: currentUser.areaID } )
           .catch((error) => {
             console.log("Could not find my ranking in myRanking()", error)
           });
@@ -314,8 +314,8 @@ client.connect((err) => {
       console.log("---------FUNCTION MYRANKING----------");
       console.log(localArea);
 
-      var index = await localArea.users.findIndex(userObject => userObject._id === user._id);
-      return index;
+      var index = await localArea.users.findIndex(user => user.username === currentUser.username);
+      return index + 1;
     }
 
 

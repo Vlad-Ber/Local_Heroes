@@ -36,6 +36,18 @@ class MyRanking extends Component {
     	   this.getMyRanking();
     }
 
+
+    renderTableData() {
+        const {username, virtuePoints } = this.state.user //destructuring
+        return (
+  		    <tr>
+    		    <td>{this.state.myRank}</td>
+    		    <td>{username}</td>
+    		    <td>{virtuePoints}</td>
+  		    </tr>
+        )
+    }
+
     render(){
 	     console.log(this.state.user);
         return (
@@ -43,8 +55,11 @@ class MyRanking extends Component {
       	    <TitleWrapper>
       		<h1>My Ranking</h1>
       		</TitleWrapper>
-      		<p> {this.state.user.username} </p>
-      		<p> {this.state.myRank} </p>
+          <table id='users'>
+            <tbody>
+                {this.renderTableData()}
+            </tbody>
+         </table>
       		</MyRankingWrapper>
         )
     }
