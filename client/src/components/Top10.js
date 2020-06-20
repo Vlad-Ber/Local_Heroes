@@ -2,10 +2,8 @@ import React, { Component } from 'react'
 
 import styled from 'styled-components'
 import axios from 'axios';
-import { config } from "../config"
 
 class Top10 extends Component {
-    _isMounted = false;
     constructor(props) {
 	super(props)
 	this.state = {
@@ -23,73 +21,52 @@ class Top10 extends Component {
 		{ id: 10, name: 'Åsa', VP: 2},
             ],*/
 	    top10array: [],
-	  
+
 	};
     }
 
     getTop10Info = () => {
-	console.log("getTop10Request");
-	axios.post(config.baseUrl + "/getTop10", {
-	    areaID: this.state.user.areaID,
-	}).then((response) => {
-	    this.setState({
-		top10array: response.data.top10,
-	    });
-	}).catch((error) => {
-	    console.log("EventItem, uptadeVirtuepoints: Got error while updating Virtue Points ", error);
-	});
+    	console.log("getTop10Request");
+    	axios.post("/getTop10", {
+    	    areaID: this.state.user.areaID,
+    	}).then((response) => {
+    	    this.setState({	top10array: response.data.top10 });
+    	}).catch((error) => {
+    	    console.log("EventItem, uptadeVirtuepoints: Got error while updating Virtue Points ", error);
+    	});
     };
 
     componentDidMount() {
-	this._isMounted = true;
-	if(this._isMounted) {
-	    
-	    console.log("getTop10Request");
-	    axios.post(config.baseUrl + "/getTop10", {
-		areaID: this.state.user.areaID,
-	    }).then((response) => {
-		this.setState({
-		    top10array: response.data.top10,
-		});
-	    }).catch((error) => {
-		console.log("EventItem, uptadeVirtuepoints: Got error while updating Virtue Points ", error);
-	    });
-	}
-    }
-    componentWillUnmount () {
-	this._isMounted = false;
+    	   this.getTop10Info();
     }
 
     renderTableData() {
-	console.log("----Printing top10array:-----");
-	console.log(this.state.top10array);
-	return this.state.top10array.map((user, index) => {
-            const {username, virtuePoints } = user //destructuring
-            return (
-		    <tr key={index}>
-		    <td>{index}</td>
-		    <td>{username}</td>
-		    <td>{virtuePoints}</td>
-		    </tr>
-            )
-	})
+    	console.log("----Printing top10array:-----");
+    	console.log(this.state.top10array);
+    	return this.state.top10array.map((user, index) => {
+                const {username, virtuePoints } = user //destructuring
+                return (
+    		    <tr key={index}>
+    		    <td>{index}</td>
+    		    <td>{username}</td>
+    		    <td>{virtuePoints}</td>
+    		    </tr>
+      )
+    	})
     }
 
     render(){
         return (
-		<LeaderboardWrapper>
-	    <TitleWrapper>
-		<h1>Leaderboard</h1>
-		</TitleWrapper>
-	  	<table id='users'>
-		<tbody>
-                {this.renderTableData()}
-            </tbody>
-		</table>
-		
-	    </LeaderboardWrapper>
-		
-	    
+      		<LeaderboardWrapper>
+      	    <TitleWrapper>
+      		    <h1>Leaderboard</h1>
+      		  </TitleWrapper>
+      	  	<table id='users'>
+      		    <tbody>
+                  {this.renderTableData()}
+              </tbody>
+      		 </table>
+    	    </LeaderboardWrapper>
         );
     }
 }
@@ -110,4 +87,4 @@ const TitleWrapper = styled.div`
     padding: 4px;
 `
 
-export default Top10; 
+export default Top10;

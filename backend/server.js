@@ -294,15 +294,28 @@ client.connect((err) => {
 
     //FUNC: Returns 10 users with most VP in order in local area
     async function returnTop10(areaID) {
-	let localArea = await areas.findOne( { areaID: areaID } )
-	    .catch((error) => {
-    		console.log("Could not find area in returnTop10", error)
-    	    });
-	if(localArea.users != null){
-	let top10 = await localArea.users.slice(0, 10);
-	
-	return top10;
-	}
+    	let localArea = await areas.findOne( { areaID: areaID } )
+    	    .catch((error) => {
+        		console.log("Could not find area in returnTop10", error)
+        	    });
+    	if(localArea.users != null){
+    	let top10 = await localArea.users.slice(0, 10);
+
+    	return top10;
+    	}
+    }
+
+    async function myRanking(user){
+      let localArea = await areas.findOne( { areaID: user.areaID } )
+          .catch((error) => {
+            console.log("Could not find my ranking in myRanking()", error)
+          });
+
+      console.log("---------FUNCTION MYRANKING----------");
+      console.log(localArea);
+
+      var index = await localArea.users.findIndex(userObject => userObject._id === user._id);
+      return index;
     }
 
 
@@ -437,7 +450,6 @@ client.connect((err) => {
       	let newUserData = data.body;
 
         await updateUser(newUserData);
-        //await updateVirtuePoints(newUserData.user);
 
         console.log(newUserData.user)
       	res.send(newUserData); //non-sensical line?
@@ -496,11 +508,22 @@ client.connect((err) => {
 
     app.post("/getTop10", async (data, res) => {
         var top10 = await returnTop10(data.body.areaID)
-	    .catch((error) => {
-    		console.log("post getTOP10 Error: ", error)
-    	    });
-	console.log("Top 10 is: " + top10);
+	      .catch((error) => {
+    	 	   console.log("post getTOP10 Error: ", error)
+  	    });
       	res.send({ top10 });
+    });
+
+    app.post("/getMyRanking", async (data, res) => {
+        var myRank = await myRanking(data.body.user)
+	      .catch((error) => {
+    		    console.log("post getTOP10 Error: ", error)
+    	   });
+
+         console.log("-----------MYRANKING USER------------");
+         console.log(data.body.user);
+        console.log("My ranking is: " + myRank);
+      	res.send({ myRank });
     });
 
 });
