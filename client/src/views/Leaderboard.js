@@ -12,22 +12,22 @@ class Leaderboard extends Component {
         super(props);
         this.state = {
 	    activeUser: this.props.activeUser,
-        this.state = {}
+	}
+    };
+	render(){
+	    return(
+		    <div>
+		    <NavBar
+		leftButtonType="back"
+		leftButtonLink="/home"
+		    />
+		    <Top10/>
+		    <MyRanking
+		activeUser= {this.state.activeUser}
+		    />
+		    </div>
+	    );
+	}
     }
-    render(){
-	return(
-		<div>
-		<NavBar
-	    leftButtonType="back"
-            leftButtonLink="/home"
-		/>
-		<Top10/>
-		<MyRanking
-	    activeUser= {this.state.activeUser}
-		/>
-		</div>
-	);
-    }
-}
 
 export default Leaderboard;

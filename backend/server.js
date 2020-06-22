@@ -1,6 +1,8 @@
 const express = require("express");
 var bodyParser = require("body-parser");
 const bcrypt = require('bcrypt');
+const jwt = require('express-jwt');
+const jwksRsa = require('jwks-rsa');
 const app = express();
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
@@ -271,10 +273,10 @@ client.connect((err) => {
     //FUNC: Sorts the leaderboard for area with corresponding areaID
     async function updateLeaderboardRanking(user) {
 
-       await areas.updateOne(
-         { areaID: user.areaID },
-         { $push: { users: { $each: [], $sort: { virtuePoints: -1 } } } }
-       );
+	await areas.updateOne(
+            { areaID: user.areaID },
+            { $push: { users: { $each: [], $sort: { virtuePoints: -1 } } } }
+	);
     }
 
 
@@ -355,14 +357,30 @@ client.connect((err) => {
 	res.send("health check good")
     })
 
+
+    const checkJwt = jwt({
+	secret: jwksRsa.expressJwtSecret({
+	    cache: true,
+	    rateLimit: true,
+	    jwksRequestsPerMinute: 5,
+	    jwksUri: `https://dev-sibrlb8g.eu.auth0.com/.well-known/jwks.json`
+	}),
+
+	// Validate the audience and the issuer.
+	audience: 'fSj032oj1PZQ7vEmYyVmqU24Md1524Wp',
+	issuer: `https://dev-sibrlb8g.eu.auth0.com/`,
+	algorithms: ['RS256']
+    });
+
+    
     // GETs username and checks if it unique
-    app.post("/check-username", (username, res) => {
+    app.post("/check-username", checkJwt, (username, res) => {
 	let u = username.body;
 	users.find({ username: u }).catch((error) => console.error(error));
     });
 
     // GETs and sends user data to database
-    app.post('/insertUser', async (userData, res) => {
+    app.post('/insertUser', checkJwt, async (userData, res) => {
         let user = userData.body;
         try{
 
@@ -381,7 +399,7 @@ client.connect((err) => {
     });
 
 
-    app.post("/check-user", async (data, res) => {
+    app.post("/check-user", checkJwt, async (data, res) => {
 	let user = data.body;
 	let curUsername = { username: user.username };
 	let curEmail = { email: user.email };
@@ -394,7 +412,7 @@ client.connect((err) => {
 	res.send(dataToSend);
     });
 
-    app.post("/loginUser", async (data, res) => {
+    app.post("/loginUser", checkJwt, async (data, res) => {
         console.log("inside login-user")
         let user = data.body;
 
@@ -414,21 +432,21 @@ client.connect((err) => {
     });
 
 
-    app.post("/getUser", async(data, res) => {
+    app.post("/getUser", checkJwt,async(data, res) => {
 	console.log("getUser request heard");
 	var user = await getUser(data.body.username);
 	console.log("res.send: " + JSON.stringify(user))
 	res.send(user);
     });
 
-    app.post("/fetchUserByID", async(data, res) => {
+    app.post("/fetchUserByID",checkJwt, async(data, res) => {
 	console.log("fetchUserByID request heard");
 	var user = await fetchUserByID(data.body.userID);
 	console.log("res.send: " + JSON.stringify(user))
 	res.send(user);
     });
 
-    app.post("/updateUser", async (data, res) => {
+    app.post("/updateUser", checkJwt, async (data, res) => {
       	console.log("updateUser request heard");
       	let newUserData = data.body;
 
@@ -439,12 +457,12 @@ client.connect((err) => {
       	res.send(newUserData); //non-sensical line?
     });
 
-    app.post("/getUsersArea", async function (req, res) {
+    app.post("/getUsersArea",checkJwt,  async function (req, res) {
 	var users = await getUsersArea(req.body.areaID);
 	res.send({ users });
     });
 
-    app.post("/insertErrand", async (data, res) => {
+    app.post("/insertErrand", checkJwt, async (data, res) => {
 	//console.log("insertErrand request heard");
 	let errandData = data.body;
 	//console.log(JSON.stringify(errandData));
@@ -452,7 +470,7 @@ client.connect((err) => {
 	res.send(errandData);
     });
 
-    app.post("/updateErrand", (data, res) => {
+    app.post("/updateErrand", checkJwt, (data, res) => {
 	//console.log("updateErrand app.post");
 	let doneErrand = updateErrand(
 	    data.body.errandID,
@@ -461,14 +479,14 @@ client.connect((err) => {
 	res.send(doneErrand);
     });
 
-    app.post("/deleteErrand", async function (data, res) {
+    app.post("/deleteErrand", checkJwt, async function (data, res) {
 	console.log("deleteErrand request heard")
 	console.log("data.body.errandID: " + data.body.errandID);
 	await deleteErrand(data.body.errandID);
     });
 
 
-    app.post("/updateVirtuePoints", async (data, res) => {
+    app.post("/updateVirtuePoints", checkJwt, async (data, res) => {
 	let userToUpdate = await getUser(data.body.userToUpdate);
 
 	userToUpdate.virtuePoints = userToUpdate.virtuePoints + 2;
@@ -476,16 +494,16 @@ client.connect((err) => {
 	await updateVirtuePoints(userToUpdate);
     });
 
-    app.post("/getErrandsArea", async function (req, res) {
+    app.post("/getErrandsArea",checkJwt,  async function (req, res) {
 	var errands = await getErrandsArea(req.body.areaID);
 	res.send({ errands });
     });
 
-    app.post("/uploadImage", async (data, res) => {
+    app.post("/uploadImage", checkJwt, async (data, res) => {
 	let image = data.body;
     });
 
-    app.post("/getUserErrand", async (data, res) => {
+    app.post("/getUserErrand", checkJwt, async (data, res) => {
 	var errands = await getErrandsUsername(data.body.username);
 	res.send({ errands });
     });
