@@ -12,7 +12,7 @@ class Leaderboard extends Component {
         super(props);
         this.state = {
 	    activeUser: this.props.activeUser,
-        this.state = {}
+	}
     }
     render(){
 	return(
