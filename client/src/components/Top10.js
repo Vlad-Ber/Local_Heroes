@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 import styled from 'styled-components'
-import { config } from "../config"
 
 class Top10 extends Component {
     constructor(props) {

@@ -380,7 +380,7 @@ client.connect((err) => {
     });
 
     // GETs and sends user data to database
-    app.post('/insertUser', checkJwt, async (userData, res) => {
+    app.post('/insertUser', async (userData, res) => {
         let user = userData.body;
         try{
 
@@ -399,7 +399,7 @@ client.connect((err) => {
     });
 
 
-    app.post("/check-user", checkJwt, async (data, res) => {
+    app.post("/check-user", async (data, res) => {
 	let user = data.body;
 	let curUsername = { username: user.username };
 	let curEmail = { email: user.email };
@@ -412,7 +412,7 @@ client.connect((err) => {
 	res.send(dataToSend);
     });
 
-    app.post("/loginUser", checkJwt, async (data, res) => {
+    app.post("/loginUser", async (data, res) => {
         console.log("inside login-user")
         let user = data.body;
 
@@ -432,7 +432,7 @@ client.connect((err) => {
     });
 
 
-    app.post("/getUser", checkJwt,async(data, res) => {
+    app.post("/getUser",async(data, res) => {
 	console.log("getUser request heard");
 	var user = await getUser(data.body.username);
 	console.log("res.send: " + JSON.stringify(user))

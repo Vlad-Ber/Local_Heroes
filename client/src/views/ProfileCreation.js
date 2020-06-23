@@ -9,6 +9,7 @@ import TextInput from '../components/TextInput.js'
 import NavBar from '../components/NavBar.js';
 import ArrowButton from '../components/ArrowButton.js';
 import StyledForm from '../components/StyledForm.js';
+import auth0Client from '../Auth';
 
 class ProfileCreation extends Component {
 
@@ -33,45 +34,47 @@ class ProfileCreation extends Component {
         this.setState({ [e.target.name]: e.target.value })
     }
 
-  storeUser = e => {
-    e.preventDefault();
-    window.sessionStorage.setItem("stateProfileCreation", JSON.stringify(this.state));
-    this.props.history.push("/residence-info");
-  }
+    storeUser = e => {
+	e.preventDefault();
+	window.sessionStorage.setItem("stateProfileCreation", JSON.stringify(this.state));
+	this.props.history.push("/residence-info");
+    }
 
-  checkForUniqueUser = e => {
-      axios.post(config.baseUrl + "/check-user", {
-          username: this.state.username,
-          email: this.state.email,
-      })
-          .then((response) => {
-              let uniqueUser =  response.data.uniqueUser;
-              let uniqueEmail = response.data.uniqueEmail;
+    checkForUniqueUser = e  => {
+	axios.post(config.baseUrl + "/check-user", {
+            username: this.state.username,
+            email: this.state.email,
+	})
+            .then((response) => {
+		let uniqueUser =  response.data.uniqueUser;
+		let uniqueEmail = response.data.uniqueEmail;
 
-              if(uniqueUser && uniqueEmail) {
-                this.setState({text: 'Username and Email already taken'});
+		if(uniqueUser && uniqueEmail) {
+                    this.setState({text: 'Username and Email already taken'});
 
-              } else if(uniqueUser){
-                this.setState({text: 'Username already taken'});
+		} else if(uniqueUser){
+                    this.setState({text: 'Username already taken'});
 
-              } else if(uniqueEmail){
-                this.setState({text: 'Email already taken'});
+		} else if(uniqueEmail){
+                    this.setState({text: 'Email already taken'});
 
-              } else {
-                this.storeUser(e);
-              }
-          })
-   }
+		} else {
+		    auth0Client.signUp(this.state.email, this.state.password, this.state.username);
+		    console.log("auth0Client.signup");
+		    this.storeUser(e);
+		    }
+	    })
+    }
 
-    render(){
-        return (
-            <div>
-                <NavBar
-                    leftButtonType="back"
-                    leftButtonLink="/signup"
-                />
+	render(){
+            return (
+		    <div>
+                    <NavBar
+                leftButtonType="back"
+                leftButtonLink="/signup"
+                    />
 
-                <StyledForm>
+                    <StyledForm>
                     <SectionTitle text="Profile Creation" />
 
                     <SectionTitle id="username" fontSize="14px" text="Username" />
@@ -97,13 +100,13 @@ class ProfileCreation extends Component {
                     <ArrowButton onClick={this.checkForUniqueUser} />
 
                 </StyledForm>
-            </div>
-        );
+		    </div>
+            );
+	}
     }
-}
 
 
-const TextWrapper = styled.div`
+    const TextWrapper = styled.div`
     border: #4CAF50;
     color: red;
     margin-top: 1em;
@@ -112,4 +115,4 @@ const TextWrapper = styled.div`
 `;
 
 
-export default ProfileCreation;
+    export default ProfileCreation;

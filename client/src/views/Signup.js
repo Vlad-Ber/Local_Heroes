@@ -8,6 +8,7 @@ import SectionTitle from "../components/SectionTitle.js";
 import TextInput from "../components/TextInput.js";
 import TextButton from "../components/TextButton.js";
 import LinkWrapper from "../components/LinkWrapper.js";
+import auth0Client from '../Auth';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSeedling } from "@fortawesome/free-solid-svg-icons";
@@ -28,7 +29,9 @@ class Signup extends Component {
   };
 
   checkLogin = (e) => {
-    e.preventDefault();
+      e.preventDefault();
+      auth0Client.login(this.state.username);
+      console.log("Rad efter login");
     axios
       .post(config.baseUrl + "/loginUser", {
         username: this.state.username,
@@ -37,7 +40,8 @@ class Signup extends Component {
       .then((response) => {
         let login = response.data.login;
 
-        if (login) {
+          if (login) {
+	      //Auth 0 login
           let user = response.data.user;
           window.localStorage.setItem("loggedInUser", JSON.stringify(user));
           this.props.activeUser.onSetLoggedInUser(user);
