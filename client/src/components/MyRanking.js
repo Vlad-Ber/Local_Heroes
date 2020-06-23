@@ -8,7 +8,7 @@ class MyRanking extends Component {
     	super(props)
     	this.state = {
     	    user: this.props.activeUser,
-          myRank: null
+            myRank: null,
     	}
     }
 
@@ -20,7 +20,7 @@ class MyRanking extends Component {
 
     	}).then((response) => {
           const myRanking = response.data.myRank;
-          if(myRanking == -1){
+          if(myRanking === -1){
             this.setState({	myRank:  "error while retrieving rank"});
 
           } else {
@@ -49,7 +49,7 @@ class MyRanking extends Component {
     }
 
     render(){
-	     console.log(this.state.user);
+	     console.log("myrank :" + this.state.myRank);
         return (
       		<MyRankingWrapper>
       	    <TitleWrapper>
