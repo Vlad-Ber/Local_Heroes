@@ -10,15 +10,11 @@ import PlacesAutocomplete, {
 class AutoCompleteInput extends React.Component {
   constructor(props) {
     super(props);
-
-    console.log(this.props)
-
   }
 
   render() {
     return (
       <PlacesAutocomplete
-        onSelect={this.handleSelect}
         {...this.props}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
@@ -39,6 +35,9 @@ class AutoCompleteInput extends React.Component {
                 const style = suggestion.active
                   ? { backgroundColor: '#a6a3a0', cursor: 'pointer' }
                   : { backgroundColor: '#ffffff', cursor: 'pointer' };
+
+                  console.log(suggestion  )
+
                 return (
                   <div
                     {...getSuggestionItemProps(suggestion, {

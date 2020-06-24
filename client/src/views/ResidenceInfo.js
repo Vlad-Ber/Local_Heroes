@@ -12,7 +12,6 @@ import ArrowButton from '../components/ArrowButton.js';
 import StyledForm from '../components/StyledForm.js';
 
 class ResidenceInfo extends React.Component {
-
       constructor(props){
         super(props);
 
@@ -29,23 +28,48 @@ class ResidenceInfo extends React.Component {
 
       setAdress = address => {
         this.setState({ address: address })
+
+        this.getAreaCode(address);
       }
 
-    /*  handleSelect = address => {
-        geocodeByAddress(address)
-          .then(results => getLatLng(results[0]))
-          .then(latLng => console.log('Success', latLng))
-          .catch(error => console.error('Error', error));
-      };*/
+      getAreaCode = async address => {
+        let result = await geocodeByAddress(address);
+        let latLng = await getLatLng(result[0]);
+
+        this.getCityByCoordinates(latLng.lat, latLng.lng);
+        console.log("--AREA CODE--");
+        console.log(result[0]);
+        console.log(this.state.area)
+        console.log(this.state.city)
+
+      };
+
+      getCityByCoordinates = async (lat, lng) => {
+        let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyBQ0fbpDjxjDFLmagN0-pgyinM8rKTSPwg`
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+
+          let parts = data.results[0].address_components;
+
+          parts.forEach(part => {
+            if( part.types.includes("postal_code") ){
+              this.setState({ area: part.long_name })
+
+            } else if( part.types.includes("postal_town") ) {
+              this.setState({ city: part.long_name })
+            }
+          })
+        })
+    };
 
 
-      storeSession = e => {
-        window.sessionStorage.setItem("stateResidenceInfo", JSON.stringify(this.state));
-        this.props.history.push("/insert-image");
-      }
+    storeSession = e => {
+      window.sessionStorage.setItem("stateResidenceInfo", JSON.stringify(this.state));
+      this.props.history.push("/insert-image");
+    }
 
     render(){
-      console.log(this.state)
         return (
           <div>
             <NavBar

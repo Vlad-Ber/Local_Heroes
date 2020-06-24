@@ -2,13 +2,19 @@ import React, { Component } from 'react';
 
 import styled from 'styled-components'
 import axios from 'axios';
-import { config } from "../config"
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng,
+} from 'react-places-autocomplete';
 
 import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js'
 import NavBar from '../components/NavBar.js';
 import ArrowButton from '../components/ArrowButton.js';
 import StyledForm from '../components/StyledForm.js';
+import AutoCompleteInput from '../components/AutoCompleteInput.js';
+
+import { config } from "../config"
 
 class ProfileCreation extends Component {
 
@@ -25,6 +31,10 @@ class ProfileCreation extends Component {
             email: '',
             mobile: '',
 
+            address: '',
+            area: '',
+            city: '',
+
             text: '',
         }
     }
@@ -33,10 +43,39 @@ class ProfileCreation extends Component {
         this.setState({ [e.target.name]: e.target.value })
     }
 
+    sendProfiletoBackend = (userProfile, response) => {
+      let user = this.state;
+
+      axios
+        .post(config.baseUrl + "/insertUser", {
+          username: user.username,
+          password: user.password,
+          email: user.email,
+          name: user.name,
+          age: user.age,
+          address: user.address,
+          description: user.description,
+          virtuePoints: 0,
+          areaId: user.area,
+          mobile: user.mobile,
+          city: user.city,
+          image: "",
+        })
+        .then((response) => {
+          console.log(response);
+        });
+
+    };
+
   storeUser = e => {
+    let user = this.state;
+    let result = delete user['text'];
+
+    this.sendProfiletoBackend();
+
     e.preventDefault();
-    window.sessionStorage.setItem("stateProfileCreation", JSON.stringify(this.state));
-    this.props.history.push("/residence-info");
+    window.sessionStorage.setItem("stateProfileCreation", JSON.stringify(result));
+    this.props.history.push("/signup");
   }
 
   checkForUniqueUser = e => {
@@ -62,6 +101,46 @@ class ProfileCreation extends Component {
               }
           })
    }
+
+   /**** CODE FOR ADDRESS ****/
+
+   setAdress = address => {
+     this.setState({ address: address })
+
+     this.getAreaCode(address);
+   }
+
+   getAreaCode = async address => {
+     let result = await geocodeByAddress(address);
+     let latLng = await getLatLng(result[0]);
+
+     this.getCityByCoordinates(latLng.lat, latLng.lng);
+     console.log("--AREA CODE--");
+     console.log(result[0]);
+     console.log(this.state.area)
+     console.log(this.state.city)
+
+   };
+
+   getCityByCoordinates = async (lat, lng) => {
+     let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyBQ0fbpDjxjDFLmagN0-pgyinM8rKTSPwg`
+     await fetch(url)
+     .then( response => response.json())
+     .then( data => {
+
+       let parts = data.results[0].address_components;
+
+       parts.forEach( part => {
+         if( part.types.includes("postal_code") ){
+           this.setState({ area: part.long_name })
+
+         } else if( part.types.includes("postal_town") ) {
+           this.setState({ city: part.long_name })
+         }
+       })
+     })
+   };
+
 
     render(){
         return (
@@ -91,6 +170,12 @@ class ProfileCreation extends Component {
 
                     <SectionTitle fontSize="14px" text="E-mail address" />
                     <TextInput height="24px" name="email" value={this.email} onChange={this.saveInput}/>
+
+                    <SectionTitle text="Address" fontSize="14px" />
+                    <AutoCompleteInput
+                    value={this.state.address}
+                    onChange={this.setAdress}
+                    />
 
                     <TextWrapper>{this.state.text}</TextWrapper>
 
