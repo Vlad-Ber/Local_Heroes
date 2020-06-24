@@ -433,7 +433,6 @@ client.connect((err) => {
       	let newUserData = data.body;
 
         await updateUser(newUserData);
-        //await updateVirtuePoints(newUserData.user);
 
         console.log(newUserData.user)
       	res.send(newUserData); //non-sensical line?
