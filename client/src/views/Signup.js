@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import styled from "styled-components";
 import axios from "axios";
-import { config }  from "../config"
+import { config } from "../config";
 
 import SectionTitle from "../components/SectionTitle.js";
 import TextInput from "../components/TextInput.js";
@@ -35,18 +35,22 @@ class Signup extends Component {
         password: this.state.password,
       })
       .then((response) => {
-        let login = response.data.login;
+        let loginAccessToken = response.data.accesstoken;
 
-        if (login) {
-          let user = response.data.user;
-          window.localStorage.setItem("loggedInUser", JSON.stringify(user));
-          this.props.activeUser.onSetLoggedInUser(user);
-          this.props.history.push("/home");
-        } else {
-          this.setState({
-            text: "Wrong Username or Password",
-          });
-        }
+        console.log(loginAccessToken);
+        // if (login) {
+        //   let user = response.data.user;
+        //   window.localStorage.setItem("loggedInUser", JSON.stringify(user));
+        //   this.props.activeUser.onSetLoggedInUser(user);
+        //   this.props.history.push("/home");
+        // } else {
+        //   this.setState({
+        //     text: "Wrong Username or Password",
+        //   });
+        // }
+      })
+      .catch((error) => {
+        console.log("Got error while posting data", error);
       });
   };
 
