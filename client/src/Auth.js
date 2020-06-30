@@ -45,8 +45,8 @@ class Auth {
 	});
     }
     
-    signIn() {
-	this.auth0.authorize();
+    async signIn() {
+	await this.auth0.authorize();
     }
     
     async login(username, password){

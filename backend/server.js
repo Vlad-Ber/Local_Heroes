@@ -412,7 +412,7 @@ client.connect((err) => {
 	res.send(dataToSend);
     });
 
-    app.post("/loginUser", async (data, res) => {
+    app.post("/loginUser", checkJwt,async (data, res) => {
         console.log("inside login-user")
         let user = data.body;
 

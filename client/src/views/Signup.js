@@ -28,10 +28,10 @@ class Signup extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  checkLogin = (e) => {
-      e.preventDefault();
-      auth0Client.login(this.state.username);
-      console.log("Rad efter login");
+     checkLogin = (e) => {
+	 e.preventDefault();
+	 auth0Client.login();
+	 console.log("----Auth0 api login----");
     axios
       .post(config.baseUrl + "/loginUser", {
         username: this.state.username,
