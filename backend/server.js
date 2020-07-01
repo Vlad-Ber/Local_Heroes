@@ -358,9 +358,8 @@ client.connect((err) => {
       { $set: { "users.$.virtuePoints": user.virtuePoints } }
     );
   }
-
+  // FUNC: used to update the refreshtoken for a user
   async function updateRefreshTokenUser(user, refreshtoken) {
-    console.log("Refreshtoken: " + refreshtoken);
     await users.updateOne(
       { username: user.username },
       { $set: { refreshtoken: refreshtoken } }
@@ -464,6 +463,7 @@ client.connect((err) => {
       res.send({ error: "${err.message}" });
     }
   });
+
   app.post("/check-user", async (data, res) => {
     let user = data.body;
     let curUsername = { username: user.username };
@@ -473,6 +473,8 @@ client.connect((err) => {
     let dataToSend = { uniqueUser: userExists, uniqueEmail: emailExists };
     res.send(dataToSend);
   });
+
+  // login a user
   app.post("/loginUser", async (data, res) => {
     console.log("inside login-user");
     let user = data.body;
@@ -483,16 +485,11 @@ client.connect((err) => {
         user.password,
         checkUser.password
       );
-      console.log("checkUser: " + checkUser);
-      console.log("User: " + user);
-
       if (!comparePassword) throw new Error("Password not correct");
       const accesstoken = createAccessToken(user.id);
       const refreshtoken = createRefreshToken(user.id);
       // Update database
       await updateRefreshTokenUser(checkUser, refreshtoken);
-
-      // user.refreshtoken = refreshtoken;
       sendRefreshToken(res, refreshtoken);
       sendAccessToken(res, data, accesstoken);
     } catch (err) {
@@ -579,10 +576,24 @@ client.connect((err) => {
     userToUpdate.virtuePoints = userToUpdate.virtuePoints + 2;
     await updateVirtuePoints(userToUpdate);
   });
+
   app.post("/getErrandsArea", async function (req, res) {
-    var errands = await getErrandsArea(req.body.areaID);
-    res.send({ errands });
+    try {
+      const userID = isAuth(req);
+      if (userID !== null) {
+        var errands = await getErrandsArea(req.body.areaID);
+        res.send({
+          data: "This is protected data",
+        });
+      }
+    } catch (err) {
+      res.send({
+        data: 0,
+        error: `${err.message}`,
+      });
+    }
   });
+
   app.post("/uploadImage", async (data, res) => {
     let image = data.body;
   });
