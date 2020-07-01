@@ -42,14 +42,14 @@ class AutoCompleteInput extends React.Component {
                   console.log(suggestion  )
 
                 return (
-                  <div
+                  <StyledSuggestions
                     {...getSuggestionItemProps(suggestion, {
                       className,
                       style,
                     })}
                   >
                     <span>{suggestion.description}</span>
-                  </div>
+                  </StyledSuggestions>
                 );
               })}
             </div>
@@ -59,20 +59,21 @@ class AutoCompleteInput extends React.Component {
     );
   }
 }
-const StyledDiv = styled.div`
+const StyledSuggestions = styled.div`
+  margin: auto;
+  display: flex;
 
-	border-radius: 16px;
-	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.12);
-	border: 1px solid #31D285;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	font-family: 'Muli';
-	position: relative;
-	height: 24px;
-	width: 370px;
-	max-width: calc(100% - 10px);
+  font-family: 'Arial', Helvetica, sans-serif;
+  font-size: 14px;
+
+  border:  1px outset #31D285;
+  box-sizing: border-box;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.12);
+
+  height: 18px;
+  width: 18em;
+
+  overflow: hidden;
 `
 
 
