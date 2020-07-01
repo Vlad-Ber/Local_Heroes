@@ -1,6 +1,9 @@
 import React from 'react';
 
 import styled from 'styled-components'
+
+import '../css/components.css'
+
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
@@ -16,12 +19,12 @@ class AutoCompleteInput extends React.Component {
     return (
       <PlacesAutocomplete
         {...this.props}
+        class="autocompleteInput"
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div>
-            <input
+          <div class="autocompleteInput">
+            <StyledInput
               {...getInputProps({
-                placeholder: 'Search Address ...',
                 className: 'location-search-input',
               })}
             />
@@ -56,6 +59,22 @@ class AutoCompleteInput extends React.Component {
     );
   }
 }
+const StyledDiv = styled.div`
+
+	border-radius: 16px;
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.12);
+	border: 1px solid #31D285;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-family: 'Muli';
+	position: relative;
+	height: 24px;
+	width: 370px;
+	max-width: calc(100% - 10px);
+`
+
 
 const StyledInput = styled.input`
     margin: auto;
@@ -68,8 +87,8 @@ const StyledInput = styled.input`
     box-sizing: border-box;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.12);
 
-    height: ${props => props.height || '24em'};
-    width: ${props => props.width || '18em'};
+    height: 24px;
+    width: 18em;
 `
 
 export default AutoCompleteInput;

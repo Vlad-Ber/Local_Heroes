@@ -79,6 +79,8 @@ class ProfileCreation extends Component {
   }
 
   checkForUniqueUser = e => {
+      this.getAreaCode(this.state.address);
+
       axios.post(config.baseUrl + "/check-user", {
           username: this.state.username,
           email: this.state.email,
@@ -106,26 +108,25 @@ class ProfileCreation extends Component {
 
    setAdress = address => {
      this.setState({ address: address })
-
-     this.getAreaCode(address);
    }
 
-   getAreaCode = async address => {
+   getAreaCode = async (address) => {
+
      let result = await geocodeByAddress(address);
      let latLng = await getLatLng(result[0]);
 
      this.getCityByCoordinates(latLng.lat, latLng.lng);
+
      console.log("--AREA CODE--");
      console.log(result[0]);
      console.log(this.state.area)
      console.log(this.state.city)
-
    };
 
    getCityByCoordinates = async (lat, lng) => {
      let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyBQ0fbpDjxjDFLmagN0-pgyinM8rKTSPwg`
      await fetch(url)
-     .then( response => response.json())
+     .then( response => response.json() )
      .then( data => {
 
        let parts = data.results[0].address_components;
@@ -175,6 +176,7 @@ class ProfileCreation extends Component {
                     <AutoCompleteInput
                     value={this.state.address}
                     onChange={this.setAdress}
+                    height="24px"
                     />
 
                     <TextWrapper>{this.state.text}</TextWrapper>

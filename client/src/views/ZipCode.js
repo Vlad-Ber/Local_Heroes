@@ -15,7 +15,7 @@ const ZipCode = (props) => {
 
   async function updateZipCode() {
     let zip = zipCode;
-    if(zipCode.length == 5){
+    if(zipCode.length === 5){
       zip = zip.slice(0, 3) + ' ' + zip.slice(3, 5);
     }
 
