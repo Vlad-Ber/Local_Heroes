@@ -82,21 +82,41 @@ class ProfileCreation extends Component {
       axios.post(config.baseUrl + "/check-user", {
           username: this.state.username,
           email: this.state.email,
+          mobile: this.state.mobile,
+          email: this.state.email,
       })
           .then((response) => {
               let uniqueUser =  response.data.uniqueUser;
               let uniqueEmail = response.data.uniqueEmail;
+              let validEmail = response.data.validEmail;
+              let validNumber = response.data.validPhoneNumber;
 
-              if(uniqueUser && uniqueEmail) {
+              console.log("User: " + uniqueUser);
+              console.log("uniqueEmail: " + uniqueEmail);
+              console.log("validEmail: " + validEmail);
+
+              let user = this.state;
+
+              if(user.username.length == 0 || user.email.length == 0) {
+                this.setState({text: 'Please answer every field!'});
+
+              } else if(!validEmail) {
+                this.setState({text: 'Please enter a valid e-mail!'});
+
+              } else if(!validNumber) {
+                this.setState({text: 'Please enter valid Phone-number!'});
+
+              } else if(!uniqueUser && !uniqueEmail) {
                 this.setState({text: 'Username and Email already taken'});
 
-              } else if(uniqueUser){
+              } else if(!uniqueUser){
                 this.setState({text: 'Username already taken'});
 
-              } else if(uniqueEmail){
+              } else if(!uniqueEmail){
                 this.setState({text: 'Email already taken'});
 
               } else {
+                // Function storeUser sends user to next page
                 this.storeUser(e);
               }
           })

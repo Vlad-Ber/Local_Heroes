@@ -22,7 +22,7 @@ class AutoCompleteInput extends React.Component {
         class="autocompleteInput"
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div class="autocompleteInput">
+          <div>
             <StyledInput
               {...getInputProps({
                 className: 'location-search-input',
