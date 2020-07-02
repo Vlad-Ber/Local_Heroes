@@ -55,15 +55,14 @@ client.connect((err) => {
     //ARG: Email in JSON-Format
     //RET: True if either usernamee/email is in Users-collection, else false
     async function checkUser(curUserName, curEmail) {
-	let checkUser = await documentExist("Users", { username: curUserName });
-	let checkEmail = await documentExist("Users", { email: curEmail });
-	if (checkUser == true || checkEmail == true) {
-	    return true;
-	} else {
-	    return false;
-	}
+    	let checkUser = await documentExist("Users", { username: curUserName });
+    	let checkEmail = await documentExist("Users", { email: curEmail });
+    	if (checkUser == true || checkEmail == true) {
+    	    return true;
+    	} else {
+    	    return false;
+    	}
     }
-
 
     //FUNC: Get all errands for an Area
     //ARG: Area to get errands from
@@ -278,9 +277,9 @@ client.connect((err) => {
     }
 
 
-    /*  FUNC: Updates value of virtuepoints (VP) in
-    *   Areas and Users collection for specific user
-    *   and updates leaderboard for VP
+   /*  FUNC: Updates value of virtuepoints (VP) in
+    *  Areas and Users collection for specific user
+    *  and updates leaderboard for VP
     */
     async function updateVirtuePoints(user) {
         await updateVPInUsers(user);
@@ -346,6 +345,24 @@ client.connect((err) => {
 	});
     }
 
+    //FUNC: Checks if e-mail address if valid
+    function validateEmail(email) {
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))  {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function validatePhonenumber(number) {
+      if(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(number)) {
+          return true;
+      } else {
+          return false;
+      }
+    }
+
+
     //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------//
 
     app.use(bodyParser.json());
@@ -382,16 +399,23 @@ client.connect((err) => {
 
 
     app.post("/check-user", async (data, res) => {
-	let user = data.body;
-	let curUsername = { username: user.username };
-	let curEmail = { email: user.email };
+    	let user = data.body;
+    	let curUsername = { username: user.username };
+    	let curEmail = { email: user.email };
 
-	let userExists = await documentExist("Users", curUsername);
-	let emailExists = await documentExist("Users", curEmail);
+    	let userExists = await documentExist("Users", curUsername);
+    	let emailExists = await documentExist("Users", curEmail);
+      let validEmail = await validateEmail(user.email);
+      let validNumber = await validatePhonenumber(user.mobile);
 
-	let dataToSend = { uniqueUser: userExists, uniqueEmail: emailExists };
+    	let dataToSend = {
+        uniqueUser: !userExists,
+        uniqueEmail: !emailExists ,
+        validEmail: validEmail,
+        validPhoneNumber: validNumber,
+      };
 
-	res.send(dataToSend);
+    	res.send(dataToSend);
     });
 
     app.post("/loginUser", async (data, res) => {
@@ -433,7 +457,6 @@ client.connect((err) => {
       	let newUserData = data.body;
 
         await updateUser(newUserData);
-        //await updateVirtuePoints(newUserData.user);
 
         console.log(newUserData.user)
       	res.send(newUserData); //non-sensical line?

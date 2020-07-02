@@ -14,11 +14,16 @@ const ZipCode = (props) => {
   const [success, setSuccess] = useState(null);
 
   async function updateZipCode() {
+    let zip = zipCode;
+    if(zipCode.length === 5){
+      zip = zip.slice(0, 3) + ' ' + zip.slice(3, 5);
+    }
+
     await axios.post(config.baseUrl + "/updateUser", {
       user:   props.activeUser,
       userID: props.activeUser._id,
       newUserData: {
-          areaID: zipCode
+          areaID: zip,
       }
     }).then(async (response) => {
       console.log("Zip code updated successfully!", response)
@@ -31,6 +36,7 @@ const ZipCode = (props) => {
       setSuccess(false);
     });
   }
+
 
   function updateUserContext(){
     console.log("updateLoggedInUser");
@@ -68,6 +74,7 @@ const ZipCode = (props) => {
         <TextInput
           height="32px"
           value={zipCode}
+          type="number"
           onChange={(e) => setZipCode(e.target.value)}
         />
         <TextButton
