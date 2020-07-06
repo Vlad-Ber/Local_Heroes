@@ -28,6 +28,16 @@ const TextInput = (props) => {
       />
       );
 
+    case "loginPassword":
+      return (
+        <WrappedSignIn>
+          <StyledSignIn
+            type="password"
+            {...props}
+          />
+        </WrappedSignIn>
+      );
+
     default:
       return (
       <StyledTextArea
@@ -54,7 +64,7 @@ const StyledTextArea = styled.textarea`
 
     height: ${props => props.height || '24em'};
     width: ${props => props.width || '18em'};
-    
+
     resize: ${props => props.resize || 'none'};
 
 `
@@ -72,4 +82,28 @@ const StyledInput = styled.input`
     height: ${props => props.height || '24em'};
     width: ${props => props.width || '18em'};
 `
+const WrappedSignIn = styled.div`
+  width: 100%;
+  background-color: #fff;
+  border-radius: 27px;
+  position: relative;
+  z-index: 1;
+`
+
+//font-family: Ubuntu-Bold;
+const StyledSignIn = styled.input`
+  font-size: 15px;
+  color: #1b3815;
+  line-height: 1.2;
+
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 55px;
+  background: #ebebeb;
+  border-radius: 27px;
+  padding: 0 35px 0 35px;
+`
+
+
 export default TextInput;

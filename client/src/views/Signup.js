@@ -76,9 +76,7 @@ class Signup extends Component {
         <SectionTitle text="PASSWORD" />
         <TextInput
           name="password"
-          type="password"
-          height="32px"
-          width="240px"
+          type="loginPassword"
           onChange={this.saveInput}
           autocomplete="new-password"
         />
