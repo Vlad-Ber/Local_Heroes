@@ -12,6 +12,10 @@ import LinkWrapper from "../components/LinkWrapper.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSeedling } from "@fortawesome/free-solid-svg-icons";
 
+
+import "./css/util.css";
+import "./css/main.css";
+
 class Signup extends Component {
   constructor(props) {
     super(props);
@@ -52,82 +56,77 @@ class Signup extends Component {
 
   render() {
     return (
-      <SignUpWrapper>
-        <WelcomeMessage>
-          <FontAwesomeIcon
-            icon={faSeedling}
-            style={{
-              fontSize: "72px",
-              color: "#31D285",
-            }}
-          />
-          <p>Welcome to LocalHero!</p>
-        </WelcomeMessage>
 
-        <SectionTitle text="USERNAME" />
-        <TextInput
-          name="username"
-          height="32px"
-          width="240px"
-          onChange={this.saveInput}
-          autocomplete="username"
-        />
+    	<div class="limiter">
+    		<div class="container-login100">
+    			<div class="wrap-login100">
+    				<form class="login100-form validate-form p-l-55 p-r-55 p-t-178">
+    					<span class="login100-form-title">
+                  <FontAwesomeIcon
+                    icon={faSeedling}
+                    style={{
+                      fontSize: "72px",
+                      color: "#31D285",
+                    }}
+                  />
+    					    LocalHeroes
+    					</span>
 
-        <SectionTitle text="PASSWORD" />
-        <TextInput
-          name="password"
-          type="loginPassword"
-          onChange={this.saveInput}
-          autocomplete="new-password"
-        />
+    					<div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
+    						<input
+                class="input100"
+                type="text"
+                name="username"
+                placeholder="Username"
+                onChange={this.saveInput}
+                />
+    						<span class="focus-input100"></span>
+    					</div>
 
-        <TextButton
-          onClick={this.checkLogin}
-          description="LOGIN"
-          marginTop="40px"
-          marginBottom="10px"
-          height="32px"
-          width="240px"
-        />
+    					<div class="wrap-input100 validate-input" data-validate = "Please enter password">
+    						<input class="input100"
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={this.saveInput}
+                />
+    						<span class="focus-input100"></span>
+    					</div>
 
-        <LinkWrapper to="profile-creation">
-          <TextButton
-            description="SIGN UP"
-            marginTop="10px"
-            marginBottom="10px"
-            height="32px"
-            width="240px"
-          />
-        </LinkWrapper>
-        <TextWrapper>{this.state.text}</TextWrapper>
-      </SignUpWrapper>
+    					<div class="text-right p-t-13 p-b-23">
+    						<span class="txt1">
+    							Forgot <span> </span>
+    						</span>
+
+    						<a href="#" class="txt2">
+    							Username / Password?
+    						</a>
+    					</div>
+
+    					<div class="container-login100-form-btn">
+    						<button class="login100-form-btn" onClick={this.checkLogin}>
+    							Sign in
+    						</button>
+    					</div>
+
+    					<div class="flex-col-c p-t-170 p-b-40">
+    						<span class="txt1 p-b-9">
+    							Don’t have an account?
+    						</span>
+
+                <LinkWrapper to="profile-creation">
+      						<a class="txt3">
+      							Sign up now
+      						</a>
+                </LinkWrapper>
+              </div>
+              
+    				</form>
+    			</div>
+    		</div>
+    	</div>
     );
   }
 }
-
-const TextWrapper = styled.div`
-  border: #4caf50;
-  color: red;
-  font-size: 20px;
-  border-radius: 100%;
-  margin: auto;
-  padding-top: 0.8em;
-`;
-
-const SignUpWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const WelcomeMessage = styled.div`
-  display: flex;
-  flex-direction: column;
-  font-size: 24px;
-  font-weight: 800;
-  align-items: center;
-  justify-content: center;
-  padding-top: 80px;
-  padding-bottom: 10px;
-`;
 
 export default Signup;
