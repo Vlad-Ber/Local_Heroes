@@ -191,7 +191,7 @@ class ProfileCreation extends Component {
                             />
                 					</div>
 
-                					<div class="wrap-input100 validate-input">
+                					<div class="wrap-input100 validate-input m-b-16">
                             <TextInput
                             inputType="pf" placeholder="Password"
                             type="password" height="24px"
@@ -200,7 +200,7 @@ class ProfileCreation extends Component {
                             />
                 					</div>
 
-                					<div class="wrap-input100 validate-input">
+                					<div class="wrap-input100 validate-input m-b-16">
                             <TextInput
                             inputType="pf" placeholder="Full Name"
                             height="24px" name="name"
@@ -208,7 +208,7 @@ class ProfileCreation extends Component {
                             />
                 					</div>
 
-                					<div class="wrap-input100 validate-input">
+                					<div class="wrap-input100 validate-input m-b-16">
                             <TextInput
                             inputType="pf" placeholder="Age"
                             height="24px" name="age"
@@ -217,7 +217,7 @@ class ProfileCreation extends Component {
                             />
                 					</div>
 
-                					<div class="wrap-input100 validate-input">
+                					<div class="wrap-input100 validate-input m-b-16">
                             <TextInput
                             inputType="pf" placeholder="Phone-number"
                             height="24px" name="mobile"
@@ -226,15 +226,14 @@ class ProfileCreation extends Component {
                             />
                 					</div>
 
-                					<div class="wrap-input100 validate-input">
+                					<div class="wrap-input100 validate-input m-b-16">
                             <TextInput
                             inputType="pf" placeholder="E-mail"
                             height="24px" name="email"
                             value={this.email} onChange={this.saveInput}
                             />
                 					</div>
-                					<div class="wrap-input100 validate-input">
-                            <SectionTitle text="Address" fontSize="14px" />
+                					<div class="wrap-input100 validate-input m-b-16">
                             <AutoCompleteInput
                             value={this.state.address}
                             onChange={this.setAdress}

@@ -13,6 +13,9 @@ const ArrowButton = (props) => {
 }
 
 const ArrowButtonWrapper = styled.button`
+    margin: auto;
+    display: flex;
+
     background-color: white;
     border: #4CAF50;
     color: #4CAF50;
@@ -22,6 +25,7 @@ const ArrowButtonWrapper = styled.button`
 
     &:hover {
       cursor: pointer;
+
     }
 `;
 

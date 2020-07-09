@@ -90,8 +90,9 @@ const WrapperPf = styled.div`
     display: flex;
 
     padding: 2px 0 0;
-    width: 50%;
+    width: 70%;
 `
+
 const StyledInputPf = styled.input`
     font-family: Ubuntu-Regular;
     width: 100%;
@@ -105,6 +106,7 @@ const StyledInputPf = styled.input`
     &:hover {
       cursor: auto;
 
+      background-color: #F0F0F0;
       border-image: linear-gradient(to right, #11998e, #38ef7d);
       border-image-slice: 1;
     }
@@ -113,6 +115,8 @@ const StyledInputPf = styled.input`
       padding-bottom: 6px;
       font-weight: 400;
       border-width: 3px;
+
+      background-color: #F0F0F0;
       border-image: linear-gradient(to right, #11998e, #38ef7d);
       border-image-slice: 1;
     }
