@@ -16,6 +16,15 @@ import AutoCompleteInput from '../components/AutoCompleteInput.js';
 
 import { config } from "../config"
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSeedling } from "@fortawesome/free-solid-svg-icons";
+
+
+import "../css/util.css";
+import "../css/main.css";
+
+import LinkWrapper from "../components/LinkWrapper.js";
+
 class ProfileCreation extends Component {
 
     constructor(props){
@@ -166,57 +175,83 @@ class ProfileCreation extends Component {
     render(){
         return (
             <div>
-                <NavBar
-                    leftButtonType="back"
-                    leftButtonLink="/signup"
-                />
+                	<div class="limiter">
+                		<div class="container-login100">
+                			<div class="wrap-login100">
+                				<form class="login100-form validate-form p-l-55 p-r-55 p-t-178">
+                					<span class="login100-form-title">
+                					    Profile Creation
+                					</span>
 
-                <StyledForm>
-                    <SectionTitle text="Profile Creation" />
+                					<div class="wrap-input100 validate-input m-b-16">
+                            <TextInput
+                            inputType="pf" placeholder="Username"
+                            name="username" onChange={this.saveInput}
+                            autocomplete="username"
+                            />
+                					</div>
 
-                    <SectionTitle id="username" fontSize="14px" text="Username" />
-                    <TextInput height="24px" name="username"  onChange={this.saveInput} autocomplete="username"/>
+                					<div class="wrap-input100 validate-input">
+                            <TextInput
+                            inputType="pf" placeholder="Password"
+                            type="password" height="24px"
+                            name="password" value={this.password}
+                            onChange={this.saveInput} autocomplete="new-password"
+                            />
+                					</div>
 
-                    <SectionTitle fontSize="14px" text="Password" />
-                    <TextInput type="password" height="24px" name="password" value={this.password} onChange={this.saveInput} autocomplete="new-password"/>
+                					<div class="wrap-input100 validate-input">
+                            <TextInput
+                            inputType="pf" placeholder="Full Name"
+                            height="24px" name="name"
+                            value={this.name} onChange={this.saveInput}
+                            />
+                					</div>
 
-                    <SectionTitle fontSize="14px" text="Full Name" />
-                    <TextInput height="24px" name="name" value={this.name} onChange={this.saveInput}/>
+                					<div class="wrap-input100 validate-input">
+                            <TextInput
+                            inputType="pf" placeholder="Age"
+                            height="24px" name="age"
+                            type="number" value={this.age}
+                            onChange={this.saveInput}
+                            />
+                					</div>
 
-                    <SectionTitle fontSize="14px" text="Age" />
-                    <TextInput height="24px" name="age" type="number" value={this.age} onChange={this.saveInput}/>
+                					<div class="wrap-input100 validate-input">
+                            <TextInput
+                            inputType="pf" placeholder="Phone-number"
+                            height="24px" name="mobile"
+                            type="number" value={this.mobile}
+                            onChange={this.saveInput}
+                            />
+                					</div>
 
-                    <SectionTitle fontSize="14px" text="Mobile number" />
-                    <TextInput height="24px" name="mobile" type="number" value={this.mobile} onChange={this.saveInput}/>
+                					<div class="wrap-input100 validate-input">
+                            <TextInput
+                            inputType="pf" placeholder="E-mail"
+                            height="24px" name="email"
+                            value={this.email} onChange={this.saveInput}
+                            />
+                					</div>
+                					<div class="wrap-input100 validate-input">
+                            <SectionTitle text="Address" fontSize="14px" />
+                            <AutoCompleteInput
+                            value={this.state.address}
+                            onChange={this.setAdress}
+                            height="24px"
+                            />
+                					</div>
 
-                    <SectionTitle fontSize="14px" text="E-mail address" />
-                    <TextInput height="24px" name="email" value={this.email} onChange={this.saveInput}/>
+                          <ArrowButton onClick={this.checkForUniqueUser} />
+                				</form>
+                			</div>
+                		</div>
+                	</div>
 
-                    <SectionTitle text="Address" fontSize="14px" />
-                    <AutoCompleteInput
-                    value={this.state.address}
-                    onChange={this.setAdress}
-                    height="24px"
-                    />
-
-                    <TextWrapper>{this.state.text}</TextWrapper>
-
-                    <ArrowButton onClick={this.checkForUniqueUser} />
-
-                </StyledForm>
             </div>
         );
     }
 }
-
-
-const TextWrapper = styled.div`
-    border: #4CAF50;
-    color: red;
-    margin-top: 1em;
-    font-size: 20px;
-    border-radius: 100%;
-`;
 
 
 export default ProfileCreation;

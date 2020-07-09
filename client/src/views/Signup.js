@@ -13,8 +13,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSeedling } from "@fortawesome/free-solid-svg-icons";
 
 
-import "./css/util.css";
-import "./css/main.css";
+import "../css/util.css";
+import "../css/main.css";
 
 class Signup extends Component {
   constructor(props) {
@@ -56,7 +56,6 @@ class Signup extends Component {
 
   render() {
     return (
-
     	<div class="limiter">
     		<div class="container-login100">
     			<div class="wrap-login100">
@@ -72,7 +71,7 @@ class Signup extends Component {
     					    LocalHeroes
     					</span>
 
-    					<div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
+    					<div class="wrap-input100 validate-input m-b-16">
     						<input
                 class="input100"
                 type="text"
@@ -83,7 +82,7 @@ class Signup extends Component {
     						<span class="focus-input100"></span>
     					</div>
 
-    					<div class="wrap-input100 validate-input" data-validate = "Please enter password">
+    					<div class="wrap-input100 validate-input">
     						<input class="input100"
                 type="password"
                 name="password"
@@ -98,7 +97,7 @@ class Signup extends Component {
     							Forgot <span> </span>
     						</span>
 
-    						<a href="#" class="txt2">
+    						<a class="txt2">
     							Username / Password?
     						</a>
     					</div>
@@ -120,7 +119,7 @@ class Signup extends Component {
       						</a>
                 </LinkWrapper>
               </div>
-              
+
     				</form>
     			</div>
     		</div>

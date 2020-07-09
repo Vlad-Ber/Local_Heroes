@@ -2,8 +2,10 @@ import React from 'react';
 
 import styled from 'styled-components'
 
+import "./components.css"
+
 const TextInput = (props) => {
-  let type = props.type;
+  let type = props.inputType;
   switch(type){
     case "number":
       return (
@@ -28,15 +30,14 @@ const TextInput = (props) => {
       />
       );
 
-    case "loginPassword":
+    //PF: Profile Creation
+    case "pf":
       return (
-        <WrappedSignIn>
-          <StyledSignIn
-            type="password"
-            {...props}
-          />
-        </WrappedSignIn>
+        <WrapperPf>
+          <StyledInputPf {...props}/>
+        </WrapperPf>
       );
+
 
     default:
       return (
@@ -82,27 +83,39 @@ const StyledInput = styled.input`
     height: ${props => props.height || '24em'};
     width: ${props => props.width || '18em'};
 `
-const WrappedSignIn = styled.div`
-  width: 100%;
-  background-color: #fff;
-  border-radius: 27px;
-  position: relative;
-  z-index: 1;
+
+
+const WrapperPf = styled.div`
+    margin: auto;
+    display: flex;
+
+    padding: 2px 0 0;
+    width: 50%;
 `
+const StyledInputPf = styled.input`
+    font-family: Ubuntu-Regular;
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid #9b9b9b;
+    outline: 0;
+    font-size: 1.2rem;
+    color: black;
+    padding: 7px 0;
 
-//font-family: Ubuntu-Bold;
-const StyledSignIn = styled.input`
-  font-size: 15px;
-  color: #1b3815;
-  line-height: 1.2;
+    &:hover {
+      cursor: auto;
 
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 55px;
-  background: #ebebeb;
-  border-radius: 27px;
-  padding: 0 35px 0 35px;
+      border-image: linear-gradient(to right, #11998e, #38ef7d);
+      border-image-slice: 1;
+    }
+
+    &:focus {
+      padding-bottom: 6px;
+      font-weight: 400;
+      border-width: 3px;
+      border-image: linear-gradient(to right, #11998e, #38ef7d);
+      border-image-slice: 1;
+    }
 `
 
 
