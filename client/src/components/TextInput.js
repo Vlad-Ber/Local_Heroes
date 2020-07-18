@@ -155,7 +155,7 @@ const StyledInputPf = styled.input`
     ::-ms-input-placeholder { /* Microsoft Edge */
       opacity: 0.65;
     }
-`;
+`
 
 
 export default TextInput;
