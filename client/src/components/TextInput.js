@@ -109,6 +109,17 @@ const StyledInputPf = styled.input`
       background-color: #F0F0F0;
       border-image: linear-gradient(to right, #11998e, #38ef7d);
       border-image-slice: 1;
+
+      ::placeholder {
+        opacity: 1;
+      }
+      :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        opacity: 1;
+      }
+
+      ::-ms-input-placeholder { /* Microsoft Edge */
+        opacity: 1;
+      }
     }
 
     &:focus {
@@ -119,8 +130,32 @@ const StyledInputPf = styled.input`
       background-color: #F0F0F0;
       border-image: linear-gradient(to right, #11998e, #38ef7d);
       border-image-slice: 1;
+
+      //opacity for placeholder
+      ::placeholder {
+        opacity: 1;
+      }
+      :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        opacity: 1;
+      }
+
+      ::-ms-input-placeholder { /* Microsoft Edge */
+        opacity: 1;
+      }
     }
-`
+
+    ::placeholder {
+      opacity: 0.65;
+    }
+
+    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+      opacity: 0.65;
+    }
+
+    ::-ms-input-placeholder { /* Microsoft Edge */
+      opacity: 0.65;
+    }
+`;
 
 
 export default TextInput;
