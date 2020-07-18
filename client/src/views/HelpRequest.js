@@ -9,6 +9,12 @@ import TextInput from '../components/TextInput.js';
 import DropDownInput from '../components/DropDownInput.js';
 import TextButton from '../components/TextButton.js';
 import ServerResponse from '../components/ServerResponse.js';
+import BackButton from '../components/BackButton.js';
+
+import "../css/util.css";
+import "../css/main.css";
+
+
 
 class HelpRequest extends Component {
 
@@ -94,64 +100,88 @@ class HelpRequest extends Component {
 
         return(
             <div>
-                <NavBar
-                    leftButtonType="back"
-                    leftButtonLink="/home"
-                />
-                <SectionTitle fontSize="14px" text="Name your help request"/>
-                <InputWrapper>
-                    <TextInput
-                        type="text"
-                        height="3em"
-                        onChange={this.handleChange}
-                        value={this.state.title}
-                        name="title"
-                    />
-                </InputWrapper>
 
-                <SectionTitle fontSize="14px" text="What do you need help with?"/>
-                <InputWrapper>
-                    <DropDownInput
-                        options={options}
-                        onChange={this.handleChange}
-                        value={this.state.type}
-                        name="type"
-                    />
-                </InputWrapper>
+                <div class="limiter">
+                  <div class="container-login100">
+                    <div class="wrap-login100">
+                      <form class="login100-form validate-form p-l-55 p-r-55 p-t-178">
+                        <span class="login100-form-title">
+                        <BackButton
+                            text="Home"
+                            link="/home"
+                        />
+                            Help Request
+                        </span>
 
-                <SectionTitle fontSize="14px" text="Describe more in detail please"/>
-                <InputWrapper>
-                    <TextInput
-                        type="text"
-                        height="8em"
-                        onChange={this.handleChange}
-                        value={this.state.description}
-                        name="description"
-                    />
-                </InputWrapper>
+                        <div class="wrap-input100 validate-input m-b-16">
+                          <SectionTitle fontSize="14px" text="Name your help request"/>
+                          <InputWrapper>
+                            <TextInput
+                                type="text"
+                                height="3em"
+                                onChange={this.handleChange}
+                                value={this.state.title}
+                                name="title"
+                            />
+                          </InputWrapper>
+                        </div>
 
-                <SectionTitle fontSize="14px" text="Phone Number"/>
-                <TextInput
-                    type="text"
-                    height="32px"
-                    width="240px"
-                    onChange={this.handleChange}
-                    value={this.state.number}
-                    name="number"
-                />
+                        <div class="wrap-input100 validate-input m-b-16">
+                          <SectionTitle fontSize="14px" text="What do you need help with?"/>
+                          <InputWrapper>
+                              <DropDownInput
+                                  options={options}
+                                  onChange={this.handleChange}
+                                  value={this.state.type}
+                                  name="type"
+                              />
+                          </InputWrapper>
+                        </div>
 
-                <SectionTitle fontSize="14px" text="E-mail"/>
-                <TextInput
-                    type="text"
-                    height="32px"
-                    width="240px"
-                    onChange={this.handleChange}
-                    value={this.state.email}
-                    name="email"
-                />
+                        <div class="wrap-input100 validate-input m-b-16">
+                          <SectionTitle fontSize="14px" text="Describe more in detail please"/>
+                          <InputWrapper>
+                              <TextInput
+                                  type="text"
+                                  height="8em"
+                                  onChange={this.handleChange}
+                                  value={this.state.description}
+                                  name="description"
+                              />
+                          </InputWrapper>
+                        </div>
 
-                <TextButton onClick={this.handlePublish} description="PUBLISH HELP REQUEST"/>
-                {this.renderResponse()}
+                        <div class="wrap-input100 validate-input m-b-16">
+                          <SectionTitle fontSize="14px" text="Phone Number"/>
+                          <TextInput
+                              type="text"
+                              height="32px"
+                              width="240px"
+                              onChange={this.handleChange}
+                              value={this.state.number}
+                              name="number"
+                          />
+                        </div>
+
+                        <div class="wrap-input100 validate-input m-b-16">
+                          <SectionTitle fontSize="14px" text="E-mail"/>
+                          <TextInput
+                              type="text"
+                              height="32px"
+                              width="240px"
+                              onChange={this.handleChange}
+                              value={this.state.email}
+                              name="email"
+                          />
+                        </div>
+
+
+                        <TextButton onClick={this.handlePublish} description="PUBLISH HELP REQUEST"/>
+                        {this.renderResponse()}
+                      </form>
+                    </div>
+                  </div>
+                </div>
 
             </div>
         );

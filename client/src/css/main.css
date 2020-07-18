@@ -216,6 +216,24 @@ iframe {
   padding-bottom: 39px;
 }
 
+.login100-form-title-localHeroes {
+  font-family: JosefinSans-Bold;
+  font-size: 30px;
+  color: #fff;
+  line-height: 1.2;
+  text-align: left;
+  padding-left: 20%;
+
+  display: block;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: #57b846;
+  padding-top: 50px;
+  padding-bottom: 39px;
+}
+
 /*------------------------------------------------------------------
 [ Input ]*/
 

@@ -11,6 +11,7 @@ import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js'
 import NavBar from '../components/NavBar.js';
 import ArrowButton from '../components/ArrowButton.js';
+import BackButton from '../components/BackButton.js';
 import StyledForm from '../components/StyledForm.js';
 import AutoCompleteInput from '../components/AutoCompleteInput.js';
 
@@ -180,6 +181,10 @@ class ProfileCreation extends Component {
                 			<div class="wrap-login100">
                 				<form class="login100-form validate-form p-l-55 p-r-55 p-t-178">
                 					<span class="login100-form-title">
+                          <BackButton
+                              text="Back"
+                              link="/signup"
+                          />
                 					    Profile Creation
                 					</span>
 
