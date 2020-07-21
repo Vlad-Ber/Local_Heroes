@@ -29,11 +29,15 @@ class Home extends Component {
     axios
       .post(config.baseUrl + "/getErrandsArea", {
         areaID: this.state.areaID,
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
       .then((response) => {
         if (response.data.data === 0) {
           console.log("true!");
-          this.context.router.transitionTo("/");
+          //window.location.href = "http://www.google.se";
         }
         console.log("Errands fetched successfully!", response);
         //console.log("errands: " + JSON.stringify(response.data))

@@ -33,21 +33,22 @@ class Signup extends Component {
       .post(config.baseUrl + "/loginUser", {
         username: this.state.username,
         password: this.state.password,
+        credentials: "include",
       })
       .then((response) => {
         let loginAccessToken = response.data.accesstoken;
-
+        var login = response.data.login;
         console.log(loginAccessToken);
-        // if (login) {
-        //   let user = response.data.user;
-        //   window.localStorage.setItem("loggedInUser", JSON.stringify(user));
-        //   this.props.activeUser.onSetLoggedInUser(user);
-        //   this.props.history.push("/home");
-        // } else {
-        //   this.setState({
-        //     text: "Wrong Username or Password",
-        //   });
-        // }
+        if (login) {
+          let user = response.data.user;
+          window.localStorage.setItem("loggedInUser", JSON.stringify(user));
+          this.props.activeUser.onSetLoggedInUser(user);
+          this.props.history.push("/home");
+        } else {
+          this.setState({
+            text: "Wrong Username or Password",
+          });
+        }
       })
       .catch((error) => {
         console.log("Got error while posting data", error);

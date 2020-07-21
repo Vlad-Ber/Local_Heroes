@@ -215,13 +215,11 @@ client.connect((err) => {
     return user;
   }
   async function fetchUserByID(userID) {
-    console.log("userID in fetchUserByID: " + userID);
     try {
       let _userID = ObjectID(userID);
       var user = await users
         .findOne({ _id: _userID })
         .catch((error) => console.error(error));
-      console.log("User in fetchUserByID is: " + user);
       return user;
     } catch (e) {
       console.log("in fetchUserByID: " + e);
@@ -476,7 +474,6 @@ client.connect((err) => {
 
   // login a user
   app.post("/loginUser", async (data, res) => {
-    console.log("inside login-user");
     let user = data.body;
     try {
       let checkUser = await users.findOne({ username: user.username });
@@ -491,7 +488,8 @@ client.connect((err) => {
       // Update database
       await updateRefreshTokenUser(checkUser, refreshtoken);
       sendRefreshToken(res, refreshtoken);
-      sendAccessToken(res, data, accesstoken);
+      //sendAccessToken(res, data, accesstoken);
+      res.send({ login: true, user: checkUser });
     } catch (err) {
       res.send({
         error: `${err.message}`,
@@ -528,23 +526,17 @@ client.connect((err) => {
   // });
   //   //___________________________
   app.post("/getUser", async (data, res) => {
-    console.log("getUser request heard");
     var user = await getUser(data.body.username);
-    console.log("res.send: " + JSON.stringify(user));
     res.send(user);
   });
   app.post("/fetchUserByID", async (data, res) => {
-    console.log("fetchUserByID request heard");
     var user = await fetchUserByID(data.body.userID);
-    console.log("res.send: " + JSON.stringify(user));
     res.send(user);
   });
   app.post("/updateUser", async (data, res) => {
-    console.log("updateUser request heard");
     let newUserData = data.body;
     await updateUser(newUserData);
     //await updateVirtuePoints(newUserData.user);
-    console.log(newUserData.user);
     res.send(newUserData); //non-sensical line?
   });
   app.post("/getUsersArea", async function (req, res) {
@@ -552,14 +544,11 @@ client.connect((err) => {
     res.send({ users });
   });
   app.post("/insertErrand", async (data, res) => {
-    //console.log("insertErrand request heard");
     let errandData = data.body;
-    //console.log(JSON.stringify(errandData));
     await insertErrand(errandData);
     res.send(errandData);
   });
   app.post("/updateErrand", (data, res) => {
-    //console.log("updateErrand app.post");
     let doneErrand = updateErrand(
       data.body.errandID,
       data.body.newErrandData
@@ -567,8 +556,6 @@ client.connect((err) => {
     res.send(doneErrand);
   });
   app.post("/deleteErrand", async function (data, res) {
-    console.log("deleteErrand request heard");
-    console.log("data.body.errandID: " + data.body.errandID);
     await deleteErrand(data.body.errandID);
   });
   app.post("/updateVirtuePoints", async (data, res) => {
