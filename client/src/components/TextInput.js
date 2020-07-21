@@ -56,8 +56,9 @@ const StyledTextArea = styled.textarea`
     margin: auto;
     display: flex;
 
-    font-family: 'Helvetica';
+    font-family: Ubuntu-Regular;
     font-size: 14px;
+    padding: 5px;
 
     border:  1px solid #31D285;
     box-sizing: border-box;
@@ -68,13 +69,27 @@ const StyledTextArea = styled.textarea`
 
     resize: ${props => props.resize || 'none'};
 
+    &:hover {
+      cursor: auto;
+      background-color: #F0F0F0;
+      border-image: linear-gradient(to right, #11998e, #38ef7d);
+      border-image-slice: 1;
+    }
+
+    &:focus {
+      background-color: #F0F0F0;
+      border-image: linear-gradient(to right, #11998e, #38ef7d);
+      border-image-slice: 1;
+    }
+
 `
 const StyledInput = styled.input`
     margin: auto;
     display: flex;
 
-    font-family: 'Helvetica';
+    font-family: Ubuntu-Regular;
     font-size: 14px;
+    padding: 5px;
 
     border:  1px solid #31D285;
     box-sizing: border-box;
@@ -82,6 +97,19 @@ const StyledInput = styled.input`
 
     height: ${props => props.height || '24em'};
     width: ${props => props.width || '18em'};
+
+    &:hover {
+      cursor: auto;
+      background-color: #F0F0F0;
+      border-image: linear-gradient(to right, #11998e, #38ef7d);
+      border-image-slice: 1;
+    }
+
+    &:focus {
+      background-color: #F0F0F0;
+      border-image: linear-gradient(to right, #11998e, #38ef7d);
+      border-image-slice: 1;
+    }
 `
 
 

@@ -96,11 +96,8 @@ class HelpRequest extends Component {
             }
         ]
 
-
-
         return(
             <div>
-
                 <div class="limiter">
                   <div class="container-login100">
                     <div class="wrap-login100">
@@ -114,10 +111,10 @@ class HelpRequest extends Component {
                         </span>
 
                         <div class="wrap-input100 validate-input m-b-16">
-                          <SectionTitle fontSize="14px" text="Name your help request"/>
+                          <SectionTitle fontSize="14px" paddingTop="1px" text="Name your help request"/>
                           <InputWrapper>
                             <TextInput
-                                type="text"
+                                inputType="text"
                                 height="3em"
                                 onChange={this.handleChange}
                                 value={this.state.title}
@@ -142,7 +139,7 @@ class HelpRequest extends Component {
                           <SectionTitle fontSize="14px" text="Describe more in detail please"/>
                           <InputWrapper>
                               <TextInput
-                                  type="text"
+                                  inputType="text"
                                   height="8em"
                                   onChange={this.handleChange}
                                   value={this.state.description}
@@ -154,7 +151,7 @@ class HelpRequest extends Component {
                         <div class="wrap-input100 validate-input m-b-16">
                           <SectionTitle fontSize="14px" text="Phone Number"/>
                           <TextInput
-                              type="text"
+                              inputType="number"
                               height="32px"
                               width="240px"
                               onChange={this.handleChange}
@@ -166,7 +163,7 @@ class HelpRequest extends Component {
                         <div class="wrap-input100 validate-input m-b-16">
                           <SectionTitle fontSize="14px" text="E-mail"/>
                           <TextInput
-                              type="text"
+                              inputType="text"
                               height="32px"
                               width="240px"
                               onChange={this.handleChange}
