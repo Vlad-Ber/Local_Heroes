@@ -246,7 +246,10 @@ class ProfileCreation extends Component {
                             />
                 					</div>
 
+                          <StyledErrorText>{this.state.text}</StyledErrorText>
+
                           <ArrowButton onClick={this.checkForUniqueUser} />
+
                 				</form>
                 			</div>
                 		</div>
@@ -257,5 +260,12 @@ class ProfileCreation extends Component {
     }
 }
 
+const StyledErrorText = styled.div`
+    text-align: center;
+
+    padding-top: 10px;
+    font-family: Ubuntu-Regular;
+    
+`
 
 export default ProfileCreation;
