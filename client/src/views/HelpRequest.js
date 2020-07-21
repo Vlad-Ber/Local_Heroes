@@ -3,7 +3,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { config } from "../config"
 
-import NavBar from '../components/NavBar.js';
 import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js';
 import DropDownInput from '../components/DropDownInput.js';

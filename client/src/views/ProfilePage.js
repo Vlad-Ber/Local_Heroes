@@ -3,10 +3,13 @@ import axios from "axios";
 import styled from "styled-components";
 import { config } from "../config"
 
-import NavBar from "../components/NavBar.js";
+import BackButton from '../components/BackButton.js';
 import TextButton from "../components/TextButton.js";
 import LinkWrapper from "../components/LinkWrapper.js";
 import EventItemListView from "../components/EventItemListView.js";
+
+import "../css/util.css";
+import "../css/main.css";
 
 class ProfilePage extends Component {
 
@@ -17,7 +20,6 @@ class ProfilePage extends Component {
       user: this.props.activeUser,
       errands: [],
       fetchErrandsSuccess: null,
-      profilePic: "https://image.flaticon.com/icons/png/512/37/37943.png",
     };
 
     this.getUserErrands = this.getUserErrands.bind(this);
@@ -55,61 +57,75 @@ class ProfilePage extends Component {
   render() {
     return (
       <div>
-        <NavBar leftButtonType="back" leftButtonLink="/home" />
+              <div className="limiter">
+                <div className="container-login100">
+                  <div className="wrap-login100">
+                    <form className="login100-form validate-form p-l-55 p-r-55 p-t-178">
+                      <span className="login100-form-title">
+                      <BackButton
+                          text="Home"
+                          link="/home"
+                      />
+                      {this.state.user.name}
+                      </span>
 
-        <ProfileInfoWrapper>
-          <StyledImage src={this.state.profilePic} />
-          <StyledText>
-            <Descriptor>
-              Name
-            </Descriptor>
-            <Info>
-              {this.state.user.name} 
-            </Info>
-          </StyledText>
-          <StyledText>
-            <Descriptor>
-              Area 
-            </Descriptor>
-            <Info>
-              {this.state.user.areaID} 
-            </Info>
-          </StyledText>
-          <StyledText>
-            <Descriptor>
-              E-mail 
-            </Descriptor>
-            <Info>
-              {this.state.user.email} 
-            </Info>
-          </StyledText>
-        </ProfileInfoWrapper>
+                      <div className="wrap-input100 validate-input m-b-16">
+                        <ProfileInfoWrapper>
 
-        <LinkWrapper to="/">
-          <TextButton onClick={() => localStorage.clear()} description="LOG OUT" />
-        </LinkWrapper>
+                          <StyledText>
+                            <Descriptor>
+                              Postal Area:
+                            </Descriptor>
+                            <Info>
+                              {this.state.user.areaID}
+                            </Info>
+                          </StyledText>
 
-        <StyledTextHeadLine>
-          MY ERRANDS
-        </StyledTextHeadLine>
-        <EventItemListView 
-          errands={this.state.errands}
-          emptyStateMessage="You currently have no errands" 
-        />
-      </div>
+                          <StyledText>
+                            <Descriptor>
+                              VirtuePoints:
+                            </Descriptor>
+                            <Info>
+                              {this.state.user.virtuePoints}
+                            </Info>
+                          </StyledText>
+
+                        </ProfileInfoWrapper>
+                      </div>
+
+
+                      <LinkWrapper to="/">
+                        <TextButton onClick={() => localStorage.clear()} description="LOG OUT" />
+                      </LinkWrapper>
+
+                      <StyledTextHeadLine>
+                        MY ERRANDS
+                      </StyledTextHeadLine>
+                      <EventItemListView
+                        errands={this.state.errands}
+                        emptyStateMessage="You currently have no errands"
+                      />
+
+                    </form>
+                  </div>
+              </div>
+            </div>
+        </div>
+
+
     );
   }
 }
 
 const ProfileInfoWrapper = styled.div`
-  display: flex; 
-  justify-content: center; 
+  display: flex;
+  justify-content: center;
   padding-left: 10px;
   flex-direction: column;
-`; 
+`;
 
 const StyledText = styled.div`
-  display: flex; 
+  display: flex;
   flex-direction: row;
   margin: 0.5em;
   font-size: 18px;
@@ -126,16 +142,11 @@ const Info = styled.div`
 `;
 
 const StyledTextHeadLine = styled.div`
-  display: flex; 
+  display: flex;
   justify-content: center;
   font-size: 18px;
   padding-bottom: 20px;
 `;
 
-const StyledImage = styled.img`
-  margin: 2em;
-  width: 7em;
-  height: 7em;
-`;
 
 export default ProfilePage;

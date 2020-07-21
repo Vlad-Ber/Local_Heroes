@@ -5,16 +5,10 @@ import styled from 'styled-components'
 import '../css/components.css'
 
 import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng,
 } from 'react-places-autocomplete';
 
 
 class AutoCompleteInput extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <PlacesAutocomplete

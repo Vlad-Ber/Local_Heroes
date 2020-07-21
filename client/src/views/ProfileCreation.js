@@ -7,24 +7,16 @@ import PlacesAutocomplete, {
   getLatLng,
 } from 'react-places-autocomplete';
 
-import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js'
-import NavBar from '../components/NavBar.js';
 import ArrowButton from '../components/ArrowButton.js';
 import BackButton from '../components/BackButton.js';
-import StyledForm from '../components/StyledForm.js';
 import AutoCompleteInput from '../components/AutoCompleteInput.js';
 
 import { config } from "../config"
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSeedling } from "@fortawesome/free-solid-svg-icons";
-
-
 import "../css/util.css";
 import "../css/main.css";
 
-import LinkWrapper from "../components/LinkWrapper.js";
 
 class ProfileCreation extends Component {
 
@@ -65,7 +57,7 @@ class ProfileCreation extends Component {
           age: user.age,
           address: user.address,
           description: user.description,
-          virtuePoints: 0,
+          virtuePoints: '0',
           areaId: user.area,
           mobile: user.mobile,
           city: user.city,
@@ -93,7 +85,6 @@ class ProfileCreation extends Component {
           username: this.state.username,
           email: this.state.email,
           mobile: this.state.mobile,
-          email: this.state.email,
       })
           .then((response) => {
               let uniqueUser =  response.data.uniqueUser;
@@ -107,7 +98,7 @@ class ProfileCreation extends Component {
 
               let user = this.state;
 
-              if(user.username.length == 0 || user.email.length == 0) {
+              if(user.username.length === 0 || user.email.length === 0) {
                 this.setState({text: 'Please answer every field!'});
 
               } else if(!validEmail) {
@@ -137,7 +128,7 @@ class ProfileCreation extends Component {
    setAdress = address => {
      this.setState({ address: address })
 
-    // TODO: Fix class
+    // TODO: Fix className
      this.getAreaCode(address);
    }
 
@@ -176,11 +167,11 @@ class ProfileCreation extends Component {
     render(){
         return (
             <div>
-                	<div class="limiter">
-                		<div class="container-login100">
-                			<div class="wrap-login100">
-                				<form class="login100-form validate-form p-l-55 p-r-55 p-t-178">
-                					<span class="login100-form-title">
+                	<div className="limiter">
+                		<div className="container-login100">
+                			<div className="wrap-login100">
+                				<form className="login100-form validate-form p-l-55 p-r-55 p-t-178">
+                					<span className="login100-form-title">
                           <BackButton
                               text="Back"
                               link="/signup"
@@ -188,7 +179,7 @@ class ProfileCreation extends Component {
                 					    Profile Creation
                 					</span>
 
-                					<div class="wrap-input100 validate-input m-b-16">
+                					<div className="wrap-input100 validate-input m-b-16">
                             <TextInput
                             inputType="pf" placeholder="Username"
                             name="username" onChange={this.saveInput}
@@ -196,7 +187,7 @@ class ProfileCreation extends Component {
                             />
                 					</div>
 
-                					<div class="wrap-input100 validate-input m-b-16">
+                					<div className="wrap-input100 validate-input m-b-16">
                             <TextInput
                             inputType="pf" placeholder="Password"
                             type="password" height="24px"
@@ -205,7 +196,7 @@ class ProfileCreation extends Component {
                             />
                 					</div>
 
-                					<div class="wrap-input100 validate-input m-b-16">
+                					<div className="wrap-input100 validate-input m-b-16">
                             <TextInput
                             inputType="pf" placeholder="Full Name"
                             height="24px" name="name"
@@ -213,7 +204,7 @@ class ProfileCreation extends Component {
                             />
                 					</div>
 
-                					<div class="wrap-input100 validate-input m-b-16">
+                					<div className="wrap-input100 validate-input m-b-16">
                             <TextInput
                             inputType="pf" placeholder="Age"
                             height="24px" name="age"
@@ -222,7 +213,7 @@ class ProfileCreation extends Component {
                             />
                 					</div>
 
-                					<div class="wrap-input100 validate-input m-b-16">
+                					<div className="wrap-input100 validate-input m-b-16">
                             <TextInput
                             inputType="pf" placeholder="Phone-number"
                             height="24px" name="mobile"
@@ -231,14 +222,14 @@ class ProfileCreation extends Component {
                             />
                 					</div>
 
-                					<div class="wrap-input100 validate-input m-b-16">
+                					<div className="wrap-input100 validate-input m-b-16">
                             <TextInput
                             inputType="pf" placeholder="E-mail"
                             height="24px" name="email"
                             value={this.email} onChange={this.saveInput}
                             />
                 					</div>
-                					<div class="wrap-input100 validate-input m-b-16">
+                					<div className="wrap-input100 validate-input m-b-16">
                             <AutoCompleteInput
                             value={this.state.address}
                             onChange={this.setAdress}
@@ -265,7 +256,7 @@ const StyledErrorText = styled.div`
 
     padding-top: 10px;
     font-family: Ubuntu-Regular;
-    
+
 `
 
 export default ProfileCreation;
