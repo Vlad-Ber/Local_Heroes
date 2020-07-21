@@ -33,7 +33,7 @@ function EventItemListView (props) {
 }
 
 const ParameterButtonsWrapper = styled.div`
-  display: flex; 
+  display: flex;
   justify-content: space-between;
   padding-top: 0px;
   padding-left: 20px;
@@ -43,17 +43,18 @@ const ParameterButtonsWrapper = styled.div`
 `;
 
 const ParameterButton = styled.button`
+  font-family: Ubuntu-Regular;  
   font-size: 14px;
   text-transform: uppercase;
-  font-weight: ${props => props.active ? "700" : "500"}; 
+  font-weight: ${props => props.active ? "700" : "500"};
   opacity: ${props => props.active ? "1" : "0.5"}
 `;
 
 const EmptyStateMessage = styled.div`
-  display: flex; 
-  justify-content: center; 
-  padding: 30px; 
-  font-size: 14px; 
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+  font-size: 14px;
   font-style: italic;
 `;
 

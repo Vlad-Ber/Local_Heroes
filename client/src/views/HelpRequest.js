@@ -97,11 +97,11 @@ class HelpRequest extends Component {
 
         return(
             <div>
-                <div class="limiter">
-                  <div class="container-login100">
-                    <div class="wrap-login100">
-                      <form class="login100-form validate-form p-l-55 p-r-55 p-t-178">
-                        <span class="login100-form-title">
+                <div className="limiter">
+                  <div className="container-login100">
+                    <div className="wrap-login100">
+                      <form className="login100-form validate-form p-l-55 p-r-55 p-t-178">
+                        <span className="login100-form-title">
                         <BackButton
                             text="Home"
                             link="/home"
@@ -109,7 +109,7 @@ class HelpRequest extends Component {
                             Help Request
                         </span>
 
-                        <div class="wrap-input100 validate-input m-b-16">
+                        <div className="wrap-input100 validate-input m-b-16">
                           <SectionTitle fontSize="14px" paddingTop="1px" text="Name your help request"/>
                           <InputWrapper>
                             <TextInput
@@ -122,7 +122,7 @@ class HelpRequest extends Component {
                           </InputWrapper>
                         </div>
 
-                        <div class="wrap-input100 validate-input m-b-16">
+                        <div className="wrap-input100 validate-input m-b-16">
                           <SectionTitle fontSize="14px" text="What do you need help with?"/>
                           <InputWrapper>
                               <DropDownInput
@@ -134,7 +134,7 @@ class HelpRequest extends Component {
                           </InputWrapper>
                         </div>
 
-                        <div class="wrap-input100 validate-input m-b-16">
+                        <div className="wrap-input100 validate-input m-b-16">
                           <SectionTitle fontSize="14px" text="Describe more in detail please"/>
                           <InputWrapper>
                               <TextInput
@@ -147,7 +147,7 @@ class HelpRequest extends Component {
                           </InputWrapper>
                         </div>
 
-                        <div class="wrap-input100 validate-input m-b-16">
+                        <div className="wrap-input100 validate-input m-b-16">
                           <SectionTitle fontSize="14px" text="Phone Number"/>
                           <TextInput
                               inputType="number"
@@ -159,7 +159,7 @@ class HelpRequest extends Component {
                           />
                         </div>
 
-                        <div class="wrap-input100 validate-input m-b-16">
+                        <div className="wrap-input100 validate-input m-b-16">
                           <SectionTitle fontSize="14px" text="E-mail"/>
                           <TextInput
                               inputType="text"

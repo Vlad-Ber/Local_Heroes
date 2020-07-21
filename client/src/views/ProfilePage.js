@@ -92,21 +92,20 @@ class ProfilePage extends Component {
 
                         </ProfileInfoWrapper>
                       </div>
-
-
-                      <LinkWrapper to="/">
-                        <TextButton onClick={() => localStorage.clear()} description="LOG OUT" />
-                      </LinkWrapper>
-
-                      <StyledTextHeadLine>
-                        MY ERRANDS
-                      </StyledTextHeadLine>
-                      <EventItemListView
-                        errands={this.state.errands}
-                        emptyStateMessage="You currently have no errands"
-                      />
-
                     </form>
+
+                    <LinkWrapper to="/">
+                      <TextButton onClick={() => localStorage.clear()} description="LOG OUT" />
+                    </LinkWrapper>
+
+                    <StyledTextHeadLine>
+                      MY ERRANDS
+                    </StyledTextHeadLine>
+                    <EventItemListView
+                      errands={this.state.errands}
+                      emptyStateMessage="You currently have no errands"
+                    />
+
                   </div>
               </div>
             </div>

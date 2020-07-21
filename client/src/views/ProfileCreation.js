@@ -256,7 +256,6 @@ const StyledErrorText = styled.div`
 
     padding-top: 10px;
     font-family: Ubuntu-Regular;
-
 `
 
 export default ProfileCreation;
