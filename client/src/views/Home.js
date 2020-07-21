@@ -39,7 +39,7 @@ class Home extends Component {
             this.setState({ fetchErrandsSuccess: false });
         });
         this.fetchErrandsTimeout = setTimeout(this.fetchErrands, 2000);
-    }   
+    }
 
     fetchUsers = () => {
         console.log("fetchUsers");
@@ -47,7 +47,7 @@ class Home extends Component {
             areaID: this.state.areaID
         }).then((response) => {
             console.log("Users fetched successfully!", response)
-            //console.log("users: " + JSON.stringify(response.data))   
+            //console.log("users: " + JSON.stringify(response.data))
             this.setState({ fetchUsersSuccess: true, users: response.data["users"] });
         }).catch((error) => {
             console.log("Got error while fetching users", error);
@@ -83,10 +83,10 @@ class Home extends Component {
                 <LinkWrapper to="/help-request">
                     <TextButton description="ASK FOR HELP"/>
                 </LinkWrapper>
-		  <LinkWrapper to="/leader-board">
+		            <LinkWrapper to="/leader-board">
                     <TextButton description="LEADERBOARD"/>
                 </LinkWrapper>
-                <EventItemListView 
+                <EventItemListView
                     errands={this.state.errands}
                     emptyStateMessage="No errands in this area"
                 />
