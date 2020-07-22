@@ -25,7 +25,7 @@ class ProfilePage extends Component {
 
     logoutUser = () => {
 	axios.post(config.baseUrl + "/logout", {
-		username: this.state.user.username
+	    username: this.state.user.username
 	}).then((response) => {
 	    console.log("Recieved message succesfully!");
 	});

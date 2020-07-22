@@ -69,8 +69,15 @@ class Home extends Component {
 	this.fetchUsersTimeout = setTimeout(this.fetchUsers, 2000);
     };
 
+    checkAuth = () => {
+	console.log("inside checkAuth");
+
+    };
+
+
     componentDidMount() {
 	console.log("---------- HOME.JS DID MOUNT ----------------");
+	this.checkAuth();
 	this.fetchErrands();
 	this.fetchUsers();
     }

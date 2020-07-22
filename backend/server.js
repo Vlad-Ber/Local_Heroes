@@ -112,11 +112,15 @@ client.connect((err) => {
     // Logout the user
     app.post("/logout", (_req, res) => {
 	res.clearCookie("refreshtoken", {path: "/refresh_token"});
+	console.log(_req);
 	return res.send({
 	    message: "Logged out",
+	    
 	});
     });
 
+
+    
   // Protected route -TEST
   app.post("/protected", async (req, res) => {
     try {
@@ -482,16 +486,19 @@ client.connect((err) => {
         user.password,
         checkUser.password
       );
-      if (!comparePassword) throw new Error("Password not correct");
-      const accesstoken = createAccessToken(user.id);
-      const refreshtoken = createRefreshToken(user.id);
-      // Update database
-      await updateRefreshTokenUser(checkUser, refreshtoken);
-      sendRefreshToken(res, refreshtoken);
-      //sendAccessToken(res, data, accesstoken);
-      res.send({ login: true, user: checkUser });
+	if (!comparePassword) throw new Error("Password not correct");
+	const accesstoken = createAccessToken(checkUser._id);
+	const refreshtoken = createRefreshToken(checkUser._id);
+	// Update database
+	await updateRefreshTokenUser(checkUser, refreshtoken);
+	sendRefreshToken(res, refreshtoken);
+	res.send({ login: true,
+		   user: checkUser,
+		   accesstoken,
+		   email: data.body.email,
+		 });
     } catch (err) {
-      res.send({
+	res.send({
         error: `${err.message}`,
       });
     }
