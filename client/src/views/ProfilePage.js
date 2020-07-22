@@ -10,95 +10,104 @@ import EventItemListView from "../components/EventItemListView.js";
 
 class ProfilePage extends Component {
 
-  constructor(props) {
-    super(props);
+    constructor(props) {
+	super(props);
 
-    this.state = {
-      user: this.props.activeUser,
-      errands: [],
-      fetchErrandsSuccess: null,
-      profilePic: "https://image.flaticon.com/icons/png/512/37/37943.png",
+	this.state = {
+	    user: this.props.activeUser,
+	    errands: [],
+	    fetchErrandsSuccess: null,
+	    profilePic: "https://image.flaticon.com/icons/png/512/37/37943.png",
+	};
+
+	this.getUserErrands = this.getUserErrands.bind(this);
+    }
+
+    logoutUser = () => {
+	axios.post(config.baseUrl + "/logout", {
+		username: this.state.user.username
+	}).then((response) => {
+	    console.log("Recieved message succesfully!");
+	});
+	localStorage.clear();
+    }
+    
+    getUserErrands = () => {
+	axios
+	    .post(config.baseUrl + "/getUserErrand", {
+		username: this.state.user.username
+	    })
+	    .then((response) => {
+		this.setState({
+		    fetchErrandsSuccess: true,
+		    errands: response.data["errands"],
+		});
+	    })
+	    .catch((error) => {
+		console.log("You have no errands!", error);
+		this.setState({ fetchErrandsSuccess: false });
+	    });
+	this.getUserErrandsTimeout = setTimeout(this.getUserErrands, 2000);
     };
 
-    this.getUserErrands = this.getUserErrands.bind(this);
-  }
 
-  getUserErrands = () => {
-    axios
-      .post(config.baseUrl + "/getUserErrand", {
-        username: this.state.user.username
-      })
-      .then((response) => {
-        this.setState({
-          fetchErrandsSuccess: true,
-          errands: response.data["errands"],
-        });
-      })
-      .catch((error) => {
-        console.log("You have no errands!", error);
-        this.setState({ fetchErrandsSuccess: false });
-      });
-      this.getUserErrandsTimeout = setTimeout(this.getUserErrands, 2000);
-  };
+    componentDidMount() {
+	console.log("---------- PROFILEPAGE.JS DID MOUNT ----------------")
+	this.getUserErrands();
+    }
 
+    componentWillUnmount() {
+	console.log("---------- PROFILEPAGE.JS WILL UNMOUNT ----------------")
+	clearTimeout(this.getUserErrandsTimeout);
+    }
 
-  componentDidMount() {
-    console.log("---------- PROFILEPAGE.JS DID MOUNT ----------------")
-    this.getUserErrands();
-  }
+    render() {
+	return (
+		<div>
+		<NavBar leftButtonType="back" leftButtonLink="/home" />
 
-  componentWillUnmount() {
-    console.log("---------- PROFILEPAGE.JS WILL UNMOUNT ----------------")
-    clearTimeout(this.getUserErrandsTimeout);
-  }
-
-  render() {
-    return (
-      <div>
-        <NavBar leftButtonType="back" leftButtonLink="/home" />
-
-        <ProfileInfoWrapper>
-          <StyledImage src={this.state.profilePic} />
-          <StyledText>
-            <Descriptor>
-              Name
+		<ProfileInfoWrapper>
+		<StyledImage src={this.state.profilePic} />
+		<StyledText>
+		<Descriptor>
+		Name
             </Descriptor>
-            <Info>
-              {this.state.user.name} 
+		<Info>
+		{this.state.user.name} 
             </Info>
-          </StyledText>
-          <StyledText>
-            <Descriptor>
-              Area 
+		</StyledText>
+		<StyledText>
+		<Descriptor>
+		Area 
             </Descriptor>
-            <Info>
-              {this.state.user.areaID} 
+		<Info>
+		{this.state.user.areaID} 
             </Info>
-          </StyledText>
-          <StyledText>
-            <Descriptor>
-              E-mail 
+		</StyledText>
+		<StyledText>
+		<Descriptor>
+		E-mail 
             </Descriptor>
-            <Info>
-              {this.state.user.email} 
+		<Info>
+		{this.state.user.email} 
             </Info>
-          </StyledText>
-        </ProfileInfoWrapper>
+		</StyledText>
+		</ProfileInfoWrapper>
 
-        <LinkWrapper to="/">
-          <TextButton onClick={() => localStorage.clear()} description="LOG OUT" />
-        </LinkWrapper>
+		<LinkWrapper to="/">
+		<TextButton onClick={() => this.logoutUser()} description="LOG OUT" />
+		</LinkWrapper>
 
-        <StyledTextHeadLine>
-          MY ERRANDS
-        </StyledTextHeadLine>
-        <EventItemListView 
-          errands={this.state.errands}
-          emptyStateMessage="You currently have no errands" 
-        />
-      </div>
-    );
-  }
+		<StyledTextHeadLine>
+		MY ERRANDS
+            </StyledTextHeadLine>
+		<EventItemListView 
+            errands={this.state.errands}
+            emptyStateMessage="You currently have no errands" 
+		/>
+		</div>
+	);
+    }
 }
 
 const ProfileInfoWrapper = styled.div`

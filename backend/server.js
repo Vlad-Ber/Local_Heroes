@@ -49,7 +49,7 @@ app.use(function (req, res, next) {
 });
 
 // Connecting to the database (MongoDB)
-const uri = process.env.ATLAS_URI;
+const uri = "mongodb+srv://Vlad-Ber:arneiskogen1@cluster0-76fsx.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -109,13 +109,13 @@ client.connect((err) => {
     }
   });
 
-  // Logout the user
-  app.post("/logout", (_req, res) => {
-    res.clearCookie("refreshtoken");
-    return res.send({
-      message: "Logged out",
+    // Logout the user
+    app.post("/logout", (_req, res) => {
+	res.clearCookie("refreshtoken", {path: "/refresh_token"});
+	return res.send({
+	    message: "Logged out",
+	});
     });
-  });
 
   // Protected route -TEST
   app.post("/protected", async (req, res) => {
@@ -566,19 +566,12 @@ client.connect((err) => {
 
   app.post("/getErrandsArea", async function (req, res) {
     try {
-      const userID = isAuth(req);
       if (userID !== null) {
         var errands = await getErrandsArea(req.body.areaID);
-        res.send({
-          data: "This is protected data",
-        });
       }
     } catch (err) {
-      res.send({
-        data: 0,
-        error: `${err.message}`,
-      });
-    }
+	console.log("getErrandsArea Error");
+    };
   });
 
   app.post("/uploadImage", async (data, res) => {
