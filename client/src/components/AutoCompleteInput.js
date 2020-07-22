@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components'
 
-import '../css/components.css'
+//import '../css/components.css'
 
 import PlacesAutocomplete, {
   geocodeByAddress,
