@@ -33,6 +33,9 @@ const HelpNotice = (props) => {
         });
     };
 
+    
+    
+
   function renderResponse(){
     return <ServerResponse 
               success={success} 

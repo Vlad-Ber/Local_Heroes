@@ -51,13 +51,28 @@ class ProfilePage extends Component {
     };
 
 
+    checkAuth = async () => {
+	await axios.post(config.baseUrl + "/checkAuth", {
+	    accessToken: this.props.activeUser.accessToken,
+	}).then((response) => {
+	    if(response.data.error === undefined){
+		console.log("You are authorized!");
+	    }
+	    else{
+		window.location.href = "/" ;
+	    }
+	}).catch((error) => {
+	    console.log(error);
+	});
+    }
     componentDidMount() {
-	console.log("---------- PROFILEPAGE.JS DID MOUNT ----------------")
+	console.log("---------- PROFILEPAGE.JS DID MOUNT ----------------");
+	this.checkAuth();
 	this.getUserErrands();
     }
 
     componentWillUnmount() {
-	console.log("---------- PROFILEPAGE.JS WILL UNMOUNT ----------------")
+	console.log("---------- PROFILEPAGE.JS WILL UNMOUNT ----------------");
 	clearTimeout(this.getUserErrandsTimeout);
     }
 

@@ -121,21 +121,6 @@ client.connect((err) => {
 
 
     
-  // Protected route -TEST
-  app.post("/protected", async (req, res) => {
-    try {
-      const userID = isAuth(req);
-      if (userID !== null) {
-        res.send({
-          data: "This is protected data",
-        });
-      }
-    } catch (err) {
-      res.send({
-        error: `${err.message}`,
-      });
-    }
-  });
 
   // Get a new access token with a refresh token
   app.post("/refresh_token", (req, res) => {
@@ -491,7 +476,10 @@ client.connect((err) => {
 	const refreshtoken = createRefreshToken(checkUser._id);
 	// Update database
 	await updateRefreshTokenUser(checkUser, refreshtoken);
+	checkUser = await users.findOne({ username: user.username });
 	sendRefreshToken(res, refreshtoken);
+	checkUser.accessToken = accesstoken;
+	console.log(checkUser);
 	res.send({ login: true,
 		   user: checkUser,
 		   accesstoken,
@@ -571,6 +559,22 @@ client.connect((err) => {
     await updateVirtuePoints(userToUpdate);
   });
 
+    app.post('/checkAuth', async (req, res) => {
+	try {
+	    const userId = isAuth(req);
+	    if (userId !== null) {
+		res.send({
+		    data: 'This is protected data.',
+		});
+	    }
+	} catch (err) {
+	    res.send({
+		error: `${err.message}`,
+	    });
+	}
+    });
+    
+    
   app.post("/getErrandsArea", async function (req, res) {
     try {
       if (userID !== null) {

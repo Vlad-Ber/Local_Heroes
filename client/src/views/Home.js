@@ -11,7 +11,6 @@ import LinkWrapper from "../components/LinkWrapper.js";
 class Home extends Component {
     constructor(props) {
 	super(props);
-
 	this.state = {
 	    areaID: this.props.activeUser.areaID,
 	    users: [],
@@ -49,14 +48,11 @@ class Home extends Component {
     };
 
     fetchUsers = () => {
-	console.log("fetchUsers");
 	axios
 	    .post(config.baseUrl + "/getUsersArea", {
 		areaID: this.state.areaID,
 	    })
 	    .then((response) => {
-		console.log("Users fetched successfully!", response);
-		//console.log("users: " + JSON.stringify(response.data))
 		this.setState({
 		    fetchUsersSuccess: true,
 		    users: response.data["users"],
@@ -69,10 +65,20 @@ class Home extends Component {
 	this.fetchUsersTimeout = setTimeout(this.fetchUsers, 2000);
     };
 
-    checkAuth = () => {
-	console.log("inside checkAuth");
-
-    };
+    checkAuth = async () => {
+	axios.post(config.baseUrl + "/checkAuth", {
+	    accessToken: this.props.activeUser.accessToken,
+	}).then((response) => {
+	    if(response.data.error === undefined){
+		console.log("You are authorized!");
+	    }
+	    else{
+		window.location.href = "/" ;
+	    }
+	}).catch((error) => {
+	    console.log(error);
+	});
+    }
 
 
     componentDidMount() {

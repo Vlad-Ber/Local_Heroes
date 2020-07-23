@@ -34,15 +34,15 @@ class Signup extends Component {
         username: this.state.username,
         password: this.state.password,
         credentials: "include",
-      })
-      .then((response) => {
-        let loginAccessToken = response.data.accesstoken;
+      }).then((response) => {
+	 
+        let accessToken = response.data.accesstoken;
         var login = response.data.login;
-        console.log(loginAccessToken);
+        console.log(accessToken);
         if (login) {
           let user = response.data.user;
           window.localStorage.setItem("loggedInUser", JSON.stringify(user));
-          this.props.activeUser.onSetLoggedInUser(user);
+            this.props.activeUser.onSetLoggedInUser(user, accessToken);
           this.props.history.push("/home");
         } else {
           this.setState({
