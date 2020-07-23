@@ -56,41 +56,40 @@ class ProfilePage extends Component {
 
   render() {
     return (
-      <div>
-              <div className="limiter">
-                <div className="container-login100">
-                  <div className="wrap-login100">
-                    <form className="login100-form validate-form p-l-55 p-r-55 p-t-178">
-                      <span className="login100-form-title">
-                      <BackButton
-                          text="Home"
-                          link="/home"
-                      />
-                      {this.state.user.name}
-                      </span>
+          <div className="limiter">
+            <div className="container-login100">
+              <div className="wrap-login100">
+                <form className="login100-form validate-form p-l-55 p-r-55 p-t-178">
+                  <span className="login100-form-title">
+                    <BackButton
+                        text="Home"
+                        link="/home"
+                    />
+                    {this.state.user.name}
+                  </span>
 
-                      <div className="wrap-input100 validate-input m-b-16">
-                        <ProfileInfoWrapper>
+                  <div className="wrap-input100 validate-input m-b-16">
+                    <ProfileInfoWrapper>
 
-                          <StyledText>
-                            <Descriptor>
-                              Postal Area:
-                            </Descriptor>
-                            <Info>
-                              {this.state.user.areaID}
-                            </Info>
-                          </StyledText>
+                      <StyledText>
+                        <Descriptor>
+                          Postal Area:
+                        </Descriptor>
+                        <Info>
+                          {this.state.user.areaID}
+                        </Info>
+                        </StyledText>
 
-                          <StyledText>
-                            <Descriptor>
-                              VirtuePoints:
-                            </Descriptor>
-                            <Info>
-                              {this.state.user.virtuePoints}
-                            </Info>
-                          </StyledText>
+                        <StyledText>
+                          <Descriptor>
+                            VirtuePoints:
+                          </Descriptor>
+                          <Info>
+                            {this.state.user.virtuePoints}
+                          </Info>
+                        </StyledText>
 
-                        </ProfileInfoWrapper>
+                      </ProfileInfoWrapper>
                       </div>
                     </form>
 
@@ -109,9 +108,6 @@ class ProfilePage extends Component {
                   </div>
               </div>
             </div>
-        </div>
-
-
     );
   }
 }
