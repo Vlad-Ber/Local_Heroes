@@ -17,24 +17,22 @@ const Button = styled.button`
     justify-content: center;
     align-items: center;
     font-size: 1em;
-    font-family: 'Arial', Helvetica, sans-serif;
+    font-family: Ubuntu-Regular;
 
     height: ${props => props.height || '42px'};
     width: ${props => props.width || '18em'};
     margin-top: ${props => props.marginTop || '30px'};
     margin-bottom: ${props => props.marginBottom || '30px'};
 
-    background: #31D285;
+    background: #57b846;
     box-shadow: 1px;
-    border-radius: 4px;
+    border-radius: 20px;
 
 
     &:hover {
       cursor: pointer;
 
-      text-shadow: 0 0 2em rgba(250,250,250,1);
-      color:#FFFFFF;
-      border-color:#FFFFFF;
+      background-color: #C0C0C0;
     }
 `
 
