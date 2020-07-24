@@ -7,14 +7,16 @@ import PlacesAutocomplete, {
   getLatLng,
 } from 'react-places-autocomplete';
 
-import SectionTitle from '../components/SectionTitle.js';
 import TextInput from '../components/TextInput.js'
-import NavBar from '../components/NavBar.js';
 import ArrowButton from '../components/ArrowButton.js';
-import StyledForm from '../components/StyledForm.js';
+import BackButton from '../components/BackButton.js';
 import AutoCompleteInput from '../components/AutoCompleteInput.js';
 
 import { config } from "../config"
+
+import "../css/util.css";
+import "../css/main.css";
+
 
 class ProfileCreation extends Component {
 
@@ -55,7 +57,7 @@ class ProfileCreation extends Component {
           age: user.age,
           address: user.address,
           description: user.description,
-          virtuePoints: 0,
+          virtuePoints: '0',
           areaId: user.area,
           mobile: user.mobile,
           city: user.city,
@@ -83,7 +85,6 @@ class ProfileCreation extends Component {
           username: this.state.username,
           email: this.state.email,
           mobile: this.state.mobile,
-          email: this.state.email,
       })
           .then((response) => {
               let uniqueUser =  response.data.uniqueUser;
@@ -97,7 +98,7 @@ class ProfileCreation extends Component {
 
               let user = this.state;
 
-              if(user.username.length == 0 || user.email.length == 0) {
+              if(user.username.length === 0 || user.email.length === 0) {
                 this.setState({text: 'Please answer every field!'});
 
               } else if(!validEmail) {
@@ -127,7 +128,7 @@ class ProfileCreation extends Component {
    setAdress = address => {
      this.setState({ address: address })
 
-    // TODO: Fix class
+    // TODO: Fix className
      this.getAreaCode(address);
    }
 
@@ -166,57 +167,95 @@ class ProfileCreation extends Component {
     render(){
         return (
             <div>
-                <NavBar
-                    leftButtonType="back"
-                    leftButtonLink="/signup"
-                />
+                	<div className="limiter">
+                		<div className="container-login100">
+                			<div className="wrap-login100">
+                				<form className="login100-form validate-form p-l-55 p-r-55 p-t-178">
+                					<span className="login100-form-title">
+                          <BackButton
+                              text="Back"
+                              link="/signup"
+                          />
+                					    Profile Creation
+                					</span>
 
-                <StyledForm>
-                    <SectionTitle text="Profile Creation" />
+                					<div className="wrap-input100 validate-input m-b-16">
+                            <TextInput
+                            inputType="pf" placeholder="Username"
+                            name="username" onChange={this.saveInput}
+                            autocomplete="username"
+                            />
+                					</div>
 
-                    <SectionTitle id="username" fontSize="14px" text="Username" />
-                    <TextInput height="24px" name="username"  onChange={this.saveInput} autocomplete="username"/>
+                					<div className="wrap-input100 validate-input m-b-16">
+                            <TextInput
+                            inputType="pf" placeholder="Password"
+                            type="password" height="24px"
+                            name="password" value={this.password}
+                            onChange={this.saveInput} autocomplete="new-password"
+                            />
+                					</div>
 
-                    <SectionTitle fontSize="14px" text="Password" />
-                    <TextInput type="password" height="24px" name="password" value={this.password} onChange={this.saveInput} autocomplete="new-password"/>
+                					<div className="wrap-input100 validate-input m-b-16">
+                            <TextInput
+                            inputType="pf" placeholder="Full Name"
+                            height="24px" name="name"
+                            value={this.name} onChange={this.saveInput}
+                            />
+                					</div>
 
-                    <SectionTitle fontSize="14px" text="Full Name" />
-                    <TextInput height="24px" name="name" value={this.name} onChange={this.saveInput}/>
+                					<div className="wrap-input100 validate-input m-b-16">
+                            <TextInput
+                            inputType="pf" placeholder="Age"
+                            height="24px" name="age"
+                            type="number" value={this.age}
+                            onChange={this.saveInput}
+                            />
+                					</div>
 
-                    <SectionTitle fontSize="14px" text="Age" />
-                    <TextInput height="24px" name="age" type="number" value={this.age} onChange={this.saveInput}/>
+                					<div className="wrap-input100 validate-input m-b-16">
+                            <TextInput
+                            inputType="pf" placeholder="Phone-number"
+                            height="24px" name="mobile"
+                            type="number" value={this.mobile}
+                            onChange={this.saveInput}
+                            />
+                					</div>
 
-                    <SectionTitle fontSize="14px" text="Mobile number" />
-                    <TextInput height="24px" name="mobile" type="number" value={this.mobile} onChange={this.saveInput}/>
+                					<div className="wrap-input100 validate-input m-b-16">
+                            <TextInput
+                            inputType="pf" placeholder="E-mail"
+                            height="24px" name="email"
+                            value={this.email} onChange={this.saveInput}
+                            />
+                					</div>
+                					<div className="wrap-input100 validate-input m-b-16">
+                            <AutoCompleteInput
+                            value={this.state.address}
+                            onChange={this.setAdress}
+                            height="24px"
+                            />
+                					</div>
 
-                    <SectionTitle fontSize="14px" text="E-mail address" />
-                    <TextInput height="24px" name="email" value={this.email} onChange={this.saveInput}/>
+                          <StyledErrorText>{this.state.text}</StyledErrorText>
 
-                    <SectionTitle text="Address" fontSize="14px" />
-                    <AutoCompleteInput
-                    value={this.state.address}
-                    onChange={this.setAdress}
-                    height="24px"
-                    />
+                          <ArrowButton onClick={this.checkForUniqueUser} />
 
-                    <TextWrapper>{this.state.text}</TextWrapper>
+                				</form>
+                			</div>
+                		</div>
+                	</div>
 
-                    <ArrowButton onClick={this.checkForUniqueUser} />
-
-                </StyledForm>
             </div>
         );
     }
 }
 
+const StyledErrorText = styled.div`
+    text-align: center;
 
-const TextWrapper = styled.div`
-    border: #4CAF50;
-    color: red;
-    margin-top: 1em;
-    font-size: 20px;
-    border-radius: 100%;
-`;
-
+    padding-top: 10px;
+    font-family: Ubuntu-Regular;
+`
 
 export default ProfileCreation;
