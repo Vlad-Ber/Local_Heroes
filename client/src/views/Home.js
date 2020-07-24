@@ -78,13 +78,17 @@ class Home extends Component {
                       <form className="login100-form validate-form p-l-55 p-r-55 p-t-178">
                         <span className="login100-form-title-home">
                           <ProfileAndAreaView areaID={this.state.areaID}/>
-                          <StatusView
-                              activeUsers={this.state.users.length}
-                              activeErrands={this.state.errands.filter(errand => errand.status !== "done").length}
-                              areaID={this.state.areaID}
-                          />
+                          Home
                         </span>
                       </form>
+
+                      <div>
+                        <StatusView
+                            activeUsers={this.state.users.length}
+                            activeErrands={this.state.errands.filter(errand => errand.status !== "done").length}
+                            areaID={this.state.areaID}
+                        />
+                      </div>
 
                       <div className="container-login100-form-btn">
                         <LinkWrapper to="/help-request">
@@ -92,12 +96,11 @@ class Home extends Component {
                         </LinkWrapper>
                       </div>
 
-                      <div cclassName="wrap-input100 validate-input m-b-16">
+                      <div className="wrap-input100 validate-input m-b-16">
                         <LinkWrapper to="/leader-board">
-                            <TextButton description="LEADERBOARD"/>
+                            <TextButton marginTop="15px" description="LEADERBOARD"/>
                         </LinkWrapper>
                       </div>
-
 
                       <div className="wrap-input100 validate-input m-b-16">
                       <EventItemListView

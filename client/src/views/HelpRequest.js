@@ -171,10 +171,9 @@ class HelpRequest extends Component {
                           />
                         </div>
 
-
-                        <TextButton onClick={this.handlePublish} description="PUBLISH HELP REQUEST"/>
-                        {this.renderResponse()}
                       </form>
+                      <TextButton onClick={this.handlePublish} description="PUBLISH HELP REQUEST"/>
+                      
                     </div>
                   </div>
                 </div>

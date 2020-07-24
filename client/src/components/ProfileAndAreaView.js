@@ -11,23 +11,23 @@ class ProfileAndAreaView extends Component {
     render(){
         return (
           <div>
-                  <LinkWrapper to="zipcode">
-                      <DisplayAreaId>
-                          <FontAwesomeIcon icon={faLocationArrow} style={{ color: "#31D285", fontSize: '20px' }}/>
-                          <StyledAreaId>
-                              {this.props.areaID}
-                          </StyledAreaId>
-                      </DisplayAreaId>
-                  </LinkWrapper>
+              <LinkWrapper to="zipcode">
+                  <DisplayAreaId>
+                      <FontAwesomeIcon icon={faLocationArrow} style={{ color: "black", fontSize: '15px' }}/>
+                      <StyledAreaId>
+                          {this.props.areaID}
+                      </StyledAreaId>
+                  </DisplayAreaId>
+              </LinkWrapper>
 
-                  <LinkWrapper to="profile-page">
-                    <RenderProfileLink>
-                      <FontAwesomeIcon
-                      icon={faUserCircle}
-                      style={{ fontSize: '40px' }}
-                      />
-                    </RenderProfileLink>
-                  </LinkWrapper>
+              <LinkWrapper to="profile-page">
+                <RenderProfileLink>
+                  <FontAwesomeIcon
+                  icon={faUserCircle}
+                  style={{ fontSize: '30px' }}
+                  />
+                </RenderProfileLink>
+              </LinkWrapper>
             </div>
         );
     }
@@ -37,16 +37,18 @@ class ProfileAndAreaView extends Component {
 
 const RenderProfileLink = styled.div`
   position: absolute;
-  top: 20px;
-  right: 16px;
+  top: 10px;
+  right: 70px;
 `
 
 
 const DisplayAreaId = styled.div`
   position: absolute;
-  top: 20px;
-  margin-left: 45%;
-  margin-top: 2px;
+  top: 13px;
+  right: 16px;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
 `
 
 
@@ -55,7 +57,7 @@ const StyledAreaId = styled.div`
     flex: 1;
     flex-direction: column;
     font-family: Ubuntu-Regular;
-    fontSize: 20px;
+    font-weight: 600;
 `
 
 export default ProfileAndAreaView;

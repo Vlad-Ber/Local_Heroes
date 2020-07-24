@@ -235,6 +235,15 @@ iframe {
 }
 
 .login100-form-title-home {
+  font-family: JosefinSans-Bold;
+  font-size: 30px;
+  color: #fff;
+  line-height: 1.2;
+  text-align: left;
+  padding-left: 20%;
+  justify-content: center;
+  text-align: center;
+
   display: block;
   position: absolute;
   width: 100%;
