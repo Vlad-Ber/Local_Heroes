@@ -41,7 +41,7 @@ class MyRanking extends Component {
         const {username, virtuePoints } = this.state.user //destructuring
         return (
   		    <tr>
-    		    <td>{this.state.myRank}</td>
+    		    <td>{this.state.myRank + "."}</td>
     		    <td>{username}</td>
     		    <td>{virtuePoints}</td>
   		    </tr>
@@ -52,10 +52,17 @@ class MyRanking extends Component {
         return (
       		<MyRankingWrapper>
       	    <TitleWrapper>
-      		<h1>My Ranking</h1>
+      		<h1 id="myRankingTitle"></h1>
       		</TitleWrapper>
-          <table id='users'>
-            <tbody>
+		<table id='myranking'>
+		<thead>
+		<tr>
+		<td>#</td>
+		<td>MyRanking</td>
+		<td>VirtuePoints</td>
+		</tr>
+		</thead>
+		<tbody>
                 {this.renderTableData()}
             </tbody>
          </table>
@@ -70,8 +77,6 @@ const MyRankingWrapper = styled.div`
     justify-content: space-between;
     padding: 12px;
     margin: 6px;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
-    border-radius: 3px;
 `
 
 

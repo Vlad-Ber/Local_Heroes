@@ -40,7 +40,7 @@ class Top10 extends Component {
                 const {username, virtuePoints } = user //destructuring
                 return (
     		    <tr key={index+1}>
-    		    <td>{index+1}</td>
+    		    <td>{index+1 + "."}</td>
     		    <td>{username}</td>
     		    <td>{virtuePoints}</td>
     		    </tr>
@@ -51,15 +51,19 @@ class Top10 extends Component {
     render(){
         return (
       		<LeaderboardWrapper>
-      	    <TitleWrapper>
-      		    <h1>Leaderboard</h1>
-      		  </TitleWrapper>
       	  	<table id='users'>
-      		    <tbody>
-                  {this.renderTableData()}
-              </tbody>
-      		 </table>
-    	    </LeaderboardWrapper>
+      		<thead>
+		<tr>
+		<td>#</td>
+		<td>Username</td>
+		<td>VirtuePoints</td>
+		</tr>
+		</thead>
+		<tbody>
+                {this.renderTableData()}
+            </tbody>
+      		</table>
+    		</LeaderboardWrapper>
         );
     }
 }
@@ -70,14 +74,7 @@ const LeaderboardWrapper = styled.div`
     justify-content: space-between;
     padding: 12px;
     margin: 6px;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
-    border-radius: 3px;
 `
 
-const TitleWrapper = styled.div`
-    font-weight: 700;
-    font-size: 12px;
-    padding: 4px;
-`
 
 export default Top10;
