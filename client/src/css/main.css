@@ -234,6 +234,19 @@ iframe {
   padding-bottom: 39px;
 }
 
+.login100-form-title-home {
+  display: block;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: #57b846;
+  padding-top: 50px;
+  padding-bottom: 39px;
+  padding-left: 10px;
+  padding-right : 10px;
+}
+
 /*------------------------------------------------------------------
 [ Input ]*/
 
