@@ -14,7 +14,7 @@ class MyRanking extends Component {
 
 
     getMyRanking = () => {
-    	console.log("getMyRanking");
+    
     	axios.post("/getMyRanking", {
     	    user: this.state.user,
 
@@ -49,7 +49,6 @@ class MyRanking extends Component {
     }
 
     render(){
-	     console.log("myrank :" + this.state.myRank);
         return (
       		<MyRankingWrapper>
       	    <TitleWrapper>
