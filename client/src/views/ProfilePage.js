@@ -45,12 +45,10 @@ class ProfilePage extends Component {
 
 
   componentDidMount() {
-    console.log("---------- PROFILEPAGE.JS DID MOUNT ----------------")
     this.getUserErrands();
   }
 
   componentWillUnmount() {
-    console.log("---------- PROFILEPAGE.JS WILL UNMOUNT ----------------")
     clearTimeout(this.getUserErrandsTimeout);
   }
 
