@@ -78,7 +78,8 @@ class App extends Component {
           <div className="App" style={{ fontFamily: "Helvetica" }}>
             <Switch>
               <Route path="/" exact component={WithUserContext(Signup)} />
-              <Route path="/signup" component={WithUserContext(Signup)} />
+            <Route path="/signup" component={WithUserContext(Signup)} />
+	    <Route path="/leader-board" component={WithUserContext(Leaderboard)} />
             <Route path="/home" component={WithUserContext(Home)} />
             <Route
         path="/profile-page"
@@ -93,7 +94,6 @@ class App extends Component {
         component={WithUserContext(HelpNotice)}
             />
             <Route path="/profile-creation" component={ProfileCreation} />
-	    <Route path="/leader-board" component={WithUserContext(Leaderboard)} />
             <Route path="/residence-info" component={ResidenceInfo} />
             <Route path="/insert-image" component={InsertImage} />
             <Route path="/zipcode" component={WithUserContext(ZipCode)} />
