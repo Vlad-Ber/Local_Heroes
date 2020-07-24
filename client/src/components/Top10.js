@@ -5,12 +5,12 @@ import axios from 'axios';
 
 class Top10 extends Component {
     constructor(props) {
-	super(props)
-	this.state = {
-	    user: this.props.activeUser,
-	    top10array: [],
+    	super(props)
+    	this.state = {
+    	    user: this.props.activeUser,
+    	    top10array: [],
 
-	};
+    	};
     }
 
     getTop10Info = async () => {
@@ -21,31 +21,31 @@ class Top10 extends Component {
     	}).catch((error) => {
     	    console.log("EventItem, uptadeVirtuepoints: Got error while updating Virtue Points ", error);
     	});
-	this.getTop10InfoTimeout = setTimeout(this.getTop10Info, 2000);
+	     this.getTop10InfoTimeout = setTimeout(this.getTop10Info, 2000);
     };
 
     componentWillMount() {
-	console.log("Top10array in Willmount:");
-	console.log(this.top10array);
-	if (this.top10array === undefined){
-    	    this.getTop10Info();
-	}
+    	console.log("Top10array in Willmount:");
+    	console.log(this.top10array);
+    	if (this.top10array === undefined){
+        	    this.getTop10Info();
+    	}
     }
     compomnentWillUnmount(){
-	clearTimeout(this.fetchErrandsTimeout);
+	     clearTimeout(this.fetchErrandsTimeout);
     }
 
     renderTableData() {
     	return this.state.top10array.map((user, index) => {
-                const {username, virtuePoints } = user //destructuring
+                const { username, virtuePoints } = user; //destructuring
                 return (
-    		    <tr key={index+1}>
-    		    <td>{index+1 + "."}</td>
-    		    <td>{username}</td>
-    		    <td>{virtuePoints}</td>
-    		    </tr>
-      )
-    	})
+          		    <tr key={index+1}>
+          		    <td>{index+1 + "."}</td>
+          		    <td>{username}</td>
+          		    <td>{virtuePoints}</td>
+          		    </tr>
+                )
+    	 })
     }
 
     render(){

@@ -30,19 +30,19 @@ class EventItem extends Component {
     };
 
     updateVirtuePoints = () => {
-	if(this.state.errand.helper){
-	    axios.post(config.baseUrl + "/updateVirtuePoints", {
-		userToUpdate: this.state.errand.helper,
-            })
-		.catch((error) => {
-		    console.log("EventItem, uptadeVirtuepoints: Got error while updating Virtue Points ", error);
-		});
-	}
+    	if(this.state.errand.helper){
+    	    axios.post(config.baseUrl + "/updateVirtuePoints", {
+    		      userToUpdate: this.state.errand.helper,
+          })
+    		.catch((error) => {
+    		    console.log("EventItem, uptadeVirtuepoints: Got error while updating Virtue Points ", error);
+    		});
+    	}
     }
 
     handleMarkAsDone = () => {
         console.log("handleMarkAsDone");
-	this.updateVirtuePoints();
+	      this.updateVirtuePoints();
         axios.post(config.baseUrl + "/updateErrand", {
             errandID: this.state.errand._id,
             newErrandData: {
