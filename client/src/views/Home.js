@@ -42,7 +42,7 @@ class Home extends Component {
     fetchUsers = () => {
         axios.post(config.baseUrl + "/getUsersArea", {
             areaID: this.state.areaID
-        }).then((response) => {  
+        }).then((response) => {
             this.setState({ fetchUsersSuccess: true, users: response.data["users"] });
         }).catch((error) => {
             console.log("Got error while fetching users", error);
@@ -92,7 +92,7 @@ class Home extends Component {
 
                       <div className="wrap-input100 validate-input m-b-16">
                         <LinkWrapper to="/leader-board">
-                            <TextButton marginTop="15px" description="LEADERBOARD"/>
+                            <TextButton marginTop="-15px" description="LEADERBOARD"/>
                         </LinkWrapper>
                       </div>
 
