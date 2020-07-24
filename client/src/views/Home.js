@@ -27,12 +27,9 @@ class Home extends Component {
     }
 
     fetchErrands = () => {
-        console.log("fetchErrands");
         axios.post(config.baseUrl + "/getErrandsArea", {
             areaID: this.state.areaID
         }).then((response) => {
-            console.log("Errands fetched successfully!", response)
-            //console.log("errands: " + JSON.stringify(response.data))
             this.setState({ fetchErrandsSuccess: true, errands: response.data["errands"] });
         }).catch((error) => {
             console.log("Got error while fetching errands", error);
@@ -42,12 +39,9 @@ class Home extends Component {
     }
 
     fetchUsers = () => {
-        console.log("fetchUsers");
         axios.post(config.baseUrl + "/getUsersArea", {
             areaID: this.state.areaID
-        }).then((response) => {
-            console.log("Users fetched successfully!", response)
-            //console.log("users: " + JSON.stringify(response.data))
+        }).then((response) => {  
             this.setState({ fetchUsersSuccess: true, users: response.data["users"] });
         }).catch((error) => {
             console.log("Got error while fetching users", error);

@@ -134,7 +134,8 @@ client.connect((err) => {
 
   var data = {
     _id: user._id,
-    virtuePoints: user.virtuePoints,
+      virtuePoints: user.virtuePoints,
+      username: user.username,
   }
 
 	await areas.updateOne({ areaID: user.areaID }, { $push: { users: data }});
@@ -292,12 +293,28 @@ client.connect((err) => {
 
     //FUNC: Returns 10 users with most VP in order in local area
     async function returnTop10(areaID) {
+    	let localArea = await areas.findOne( { areaID: areaID } )
+    	    .catch((error) => {
+        		console.log("Could not find area in returnTop10", error)
+        	    });
+    	if(localArea.users != null){
+    	let top10 = await localArea.users.slice(0, 10);
 
-      let localArea = await areas.findOne( { areaID: areaID } );
+    	return top10;
+    	}
+    }
 
-      let top10 = localArea.users.slice(0, 10);
+    async function myRanking(currentUser){
+      let localArea = await areas.findOne( { areaID: currentUser.areaID } )
+          .catch((error) => {
+            console.log("Could not find my ranking in myRanking()", error)
+          });
 
-      return top10;
+      console.log("---------FUNCTION MYRANKING----------");
+      console.log(localArea);
+
+      var index = await localArea.users.findIndex(user => user.username === currentUser.username);
+      return index + 1;
     }
 
 
@@ -513,12 +530,25 @@ client.connect((err) => {
 	res.send({ errands });
     });
 
-    /*app.post("/getTop10", async (data, res) => {
-      	var areaID = await getErrandsUsername(data.body.areaID);
-        var top10 = await returnTop10(areaID);
-
+    app.post("/getTop10", async (data, res) => {
+        var top10 = await returnTop10(data.body.areaID)
+	      .catch((error) => {
+    	 	   console.log("post getTOP10 Error: ", error)
+  	    });
       	res.send({ top10 });
-    });*/
+    });
+
+    app.post("/getMyRanking", async (data, res) => {
+        var myRank = await myRanking(data.body.user)
+	      .catch((error) => {
+    		    console.log("post getTOP10 Error: ", error)
+    	   });
+
+         console.log("-----------MYRANKING USER------------");
+         console.log(data.body.user);
+        console.log("My ranking is: " + myRank);
+      	res.send({ myRank });
+    });
 
 });
 

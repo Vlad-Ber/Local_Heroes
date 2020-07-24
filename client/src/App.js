@@ -13,6 +13,7 @@ import ProfilePage from "./views/ProfilePage.js";
 import ProfileCreation from "./views/ProfileCreation.js";
 import ResidenceInfo from "./views/ResidenceInfo.js";
 import ZipCode from "./views/ZipCode.js";
+import Leaderboard from "./views/Leaderboard.js";
 
 class App extends Component {
 
@@ -76,7 +77,8 @@ class App extends Component {
           <div className="App" style={{ fontFamily: "Helvetica" }}>
             <Switch>
               <Route path="/" exact component={WithUserContext(Signup)} />
-              <Route path="/signup" component={WithUserContext(Signup)} />
+            <Route path="/signup" component={WithUserContext(Signup)} />
+	    <Route path="/leader-board" component={WithUserContext(Leaderboard)} />
             <Route path="/home" component={WithUserContext(Home)} />
             <Route
         path="/profile-page"
