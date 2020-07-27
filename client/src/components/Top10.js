@@ -37,14 +37,14 @@ class Top10 extends Component {
 
     renderTableData() {
     	return this.state.top10array.map((user, index) => {
-                const { username, virtuePoints } = user; //destructuring
-                return (
-          		    <tr key={index+1}>
-          		    <td>{index+1 + "."}</td>
-          		    <td>{username}</td>
-          		    <td>{virtuePoints}</td>
-          		    </tr>
-                )
+              const { username, virtuePoints } = user; //destructuring
+              return (
+        		    <tr key={index+1}>
+        		    <td>{index+1 + "."}</td>
+        		    <td>{username}</td>
+        		    <td>{virtuePoints}</td>
+        		    </tr>
+              )
     	 })
     }
 
@@ -52,17 +52,17 @@ class Top10 extends Component {
         return (
       		<LeaderboardWrapper>
       	  	<table id='users'>
-      		<thead>
-		<tr>
-		<td>#</td>
-		<td>Username</td>
-		<td>VirtuePoints</td>
-		</tr>
-		</thead>
-		<tbody>
+      		    <thead>
+		            <tr>
+              		<td>#</td>
+              		<td>Username</td>
+              		<td>VirtuePoints</td>
+		            </tr>
+		          </thead>
+		          <tbody>
                 {this.renderTableData()}
-            </tbody>
-      		</table>
+              </tbody>
+      		  </table>
     		</LeaderboardWrapper>
         );
     }
@@ -74,6 +74,8 @@ const LeaderboardWrapper = styled.div`
     justify-content: space-between;
     padding: 12px;
     margin: 6px;
+
+    text-align: center;
 `
 
 

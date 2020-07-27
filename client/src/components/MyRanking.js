@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import axios from 'axios';
 
+import SectionTitle from './SectionTitle.js';
+
 class MyRanking extends Component {
     constructor(props) {
     	super(props)
@@ -14,7 +16,7 @@ class MyRanking extends Component {
 
 
     getMyRanking = () => {
-    
+
     	axios.post("/getMyRanking", {
     	    user: this.state.user,
 
@@ -52,20 +54,21 @@ class MyRanking extends Component {
         return (
       		<MyRankingWrapper>
       	    <TitleWrapper>
-      		<h1 id="myRankingTitle"></h1>
-      		</TitleWrapper>
-		<table id='myranking'>
-		<thead>
-		<tr>
-		<td>#</td>
-		<td>MyRanking</td>
-		<td>VirtuePoints</td>
-		</tr>
-		</thead>
-		<tbody>
+      		    <h1 id="myRankingTitle"></h1>
+      		  </TitleWrapper>
+            <SectionTitle text="My Ranking"/>
+        		<table id='myranking'>
+          		<thead>
+            		<tr>
+              		<td>#</td>
+              		<td>Username</td>
+              		<td>VirtuePoints</td>
+            		</tr>
+          		</thead>
+          		<tbody>
                 {this.renderTableData()}
-            </tbody>
-         </table>
+              </tbody>
+            </table>
       		</MyRankingWrapper>
         )
     }
@@ -77,6 +80,8 @@ const MyRankingWrapper = styled.div`
     justify-content: space-between;
     padding: 12px;
     margin: 6px;
+
+    text-align: center;
 `
 
 

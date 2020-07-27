@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import axios from "axios";
+import styled from 'styled-components'
 import { config }  from "../config"
 
 import LinkWrapper from "../components/LinkWrapper.js";
@@ -43,11 +44,22 @@ class Signup extends Component {
           this.props.activeUser.onSetLoggedInUser(user);
           this.props.history.push("/home");
         } else {
-          this.setState({
-            text: "Wrong Username or Password",
-          });
+            this.renderErrorText();
         }
       });
+  };
+
+  renderErrorText = () => {
+    this.setState({
+      text: "Wrong Username or Password",
+    });
+
+    let timer = setTimeout(() => {
+      this.setState({
+        text: "",
+      });
+    }, 5000);
+    return () => clearTimeout(timer);
   };
 
   render() {
@@ -104,6 +116,8 @@ class Signup extends Component {
     						</button>
     					</div>
 
+              <StyledErrorText>{this.state.text}</StyledErrorText>
+
     					<div className="flex-col-c p-t-170 p-b-40">
     						<span className="txt1 p-b-9">
     							Don’t have an account?
@@ -123,5 +137,15 @@ class Signup extends Component {
     );
   }
 }
+
+const StyledErrorText = styled.div`
+    position:absolute;
+    text-align: center;
+
+    font-family: Ubuntu-Regular;
+
+    margin-left: 15%;
+    margin-top: 5%;
+`
 
 export default Signup;

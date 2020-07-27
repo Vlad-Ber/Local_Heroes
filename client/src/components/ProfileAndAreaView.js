@@ -38,14 +38,14 @@ class ProfileAndAreaView extends Component {
 const RenderProfileLink = styled.div`
   position: absolute;
   top: 10px;
-  right: 70px;
+  right: 15px;
 `
 
 
 const DisplayAreaId = styled.div`
   position: absolute;
-  top: 13px;
-  right: 16px;
+  top: 10px;
+  right: 55px;
   justify-content: center;
   text-align: center;
   color: #fff;
