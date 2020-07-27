@@ -5,12 +5,12 @@ import axios from 'axios';
 
 class Top10 extends Component {
     constructor(props) {
-	super(props)
-	this.state = {
-	    user: this.props.activeUser,
-	    top10array: [],
+    	super(props)
+    	this.state = {
+    	    user: this.props.activeUser,
+    	    top10array: [],
 
-	};
+    	};
     }
 
     getTop10Info = async () => {
@@ -21,45 +21,49 @@ class Top10 extends Component {
     	}).catch((error) => {
     	    console.log("EventItem, uptadeVirtuepoints: Got error while updating Virtue Points ", error);
     	});
-	this.getTop10InfoTimeout = setTimeout(this.getTop10Info, 2000);
+	     this.getTop10InfoTimeout = setTimeout(this.getTop10Info, 2000);
     };
 
     componentWillMount() {
-	console.log("Top10array in Willmount:");
-	console.log(this.top10array);
-	if (this.top10array === undefined){
-    	    this.getTop10Info();
-	}
+    	console.log("Top10array in Willmount:");
+    	console.log(this.top10array);
+    	if (this.top10array === undefined){
+        	    this.getTop10Info();
+    	}
     }
     compomnentWillUnmount(){
-	clearTimeout(this.fetchErrandsTimeout);
+	     clearTimeout(this.fetchErrandsTimeout);
     }
 
     renderTableData() {
     	return this.state.top10array.map((user, index) => {
-                const {username, virtuePoints } = user //destructuring
-                return (
-    		    <tr key={index+1}>
-    		    <td>{index+1}</td>
-    		    <td>{username}</td>
-    		    <td>{virtuePoints}</td>
-    		    </tr>
-      )
-    	})
+              const { username, virtuePoints } = user; //destructuring
+              return (
+        		    <tr key={index+1}>
+        		    <td>{index+1 + "."}</td>
+        		    <td>{username}</td>
+        		    <td>{virtuePoints}</td>
+        		    </tr>
+              )
+    	 })
     }
 
     render(){
         return (
       		<LeaderboardWrapper>
-      	    <TitleWrapper>
-      		    <h1>Leaderboard</h1>
-      		  </TitleWrapper>
       	  	<table id='users'>
-      		    <tbody>
-                  {this.renderTableData()}
+      		    <thead>
+		            <tr>
+              		<td>#</td>
+              		<td>Username</td>
+              		<td>VirtuePoints</td>
+		            </tr>
+		          </thead>
+		          <tbody>
+                {this.renderTableData()}
               </tbody>
-      		 </table>
-    	    </LeaderboardWrapper>
+      		  </table>
+    		</LeaderboardWrapper>
         );
     }
 }
@@ -70,14 +74,9 @@ const LeaderboardWrapper = styled.div`
     justify-content: space-between;
     padding: 12px;
     margin: 6px;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
-    border-radius: 3px;
+
+    text-align: center;
 `
 
-const TitleWrapper = styled.div`
-    font-weight: 700;
-    font-size: 12px;
-    padding: 4px;
-`
 
 export default Top10;

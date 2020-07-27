@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { config } from "../config"
 
-import NavBar from '../components/NavBar.js';
 import EventItemListView from '../components/EventItemListView.js';
-import StatusView from '../components/StatusView.js';
 import TextButton from '../components/TextButton.js';
 import LinkWrapper from '../components/LinkWrapper.js';
+import StatusView from '../components/StatusView.js';
+import ProfileAndAreaView from '../components/ProfileAndAreaView.js'
 
 class Home extends Component {
 
@@ -41,7 +41,7 @@ class Home extends Component {
     fetchUsers = () => {
         axios.post(config.baseUrl + "/getUsersArea", {
             areaID: this.state.areaID
-        }).then((response) => {  
+        }).then((response) => {
             this.setState({ fetchUsersSuccess: true, users: response.data["users"] });
         }).catch((error) => {
             console.log("Got error while fetching users", error);
@@ -65,32 +65,23 @@ class Home extends Component {
     render(){
         return(
             <div>
-
-
-                <LinkWrapper to="/help-request">
-                    <TextButton description="ASK FOR HELP"/>
-                </LinkWrapper>
-
-                <LinkWrapper to="/leader-board">
-                    <TextButton description="LEADERBOARD"/>
-                </LinkWrapper>
-
-                <EventItemListView
-                    errands={this.state.errands}
-                    emptyStateMessage="No errands in this area"
-                />
                 <div className="limiter">
                   <div className="container-login100">
                     <div className="wrap-login100">
                       <form className="login100-form validate-form p-l-55 p-r-55 p-t-178">
-                        <span className="login100-form-title-localHeroes">
+                        <span className="login100-form-title-home">
+                          <ProfileAndAreaView areaID={this.state.areaID}/>
+                          Home
+                        </span>
+                      </form>
+
+                      <div>
                         <StatusView
                             activeUsers={this.state.users.length}
                             activeErrands={this.state.errands.filter(errand => errand.status !== "done").length}
                             areaID={this.state.areaID}
                         />
-                        </span>
-                      </form>
+                      </div>
 
                       <div className="container-login100-form-btn">
                         <LinkWrapper to="/help-request">
@@ -98,12 +89,11 @@ class Home extends Component {
                         </LinkWrapper>
                       </div>
 
-                      <div cclassName="wrap-input100 validate-input m-b-16">
+                      <div className="wrap-input100 validate-input m-b-16">
                         <LinkWrapper to="/leader-board">
-                            <TextButton description="LEADERBOARD"/>
+                            <TextButton marginTop="-15px" description="LEADERBOARD"/>
                         </LinkWrapper>
                       </div>
-
 
                       <div className="wrap-input100 validate-input m-b-16">
                       <EventItemListView

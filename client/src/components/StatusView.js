@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 
 import styled from 'styled-components';
 
-import LinkWrapper from '../components/LinkWrapper.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLocationArrow, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 class StatusView extends Component {
 
@@ -14,13 +11,13 @@ class StatusView extends Component {
 
                 <StatusBoxWrapper>
                     <StatusBox>
-                        <p>ACTIVE ERRANDS IN YOUR LOCAL AREA</p>
-                        <p style={{ fontWeight: '700' }}>{this.props.activeErrands}</p>
+                        <p style={{ color: '#252525' }}>ACTIVE ERRANDS IN YOUR LOCAL AREA</p>
+                        <p style={{ fontWeight: '700', color: '#252525' }}>{this.props.activeErrands}</p>
                     </StatusBox>
 
                     <StatusBox>
-                        <p>ACTIVE USERS IN YOUR LOCAL AREA</p>
-                        <p style={{ fontWeight: '700' }}>{this.props.activeUsers}</p>
+                        <p style={{ color: '#252525' }}>ACTIVE USERS IN YOUR LOCAL AREA</p>
+                        <p style={{ fontWeight: '700', color: '#252525' }}>{this.props.activeUsers}</p>
                     </StatusBox>
                 </StatusBoxWrapper>
 
@@ -43,16 +40,17 @@ const StatusBoxWrapper = styled.div`
 
 const StatusBox = styled.div`
     display: flex;
-    flex: 1;
+    flex: auto;
     flex-direction: column;
     justify-content: space-around;
     text-align: center;
     align-items: center;
-    margin: 6px;
+    margin-right: 6px;
+    margin-left: 6px;
+    margin-top: 1px;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
-    border-radius: 3px;
+    border-radius: 10px;
     background: #fff;
-
 `
 
 export default StatusView;

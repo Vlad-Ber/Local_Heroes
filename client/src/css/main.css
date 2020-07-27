@@ -75,13 +75,30 @@ ul, li {
 	margin: 0px;
 	list-style-type: none;
 }
+thead {
+     font-family: Ubuntu-Bold;
+  src: url('../fonts/ubuntu/Ubuntu-Bold.ttf');
 
+}
+
+#myRankingTitle{
+     font-family: Ubuntu-Bold;
+     src: url('../fonts/ubuntu/Ubuntu-Bold.ttf');
+     border-bottom: 4px dotted green;
+     
+}
 
 /*---------------------------------------------*/
 input {
-	outline: none;
-	border: none;
+    outline: none;
+    border: none;
 }
+#users {
+    font-family: Ubuntu-Regular, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
 
 input[type="number"] {
     -moz-appearance: textfield;
@@ -191,6 +208,7 @@ iframe {
 }
 
 
+
 /*==================================================================
 [ Form ]*/
 
@@ -232,6 +250,28 @@ iframe {
   background-color: #57b846;
   padding-top: 50px;
   padding-bottom: 39px;
+}
+
+.login100-form-title-home {
+  font-family: JosefinSans-Bold;
+  font-size: 30px;
+  color: #fff;
+  line-height: 1.2;
+  text-align: left;
+  padding-left: 20%;
+  justify-content: center;
+  text-align: center;
+
+  display: block;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: #57b846;
+  padding-top: 50px;
+  padding-bottom: 39px;
+  padding-left: 10px;
+  padding-right : 10px;
 }
 
 /*------------------------------------------------------------------
@@ -403,6 +443,7 @@ iframe {
     opacity: 1;
   }
 }
+
 
 /*//////////////////////////////////////////////////////////////////
 [ Responsive ]*/

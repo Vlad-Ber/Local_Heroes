@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import axios from 'axios';
 
+import SectionTitle from './SectionTitle.js';
+
 class MyRanking extends Component {
     constructor(props) {
     	super(props)
@@ -14,7 +16,7 @@ class MyRanking extends Component {
 
 
     getMyRanking = () => {
-    
+
     	axios.post("/getMyRanking", {
     	    user: this.state.user,
 
@@ -41,7 +43,7 @@ class MyRanking extends Component {
         const {username, virtuePoints } = this.state.user //destructuring
         return (
   		    <tr>
-    		    <td>{this.state.myRank}</td>
+    		    <td>{this.state.myRank + "."}</td>
     		    <td>{username}</td>
     		    <td>{virtuePoints}</td>
   		    </tr>
@@ -51,14 +53,19 @@ class MyRanking extends Component {
     render(){
         return (
       		<MyRankingWrapper>
-      	    <TitleWrapper>
-      		<h1>My Ranking</h1>
-      		</TitleWrapper>
-          <table id='users'>
-            <tbody>
+            <SectionTitle text="My Ranking"/>
+        		<table id='myranking'>
+          		<thead>
+            		<tr>
+              		<td>#</td>
+              		<td>Username</td>
+              		<td>VirtuePoints</td>
+            		</tr>
+          		</thead>
+          		<tbody>
                 {this.renderTableData()}
-            </tbody>
-         </table>
+              </tbody>
+            </table>
       		</MyRankingWrapper>
         )
     }
@@ -70,15 +77,8 @@ const MyRankingWrapper = styled.div`
     justify-content: space-between;
     padding: 12px;
     margin: 6px;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
-    border-radius: 3px;
-`
 
-
-const TitleWrapper = styled.div`
-    font-weight: 700;
-    font-size: 12px;
-    padding: 4px;
+    text-align: center;
 `
 
 export default MyRanking;
