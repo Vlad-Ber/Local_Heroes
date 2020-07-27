@@ -53,9 +53,6 @@ class MyRanking extends Component {
     render(){
         return (
       		<MyRankingWrapper>
-      	    <TitleWrapper>
-      		    <h1 id="myRankingTitle"></h1>
-      		  </TitleWrapper>
             <SectionTitle text="My Ranking"/>
         		<table id='myranking'>
           		<thead>
@@ -82,13 +79,6 @@ const MyRankingWrapper = styled.div`
     margin: 6px;
 
     text-align: center;
-`
-
-
-const TitleWrapper = styled.div`
-    font-weight: 700;
-    font-size: 12px;
-    padding: 4px;
 `
 
 export default MyRanking;

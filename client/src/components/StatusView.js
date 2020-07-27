@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 
 import styled from 'styled-components';
 
-import LinkWrapper from '../components/LinkWrapper.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLocationArrow, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 class StatusView extends Component {
 

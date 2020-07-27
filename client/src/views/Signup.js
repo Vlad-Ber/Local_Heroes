@@ -142,7 +142,6 @@ const StyledErrorText = styled.div`
     position:absolute;
     text-align: center;
 
-    font-family: Ubuntu-Regular;
 
     margin-left: 15%;
     margin-top: 5%;

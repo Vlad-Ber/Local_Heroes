@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 
-import NavBar from '../components/NavBar.js';
 import Top10 from '../components/Top10.js';
 import MyRanking from '../components/MyRanking.js';
-import LinkWrapper from "../components/LinkWrapper.js";
 import BackButton from '../components/BackButton.js';
 
 class Leaderboard extends Component {

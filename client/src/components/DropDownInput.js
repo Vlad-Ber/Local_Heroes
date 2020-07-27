@@ -30,10 +30,16 @@ const DropDown = styled.select`
     height: 4em;
     width: 18em;
 
+    &:hover {
+      cursor: pointer;
+      background-color: #F0F0F0;
+      border-image: linear-gradient(to right, #11998e, #38ef7d);
+      border-image-slice: 1;
+    }
 `
 
 const StyledOption = styled.option`
-    font-family: Ubuntu-Regular;;
+    font-family: Ubuntu-Regular;
 `;
 
 
