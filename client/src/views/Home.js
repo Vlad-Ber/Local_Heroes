@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import axios from "axios";
 import { config } from "../config";
 
-import NavBar from "../components/NavBar.js";
-import EventItemListView from "../components/EventItemListView.js";
-import StatusView from "../components/StatusView.js";
-import TextButton from "../components/TextButton.js";
-import LinkWrapper from "../components/LinkWrapper.js";
+
+import EventItemListView from '../components/EventItemListView.js';
+import TextButton from '../components/TextButton.js';
+import LinkWrapper from '../components/LinkWrapper.js';
+import StatusView from '../components/StatusView.js';
+import ProfileAndAreaView from '../components/ProfileAndAreaView.js'
 
 class Home extends Component {
     constructor(props) {
@@ -30,10 +31,6 @@ class Home extends Component {
 		areaID: this.state.areaID,
 	    })
 	    .then((response) => {
-		if (response.data.data === 0) {
-		    console.log("true!");
-		    //window.location.href = "http://www.google.se";
-		}
 		console.log("Errands fetched successfully!", response);
 		this.setState({
 		    fetchErrandsSuccess: true,
@@ -93,31 +90,53 @@ class Home extends Component {
 	clearTimeout(this.fetchErrandsTimeout);
 	clearTimeout(this.fetchUsersTimeout);
     }
+    
+    render(){
+        return(
+            <div>
+                <div className="limiter">
+                  <div className="container-login100">
+                    <div className="wrap-login100">
+                      <form className="login100-form validate-form p-l-55 p-r-55 p-t-178">
+                        <span className="login100-form-title-home">
+                          <ProfileAndAreaView areaID={this.state.areaID}/>
+                          Home
+                        </span>
+                      </form>
 
-    render() {
-	return (
-		<div>
-		<NavBar rightButtonType="profile" rightButtonLink="/profile-page" />
-		<StatusView
-            activeUsers={this.state.users.length}
-            activeErrands={
-		this.state.errands.filter((errand) => errand.status !== "done")
-		    .length
-            }
-            areaID={this.state.areaID}
-		/>
-		<LinkWrapper to="/help-request">
-		<TextButton description="ASK FOR HELP" />
-		</LinkWrapper>
-		<LinkWrapper to="/leader-board">
-		<TextButton description="LEADERBOARD" />
-		</LinkWrapper>
-		<EventItemListView
-            errands={this.state.errands}
-            emptyStateMessage="No errands in this area"
-		/>
-		</div>
-	);
+                      <div>
+                        <StatusView
+                            activeUsers={this.state.users.length}
+                            activeErrands={this.state.errands.filter(errand => errand.status !== "done").length}
+                            areaID={this.state.areaID}
+                        />
+                      </div>
+
+                      <div className="container-login100-form-btn">
+                        <LinkWrapper to="/help-request">
+                            <TextButton description="ASK FOR HELP"/>
+                        </LinkWrapper>
+                      </div>
+
+                      <div className="wrap-input100 validate-input m-b-16">
+                        <LinkWrapper to="/leader-board">
+                            <TextButton marginTop="-15px" description="LEADERBOARD"/>
+                        </LinkWrapper>
+                      </div>
+
+                      <div className="wrap-input100 validate-input m-b-16">
+                      <EventItemListView
+                          errands={this.state.errands}
+                          emptyStateMessage="No errands in this area"
+                      />
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+            </div>
+        );
     }
 }
 

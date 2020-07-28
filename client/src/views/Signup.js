@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 
-import styled from "styled-components";
 import axios from "axios";
-import { config } from "../config";
+import styled from 'styled-components'
+import { config }  from "../config"
 
-import SectionTitle from "../components/SectionTitle.js";
-import TextInput from "../components/TextInput.js";
-import TextButton from "../components/TextButton.js";
 import LinkWrapper from "../components/LinkWrapper.js";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSeedling } from "@fortawesome/free-solid-svg-icons";
+
+
+import "../css/util.css";
+import "../css/main.css";
 
 class Signup extends Component {
   constructor(props) {
@@ -45,9 +46,7 @@ class Signup extends Component {
             this.props.activeUser.onSetLoggedInUser(user, accessToken);
           this.props.history.push("/home");
         } else {
-          this.setState({
-            text: "Wrong Username or Password",
-          });
+            this.renderErrorText();
         }
       })
       .catch((error) => {
@@ -55,86 +54,102 @@ class Signup extends Component {
       });
   };
 
+  renderErrorText = () => {
+    this.setState({
+      text: "Wrong Username or Password",
+    });
+
+    let timer = setTimeout(() => {
+      this.setState({
+        text: "",
+      });
+    }, 5000);
+    return () => clearTimeout(timer);
+  };
+
   render() {
     return (
-      <SignUpWrapper>
-        <WelcomeMessage>
-          <FontAwesomeIcon
-            icon={faSeedling}
-            style={{
-              fontSize: "72px",
-              color: "#31D285",
-            }}
-          />
-          <p>Welcome to LocalHero!</p>
-        </WelcomeMessage>
+    	<div className="limiter">
+    		<div className="container-login100">
+    			<div className="wrap-login100">
+    				<form className="login100-form validate-form p-l-55 p-r-55 p-t-178">
+    					<span className="login100-form-title-localHeroes">
+                  <FontAwesomeIcon
+                    icon={faSeedling}
+                    style={{
+                      fontSize: "72px",
+                      color: "#31D285",
+                    }}
+                  />
+    					    LocalHeroes
+    					</span>
 
-        <SectionTitle text="USERNAME" />
-        <TextInput
-          name="username"
-          height="32px"
-          width="240px"
-          onChange={this.saveInput}
-          autocomplete="username"
-        />
+    					<div className="wrap-input100 validate-input m-b-16">
+    						<input
+                className="input100"
+                type="text"
+                name="username"
+                placeholder="Username"
+                onChange={this.saveInput}
+                />
+    						<span className="focus-input100"></span>
+    					</div>
 
-        <SectionTitle text="PASSWORD" />
-        <TextInput
-          name="password"
-          type="password"
-          height="32px"
-          width="240px"
-          onChange={this.saveInput}
-          autocomplete="new-password"
-        />
+    					<div className="wrap-input100 validate-input">
+    						<input className="input100"
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={this.saveInput}
+                />
+    						<span className="focus-input100"></span>
+    					</div>
 
-        <TextButton
-          onClick={this.checkLogin}
-          description="LOGIN"
-          marginTop="40px"
-          marginBottom="10px"
-          height="32px"
-          width="240px"
-        />
+    					<div className="text-right p-t-13 p-b-23">
+    						<span className="txt1">
+    							Forgot <span> </span>
+    						</span>
 
-        <LinkWrapper to="profile-creation">
-          <TextButton
-            description="SIGN UP"
-            marginTop="10px"
-            marginBottom="10px"
-            height="32px"
-            width="240px"
-          />
-        </LinkWrapper>
-        <TextWrapper>{this.state.text}</TextWrapper>
-      </SignUpWrapper>
+    						<div className="txt2">
+    							Username / Password?
+    						</div>
+    					</div>
+
+    					<div className="container-login100-form-btn">
+    						<button className="login100-form-btn" onClick={this.checkLogin}>
+    							Sign in
+    						</button>
+    					</div>
+
+              <StyledErrorText>{this.state.text}</StyledErrorText>
+
+    					<div className="flex-col-c p-t-170 p-b-40">
+    						<span className="txt1 p-b-9">
+    							Don’t have an account?
+    						</span>
+
+                <LinkWrapper to="profile-creation">
+      						<div className="txt3">
+      							Sign up now
+      						</div>
+                </LinkWrapper>
+              </div>
+
+    				</form>
+    			</div>
+    		</div>
+    	</div>
     );
   }
 }
 
-const TextWrapper = styled.div`
-  border: #4caf50;
-  color: red;
-  font-size: 20px;
-  border-radius: 100%;
-  margin: auto;
-  padding-top: 0.8em;
-`;
+const StyledErrorText = styled.div`
+    position:absolute;
+    text-align: center;
 
-const SignUpWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
 
-const WelcomeMessage = styled.div`
-  display: flex;
-  flex-direction: column;
-  font-size: 24px;
-  font-weight: 800;
-  align-items: center;
-  justify-content: center;
-  padding-top: 80px;
-  padding-bottom: 10px;
-`;
+    margin-left: 15%;
+    margin-top: 5%;
+`
 
 export default Signup;

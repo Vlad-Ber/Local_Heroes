@@ -1,83 +1,145 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import { config } from "../config"
 
-import NavBar from '../components/NavBar.js';
-import SectionTitle from '../components/SectionTitle.js';
-import TextInput from '../components/TextInput.js';
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng,
+} from 'react-places-autocomplete';
+
+import AutoCompleteInput from '../components/AutoCompleteInput.js';
+import BackButton from '../components/BackButton.js';
 import TextButton from '../components/TextButton.js';
 import ServerResponse from '../components/ServerResponse.js';
 
-const ZipCode = (props) => {
+class ZipCode extends Component {
 
-  const [zipCode, setZipCode] = useState("");
-  const [success, setSuccess] = useState(null);
+  constructor(props){
+      super(props);
 
-  async function updateZipCode() {
+      this.state = {
+        area: "",
+        success: null,
+      }
+  }
+
+  setAdress = address => {
+    this.setState({ address: address })
+
+   // TODO: Fix className
+    this.getAreaCode(address);
+  }
+
+  getAreaCode = async address => {
+    let result = await geocodeByAddress(address);
+    let latLng = await getLatLng(result[0]);
+
+    this.getCityByCoordinates(latLng.lat, latLng.lng);
+    console.log("--AREA CODE--");
+    console.log(result[0]);
+    console.log(this.state.area)
+    console.log(this.state.city)
+
+  };
+
+  getCityByCoordinates = async (lat, lng) => {
+    let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyBQ0fbpDjxjDFLmagN0-pgyinM8rKTSPwg`
+    await fetch(url)
+    .then( response => response.json())
+    .then( data => {
+
+      let parts = data.results[0].address_components;
+
+      parts.forEach( part => {
+        if( part.types.includes("postal_code") ){
+          this.setState({ area: part.long_name })
+
+        }
+      })
+    })
+  };
+
+
+  updateZipCode = async () => {
+
     await axios.post(config.baseUrl + "/updateUser", {
-      user:   props.activeUser,
-      userID: props.activeUser._id,
+      user:   this.props.activeUser,
+      userID: this.props.activeUser._id,
       newUserData: {
-          areaID: zipCode
+          areaID: this.state.area,
       }
     }).then(async (response) => {
       console.log("Zip code updated successfully!", response)
-      setSuccess(true);
-      await updateUserContext();
+      this.setState({ success: true })
+      await this.updateUserContext();
       console.log("switching route from zipcode to home")
-      props.history.push("/home");
+      this.props.history.push("/home");
     }).catch((error) => {
       console.log("Got error while updating zip code", error);
-      setSuccess(false);
+      this.setState({ success: false })
     });
   }
 
-  function updateUserContext(){
+
+  updateUserContext = () => {
     console.log("updateLoggedInUser");
     axios.post(config.baseUrl + "/getUser", {
-        username: props.activeUser.username
+        username: this.props.activeUser.username
     }).then((response) => {
         console.log("User updated successfully!", response)
         console.log("updateUserContext with: " + JSON.stringify(response.data));
-        props.activeUser.onSetLoggedInUser(response.data);
+        this.props.activeUser.onSetLoggedInUser(response.data);
     }).catch((error) => {
         console.log("Got error while updating logged in user", error);
     });
     console.log("finished updatingUserContext in ZipCode")
   }
 
-  function renderResponse(){
+  renderResponse = () => {
     return <ServerResponse
-              success={success}
+              success={this.state.success}
               successResponse="Sucessfully updated zip code."
               failResponse="Something went wrong, try again."
             />
   };
-
+render(){
   return (
-      <div>
-        <NavBar
-          leftButtonType="back"
-          leftButtonLink="/home"
-        />
-        <SectionTitle
-          text="Change Location (Zip Code)"
-          paddingTop="30px"
-          fontSize="16px"
-        />
-        <TextInput
-          height="32px"
-          value={zipCode}
-          onChange={(e) => setZipCode(e.target.value)}
-        />
-        <TextButton
-          description="Update zip code"
-          onClick={updateZipCode}
-        />
-        {renderResponse()}
+        <div className="limiter">
+      		<div className="container-login100">
 
+            <div className="wrap-login100">
+
+            	<form className="login100-form validate-form p-l-55 p-r-55 p-t-178">
+                <span className="login100-form-title">
+                  <BackButton
+                      text="Back"
+                      link="/home"
+                  />
+                  Change Area
+      					</span>
+      				</form>
+
+              <div className="wrap-input100 validate-input m-b-16">
+                <AutoCompleteInput
+                value={this.state.address}
+                onChange={this.setAdress}
+                height="24px"
+                />
+              </div>
+
+              <div className="wrap-input100 validate-input">
+                <TextButton
+                  description="Update zip code"
+                  onClick={this.updateZipCode}
+                />
+              </div>
+              {this.renderResponse()}
+
+      			</div>
+      		</div>
       </div>
   );
+}
 }
 
 export default ZipCode;

@@ -58,56 +58,6 @@ const client = new MongoClient(uri, {
 client.connect((err) => {
   console.log("MongoDB database conneciton establised successfully!");
 
-  // 1. register a new user
-  app.post("/register", async (req, res) => {
-    const { email, password } = req.body;
-    try {
-      // Check if user exist!
-      const user = fakeDB.find((user) => user.email === email);
-      if (user) throw new Error("User already exists!");
-      // If not, create new user
-      const hashedPassword = await hash(password, 10);
-      // Insert user in DB
-      fakeDB.push({
-        id: fakeDB.length,
-        email,
-        password: hashedPassword,
-      });
-      res.send({ message: "User Created!" });
-      console.log(fakeDB);
-    } catch (err) {
-      res.send({
-        error: `${err.message}`,
-      });
-    }
-  });
-
-  //2. Login a user
-  app.post("/login", async (req, res) => {
-    const { email, password } = req.body;
-
-    try {
-      // Find user in DB, if the user don't exist - send error
-      const user = fakeDB.find((user) => user.email === email);
-      if (!user) throw new Error("User doesn't exist!");
-      // Compare crypted password and see if it checks out, error if not
-      const valid = await compare(password, user.password);
-      if (!valid) throw new Error("Password incorrect!");
-      // If correct, create refresh- and accesstoken
-      const accesstoken = createAccessToken(user.id);
-      const refreshtoken = createRefreshToken(user.id);
-      // put the refreshtoken in the DB
-      user.refreshtoken = refreshtoken;
-      console.log(fakeDB);
-      // send token, refresh as cookie and access as response
-      sendRefreshToken(res, refreshtoken);
-      sendAccessToken(res, req, accesstoken);
-    } catch (err) {
-      res.send({
-        error: `${err.message}`,
-      });
-    }
-  });
 
     // Logout the user
     app.post("/logout", (_req, res) => {
@@ -119,8 +69,14 @@ client.connect((err) => {
 	});
     });
 
+    //FUNC: Get all errands for an Area
+    //ARG: Area to get errands from
+    //RET: Array of errands in area
+    async function getErrandsArea(areaID) {
+	let findResult = await errands.find({ areaID: areaID }).toArray();
+	return findResult;
+    }
 
-    
 
   // Get a new access token with a refresh token
   app.post("/refresh_token", (req, res) => {
@@ -154,7 +110,8 @@ client.connect((err) => {
   const db = client.db("LocalHeroes");
   const errands = db.collection("Errands");
   const areas = db.collection("Areas");
-  const users = db.collection("Users");
+    const users = db.collection("Users");
+    
   //FUNC: Check if a document exists
   //ARG: Collection name in string
   //ARG: Query to search or in JSON format
@@ -170,6 +127,7 @@ client.connect((err) => {
       return false;
     }
   }
+  
   //FUNC: Check if user email/username exists
   //ARG: Username in JSON format
   //ARG: Email in JSON-Format
@@ -182,14 +140,9 @@ client.connect((err) => {
     } else {
       return false;
     }
-  }
-  //FUNC: Get all errands for an Area
-  //ARG: Area to get errands from
-  //RET: Array of errands in area
-  async function getErrandsArea(areaID) {
-    let findResult = await errands.find({ areaID: areaID }).toArray();
-    return findResult;
-  }
+  } 
+  
+
   //FUNC: Get all erands for a user
   //ARG: user.username to get errands from
   //RET: Array of errands created by a user by given Username
@@ -197,12 +150,14 @@ client.connect((err) => {
     let findResult = await errands.find({ requester: username }).toArray();
     return findResult;
   }
+    
   async function getUser(username) {
     var user = await users
       .findOne({ username: username })
       .catch((error) => console.error(error));
     return user;
   }
+    
   async function fetchUserByID(userID) {
     try {
       let _userID = ObjectID(userID);
@@ -221,6 +176,7 @@ client.connect((err) => {
     let findResult = await users.find({ areaID: areaID }).toArray();
     return findResult;
   }
+    
   //FUNC: Create new area if area doesnt exist.
   async function createArea(areaID) {
     let areaExist = await documentExist("Areas", { areaID: areaID });
@@ -232,6 +188,7 @@ client.connect((err) => {
       await areas.insertOne(areaData).catch((error) => console.error(error));
     }
   }
+    
   //FUNC: Adds a user to virtuepoints ranking of area.
   //TODO: Initialize area (in insertuser?), push reference of user to areas
   async function insertUserToArea(user) {
@@ -270,6 +227,7 @@ client.connect((err) => {
       mobile: mobile,
       city: city,
     };
+      
     var queryToFind = { email: email };
     var userNameToFind = { username: username };
     var findEmail = await documentExist("Users", queryToFind);
@@ -302,6 +260,7 @@ client.connect((err) => {
       return false;
     }
   }
+    
   async function updateErrand(errandID, newErrandData) {
     //TODO: check if the errand exists and maybe return true or false
     let currentErrand = await errands.findOne({ _id: new ObjectID(errandID) });
@@ -312,11 +271,13 @@ client.connect((err) => {
     );
     await errands.replaceOne({ _id: new ObjectID(errandID) }, updatedErrand);
   }
+	
   async function deleteEmptyArray() {
     await areas.remove({ users: { $exists: true, $eq: [] } }).catch((error) => {
       console.log("Could not delete area", error);
     });
   }
+	
   async function removeUserFromOldArea(areaID, userID) {
     await areas.updateOne(
       { areaID: areaID },
@@ -324,6 +285,7 @@ client.connect((err) => {
     );
     await deleteEmptyArray();
   }
+	
   async function updateUser(data) {
     let oldUser = await users.findOne({ _id: new ObjectID(data.userID) });
     let updatedUser = oldUser;
@@ -336,15 +298,18 @@ client.connect((err) => {
     await insertUserToArea(updatedUser);
     await updateLeaderboardRanking(updatedUser);
   }
+	
   async function updateVPInUsers(user) {
     await users.replaceOne({ username: user.username }, user);
   }
+	
   async function updateVPInAreas(user) {
     await areas.updateOne(
       { areaID: user.areaID, "users._id": user._id },
       { $set: { "users.$.virtuePoints": user.virtuePoints } }
     );
   }
+    
   // FUNC: used to update the refreshtoken for a user
   async function updateRefreshTokenUser(user, refreshtoken) {
     await users.updateOne(
@@ -352,6 +317,7 @@ client.connect((err) => {
       { $set: { refreshtoken: refreshtoken } }
     );
   }
+	
   //FUNC: Sorts the leaderboard for area with corresponding areaID
   async function updateLeaderboardRanking(user) {
     await areas.updateOne(
@@ -359,6 +325,7 @@ client.connect((err) => {
       { $push: { users: { $each: [], $sort: { virtuePoints: -1 } } } }
     );
   }
+	
   /*  FUNC: Updates value of virtuepoints (VP) in
    *   Areas and Users collection for specific user
    *   and updates leaderboard for VP
@@ -370,12 +337,14 @@ client.connect((err) => {
     let a = await areas.findOne({ areaID: user.areaID });
     console.log(a);
   }
+	
   //FUNC: Returns 10 users with most VP in order in local area
   async function returnTop10(areaID) {
     let localArea = await areas.findOne({ areaID: areaID });
     let top10 = localArea.users.slice(0, 10);
     return top10;
   }
+	
   async function insertErrand(errandData) {
     var date = new Date();
     var dateString = date.toISOString().slice(0, 10);
@@ -399,6 +368,7 @@ client.connect((err) => {
       .insertOne(data)
       .catch((error) => console.error(error));
   }
+	
   const ObjectID = require("mongodb").ObjectID;
   //FUNC: Deletes an errand from db
   //ARG: ErrandID to remove
@@ -415,17 +385,20 @@ client.connect((err) => {
         console.log("Could not delete errand", error);
       });
   }
+
   //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------//
   app.use(bodyParser.json());
   var router = express.Router();
   app.get("/health", (req, res) => {
     res.send("health check good");
   });
+	
   // GETs username and checks if it unique
   app.post("/check-username", (username, res) => {
     let u = username.body;
     users.find({ username: u }).catch((error) => console.error(error));
   });
+	
   // GETs and sends user data to database
   app.post("/insertUser", async (userData, res) => {
     let user = userData.body;
@@ -447,19 +420,124 @@ client.connect((err) => {
       );
       res.send({ message: "User Created" });
     } catch (err) {
-      res.send({ error: "${err.message}" });
+	res.send({ error: "${err.message}" });
     }
   });
 
-  app.post("/check-user", async (data, res) => {
-    let user = data.body;
-    let curUsername = { username: user.username };
-    let curEmail = { email: user.email };
-    let userExists = await documentExist("Users", curUsername);
-    let emailExists = await documentExist("Users", curEmail);
-    let dataToSend = { uniqueUser: userExists, uniqueEmail: emailExists };
-    res.send(dataToSend);
-  });
+    async function removeUserFromOldArea(areaID, userID) {
+        await areas.updateOne(
+          { areaID: areaID},
+          { $pull: { users: { _id: new ObjectID(userID) } } },
+        );
+
+        await deleteEmptyArray();
+    }
+
+   async function updateUser(data) {
+    	let oldUser = await users.findOne({ _id: new ObjectID(data.userID) });
+    	let updatedUser = oldUser;
+
+      await removeUserFromOldArea(oldUser.areaID, data.userID);
+
+    	Object.keys(data.newUserData).map(
+    	    (key) => (updatedUser[key] = data.newUserData[key])
+    	);
+
+      console.log(updatedUser);
+
+      await users.replaceOne({ _id: new ObjectID(data.userID) }, updatedUser);
+      await insertUserToArea(updatedUser);
+      await updateLeaderboardRanking(updatedUser);
+    }
+    
+
+    async function updateVPInUsers(user) {
+	     await users.replaceOne({ username: user.username }, user);
+    }
+
+    async function updateVPInAreas(user) {
+        await areas.updateOne(
+          { areaID: user.areaID, "users._id": user._id },
+          { $set: { "users.$.virtuePoints": user.virtuePoints } },
+        );
+    }
+
+    //FUNC: Sorts the leaderboard for area with corresponding areaID
+    async function updateLeaderboardRanking(user) {
+
+       await areas.updateOne(
+         { areaID: user.areaID },
+         { $push: { users: { $each: [], $sort: { virtuePoints: -1 } } } }
+       );
+    }
+
+
+   /*  FUNC: Updates value of virtuepoints (VP) in
+    *  Areas and Users collection for specific user
+    *  and updates leaderboard for VP
+    */
+    async function updateVirtuePoints(user) {
+        await updateVPInUsers(user);
+        await updateVPInAreas(user);
+        await updateLeaderboardRanking(user);
+
+        let a = await areas.findOne( { areaID: user.areaID } );
+        console.log(a);
+    }
+    
+    //FUNC: Returns 10 users with most VP in order in local area
+    async function returnTop10(areaID) {
+    	let localArea = await areas.findOne( { areaID: areaID } )
+    	    .catch((error) => {
+        		console.log("Could not find area in returnTop10", error)
+        	    });
+    	if(localArea.users != null){
+    	let top10 = await localArea.users.slice(0, 10);
+
+    	return top10;
+    	}
+    }
+
+    async function myRanking(currentUser){
+      let localArea = await areas.findOne( { areaID: currentUser.areaID } )
+          .catch((error) => {
+            console.log("Could not find my ranking in myRanking()", error)
+          });
+
+      console.log("---------FUNCTION MYRANKING----------");
+      console.log(localArea);
+
+      var index = await localArea.users.findIndex(user => user.username === currentUser.username);
+      return index + 1;
+    }
+    
+
+
+    async function insertErrand(errandData) {
+	var date = new Date();
+	var dateString = date.toISOString().slice(0, 10);
+	var data = {
+	    createdAt: dateString, //Future improvement, show hours ago created
+	    closedAt: "",
+	    status: "waiting",
+	    type: errandData.type,
+	    title: errandData.title,
+	    description: errandData.description,
+	    adress: errandData.adress,
+	    mobile: errandData.number,
+	    email: errandData.email,
+	    helper: "",
+	    requester: errandData.requester,
+	    areaID: errandData.areaID,
+	};
+	console.log(errandData.email)
+	console.log(errandData.number)
+
+	var insert = await errands
+	    .insertOne(data)
+	    .catch((error) => console.error(error));
+    }
+
 
   // login a user
   app.post("/loginUser", async (data, res) => {
@@ -492,34 +570,6 @@ client.connect((err) => {
     }
   });
 
-  // //-----------------------------
-  //  //2. Login a user
-  //  app.post("/login", async (req, res) => {
-  //   const { email, password } = req.body;
-
-  //   try {
-  //     // Find user in DB, if the user don't exist - send error
-  //     const user = fakeDB.find((user) => user.email === email);
-  //     if (!user) throw new Error("User doesn't exist!");
-  //     // Compare crypted password and see if it checks out, error if not
-  //     const valid = await compare(password, user.password);
-  //     if (!valid) throw new Error("Password incorrect!");
-  //     // If correct, create refresh- and accesstoken
-  //     const accesstoken = createAccessToken(user.id);
-  //     const refreshtoken = createRefreshToken(user.id);
-  //     // put the refreshtoken in the DB
-  //     user.refreshtoken = refreshtoken;
-  //     console.log(fakeDB);
-  //     // send token, refresh as cookie and access as response
-  //     sendRefreshToken(res, refreshtoken);
-  //     sendAccessToken(res, req, accesstoken);
-  //   } catch (err) {
-  //     res.send({
-  //       error: `${err.message}`,
-  //     });
-  //   }
-  // });
-  //   //___________________________
   app.post("/getUser", async (data, res) => {
     var user = await getUser(data.body.username);
     res.send(user);
@@ -574,16 +624,6 @@ client.connect((err) => {
 	}
     });
     
-    
-  app.post("/getErrandsArea", async function (req, res) {
-    try {
-      if (userID !== null) {
-        var errands = await getErrandsArea(req.body.areaID);
-      }
-    } catch (err) {
-	console.log("getErrandsArea Error");
-    };
-  });
 
   app.post("/uploadImage", async (data, res) => {
     let image = data.body;
@@ -592,16 +632,200 @@ client.connect((err) => {
     var errands = await getErrandsUsername(data.body.username);
     res.send({ errands });
   });
-  /*app.post("/getTop10", async (data, res) => {
-      	var areaID = await getErrandsUsername(data.body.areaID);
-        var top10 = await returnTop10(areaID);
+
+
+    //FUNC: Checks if e-mail address if valid
+    function validateEmail(email) {
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))  {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function validatePhonenumber(number) {
+      if(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(number)) {
+          return true;
+      } else {
+          return false;
+      }
+    }
+
+
+    //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------//
+
+    app.use(bodyParser.json());
+    var router = express.Router();
+
+    app.get("/health", (req, res) => {
+	res.send("health check good")
+    })
+  
+    // GETs username and checks if it unique
+    app.post("/check-username", (username, res) => {
+	let u = username.body;
+	users.find({ username: u }).catch((error) => console.error(error));
+    });
+
+    // GETs and sends user data to database
+    app.post('/insertUser', async (userData, res) => {
+        let user = userData.body;
+        try{
+
+            //Hash userpassword, first argument is userpassword
+            //second argument number of rounds to use when generating a salt
+            let hashedPassword = await bcrypt.hash(user.password, 10);
+
+            insertUser(user.username, hashedPassword, user.email, user.name, user.age, user.address,
+                       user.description, user.areaId, user.mobile, user.city);
+            res.send({ message: "User Created" });
+        } catch(err){
+
+            res.send({ error: '${err.message}'});
+        }
+    });
+
+
+    app.post("/check-user", async (data, res) => {
+    	let user = data.body;
+    	let curUsername = { username: user.username };
+    	let curEmail = { email: user.email };
+
+    	let userExists = await documentExist("Users", curUsername);
+    	let emailExists = await documentExist("Users", curEmail);
+      let validEmail = await validateEmail(user.email);
+      let validNumber = await validatePhonenumber(user.mobile);
+
+    	let dataToSend = {
+        uniqueUser: !userExists,
+        uniqueEmail: !emailExists ,
+        validEmail: validEmail,
+        validPhoneNumber: validNumber,
+      };
+
+    	res.send(dataToSend);
+    });
+
+    app.post("/loginUser", async (data, res) => {
+        console.log("inside login-user")
+        let user = data.body;
+
+        try {
+            let checkUser = await users.findOne({ "username": user.username });
+            if(!checkUser) throw new Error("User does not exist");
+
+            let comparePassword = await bcrypt.compare(user.password, checkUser.password);
+            if(!comparePassword) throw new Error("Password not correct");
+
+            res.send({ "login": true, "user": checkUser });
+
+        } catch (err) {
+            res.send({ "login": false });
+        }
+
+    });
+
+
+    app.post("/getUser", async(data, res) => {
+	console.log("getUser request heard");
+	var user = await getUser(data.body.username);
+	console.log("res.send: " + JSON.stringify(user))
+	res.send(user);
+    });
+
+    app.post("/fetchUserByID", async(data, res) => {
+	console.log("fetchUserByID request heard");
+	var user = await fetchUserByID(data.body.userID);
+	console.log("res.send: " + JSON.stringify(user))
+	res.send(user);
+    });
+  
+    app.post("/updateUser", async (data, res) => {
+      	console.log("updateUser request heard");
+      	let newUserData = data.body;
+
+        await updateUser(newUserData);
+
+        console.log(newUserData.user)
+      	res.send(newUserData); //non-sensical line?
+    });
+
+    app.post("/getUsersArea", async function (req, res) {
+	var users = await getUsersArea(req.body.areaID);
+	res.send({ users });
+    });
+
+    app.post("/insertErrand", async (data, res) => {
+	//console.log("insertErrand request heard");
+	let errandData = data.body;
+	//console.log(JSON.stringify(errandData));
+	await insertErrand(errandData);
+	res.send(errandData);
+    });
+
+    app.post("/updateErrand", (data, res) => {
+	//console.log("updateErrand app.post");
+	let doneErrand = updateErrand(
+	    data.body.errandID,
+	    data.body.newErrandData
+	).catch((error) => console.error(error));
+	res.send(doneErrand);
+    });
+
+    app.post("/deleteErrand", async function (data, res) {
+	console.log("deleteErrand request heard")
+	console.log("data.body.errandID: " + data.body.errandID);
+	await deleteErrand(data.body.errandID);
+    });
+
+
+    app.post("/updateVirtuePoints", async (data, res) => {
+	let userToUpdate = await getUser(data.body.userToUpdate);
+
+	userToUpdate.virtuePoints = userToUpdate.virtuePoints + 2;
+
+	await updateVirtuePoints(userToUpdate);
+    });
+
+    app.post("/getErrandsArea", async function (req, res) {
+	var errands = await getErrandsArea(req.body.areaID);
+	res.send({ errands });
+    });
+
+    app.post("/uploadImage", async (data, res) => {
+	let image = data.body;
+    });
+
+    app.post("/getUserErrand", async (data, res) => {
+	var errands = await getErrandsUsername(data.body.username);
+	res.send({ errands });
+    });
+
+    app.post("/getTop10", async (data, res) => {
+        var top10 = await returnTop10(data.body.areaID)
+	      .catch((error) => {
+    	 	   console.log("post getTOP10 Error: ", error)
+  	    });
       	res.send({ top10 });
-    });*/
-});
+    });
+
+    app.post("/getMyRanking", async (data, res) => {
+        var myRank = await myRanking(data.body.user)
+	      .catch((error) => {
+    		    console.log("post getTOP10 Error: ", error)
+    	   });
+
+         console.log("-----------MYRANKING USER------------");
+         console.log(data.body.user);
+        console.log("My ranking is: " + myRank);
+      	res.send({ myRank });
+    });
+	
+	
 app.listen(process.env.PORT, () =>
   console.log(`Server listening to ${process.env.PORT}`)
-);
-
+	  );
+});
 // // // using the models and routes established
 // // //const errandsRouter = require("./routes/errands");
 // // const userRouter = require("./routes/users");

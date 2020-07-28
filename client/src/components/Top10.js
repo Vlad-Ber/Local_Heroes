@@ -2,55 +2,69 @@ import React, { Component } from 'react'
 
 import styled from 'styled-components'
 
+import axios from 'axios';
+
 class Top10 extends Component {
     constructor(props) {
-	super(props)
-	this.state = {
-            heroes: [
-		{ id: 1, name: 'Stefan', VP: 98},
-		{ id: 2, name: 'Ali', VP: 20},
-		{ id: 3, name: 'Olle', VP: 15},
-		{ id: 4, name: 'Stina', VP: 15},
-		{ id: 5, name: 'Mikaela', VP: 14},
-		{ id: 6, name: 'Göran', VP: 5},
-		{ id: 7, name: 'Åke', VP: 5},
-		{ id: 8, name: 'Sven', VP: 3},
-		{ id: 9, name: 'Rigmor', VP: 2},
-		{ id: 10, name: 'Åsa', VP: 2},
-            ]
-	}
+    	super(props)
+    	this.state = {
+    	    user: this.props.activeUser,
+    	    top10array: [],
+
+    	};
     }
-    
+
+    getTop10Info = async () => {
+    	await axios.post("/getTop10", {
+    	    areaID: this.state.user.areaID,
+    	}).then((response) => {
+    	    this.setState({	top10array: response.data.top10 });
+    	}).catch((error) => {
+    	    console.log("EventItem, uptadeVirtuepoints: Got error while updating Virtue Points ", error);
+    	});
+	     this.getTop10InfoTimeout = setTimeout(this.getTop10Info, 2000);
+    };
+
+    componentWillMount() {
+    	console.log("Top10array in Willmount:");
+    	console.log(this.top10array);
+    	if (this.top10array === undefined){
+        	    this.getTop10Info();
+    	}
+    }
+    compomnentWillUnmount(){
+	     clearTimeout(this.fetchErrandsTimeout);
+    }
+
     renderTableData() {
-      return this.state.heroes.map((user, index) => {
-         const { id, name, VP } = user //destructuring
-         return (
-            <tr key={id}>
-               <td>{id}</td>
-               <td>{name}</td>
-               <td>{VP}</td>
-            </tr>
-         )
-      })
-   }
+    	return this.state.top10array.map((user, index) => {
+              const { username, virtuePoints } = user; //destructuring
+              return (
+        		    <tr key={index+1}>
+        		    <td>{index+1 + "."}</td>
+        		    <td>{username}</td>
+        		    <td>{virtuePoints}</td>
+        		    </tr>
+              )
+    	 })
+    }
 
     render(){
         return (
-	    
-		<LeaderboardWrapper>
-
-	    <TitleWrapper>
-		<h1>Leaderboard</h1>
-		</TitleWrapper>
-	  	<table id='users'>
-		<tbody>
+      		<LeaderboardWrapper>
+      	  	<table id='users'>
+      		    <thead>
+		            <tr>
+              		<td>#</td>
+              		<td>Username</td>
+              		<td>VirtuePoints</td>
+		            </tr>
+		          </thead>
+		          <tbody>
                 {this.renderTableData()}
-            </tbody>
-		</table>
-		
-	    </LeaderboardWrapper>
-		
-	    
+              </tbody>
+      		  </table>
+    		</LeaderboardWrapper>
         );
     }
 }
@@ -61,14 +75,9 @@ const LeaderboardWrapper = styled.div`
     justify-content: space-between;
     padding: 12px;
     margin: 6px;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
-    border-radius: 3px;
+
+    text-align: center;
 `
 
-const TitleWrapper = styled.div`
-    font-weight: 700;
-    font-size: 12px;
-    padding: 4px;
-`
 
-export default Top10; 
+export default Top10;
