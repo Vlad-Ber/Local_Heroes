@@ -86,6 +86,10 @@ class EventItem extends Component {
             color: '#31D285'
         }
 
+        let infoStyle = {
+            color: '#31D285'
+        }
+
         switch (type) {
 
             case "carrying":
@@ -101,7 +105,7 @@ class EventItem extends Component {
             return <FontAwesomeIcon icon={faUserFriends} style={typeIconStyle}/>
 
             default:
-            return <FontAwesomeIcon icon={faInfo} style={typeIconStyle}/>
+            return <FontAwesomeIcon icon={faInfo} style={infoStyle}/>
 
         }
 

@@ -286,9 +286,6 @@ client.connect((err) => {
         await updateVPInUsers(user);
         await updateVPInAreas(user);
         await updateLeaderboardRanking(user);
-
-        let a = await areas.findOne( { areaID: user.areaID } );
-        console.log(a);
     }
 
     //FUNC: Returns 10 users with most VP in order in local area
