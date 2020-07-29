@@ -87,6 +87,7 @@ class ProfileCreation extends Component {
           mobile: this.state.mobile,
       })
           .then((response) => {
+	      console.log(response.data);
               let uniqueUser =  response.data.uniqueUser;
               let uniqueEmail = response.data.uniqueEmail;
               let validEmail = response.data.validEmail;
@@ -120,7 +121,10 @@ class ProfileCreation extends Component {
                 // Function storeUser sends user to next page
                 this.storeUser(e);
               }
-          })
+	  })
+	  .catch((error) => {
+	      console.log(error);
+	  });
    }
 
    /**** CODE FOR ADDRESS ****/

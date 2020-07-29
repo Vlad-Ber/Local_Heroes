@@ -13,44 +13,70 @@ import "../css/main.css";
 
 class ProfilePage extends Component {
 
-  constructor(props) {
-    super(props);
+    constructor(props) {
+	super(props);
 
-    this.state = {
-      user: this.props.activeUser,
-      errands: [],
-      fetchErrandsSuccess: null,
+	this.state = {
+	    user: this.props.activeUser,
+	    errands: [],
+	    fetchErrandsSuccess: null,
+	};
+
+	this.getUserErrands = this.getUserErrands.bind(this);
+    }
+
+    logoutUser = () => {
+	axios.post(config.baseUrl + "/logout", {
+	    username: this.state.user.username
+	}).then((response) => {
+	    console.log("Recieved message succesfully!");
+	});
+	localStorage.clear();
+    }
+    
+    getUserErrands = () => {
+	axios
+	    .post(config.baseUrl + "/getUserErrand", {
+		username: this.state.user.username
+	    })
+	    .then((response) => {
+		this.setState({
+		    fetchErrandsSuccess: true,
+		    errands: response.data["errands"],
+		});
+	    })
+	    .catch((error) => {
+		console.log("You have no errands!", error);
+		this.setState({ fetchErrandsSuccess: false });
+	    });
+	this.getUserErrandsTimeout = setTimeout(this.getUserErrands, 2000);
     };
 
-    this.getUserErrands = this.getUserErrands.bind(this);
-  }
 
-  getUserErrands = () => {
-    axios
-      .post(config.baseUrl + "/getUserErrand", {
-        username: this.state.user.username
-      })
-      .then((response) => {
-        this.setState({
-          fetchErrandsSuccess: true,
-          errands: response.data["errands"],
-        });
-      })
-      .catch((error) => {
-        console.log("You have no errands!", error);
-        this.setState({ fetchErrandsSuccess: false });
-      });
-      this.getUserErrandsTimeout = setTimeout(this.getUserErrands, 2000);
-  };
+    checkAuth = async () => {
+	await axios.post(config.baseUrl + "/checkAuth", {
+	    accessToken: this.props.activeUser.accessToken,
+	}).then((response) => {
+	    if(response.data.error === undefined){
+		console.log("You are authorized!");
+	    }
+	    else{
+		window.location.href = "/" ;
+	    }
+	}).catch((error) => {
+	    console.log(error);
+	});
+    }
+    componentDidMount() {
+	console.log("---------- PROFILEPAGE.JS DID MOUNT ----------------");
+	this.checkAuth();
+	this.getUserErrands();
+    }
 
-
-  componentDidMount() {
-    this.getUserErrands();
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.getUserErrandsTimeout);
-  }
+    componentWillUnmount() {
+	console.log("---------- PROFILEPAGE.JS WILL UNMOUNT ----------------");
+	clearTimeout(this.getUserErrandsTimeout);
+    }
 
   render() {
     return (
@@ -92,7 +118,7 @@ class ProfilePage extends Component {
                     </form>
 
                     <LinkWrapper to="/">
-                      <TextButton onClick={() => localStorage.clear()} description="LOG OUT" />
+            <TextButton onClick={() => this.logoutUser()} description="LOG OUT" />
                     </LinkWrapper>
 
                     <StyledTextHeadLine>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import styled from 'styled-components'
+
 import axios from 'axios';
 
 class Top10 extends Component {
@@ -36,33 +37,34 @@ class Top10 extends Component {
     }
 
     renderTableData() {
+	console.log(this.state.top10array);
     	return this.state.top10array.map((user, index) => {
-              const { username, virtuePoints } = user; //destructuring
-              return (
-        		    <tr key={index+1}>
-        		    <td>{index+1 + "."}</td>
-        		    <td>{username}</td>
-        		    <td>{virtuePoints}</td>
-        		    </tr>
-              )
-    	 })
+            const { username, virtuePoints } = user; //destructuring
+            return (
+        	    <tr key={index+1}>
+        	    <td>{index+1 + "."}</td>
+        	    <td>{username}</td>
+        	    <td>{virtuePoints}</td>
+        	    </tr>
+            )
+    	})
     }
 
     render(){
         return (
       		<LeaderboardWrapper>
       	  	<table id='users'>
-      		    <thead>
-		            <tr>
-              		<td>#</td>
-              		<td>Username</td>
-              		<td>VirtuePoints</td>
-		            </tr>
-		          </thead>
-		          <tbody>
+      		<thead>
+		<tr>
+              	<td>#</td>
+              	<td>Username</td>
+              	<td>VirtuePoints</td>
+		</tr>
+		</thead>
+		<tbody>
                 {this.renderTableData()}
-              </tbody>
-      		  </table>
+            </tbody>
+      		</table>
     		</LeaderboardWrapper>
         );
     }

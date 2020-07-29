@@ -8,6 +8,7 @@ import TextButton from '../components/TextButton.js';
 import ServerResponse from '../components/ServerResponse.js';
 
 const HelpNotice = (props) => {
+  console.log(props);
 
     const [success, setSuccess] = useState(null);
     const { errand } = props.location.state;
@@ -31,6 +32,9 @@ const HelpNotice = (props) => {
             setSuccess(false);
         });
     };
+
+
+
 
   function renderResponse(){
     return <ServerResponse
@@ -61,13 +65,13 @@ const HelpNotice = (props) => {
                    />
                 </div>
 
+              </form>
+
                 <TextButton
                   description="GIVE NOTICE"
                   onClick={handleHelpNotice}
                 />
                 {renderResponse()}
-
-              </form>
             </div>
           </div>
         </div>

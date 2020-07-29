@@ -14,29 +14,32 @@ import ProfileCreation from "./views/ProfileCreation.js";
 import ZipCode from "./views/ZipCode.js";
 import Leaderboard from "./views/Leaderboard.js";
 
+
 class App extends Component {
-
+    
+    
   constructor(props) {
-
     super(props);
 
     this.state = {
       fetchLoggedInUser: {},
       userData: {},
     };
-
     this.updateUserContext = this.updateUserContext.bind(this);
     this.setLoggedInUser = this.setLoggedInUser.bind(this);
     this.checkInitialLogin = this.checkInitialLogin.bind(this);
 
   };
 
+ 
   // setLoggedInUser
   // accessed via prop onSetLoggedInUser in UserContext
   // PARAM: user object to update state with
-  setLoggedInUser = (user) => {
+    setLoggedInUser = (user, accessToken) => {
     console.log("setLoggedInUser in App.js")
-    this.setState({ userData: user })
+	this.setState({ userData: user,
+			accessToken: accessToken,
+		      });
   };
 
   // When App mounts (e.g. on refresh), fetches logged in user from localStorage and updates state and context
