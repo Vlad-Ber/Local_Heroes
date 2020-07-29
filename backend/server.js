@@ -69,14 +69,6 @@ client.connect((err) => {
 	});
     });
 
-    //FUNC: Get all errands for an Area
-    //ARG: Area to get errands from
-    //RET: Array of errands in area
-    async function getErrandsArea(areaID) {
-	let findResult = await errands.find({ areaID: areaID }).toArray();
-	return findResult;
-    }
-
 
   // Get a new access token with a refresh token
   app.post("/refresh_token", (req, res) => {
@@ -127,6 +119,16 @@ client.connect((err) => {
       return false;
     }
   }
+
+    
+    //FUNC: Get all errands for an Area
+    //ARG: Area to get errands from
+    //RET: Array of errands in area
+    async function getErrandsArea(areaID) {
+	let findResult = await errands.find({ areaID: areaID }).toArray();
+	return findResult;
+    }
+
   
   //FUNC: Check if user email/username exists
   //ARG: Username in JSON format
@@ -191,14 +193,22 @@ client.connect((err) => {
     
   //FUNC: Adds a user to virtuepoints ranking of area.
   //TODO: Initialize area (in insertuser?), push reference of user to areas
-  async function insertUserToArea(user) {
-    await createArea(user.areaID);
-    var data = {
-      _id: user._id,
-      virtuePoints: user.virtuePoints,
-    };
-    await areas.updateOne({ areaID: user.areaID }, { $push: { users: data } });
-  }
+
+
+    async function insertUserToArea(user){
+
+	await createArea(user.areaID);
+
+	var data = {
+	    _id: user._id,
+	    virtuePoints: user.virtuePoints,
+	    username: user.username,
+	}
+
+	await areas.updateOne({ areaID: user.areaID }, { $push: { users: data }});
+
+    }
+    
   //FUNC: Adds a user to db. Adds user to given area. If area doesnt exist, create new area.
   //ARGS: data required
   async function insertUser(
@@ -286,19 +296,6 @@ client.connect((err) => {
     await deleteEmptyArray();
   }
 	
-  async function updateUser(data) {
-    let oldUser = await users.findOne({ _id: new ObjectID(data.userID) });
-    let updatedUser = oldUser;
-    await removeUserFromOldArea(oldUser.areaID, data.userID);
-    Object.keys(data.newUserData).map(
-      (key) => (updatedUser[key] = data.newUserData[key])
-    );
-    console.log(updatedUser);
-    await users.replaceOne({ _id: new ObjectID(data.userID) }, updatedUser);
-    await insertUserToArea(updatedUser);
-    await updateLeaderboardRanking(updatedUser);
-  }
-	
   async function updateVPInUsers(user) {
     await users.replaceOne({ username: user.username }, user);
   }
@@ -337,39 +334,110 @@ client.connect((err) => {
     let a = await areas.findOne({ areaID: user.areaID });
     console.log(a);
   }
+    
+   async function updateUser(data) {
+    	let oldUser = await users.findOne({ _id: new ObjectID(data.userID) });
+    	let updatedUser = oldUser;
+
+      await removeUserFromOldArea(oldUser.areaID, data.userID);
+
+    	Object.keys(data.newUserData).map(
+    	    (key) => (updatedUser[key] = data.newUserData[key])
+    	);
+
+      console.log(updatedUser);
+
+      await users.replaceOne({ _id: new ObjectID(data.userID) }, updatedUser);
+      await insertUserToArea(updatedUser);
+      await updateLeaderboardRanking(updatedUser);
+    }
+
+   /*  FUNC: Updates value of virtuepoints (VP) in
+    *  Areas and Users collection for specific user
+    *  and updates leaderboard for VP
+    */
+    async function updateVirtuePoints(user) {
+        await updateVPInUsers(user);
+        await updateVPInAreas(user);
+        await updateLeaderboardRanking(user);
+    }
+    
+    //FUNC: Returns 10 users with most VP in order in local area
+    async function returnTop10(areaID) {
+    	let localArea = await areas.findOne( { areaID: areaID } )
+    	    .catch((error) => {
+        		console.log("Could not find area in returnTop10", error)
+        	    });
+    	if(localArea.users != null){
+	    console.log(localArea);
+    	let top10 = await localArea.users.slice(0, 10);
+
+    	return top10;
+    	}
+    }
+
+    async function myRanking(currentUser){
+      let localArea = await areas.findOne( { areaID: currentUser.areaID } )
+          .catch((error) => {
+            console.log("Could not find my ranking in myRanking()", error)
+          });
+
+      console.log("---------FUNCTION MYRANKING----------");
+      console.log(localArea);
+
+      var index = await localArea.users.findIndex(user => user.username === currentUser.username);
+      return index + 1;
+    }
+    
+
+
+    async function insertErrand(errandData) {
+	var date = new Date();
+	var dateString = date.toISOString().slice(0, 10);
+	var data = {
+	    createdAt: dateString, //Future improvement, show hours ago created
+	    closedAt: "",
+	    status: "waiting",
+	    type: errandData.type,
+	    title: errandData.title,
+	    description: errandData.description,
+	    adress: errandData.adress,
+	    mobile: errandData.number,
+	    email: errandData.email,
+	    helper: "",
+	    requester: errandData.requester,
+	    areaID: errandData.areaID,
+	};
+	console.log(errandData.email)
+	console.log(errandData.number)
+
+	var insert = await errands
+	    .insertOne(data)
+	    .catch((error) => console.error(error));
+    }
+
+
+
+    //FUNC: Checks if e-mail address if valid
+    function validateEmail(email) {
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))  {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function validatePhonenumber(number) {
+      if(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(number)) {
+          return true;
+      } else {
+          return false;
+      }
+    }
+
+
 	
-  //FUNC: Returns 10 users with most VP in order in local area
-  async function returnTop10(areaID) {
-    let localArea = await areas.findOne({ areaID: areaID });
-    let top10 = localArea.users.slice(0, 10);
-    return top10;
-  }
-	
-  async function insertErrand(errandData) {
-    var date = new Date();
-    var dateString = date.toISOString().slice(0, 10);
-    var data = {
-      createdAt: dateString, //Future improvement, show hours ago created
-      closedAt: "",
-      status: "waiting",
-      type: errandData.type,
-      title: errandData.title,
-      description: errandData.description,
-      adress: errandData.adress,
-      mobile: errandData.number,
-      email: errandData.email,
-      helper: "",
-      requester: errandData.requester,
-      areaID: errandData.areaID,
-    };
-    console.log(errandData.email);
-    console.log(errandData.number);
-    var insert = await errands
-      .insertOne(data)
-      .catch((error) => console.error(error));
-  }
-	
-  const ObjectID = require("mongodb").ObjectID;
+    const ObjectID = require("mongodb").ObjectID;
   //FUNC: Deletes an errand from db
   //ARG: ErrandID to remove
   //TODO: Inte klar
@@ -423,188 +491,68 @@ client.connect((err) => {
 	res.send({ error: "${err.message}" });
     }
   });
-
-    async function removeUserFromOldArea(areaID, userID) {
-        await areas.updateOne(
-          { areaID: areaID},
-          { $pull: { users: { _id: new ObjectID(userID) } } },
-        );
-
-        await deleteEmptyArray();
-    }
-
-   async function updateUser(data) {
-    	let oldUser = await users.findOne({ _id: new ObjectID(data.userID) });
-    	let updatedUser = oldUser;
-
-      await removeUserFromOldArea(oldUser.areaID, data.userID);
-
-    	Object.keys(data.newUserData).map(
-    	    (key) => (updatedUser[key] = data.newUserData[key])
-    	);
-
-      console.log(updatedUser);
-
-      await users.replaceOne({ _id: new ObjectID(data.userID) }, updatedUser);
-      await insertUserToArea(updatedUser);
-      await updateLeaderboardRanking(updatedUser);
-    }
     
+    // login a user
+    app.post("/loginUser", async (data, res) => {
+	let user = data.body;
+	try {
+	    let checkUser = await users.findOne({ username: user.username });
+	    if (!checkUser) throw new Error("User does not exist");
+	    let comparePassword = await bcrypt.compare(
+		user.password,
+		checkUser.password
+	    );
+	    if (!comparePassword) throw new Error("Password not correct");
+	    const accesstoken = createAccessToken(checkUser._id);
+	    const refreshtoken = createRefreshToken(checkUser._id);
+	    // Update database
+	    await updateRefreshTokenUser(checkUser, refreshtoken);
+	    checkUser = await users.findOne({ username: user.username });
+	    sendRefreshToken(res, refreshtoken);
+	    checkUser.accessToken = accesstoken;
+	    console.log(checkUser);
+	    res.send({ login: true,
+		       user: checkUser,
+		       accesstoken,
+		       email: data.body.email,
+		     });
+	} catch (err) {
+	    res.send({
+		error: `${err.message}`,
+	    });
+	}
+    });
 
-    async function updateVPInUsers(user) {
-	     await users.replaceOne({ username: user.username }, user);
-    }
-
-    async function updateVPInAreas(user) {
-        await areas.updateOne(
-          { areaID: user.areaID, "users._id": user._id },
-          { $set: { "users.$.virtuePoints": user.virtuePoints } },
-        );
-    }
-
-    //FUNC: Sorts the leaderboard for area with corresponding areaID
-    async function updateLeaderboardRanking(user) {
-
-       await areas.updateOne(
-         { areaID: user.areaID },
-         { $push: { users: { $each: [], $sort: { virtuePoints: -1 } } } }
-       );
-    }
-
-
-   /*  FUNC: Updates value of virtuepoints (VP) in
-    *  Areas and Users collection for specific user
-    *  and updates leaderboard for VP
-    */
-    async function updateVirtuePoints(user) {
-        await updateVPInUsers(user);
-        await updateVPInAreas(user);
-        await updateLeaderboardRanking(user);
-    }
     
-    //FUNC: Returns 10 users with most VP in order in local area
-    async function returnTop10(areaID) {
-    	let localArea = await areas.findOne( { areaID: areaID } )
-    	    .catch((error) => {
-        		console.log("Could not find area in returnTop10", error)
-        	    });
-    	if(localArea.users != null){
-    	let top10 = await localArea.users.slice(0, 10);
-
-    	return top10;
-    	}
-    }
-
-    async function myRanking(currentUser){
-      let localArea = await areas.findOne( { areaID: currentUser.areaID } )
-          .catch((error) => {
-            console.log("Could not find my ranking in myRanking()", error)
-          });
-
-      console.log("---------FUNCTION MYRANKING----------");
-      console.log(localArea);
-
-      var index = await localArea.users.findIndex(user => user.username === currentUser.username);
-      return index + 1;
-    }
+    app.post("/fetchUserByID", async (data, res) => {
+	var user = await fetchUserByID(data.body.userID);
+	res.send(user);
+    });
     
-
-
-    async function insertErrand(errandData) {
-	var date = new Date();
-	var dateString = date.toISOString().slice(0, 10);
-	var data = {
-	    createdAt: dateString, //Future improvement, show hours ago created
-	    closedAt: "",
-	    status: "waiting",
-	    type: errandData.type,
-	    title: errandData.title,
-	    description: errandData.description,
-	    adress: errandData.adress,
-	    mobile: errandData.number,
-	    email: errandData.email,
-	    helper: "",
-	    requester: errandData.requester,
-	    areaID: errandData.areaID,
-	};
-	console.log(errandData.email)
-	console.log(errandData.number)
-
-	var insert = await errands
-	    .insertOne(data)
-	    .catch((error) => console.error(error));
-    }
-
-
-  // login a user
-  app.post("/loginUser", async (data, res) => {
-    let user = data.body;
-    try {
-      let checkUser = await users.findOne({ username: user.username });
-      if (!checkUser) throw new Error("User does not exist");
-      let comparePassword = await bcrypt.compare(
-        user.password,
-        checkUser.password
-      );
-	if (!comparePassword) throw new Error("Password not correct");
-	const accesstoken = createAccessToken(checkUser._id);
-	const refreshtoken = createRefreshToken(checkUser._id);
-	// Update database
-	await updateRefreshTokenUser(checkUser, refreshtoken);
-	checkUser = await users.findOne({ username: user.username });
-	sendRefreshToken(res, refreshtoken);
-	checkUser.accessToken = accesstoken;
-	console.log(checkUser);
-	res.send({ login: true,
-		   user: checkUser,
-		   accesstoken,
-		   email: data.body.email,
-		 });
-    } catch (err) {
-	res.send({
-        error: `${err.message}`,
-      });
-    }
-  });
-
-  app.post("/getUser", async (data, res) => {
-    var user = await getUser(data.body.username);
-    res.send(user);
-  });
-  app.post("/fetchUserByID", async (data, res) => {
-    var user = await fetchUserByID(data.body.userID);
-    res.send(user);
-  });
-  app.post("/updateUser", async (data, res) => {
-    let newUserData = data.body;
-    await updateUser(newUserData);
-    //await updateVirtuePoints(newUserData.user);
-    res.send(newUserData); //non-sensical line?
-  });
-  app.post("/getUsersArea", async function (req, res) {
-    var users = await getUsersArea(req.body.areaID);
-    res.send({ users });
-  });
-  app.post("/insertErrand", async (data, res) => {
-    let errandData = data.body;
-    await insertErrand(errandData);
-    res.send(errandData);
-  });
-  app.post("/updateErrand", (data, res) => {
-    let doneErrand = updateErrand(
-      data.body.errandID,
-      data.body.newErrandData
-    ).catch((error) => console.error(error));
-    res.send(doneErrand);
-  });
-  app.post("/deleteErrand", async function (data, res) {
-    await deleteErrand(data.body.errandID);
-  });
-  app.post("/updateVirtuePoints", async (data, res) => {
-    let userToUpdate = await getUser(data.body.userToUpdate);
-    userToUpdate.virtuePoints = userToUpdate.virtuePoints + 2;
-    await updateVirtuePoints(userToUpdate);
-  });
+    app.post("/getUsersArea", async function (req, res) {
+	var users = await getUsersArea(req.body.areaID);
+	res.send({ users });
+    });
+    app.post("/insertErrand", async (data, res) => {
+	let errandData = data.body;
+	await insertErrand(errandData);
+	res.send(errandData);
+    });
+    app.post("/updateErrand", (data, res) => {
+	let doneErrand = updateErrand(
+	    data.body.errandID,
+	    data.body.newErrandData
+	).catch((error) => console.error(error));
+	res.send(doneErrand);
+    });
+    app.post("/deleteErrand", async function (data, res) {
+	await deleteErrand(data.body.errandID);
+    });
+    app.post("/updateVirtuePoints", async (data, res) => {
+	let userToUpdate = await getUser(data.body.userToUpdate);
+	userToUpdate.virtuePoints = userToUpdate.virtuePoints + 2;
+	await updateVirtuePoints(userToUpdate);
+    });
 
     app.post('/checkAuth', async (req, res) => {
 	try {
@@ -622,47 +570,14 @@ client.connect((err) => {
     });
     
 
-  app.post("/uploadImage", async (data, res) => {
-    let image = data.body;
-  });
-  app.post("/getUserErrand", async (data, res) => {
-    var errands = await getErrandsUsername(data.body.username);
-    res.send({ errands });
-  });
-
-
-    //FUNC: Checks if e-mail address if valid
-    function validateEmail(email) {
-      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))  {
-        return true;
-      } else {
-        return false;
-      }
-    }
-
-    function validatePhonenumber(number) {
-      if(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(number)) {
-          return true;
-      } else {
-          return false;
-      }
-    }
-
-
-    //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------//
-
-    app.use(bodyParser.json());
-    var router = express.Router();
-
-    app.get("/health", (req, res) => {
-	res.send("health check good")
-    })
-  
-    // GETs username and checks if it unique
-    app.post("/check-username", (username, res) => {
-	let u = username.body;
-	users.find({ username: u }).catch((error) => console.error(error));
+    app.post("/uploadImage", async (data, res) => {
+	let image = data.body;
     });
+    app.post("/getUserErrand", async (data, res) => {
+	var errands = await getErrandsUsername(data.body.username);
+	res.send({ errands });
+    });
+
 
     // GETs and sends user data to database
     app.post('/insertUser', async (userData, res) => {
@@ -703,26 +618,6 @@ client.connect((err) => {
     	res.send(dataToSend);
     });
 
-    app.post("/loginUser", async (data, res) => {
-        console.log("inside login-user")
-        let user = data.body;
-
-        try {
-            let checkUser = await users.findOne({ "username": user.username });
-            if(!checkUser) throw new Error("User does not exist");
-
-            let comparePassword = await bcrypt.compare(user.password, checkUser.password);
-            if(!comparePassword) throw new Error("Password not correct");
-
-            res.send({ "login": true, "user": checkUser });
-
-        } catch (err) {
-            res.send({ "login": false });
-        }
-
-    });
-
-
     app.post("/getUser", async(data, res) => {
 	console.log("getUser request heard");
 	var user = await getUser(data.body.username);
@@ -730,12 +625,6 @@ client.connect((err) => {
 	res.send(user);
     });
 
-    app.post("/fetchUserByID", async(data, res) => {
-	console.log("fetchUserByID request heard");
-	var user = await fetchUserByID(data.body.userID);
-	console.log("res.send: " + JSON.stringify(user))
-	res.send(user);
-    });
   
     app.post("/updateUser", async (data, res) => {
       	console.log("updateUser request heard");
@@ -747,54 +636,8 @@ client.connect((err) => {
       	res.send(newUserData); //non-sensical line?
     });
 
-    app.post("/getUsersArea", async function (req, res) {
-	var users = await getUsersArea(req.body.areaID);
-	res.send({ users });
-    });
-
-    app.post("/insertErrand", async (data, res) => {
-	//console.log("insertErrand request heard");
-	let errandData = data.body;
-	//console.log(JSON.stringify(errandData));
-	await insertErrand(errandData);
-	res.send(errandData);
-    });
-
-    app.post("/updateErrand", (data, res) => {
-	//console.log("updateErrand app.post");
-	let doneErrand = updateErrand(
-	    data.body.errandID,
-	    data.body.newErrandData
-	).catch((error) => console.error(error));
-	res.send(doneErrand);
-    });
-
-    app.post("/deleteErrand", async function (data, res) {
-	console.log("deleteErrand request heard")
-	console.log("data.body.errandID: " + data.body.errandID);
-	await deleteErrand(data.body.errandID);
-    });
-
-
-    app.post("/updateVirtuePoints", async (data, res) => {
-	let userToUpdate = await getUser(data.body.userToUpdate);
-
-	userToUpdate.virtuePoints = userToUpdate.virtuePoints + 2;
-
-	await updateVirtuePoints(userToUpdate);
-    });
-
     app.post("/getErrandsArea", async function (req, res) {
 	var errands = await getErrandsArea(req.body.areaID);
-	res.send({ errands });
-    });
-
-    app.post("/uploadImage", async (data, res) => {
-	let image = data.body;
-    });
-
-    app.post("/getUserErrand", async (data, res) => {
-	var errands = await getErrandsUsername(data.body.username);
 	res.send({ errands });
     });
 
@@ -802,7 +645,7 @@ client.connect((err) => {
         var top10 = await returnTop10(data.body.areaID)
 	      .catch((error) => {
     	 	   console.log("post getTOP10 Error: ", error)
-  	    });
+  	      });
       	res.send({ top10 });
     });
 
