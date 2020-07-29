@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { config } from "../config"
 
-import NavBar from '../components/NavBar.js';
-import SectionTitle from '../components/SectionTitle.js';
+import BackButton from '../components/BackButton.js';
 import EventItem from '../components/EventItem.js';
 import TextButton from '../components/TextButton.js';
 import ServerResponse from '../components/ServerResponse.js';
@@ -37,36 +36,44 @@ const HelpNotice = (props) => {
     
 
   function renderResponse(){
-    return <ServerResponse 
-              success={success} 
-              successResponse="Thank you for helping out!" 
+    return <ServerResponse
+              success={success}
+              successResponse="Thank you for helping out!"
               failResponse="Something went wrong, try again."
             />
   };
 
   return (
-      <div>
-        <NavBar 
-          leftButtonType="back"
-          leftButtonLink="/home"
-        /> 
-        <SectionTitle
-          text="ERRAND INFORMATION" 
-          paddingTop="30px"
-          fontSize="16px"
-        />
-        <EventItem
-            fullView={true}
-            errand={errand}
-            disableAction={true}
-         />
-        <TextButton
-          description="GIVE NOTICE"
-          onClick={handleHelpNotice}
-        />
-        {renderResponse()}
-        
-      </div>
+        <div className="limiter">
+          <div className="container-login100">
+            <div className="wrap-login100">
+              <form className="login100-form validate-form p-l-55 p-r-55 p-t-178">
+                <span className="login100-form-title">
+                <BackButton
+                    text="Home"
+                    link="/home"
+                />
+                    Errand Information
+                </span>
+
+                <div className="wrap-input100 validate-input m-b-16">
+                  <EventItem
+                      fullView={true}
+                      errand={errand}
+                      disableAction={true}
+                   />
+                </div>
+
+                <TextButton
+                  description="GIVE NOTICE"
+                  onClick={handleHelpNotice}
+                />
+                {renderResponse()}
+
+              </form>
+            </div>
+          </div>
+        </div>
   );
 }
 
