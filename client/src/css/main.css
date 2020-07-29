@@ -85,7 +85,7 @@ thead {
      font-family: Ubuntu-Bold;
      src: url('../fonts/ubuntu/Ubuntu-Bold.ttf');
      border-bottom: 4px dotted green;
-     
+
 }
 
 /*---------------------------------------------*/
@@ -283,6 +283,7 @@ iframe {
   border-radius: 27px;
   position: relative;
   z-index: 1;
+  overflow: hidden;
 }
 
 .input100 {

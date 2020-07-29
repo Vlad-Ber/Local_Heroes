@@ -15,6 +15,7 @@ const {
 
 const bcrypt = require("bcrypt"); // Ta bort sen!
 const MongoClient = require("mongodb").MongoClient;
+const ObjectID = require("mongodb").ObjectID;
 const { fakeDB } = require("./fakeDB.js");
 const { isAuth } = require("./isAuth.js");
 
@@ -65,7 +66,7 @@ client.connect((err) => {
 	console.log(_req);
 	return res.send({
 	    message: "Logged out",
-	    
+
 	});
     });
 
@@ -103,7 +104,7 @@ client.connect((err) => {
   const errands = db.collection("Errands");
   const areas = db.collection("Areas");
     const users = db.collection("Users");
-    
+
   //FUNC: Check if a document exists
   //ARG: Collection name in string
   //ARG: Query to search or in JSON format
@@ -120,7 +121,7 @@ client.connect((err) => {
     }
   }
 
-    
+
     //FUNC: Get all errands for an Area
     //ARG: Area to get errands from
     //RET: Array of errands in area
@@ -129,7 +130,7 @@ client.connect((err) => {
 	return findResult;
     }
 
-  
+
   //FUNC: Check if user email/username exists
   //ARG: Username in JSON format
   //ARG: Email in JSON-Format
@@ -142,8 +143,8 @@ client.connect((err) => {
     } else {
       return false;
     }
-  } 
-  
+  }
+
 
   //FUNC: Get all erands for a user
   //ARG: user.username to get errands from
@@ -152,14 +153,14 @@ client.connect((err) => {
     let findResult = await errands.find({ requester: username }).toArray();
     return findResult;
   }
-    
+
   async function getUser(username) {
     var user = await users
       .findOne({ username: username })
       .catch((error) => console.error(error));
     return user;
   }
-    
+
   async function fetchUserByID(userID) {
     try {
       let _userID = ObjectID(userID);
@@ -178,7 +179,7 @@ client.connect((err) => {
     let findResult = await users.find({ areaID: areaID }).toArray();
     return findResult;
   }
-    
+
   //FUNC: Create new area if area doesnt exist.
   async function createArea(areaID) {
     let areaExist = await documentExist("Areas", { areaID: areaID });
@@ -190,7 +191,7 @@ client.connect((err) => {
       await areas.insertOne(areaData).catch((error) => console.error(error));
     }
   }
-    
+
   //FUNC: Adds a user to virtuepoints ranking of area.
   //TODO: Initialize area (in insertuser?), push reference of user to areas
 
@@ -208,7 +209,7 @@ client.connect((err) => {
 	await areas.updateOne({ areaID: user.areaID }, { $push: { users: data }});
 
     }
-    
+
   //FUNC: Adds a user to db. Adds user to given area. If area doesnt exist, create new area.
   //ARGS: data required
   async function insertUser(
@@ -237,7 +238,7 @@ client.connect((err) => {
       mobile: mobile,
       city: city,
     };
-      
+
     var queryToFind = { email: email };
     var userNameToFind = { username: username };
     var findEmail = await documentExist("Users", queryToFind);
@@ -270,7 +271,7 @@ client.connect((err) => {
       return false;
     }
   }
-    
+
   async function updateErrand(errandID, newErrandData) {
     //TODO: check if the errand exists and maybe return true or false
     let currentErrand = await errands.findOne({ _id: new ObjectID(errandID) });
@@ -281,13 +282,13 @@ client.connect((err) => {
     );
     await errands.replaceOne({ _id: new ObjectID(errandID) }, updatedErrand);
   }
-	
+
   async function deleteEmptyArray() {
     await areas.remove({ users: { $exists: true, $eq: [] } }).catch((error) => {
       console.log("Could not delete area", error);
     });
   }
-	
+
   async function removeUserFromOldArea(areaID, userID) {
     await areas.updateOne(
       { areaID: areaID },
@@ -295,18 +296,18 @@ client.connect((err) => {
     );
     await deleteEmptyArray();
   }
-	
+
   async function updateVPInUsers(user) {
     await users.replaceOne({ username: user.username }, user);
   }
-	
+
   async function updateVPInAreas(user) {
     await areas.updateOne(
       { areaID: user.areaID, "users._id": user._id },
       { $set: { "users.$.virtuePoints": user.virtuePoints } }
     );
   }
-    
+
   // FUNC: used to update the refreshtoken for a user
   async function updateRefreshTokenUser(user, refreshtoken) {
     await users.updateOne(
@@ -314,7 +315,7 @@ client.connect((err) => {
       { $set: { refreshtoken: refreshtoken } }
     );
   }
-	
+
   //FUNC: Sorts the leaderboard for area with corresponding areaID
   async function updateLeaderboardRanking(user) {
     await areas.updateOne(
@@ -322,7 +323,7 @@ client.connect((err) => {
       { $push: { users: { $each: [], $sort: { virtuePoints: -1 } } } }
     );
   }
-	
+
   /*  FUNC: Updates value of virtuepoints (VP) in
    *   Areas and Users collection for specific user
    *   and updates leaderboard for VP
@@ -334,7 +335,7 @@ client.connect((err) => {
     let a = await areas.findOne({ areaID: user.areaID });
     console.log(a);
   }
-    
+
    async function updateUser(data) {
     	let oldUser = await users.findOne({ _id: new ObjectID(data.userID) });
     	let updatedUser = oldUser;
@@ -361,7 +362,7 @@ client.connect((err) => {
         await updateVPInAreas(user);
         await updateLeaderboardRanking(user);
     }
-    
+
     //FUNC: Returns 10 users with most VP in order in local area
     async function returnTop10(areaID) {
     	let localArea = await areas.findOne( { areaID: areaID } )
@@ -388,7 +389,7 @@ client.connect((err) => {
       var index = await localArea.users.findIndex(user => user.username === currentUser.username);
       return index + 1;
     }
-    
+
 
 
     async function insertErrand(errandData) {
@@ -436,8 +437,8 @@ client.connect((err) => {
     }
 
 
-	
-    const ObjectID = require("mongodb").ObjectID;
+
+
   //FUNC: Deletes an errand from db
   //ARG: ErrandID to remove
   //TODO: Inte klar
@@ -460,13 +461,13 @@ client.connect((err) => {
   app.get("/health", (req, res) => {
     res.send("health check good");
   });
-	
+
   // GETs username and checks if it unique
   app.post("/check-username", (username, res) => {
     let u = username.body;
     users.find({ username: u }).catch((error) => console.error(error));
   });
-	
+
   // GETs and sends user data to database
   app.post("/insertUser", async (userData, res) => {
     let user = userData.body;
@@ -491,7 +492,7 @@ client.connect((err) => {
 	res.send({ error: "${err.message}" });
     }
   });
-    
+
     // login a user
     app.post("/loginUser", async (data, res) => {
 	let user = data.body;
@@ -523,30 +524,33 @@ client.connect((err) => {
 	}
     });
 
-    
+
     app.post("/fetchUserByID", async (data, res) => {
 	var user = await fetchUserByID(data.body.userID);
 	res.send(user);
     });
-    
+
     app.post("/getUsersArea", async function (req, res) {
-	var users = await getUsersArea(req.body.areaID);
-	res.send({ users });
+    	var users = await getUsersArea(req.body.areaID);
+    	res.send({ users });
     });
+
     app.post("/insertErrand", async (data, res) => {
-	let errandData = data.body;
-	await insertErrand(errandData);
-	res.send(errandData);
+    	let errandData = data.body;
+    	await insertErrand(errandData);
+    	res.send(errandData);
     });
+
     app.post("/updateErrand", (data, res) => {
-	let doneErrand = updateErrand(
-	    data.body.errandID,
-	    data.body.newErrandData
-	).catch((error) => console.error(error));
-	res.send(doneErrand);
+    	let doneErrand = updateErrand(
+    	    data.body.errandID,
+    	    data.body.newErrandData
+    	).catch((error) => console.error(error));
+    	res.send(doneErrand);
     });
+
     app.post("/deleteErrand", async function (data, res) {
-	await deleteErrand(data.body.errandID);
+    	await deleteErrand(data.body.errandID);
     });
     app.post("/updateVirtuePoints", async (data, res) => {
 	let userToUpdate = await getUser(data.body.userToUpdate);
@@ -568,7 +572,7 @@ client.connect((err) => {
 	    });
 	}
     });
-    
+
 
     app.post("/uploadImage", async (data, res) => {
 	let image = data.body;
@@ -625,7 +629,7 @@ client.connect((err) => {
 	res.send(user);
     });
 
-  
+
     app.post("/updateUser", async (data, res) => {
       	console.log("updateUser request heard");
       	let newUserData = data.body;
@@ -660,8 +664,8 @@ client.connect((err) => {
         console.log("My ranking is: " + myRank);
       	res.send({ myRank });
     });
-	
-	
+
+
 app.listen(process.env.PORT, () =>
   console.log(`Server listening to ${process.env.PORT}`)
 	  );

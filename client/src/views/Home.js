@@ -11,86 +11,86 @@ import ProfileAndAreaView from '../components/ProfileAndAreaView.js'
 
 class Home extends Component {
     constructor(props) {
-	super(props);
-	this.state = {
-	    areaID: this.props.activeUser.areaID,
-	    users: [],
-	    errands: [],
-	    fetchErrandsSuccess: null,
-	    fetchUsersSuccess: null,
-	};
+    	super(props);
+    	this.state = {
+    	    areaID: this.props.activeUser.areaID,
+    	    users: [],
+    	    errands: [],
+    	    fetchErrandsSuccess: null,
+    	    fetchUsersSuccess: null,
+    	};
 
-	this.fetchErrands = this.fetchErrands.bind(this);
-	this.fetchUsers = this.fetchUsers.bind(this);
+    	this.fetchErrands = this.fetchErrands.bind(this);
+    	this.fetchUsers = this.fetchUsers.bind(this);
     }
 
     fetchErrands = () => {
-	console.log("fetchErrands");
-	axios
-	    .post(config.baseUrl + "/getErrandsArea", {
-		areaID: this.state.areaID,
-	    })
-	    .then((response) => {
-		console.log("Errands fetched successfully!", response);
-		this.setState({
-		    fetchErrandsSuccess: true,
-		    errands: response.data["errands"],
-		});
-	    })
-	    .catch((error) => {
-		console.log("Got error while fetching errands", error);
-		this.setState({ fetchErrandsSuccess: false });
-	    });
-	this.fetchErrandsTimeout = setTimeout(this.fetchErrands, 2000);
+    	console.log("fetchErrands");
+    	axios
+    	    .post(config.baseUrl + "/getErrandsArea", {
+        		areaID: this.state.areaID,
+    	    })
+    	    .then((response) => {
+        		console.log("Errands fetched successfully!", response);
+        		this.setState({
+        		    fetchErrandsSuccess: true,
+        		    errands: response.data["errands"],
+        		});
+    	    })
+    	    .catch((error) => {
+        		console.log("Got error while fetching errands", error);
+        		this.setState({ fetchErrandsSuccess: false });
+    	    });
+    	this.fetchErrandsTimeout = setTimeout(this.fetchErrands, 2000);
     };
 
     fetchUsers = () => {
-	axios
-	    .post(config.baseUrl + "/getUsersArea", {
-		areaID: this.state.areaID,
-	    })
-	    .then((response) => {
-		this.setState({
-		    fetchUsersSuccess: true,
-		    users: response.data["users"],
-		});
-	    })
-	    .catch((error) => {
-		console.log("Got error while fetching users", error);
-		this.setState({ fetchUsersSuccess: false });
-	    });
-	this.fetchUsersTimeout = setTimeout(this.fetchUsers, 2000);
+    	axios
+    	    .post(config.baseUrl + "/getUsersArea", {
+        		areaID: this.state.areaID,
+    	    })
+    	    .then((response) => {
+        		this.setState({
+        		    fetchUsersSuccess: true,
+        		    users: response.data["users"],
+        		});
+    	    })
+    	    .catch((error) => {
+        		console.log("Got error while fetching users", error);
+        		this.setState({ fetchUsersSuccess: false });
+    	    });
+    	this.fetchUsersTimeout = setTimeout(this.fetchUsers, 2000);
     };
 
     checkAuth = async () => {
-	axios.post(config.baseUrl + "/checkAuth", {
-	    accessToken: this.props.activeUser.accessToken,
-	}).then((response) => {
-	    if(response.data.error === undefined){
-		console.log("You are authorized!");
-	    }
-	    else{
-		window.location.href = "/" ;
-	    }
-	}).catch((error) => {
-	    console.log(error);
-	});
+    	axios.post(config.baseUrl + "/checkAuth", {
+    	    accessToken: this.props.activeUser.accessToken,
+    	}).then((response) => {
+    	    if(response.data.error === undefined){
+    		console.log("You are authorized!");
+    	    }
+    	    else{
+    		window.location.href = "/" ;
+    	    }
+    	}).catch((error) => {
+    	    console.log(error);
+    	});
     }
 
 
     componentDidMount() {
-	console.log("---------- HOME.JS DID MOUNT ----------------");
-	this.checkAuth();
-	this.fetchErrands();
-	this.fetchUsers();
+    	console.log("---------- HOME.JS DID MOUNT ----------------");
+    	this.checkAuth();
+    	this.fetchErrands();
+    	this.fetchUsers();
     }
 
     componentWillUnmount() {
-	console.log("---------- HOME.JS WILL UNMOUNT ----------------");
-	clearTimeout(this.fetchErrandsTimeout);
-	clearTimeout(this.fetchUsersTimeout);
+    	console.log("---------- HOME.JS WILL UNMOUNT ----------------");
+    	clearTimeout(this.fetchErrandsTimeout);
+    	clearTimeout(this.fetchUsersTimeout);
     }
-    
+
     render(){
         return(
             <div>
@@ -100,7 +100,7 @@ class Home extends Component {
                       <form className="login100-form validate-form p-l-55 p-r-55 p-t-178">
                         <span className="login100-form-title-home">
                           <ProfileAndAreaView areaID={this.state.areaID}/>
-                          Home
+                          Hej {this.props.activeUser.username}
                         </span>
                       </form>
 
