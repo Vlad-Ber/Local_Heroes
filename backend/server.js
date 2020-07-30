@@ -332,8 +332,6 @@ client.connect((err) => {
     await updateVPInUsers(user);
     await updateVPInAreas(user);
     await updateLeaderboardRanking(user);
-    let a = await areas.findOne({ areaID: user.areaID });
-    console.log(a);
   }
 
    async function updateUser(data) {
@@ -353,6 +351,7 @@ client.connect((err) => {
       await updateLeaderboardRanking(updatedUser);
     }
 
+
    /*  FUNC: Updates value of virtuepoints (VP) in
     *  Areas and Users collection for specific user
     *  and updates leaderboard for VP
@@ -368,7 +367,7 @@ client.connect((err) => {
     	let localArea = await areas.findOne( { areaID: areaID } )
     	    .catch((error) => {
         		console.log("Could not find area in returnTop10", error)
-        	    });
+        	 });
     	if(localArea.users != null){
 	    console.log(localArea);
     	let top10 = await localArea.users.slice(0, 10);
@@ -393,28 +392,28 @@ client.connect((err) => {
 
 
     async function insertErrand(errandData) {
-	var date = new Date();
-	var dateString = date.toISOString().slice(0, 10);
-	var data = {
-	    createdAt: dateString, //Future improvement, show hours ago created
-	    closedAt: "",
-	    status: "waiting",
-	    type: errandData.type,
-	    title: errandData.title,
-	    description: errandData.description,
-	    adress: errandData.adress,
-	    mobile: errandData.number,
-	    email: errandData.email,
-	    helper: "",
-	    requester: errandData.requester,
-	    areaID: errandData.areaID,
-	};
-	console.log(errandData.email)
-	console.log(errandData.number)
+    	var date = new Date();
+    	var dateString = date.toISOString().slice(0, 10);
+    	var data = {
+    	    createdAt: dateString, //Future improvement, show hours ago created
+    	    closedAt: "",
+    	    status: "waiting",
+    	    type: errandData.type,
+    	    title: errandData.title,
+    	    description: errandData.description,
+    	    adress: errandData.adress,
+    	    mobile: errandData.number,
+    	    email: errandData.email,
+    	    helper: "",
+    	    requester: errandData.requester,
+    	    areaID: errandData.areaID,
+    	};
+    	console.log(errandData.email)
+    	console.log(errandData.number)
 
-	var insert = await errands
-	    .insertOne(data)
-	    .catch((error) => console.error(error));
+    	var insert = await errands
+    	    .insertOne(data)
+    	    .catch((error) => console.error(error));
     }
 
 
@@ -454,6 +453,17 @@ client.connect((err) => {
         console.log("Could not delete errand", error);
       });
   }
+
+  async function deleteUser(username, areaID) {
+     users.deleteOne( { username: username } );
+     errands.deleteMany ( { requester: username } );
+     await areas.updateOne(
+       { areaID: areaID },
+       { $pull: { users: { username: username } } }
+     );
+
+     await deleteEmptyArray();
+   }
 
   //--------------------------------MESSAGING FUNKTIONER-----------------------------------------------------//
   app.use(bodyParser.json());
@@ -663,6 +673,12 @@ client.connect((err) => {
          console.log(data.body.user);
         console.log("My ranking is: " + myRank);
       	res.send({ myRank });
+    });
+
+    app.post("/deleteUser", async (data, res) => {
+        var username = data.body.username;
+        var areaID = data.body.areaID;
+        await deleteUser(username, areaID);
     });
 
 

@@ -79,6 +79,13 @@ class ProfilePage extends Component {
     	clearTimeout(this.getUserErrandsTimeout);
     }
 
+    renderBackButton = (link, text) => {
+        return <LinkWrapper to={link}>
+                  <ButtonWrapper>{text}</ButtonWrapper>
+              </LinkWrapper>
+    };
+
+
   render() {
     return (
           <div className="limiter">
@@ -90,6 +97,9 @@ class ProfilePage extends Component {
                         text="Home"
                         link="/home"
                     />
+                    <div>
+                      {this.renderBackButton("/settings", "Settings")}
+                    </div>
                     {this.state.user.name}
                   </span>
 
@@ -177,6 +187,19 @@ const StyledTextHeadLine = styled.div`
   justify-content: center;
   font-size: 18px;
   padding-bottom: 20px;
+`;
+
+
+const ButtonWrapper = styled.button`
+    position: absolute;
+    top: 20px;
+    right: 16px;
+
+    font-family: JosefinSans-Bold;
+
+    &:hover {
+        color: white;
+    }
 `;
 
 

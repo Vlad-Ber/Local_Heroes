@@ -13,11 +13,12 @@ import ProfilePage from "./views/ProfilePage.js";
 import ProfileCreation from "./views/ProfileCreation.js";
 import ZipCode from "./views/ZipCode.js";
 import Leaderboard from "./views/Leaderboard.js";
+import Settings from "./views/Settings.js";
 
 
 class App extends Component {
-    
-    
+
+
   constructor(props) {
     super(props);
 
@@ -31,7 +32,7 @@ class App extends Component {
 
   };
 
- 
+
   // setLoggedInUser
   // accessed via prop onSetLoggedInUser in UserContext
   // PARAM: user object to update state with
@@ -79,26 +80,27 @@ class App extends Component {
           <div className="App" style={{ fontFamily: "Helvetica" }}>
             <Switch>
               <Route path="/" exact component={WithUserContext(Signup)} />
-            <Route path="/signup" component={WithUserContext(Signup)} />
-	    <Route path="/leader-board" component={WithUserContext(Leaderboard)} />
-            <Route path="/home" component={WithUserContext(Home)} />
-            <Route
-        path="/profile-page"
-        component={WithUserContext(ProfilePage)}
-            />
-            <Route
-        path="/help-request"
-        component={WithUserContext(HelpRequest)}
-            />
-            <Route
-        path="/help-notice"
-        component={WithUserContext(HelpNotice)}
-            />
-            <Route path="/profile-creation" component={ProfileCreation} />
-            <Route path="/zipcode" component={WithUserContext(ZipCode)} />
+              <Route path="/signup" component={WithUserContext(Signup)} />
+        	    <Route path="/leader-board" component={WithUserContext(Leaderboard)} />
+              <Route path="/home" component={WithUserContext(Home)} />
+              <Route
+              path="/profile-page"
+              component={WithUserContext(ProfilePage)}
+              />
+              <Route
+              path="/help-request"
+              component={WithUserContext(HelpRequest)}
+              />
+              <Route
+              path="/help-notice"
+              component={WithUserContext(HelpNotice)}
+              />
+              <Route path="/profile-creation" component={ProfileCreation} />
+              <Route path="/zipcode" component={WithUserContext(ZipCode)} />
+              <Route path="/settings" component={WithUserContext(Settings)} />
             </Switch>
-            </div>
-            </UserProvider>
+          </div>
+        </UserProvider>
 	    </Router>
     );
   }
