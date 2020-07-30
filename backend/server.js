@@ -57,7 +57,7 @@ const client = new MongoClient(uri, {
 });
 
 client.connect((err) => {
-  console.log("MongoDB database conneciton establised successfully!");
+  console.log("MongoDB database connection established successfully!");
 
 
     // Logout the user
@@ -232,7 +232,7 @@ client.connect((err) => {
       name: name,
       age: age,
       address: address,
-      desription: description,
+      description: description,
       virtuePoints: 0,
       areaID: areaID,
       mobile: mobile,

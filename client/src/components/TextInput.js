@@ -38,6 +38,13 @@ const TextInput = (props) => {
         </WrapperPf>
       );
 
+    case "descriptionPf":
+      return (
+        <WrapperPf>
+          <StyledDesc {...props}/>
+        </WrapperPf>
+      );
+
 
     default:
       return (
@@ -131,6 +138,9 @@ const StyledInputPf = styled.input`
     color: black;
     padding: 7px 0;
 
+    height: ${props => props.height || '24em'};
+    resize: ${props => props.resize || 'none'};
+
     &:hover {
       cursor: auto;
 
@@ -184,6 +194,79 @@ const StyledInputPf = styled.input`
       opacity: 0.65;
     }
 `
+
+const StyledDesc = styled.textarea`
+    font-family: Ubuntu-Regular;
+    font-size: 1.2rem;
+
+    border: 0;
+    outline: 0;
+    border-bottom: 2px solid #9b9b9b;
+
+    box-sizing: border-box;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.12);
+
+    height: ${props => props.height || '24em'};
+    width: ${props => props.width || '18em'};
+
+    resize: ${props => props.resize || 'none'};
+
+    &:hover {
+      cursor: auto;
+
+      background-color: #F0F0F0;
+      border-image: linear-gradient(to right, #11998e, #38ef7d);
+      border-image-slice: 1;
+
+      ::placeholder {
+        opacity: 1;
+      }
+      :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        opacity: 1;
+      }
+
+      ::-ms-input-placeholder { /* Microsoft Edge */
+        opacity: 1;
+      }
+    }
+
+    &:focus {
+      padding-bottom: 6px;
+      font-weight: 400;
+      border-width: 3px;
+
+      background-color: #F0F0F0;
+      border-image: linear-gradient(to right, #11998e, #38ef7d);
+      border-image-slice: 1;
+
+      //opacity for placeholder
+      ::placeholder {
+        opacity: 1;
+      }
+      :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        opacity: 1;
+      }
+
+      ::-ms-input-placeholder { /* Microsoft Edge */
+        opacity: 1;
+      }
+    }
+
+    ::placeholder {
+      opacity: 0.65;
+    }
+
+    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+      opacity: 0.65;
+    }
+
+    ::-ms-input-placeholder { /* Microsoft Edge */
+      opacity: 0.65;
+    }
+
+`
+
+
 
 
 export default TextInput;

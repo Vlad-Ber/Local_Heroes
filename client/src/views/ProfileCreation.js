@@ -169,6 +169,7 @@ class ProfileCreation extends Component {
 
 
     render(){
+      console.log(this.state.description);
         return (
             <div>
                 	<div className="limiter">
@@ -187,7 +188,7 @@ class ProfileCreation extends Component {
                             <TextInput
                             inputType="pf" placeholder="Username"
                             name="username" onChange={this.saveInput}
-                            autocomplete="username"
+                            autocomplete="username" height="24px"
                             />
                 					</div>
 
@@ -233,6 +234,15 @@ class ProfileCreation extends Component {
                             value={this.email} onChange={this.saveInput}
                             />
                 					</div>
+
+                					<div className="wrap-input100 validate-input m-b-16">
+                            <TextInput
+                            inputType="descriptionPf" placeholder="Description"
+                            name="description" height="100px"
+                            value={this.description} onChange={this.saveInput}
+                            />
+                					</div>
+
                 					<div className="wrap-input100 validate-input m-b-16">
                             <AutoCompleteInput
                             value={this.state.address}
