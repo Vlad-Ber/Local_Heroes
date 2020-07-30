@@ -70,7 +70,7 @@ class Home extends Component {
     		console.log("You are authorized!");
     	    }
     	    else{
-    		window.location.href = "/" ;
+        		window.location.href = "/" ;
     	    }
     	}).catch((error) => {
     	    console.log(error);
@@ -120,7 +120,7 @@ class Home extends Component {
 
                       <div className="wrap-input100 validate-input m-b-16">
                         <LinkWrapper to="/leader-board">
-                            <TextButton marginTop="-15px" description="LEADERBOARD"/>
+                            <TextButton marginTop="0px" description="LEADERBOARD"/>
                         </LinkWrapper>
                       </div>
 
