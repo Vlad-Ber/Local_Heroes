@@ -28,6 +28,27 @@ class Settings extends Component {
         console.log("You have no errands!", error);
       });
     };
+    
+    checkAuth = async () => {
+    	axios.post(config.baseUrl + "/checkAuth", {
+    	    accessToken: this.props.activeUser.accessToken,
+    	}).then((response) => {
+    	    if(response.data.error === undefined){
+    		console.log("You are authorized!");
+    	    }
+    	    else{
+        		window.location.href = "/" ;
+    	    }
+    	}).catch((error) => {
+    	    console.log(error);
+    	});
+    }
+
+    
+    componentDidMount() {
+    	console.log("---------- HOME.JS DID MOUNT ----------------");
+    	this.checkAuth();
+    }
 
   render() {
     return (
