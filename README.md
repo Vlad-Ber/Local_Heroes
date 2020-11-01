@@ -5,6 +5,9 @@ Help out in your local area and become a local hero!
 Sign up now!  
 https://localhero.ew.r.appspot.com/
 
+Demonstration of the project:
+https://www.youtube.com/watch?v=AoEvMJ0L7nY
+
 Project for Computer Systems with Project Work (1DT003),
 Spring 2020, Uppsala University.
 
